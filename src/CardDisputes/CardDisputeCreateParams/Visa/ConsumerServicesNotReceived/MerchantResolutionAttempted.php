@@ -1,0 +1,15 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Increase\CardDisputes\CardDisputeCreateParams\Visa\ConsumerServicesNotReceived;
+
+/**
+ * Merchant resolution attempted.
+ */
+enum MerchantResolutionAttempted: string
+{
+    case ATTEMPTED = 'attempted';
+
+    case PROHIBITED_BY_LOCAL_LAW = 'prohibited_by_local_law';
+}

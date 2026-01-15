@@ -1,0 +1,67 @@
+<?php
+
+namespace Tests\Services\Simulations;
+
+use Increase\Client;
+use Increase\InboundRealTimePaymentsTransfers\InboundRealTimePaymentsTransfer;
+use PHPUnit\Framework\Attributes\CoversNothing;
+use PHPUnit\Framework\Attributes\Test;
+use PHPUnit\Framework\TestCase;
+
+/**
+ * @internal
+ */
+#[CoversNothing]
+final class InboundRealTimePaymentsTransfersTest extends TestCase
+{
+    protected Client $client;
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        $testUrl = getenv('TEST_API_BASE_URL') ?: 'http://127.0.0.1:4010';
+        $client = new Client(apiKey: 'My API Key', baseUrl: $testUrl);
+
+        $this->client = $client;
+    }
+
+    #[Test]
+    public function testCreate(): void
+    {
+        $result = $this
+            ->client
+            ->simulations
+            ->inboundRealTimePaymentsTransfers
+            ->create(
+                accountNumberID: 'account_number_v18nkfqm6afpsrvy82b2',
+                amount: 1000
+            )
+        ;
+
+        // @phpstan-ignore-next-line method.alreadyNarrowedType
+        $this->assertInstanceOf(InboundRealTimePaymentsTransfer::class, $result);
+    }
+
+    #[Test]
+    public function testCreateWithOptionalParams(): void
+    {
+        $result = $this
+            ->client
+            ->simulations
+            ->inboundRealTimePaymentsTransfers
+            ->create(
+                accountNumberID: 'account_number_v18nkfqm6afpsrvy82b2',
+                amount: 1000,
+                debtorAccountNumber: 'x',
+                debtorName: 'x',
+                debtorRoutingNumber: 'xxxxxxxxx',
+                remittanceInformation: 'x',
+                requestForPaymentID: 'real_time_payments_request_for_payment_28kcliz1oevcnqyn9qp7',
+            )
+        ;
+
+        // @phpstan-ignore-next-line method.alreadyNarrowedType
+        $this->assertInstanceOf(InboundRealTimePaymentsTransfer::class, $result);
+    }
+}

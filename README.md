@@ -8,22 +8,10 @@ The REST API documentation can be found on [increase.com](https://increase.com/d
 
 ## Installation
 
-To use this package, install via Composer by adding the following to your application's `composer.json`:
-
 <!-- x-release-please-start-version -->
 
-```json
-{
-  "repositories": [
-    {
-      "type": "vcs",
-      "url": "git@github.com:Increase/increase-php.git"
-    }
-  ],
-  "require": {
-    "increase/increase": "dev-main"
-  }
-}
+```
+composer require "increase/increase 0.1.0"
 ```
 
 <!-- x-release-please-end -->

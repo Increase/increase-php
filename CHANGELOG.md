@@ -1,5 +1,21 @@
 # Changelog
 
+## 0.2.0 (2026-01-21)
+
+Full Changelog: [v0.1.0...v0.2.0](https://github.com/Increase/increase-php/compare/v0.1.0...v0.2.0)
+
+### Features
+
+* **api:** api update ([b665baf](https://github.com/Increase/increase-php/commit/b665baffa57500a541979f2a52a0c12463d2aaf7))
+
+
+### Chores
+
+* **internal:** codegen related update ([69d7512](https://github.com/Increase/increase-php/commit/69d75122507ac57afb517a58629326dcfbf984ca))
+* **internal:** codegen related update ([2cbd114](https://github.com/Increase/increase-php/commit/2cbd11464eed84ce051a1a697fe06559b6ecda6c))
+* **internal:** update `actions/checkout` version ([8a96ae7](https://github.com/Increase/increase-php/commit/8a96ae79de792e15c7d4f86069b132c7a7bc934b))
+* **internal:** update phpstan comments ([6df96cd](https://github.com/Increase/increase-php/commit/6df96cd7feea0e13a6b00691b15d2c49b151dd9d))
+
 ## 0.1.0 (2026-01-16)
 
 Full Changelog: [v0.0.1...v0.1.0](https://github.com/Increase/increase-php/compare/v0.0.1...v0.1.0)

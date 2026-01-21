@@ -169,6 +169,10 @@ enum Category: string
 
     case PHYSICAL_CARD_PROFILE_UPDATED = 'physical_card_profile.updated';
 
+    case PHYSICAL_CHECK_CREATED = 'physical_check.created';
+
+    case PHYSICAL_CHECK_UPDATED = 'physical_check.updated';
+
     case PROGRAM_CREATED = 'program.created';
 
     case PROGRAM_UPDATED = 'program.updated';

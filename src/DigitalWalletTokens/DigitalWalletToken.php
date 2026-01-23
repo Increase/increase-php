@@ -9,6 +9,7 @@ use Increase\Core\Concerns\SdkModel;
 use Increase\Core\Contracts\BaseModel;
 use Increase\DigitalWalletTokens\DigitalWalletToken\Cardholder;
 use Increase\DigitalWalletTokens\DigitalWalletToken\Device;
+use Increase\DigitalWalletTokens\DigitalWalletToken\DynamicPrimaryAccountNumber;
 use Increase\DigitalWalletTokens\DigitalWalletToken\Status;
 use Increase\DigitalWalletTokens\DigitalWalletToken\TokenRequestor;
 use Increase\DigitalWalletTokens\DigitalWalletToken\Type;
@@ -19,6 +20,7 @@ use Increase\DigitalWalletTokens\DigitalWalletToken\Update;
  *
  * @phpstan-import-type CardholderShape from \Increase\DigitalWalletTokens\DigitalWalletToken\Cardholder
  * @phpstan-import-type DeviceShape from \Increase\DigitalWalletTokens\DigitalWalletToken\Device
+ * @phpstan-import-type DynamicPrimaryAccountNumberShape from \Increase\DigitalWalletTokens\DigitalWalletToken\DynamicPrimaryAccountNumber
  * @phpstan-import-type UpdateShape from \Increase\DigitalWalletTokens\DigitalWalletToken\Update
  *
  * @phpstan-type DigitalWalletTokenShape = array{
@@ -27,6 +29,7 @@ use Increase\DigitalWalletTokens\DigitalWalletToken\Update;
  *   cardholder: Cardholder|CardholderShape,
  *   createdAt: \DateTimeInterface,
  *   device: Device|DeviceShape,
+ *   dynamicPrimaryAccountNumber: null|DynamicPrimaryAccountNumber|DynamicPrimaryAccountNumberShape,
  *   status: Status|value-of<Status>,
  *   tokenRequestor: TokenRequestor|value-of<TokenRequestor>,
  *   type: Type|value-of<Type>,
@@ -67,6 +70,12 @@ final class DigitalWalletToken implements BaseModel
      */
     #[Required]
     public Device $device;
+
+    /**
+     * The redacted Dynamic Primary Account Number.
+     */
+    #[Required('dynamic_primary_account_number')]
+    public ?DynamicPrimaryAccountNumber $dynamicPrimaryAccountNumber;
 
     /**
      * This indicates if payments can be made with the Digital Wallet Token.
@@ -111,6 +120,7 @@ final class DigitalWalletToken implements BaseModel
      *   cardholder: ...,
      *   createdAt: ...,
      *   device: ...,
+     *   dynamicPrimaryAccountNumber: ...,
      *   status: ...,
      *   tokenRequestor: ...,
      *   type: ...,
@@ -127,6 +137,7 @@ final class DigitalWalletToken implements BaseModel
      *   ->withCardholder(...)
      *   ->withCreatedAt(...)
      *   ->withDevice(...)
+     *   ->withDynamicPrimaryAccountNumber(...)
      *   ->withStatus(...)
      *   ->withTokenRequestor(...)
      *   ->withType(...)
@@ -145,6 +156,7 @@ final class DigitalWalletToken implements BaseModel
      *
      * @param Cardholder|CardholderShape $cardholder
      * @param Device|DeviceShape $device
+     * @param DynamicPrimaryAccountNumber|DynamicPrimaryAccountNumberShape|null $dynamicPrimaryAccountNumber
      * @param Status|value-of<Status> $status
      * @param TokenRequestor|value-of<TokenRequestor> $tokenRequestor
      * @param Type|value-of<Type> $type
@@ -156,6 +168,7 @@ final class DigitalWalletToken implements BaseModel
         Cardholder|array $cardholder,
         \DateTimeInterface $createdAt,
         Device|array $device,
+        DynamicPrimaryAccountNumber|array|null $dynamicPrimaryAccountNumber,
         Status|string $status,
         TokenRequestor|string $tokenRequestor,
         Type|string $type,
@@ -168,6 +181,7 @@ final class DigitalWalletToken implements BaseModel
         $self['cardholder'] = $cardholder;
         $self['createdAt'] = $createdAt;
         $self['device'] = $device;
+        $self['dynamicPrimaryAccountNumber'] = $dynamicPrimaryAccountNumber;
         $self['status'] = $status;
         $self['tokenRequestor'] = $tokenRequestor;
         $self['type'] = $type;
@@ -231,6 +245,20 @@ final class DigitalWalletToken implements BaseModel
     {
         $self = clone $this;
         $self['device'] = $device;
+
+        return $self;
+    }
+
+    /**
+     * The redacted Dynamic Primary Account Number.
+     *
+     * @param DynamicPrimaryAccountNumber|DynamicPrimaryAccountNumberShape|null $dynamicPrimaryAccountNumber
+     */
+    public function withDynamicPrimaryAccountNumber(
+        DynamicPrimaryAccountNumber|array|null $dynamicPrimaryAccountNumber
+    ): self {
+        $self = clone $this;
+        $self['dynamicPrimaryAccountNumber'] = $dynamicPrimaryAccountNumber;
 
         return $self;
     }

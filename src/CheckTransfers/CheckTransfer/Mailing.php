@@ -11,22 +11,12 @@ use Increase\Core\Contracts\BaseModel;
 /**
  * If the check has been mailed by Increase, this will contain details of the shipment.
  *
- * @phpstan-type MailingShape = array{
- *   imageID: string|null,
- *   mailedAt: \DateTimeInterface,
- *   trackingNumber: string|null,
- * }
+ * @phpstan-type MailingShape = array{mailedAt: \DateTimeInterface}
  */
 final class Mailing implements BaseModel
 {
     /** @use SdkModel<MailingShape> */
     use SdkModel;
-
-    /**
-     * The ID of the file corresponding to an image of the check that was mailed, if available.
-     */
-    #[Required('image_id')]
-    public ?string $imageID;
 
     /**
      * The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which the check was mailed.
@@ -35,23 +25,17 @@ final class Mailing implements BaseModel
     public \DateTimeInterface $mailedAt;
 
     /**
-     * The tracking number of the shipment, if available for the shipping method.
-     */
-    #[Required('tracking_number')]
-    public ?string $trackingNumber;
-
-    /**
      * `new Mailing()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
-     * Mailing::with(imageID: ..., mailedAt: ..., trackingNumber: ...)
+     * Mailing::with(mailedAt: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new Mailing)->withImageID(...)->withMailedAt(...)->withTrackingNumber(...)
+     * (new Mailing)->withMailedAt(...)
      * ```
      */
     public function __construct()
@@ -64,27 +48,11 @@ final class Mailing implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      */
-    public static function with(
-        ?string $imageID,
-        \DateTimeInterface $mailedAt,
-        ?string $trackingNumber
-    ): self {
+    public static function with(\DateTimeInterface $mailedAt): self
+    {
         $self = new self;
 
-        $self['imageID'] = $imageID;
         $self['mailedAt'] = $mailedAt;
-        $self['trackingNumber'] = $trackingNumber;
-
-        return $self;
-    }
-
-    /**
-     * The ID of the file corresponding to an image of the check that was mailed, if available.
-     */
-    public function withImageID(?string $imageID): self
-    {
-        $self = clone $this;
-        $self['imageID'] = $imageID;
 
         return $self;
     }
@@ -96,17 +64,6 @@ final class Mailing implements BaseModel
     {
         $self = clone $this;
         $self['mailedAt'] = $mailedAt;
-
-        return $self;
-    }
-
-    /**
-     * The tracking number of the shipment, if available for the shipping method.
-     */
-    public function withTrackingNumber(?string $trackingNumber): self
-    {
-        $self = clone $this;
-        $self['trackingNumber'] = $trackingNumber;
 
         return $self;
     }

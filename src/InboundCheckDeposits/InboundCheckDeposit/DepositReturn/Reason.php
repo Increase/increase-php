@@ -18,4 +18,6 @@ enum Reason: string
     case ENDORSEMENT_MISSING = 'endorsement_missing';
 
     case ENDORSEMENT_IRREGULAR = 'endorsement_irregular';
+
+    case REFER_TO_MAKER = 'refer_to_maker';
 }

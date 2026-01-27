@@ -35,6 +35,8 @@ enum Reason: string
 
     case FEES = 'fees';
 
+    case GENERAL_LEDGER_TRANSFER = 'general_ledger_transfer';
+
     case INTEREST = 'interest';
 
     case NEGATIVE_BALANCE_FORGIVENESS = 'negative_balance_forgiveness';

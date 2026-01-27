@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Increase\CardPayments\CardPayment\Element\CardDecline;
 
 use Increase\CardPayments\CardPayment\Element\CardDecline\Verification\CardholderAddress;
+use Increase\CardPayments\CardPayment\Element\CardDecline\Verification\CardholderName;
 use Increase\CardPayments\CardPayment\Element\CardDecline\Verification\CardVerificationCode;
 use Increase\Core\Attributes\Required;
 use Increase\Core\Concerns\SdkModel;
@@ -15,10 +16,12 @@ use Increase\Core\Contracts\BaseModel;
  *
  * @phpstan-import-type CardVerificationCodeShape from \Increase\CardPayments\CardPayment\Element\CardDecline\Verification\CardVerificationCode
  * @phpstan-import-type CardholderAddressShape from \Increase\CardPayments\CardPayment\Element\CardDecline\Verification\CardholderAddress
+ * @phpstan-import-type CardholderNameShape from \Increase\CardPayments\CardPayment\Element\CardDecline\Verification\CardholderName
  *
  * @phpstan-type VerificationShape = array{
  *   cardVerificationCode: CardVerificationCode|CardVerificationCodeShape,
  *   cardholderAddress: CardholderAddress|CardholderAddressShape,
+ *   cardholderName: null|CardholderName|CardholderNameShape,
  * }
  */
 final class Verification implements BaseModel
@@ -39,17 +42,28 @@ final class Verification implements BaseModel
     public CardholderAddress $cardholderAddress;
 
     /**
+     * Cardholder name provided in the authorization request.
+     */
+    #[Required('cardholder_name')]
+    public ?CardholderName $cardholderName;
+
+    /**
      * `new Verification()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
-     * Verification::with(cardVerificationCode: ..., cardholderAddress: ...)
+     * Verification::with(
+     *   cardVerificationCode: ..., cardholderAddress: ..., cardholderName: ...
+     * )
      * ```
      *
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new Verification)->withCardVerificationCode(...)->withCardholderAddress(...)
+     * (new Verification)
+     *   ->withCardVerificationCode(...)
+     *   ->withCardholderAddress(...)
+     *   ->withCardholderName(...)
      * ```
      */
     public function __construct()
@@ -64,15 +78,18 @@ final class Verification implements BaseModel
      *
      * @param CardVerificationCode|CardVerificationCodeShape $cardVerificationCode
      * @param CardholderAddress|CardholderAddressShape $cardholderAddress
+     * @param CardholderName|CardholderNameShape|null $cardholderName
      */
     public static function with(
         CardVerificationCode|array $cardVerificationCode,
         CardholderAddress|array $cardholderAddress,
+        CardholderName|array|null $cardholderName,
     ): self {
         $self = new self;
 
         $self['cardVerificationCode'] = $cardVerificationCode;
         $self['cardholderAddress'] = $cardholderAddress;
+        $self['cardholderName'] = $cardholderName;
 
         return $self;
     }
@@ -101,6 +118,20 @@ final class Verification implements BaseModel
     ): self {
         $self = clone $this;
         $self['cardholderAddress'] = $cardholderAddress;
+
+        return $self;
+    }
+
+    /**
+     * Cardholder name provided in the authorization request.
+     *
+     * @param CardholderName|CardholderNameShape|null $cardholderName
+     */
+    public function withCardholderName(
+        CardholderName|array|null $cardholderName
+    ): self {
+        $self = clone $this;
+        $self['cardholderName'] = $cardholderName;
 
         return $self;
     }

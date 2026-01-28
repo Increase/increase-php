@@ -10,6 +10,7 @@ use Increase\CardDisputes\CardDispute\Status;
 use Increase\CardDisputes\CardDispute\Type;
 use Increase\CardDisputes\CardDispute\Visa;
 use Increase\CardDisputes\CardDispute\Win;
+use Increase\CardDisputes\CardDispute\Withdrawal;
 use Increase\Core\Attributes\Required;
 use Increase\Core\Concerns\SdkModel;
 use Increase\Core\Contracts\BaseModel;
@@ -20,6 +21,7 @@ use Increase\Core\Contracts\BaseModel;
  * @phpstan-import-type LossShape from \Increase\CardDisputes\CardDispute\Loss
  * @phpstan-import-type VisaShape from \Increase\CardDisputes\CardDispute\Visa
  * @phpstan-import-type WinShape from \Increase\CardDisputes\CardDispute\Win
+ * @phpstan-import-type WithdrawalShape from \Increase\CardDisputes\CardDispute\Withdrawal
  *
  * @phpstan-type CardDisputeShape = array{
  *   id: string,
@@ -35,6 +37,7 @@ use Increase\Core\Contracts\BaseModel;
  *   userSubmissionRequiredBy: \DateTimeInterface|null,
  *   visa: null|Visa|VisaShape,
  *   win: null|Win|WinShape,
+ *   withdrawal: null|Withdrawal|WithdrawalShape,
  * }
  */
 final class CardDispute implements BaseModel
@@ -127,6 +130,12 @@ final class CardDispute implements BaseModel
     public ?Win $win;
 
     /**
+     * If the Card Dispute has been withdrawn, this will contain details of the withdrawal.
+     */
+    #[Required]
+    public ?Withdrawal $withdrawal;
+
+    /**
      * `new CardDispute()` is missing required properties by the API.
      *
      * To enforce required parameters use
@@ -145,6 +154,7 @@ final class CardDispute implements BaseModel
      *   userSubmissionRequiredBy: ...,
      *   visa: ...,
      *   win: ...,
+     *   withdrawal: ...,
      * )
      * ```
      *
@@ -165,6 +175,7 @@ final class CardDispute implements BaseModel
      *   ->withUserSubmissionRequiredBy(...)
      *   ->withVisa(...)
      *   ->withWin(...)
+     *   ->withWithdrawal(...)
      * ```
      */
     public function __construct()
@@ -183,6 +194,7 @@ final class CardDispute implements BaseModel
      * @param Type|value-of<Type> $type
      * @param Visa|VisaShape|null $visa
      * @param Win|WinShape|null $win
+     * @param Withdrawal|WithdrawalShape|null $withdrawal
      */
     public static function with(
         string $id,
@@ -198,6 +210,7 @@ final class CardDispute implements BaseModel
         ?\DateTimeInterface $userSubmissionRequiredBy,
         Visa|array|null $visa,
         Win|array|null $win,
+        Withdrawal|array|null $withdrawal,
     ): self {
         $self = new self;
 
@@ -214,6 +227,7 @@ final class CardDispute implements BaseModel
         $self['userSubmissionRequiredBy'] = $userSubmissionRequiredBy;
         $self['visa'] = $visa;
         $self['win'] = $win;
+        $self['withdrawal'] = $withdrawal;
 
         return $self;
     }
@@ -371,6 +385,19 @@ final class CardDispute implements BaseModel
     {
         $self = clone $this;
         $self['win'] = $win;
+
+        return $self;
+    }
+
+    /**
+     * If the Card Dispute has been withdrawn, this will contain details of the withdrawal.
+     *
+     * @param Withdrawal|WithdrawalShape|null $withdrawal
+     */
+    public function withWithdrawal(Withdrawal|array|null $withdrawal): self
+    {
+        $self = clone $this;
+        $self['withdrawal'] = $withdrawal;
 
         return $self;
     }

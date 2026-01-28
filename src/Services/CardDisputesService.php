@@ -188,16 +188,20 @@ final class CardDisputesService implements CardDisputesContract
      * Withdraw a Card Dispute
      *
      * @param string $cardDisputeID the identifier of the Card Dispute to withdraw
+     * @param string $explanation the explanation for withdrawing the Card Dispute
      * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
      */
     public function withdraw(
         string $cardDisputeID,
-        RequestOptions|array|null $requestOptions = null
+        ?string $explanation = null,
+        RequestOptions|array|null $requestOptions = null,
     ): CardDispute {
+        $params = Util::removeNulls(['explanation' => $explanation]);
+
         // @phpstan-ignore-next-line argument.type
-        $response = $this->raw->withdraw($cardDisputeID, requestOptions: $requestOptions);
+        $response = $this->raw->withdraw($cardDisputeID, params: $params, requestOptions: $requestOptions);
 
         return $response->parse();
     }

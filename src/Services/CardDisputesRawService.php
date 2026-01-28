@@ -13,6 +13,7 @@ use Increase\CardDisputes\CardDisputeListParams;
 use Increase\CardDisputes\CardDisputeListParams\CreatedAt;
 use Increase\CardDisputes\CardDisputeListParams\Status;
 use Increase\CardDisputes\CardDisputeSubmitUserSubmissionParams;
+use Increase\CardDisputes\CardDisputeWithdrawParams;
 use Increase\Client;
 use Increase\Core\Contracts\BaseResponse;
 use Increase\Core\Exceptions\APIException;
@@ -187,6 +188,7 @@ final class CardDisputesRawService implements CardDisputesRawContract
      * Withdraw a Card Dispute
      *
      * @param string $cardDisputeID the identifier of the Card Dispute to withdraw
+     * @param array{explanation?: string}|CardDisputeWithdrawParams $params
      * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<CardDispute>
@@ -195,13 +197,20 @@ final class CardDisputesRawService implements CardDisputesRawContract
      */
     public function withdraw(
         string $cardDisputeID,
-        RequestOptions|array|null $requestOptions = null
+        array|CardDisputeWithdrawParams $params,
+        RequestOptions|array|null $requestOptions = null,
     ): BaseResponse {
+        [$parsed, $options] = CardDisputeWithdrawParams::parseRequest(
+            $params,
+            $requestOptions,
+        );
+
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'post',
             path: ['card_disputes/%1$s/withdraw', $cardDisputeID],
-            options: $requestOptions,
+            body: (object) $parsed,
+            options: $options,
             convert: CardDispute::class,
         );
     }

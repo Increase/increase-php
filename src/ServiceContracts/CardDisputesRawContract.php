@@ -8,6 +8,7 @@ use Increase\CardDisputes\CardDispute;
 use Increase\CardDisputes\CardDisputeCreateParams;
 use Increase\CardDisputes\CardDisputeListParams;
 use Increase\CardDisputes\CardDisputeSubmitUserSubmissionParams;
+use Increase\CardDisputes\CardDisputeWithdrawParams;
 use Increase\Core\Contracts\BaseResponse;
 use Increase\Core\Exceptions\APIException;
 use Increase\Page;
@@ -84,6 +85,7 @@ interface CardDisputesRawContract
      * @api
      *
      * @param string $cardDisputeID the identifier of the Card Dispute to withdraw
+     * @param array<string,mixed>|CardDisputeWithdrawParams $params
      * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<CardDispute>
@@ -92,6 +94,7 @@ interface CardDisputesRawContract
      */
     public function withdraw(
         string $cardDisputeID,
-        RequestOptions|array|null $requestOptions = null
+        array|CardDisputeWithdrawParams $params,
+        RequestOptions|array|null $requestOptions = null,
     ): BaseResponse;
 }

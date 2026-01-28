@@ -111,12 +111,14 @@ interface CardDisputesContract
      * @api
      *
      * @param string $cardDisputeID the identifier of the Card Dispute to withdraw
+     * @param string $explanation the explanation for withdrawing the Card Dispute
      * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
      */
     public function withdraw(
         string $cardDisputeID,
-        RequestOptions|array|null $requestOptions = null
+        ?string $explanation = null,
+        RequestOptions|array|null $requestOptions = null,
     ): CardDispute;
 }

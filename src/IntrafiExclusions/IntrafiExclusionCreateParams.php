@@ -15,7 +15,7 @@ use Increase\Core\Contracts\BaseModel;
  * @see Increase\Services\IntrafiExclusionsService::create()
  *
  * @phpstan-type IntrafiExclusionCreateParamsShape = array{
- *   bankName: string, entityID: string
+ *   entityID: string, fdicCertificateNumber: string
  * }
  */
 final class IntrafiExclusionCreateParams implements BaseModel
@@ -25,29 +25,31 @@ final class IntrafiExclusionCreateParams implements BaseModel
     use SdkParams;
 
     /**
-     * The name of the financial institution to be excluded.
-     */
-    #[Required('bank_name')]
-    public string $bankName;
-
-    /**
      * The identifier of the Entity whose deposits will be excluded.
      */
     #[Required('entity_id')]
     public string $entityID;
 
     /**
+     * The FDIC certificate number of the financial institution to be excluded. An FDIC certificate number uniquely identifies a financial institution, and is different than a routing number. To find one, we recommend searching by Bank Name using the [FDIC's bankfind tool](https://banks.data.fdic.gov/bankfind-suite/bankfind).
+     */
+    #[Required('fdic_certificate_number')]
+    public string $fdicCertificateNumber;
+
+    /**
      * `new IntrafiExclusionCreateParams()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
-     * IntrafiExclusionCreateParams::with(bankName: ..., entityID: ...)
+     * IntrafiExclusionCreateParams::with(entityID: ..., fdicCertificateNumber: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new IntrafiExclusionCreateParams)->withBankName(...)->withEntityID(...)
+     * (new IntrafiExclusionCreateParams)
+     *   ->withEntityID(...)
+     *   ->withFdicCertificateNumber(...)
      * ```
      */
     public function __construct()
@@ -60,23 +62,14 @@ final class IntrafiExclusionCreateParams implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      */
-    public static function with(string $bankName, string $entityID): self
-    {
+    public static function with(
+        string $entityID,
+        string $fdicCertificateNumber
+    ): self {
         $self = new self;
 
-        $self['bankName'] = $bankName;
         $self['entityID'] = $entityID;
-
-        return $self;
-    }
-
-    /**
-     * The name of the financial institution to be excluded.
-     */
-    public function withBankName(string $bankName): self
-    {
-        $self = clone $this;
-        $self['bankName'] = $bankName;
+        $self['fdicCertificateNumber'] = $fdicCertificateNumber;
 
         return $self;
     }
@@ -88,6 +81,18 @@ final class IntrafiExclusionCreateParams implements BaseModel
     {
         $self = clone $this;
         $self['entityID'] = $entityID;
+
+        return $self;
+    }
+
+    /**
+     * The FDIC certificate number of the financial institution to be excluded. An FDIC certificate number uniquely identifies a financial institution, and is different than a routing number. To find one, we recommend searching by Bank Name using the [FDIC's bankfind tool](https://banks.data.fdic.gov/bankfind-suite/bankfind).
+     */
+    public function withFdicCertificateNumber(
+        string $fdicCertificateNumber
+    ): self {
+        $self = clone $this;
+        $self['fdicCertificateNumber'] = $fdicCertificateNumber;
 
         return $self;
     }

@@ -31,8 +31,8 @@ final class IntrafiExclusionsTest extends TestCase
     public function testCreate(): void
     {
         $result = $this->client->intrafiExclusions->create(
-            bankName: 'Example Bank',
-            entityID: 'entity_n8y8tnk2p9339ti393yi'
+            entityID: 'entity_n8y8tnk2p9339ti393yi',
+            fdicCertificateNumber: '314159'
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -43,8 +43,8 @@ final class IntrafiExclusionsTest extends TestCase
     public function testCreateWithOptionalParams(): void
     {
         $result = $this->client->intrafiExclusions->create(
-            bankName: 'Example Bank',
-            entityID: 'entity_n8y8tnk2p9339ti393yi'
+            entityID: 'entity_n8y8tnk2p9339ti393yi',
+            fdicCertificateNumber: '314159'
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType

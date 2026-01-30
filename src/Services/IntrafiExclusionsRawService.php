@@ -32,7 +32,7 @@ final class IntrafiExclusionsRawService implements IntrafiExclusionsRawContract
      * Create an IntraFi Exclusion
      *
      * @param array{
-     *   bankName: string, entityID: string
+     *   entityID: string, fdicCertificateNumber: string
      * }|IntrafiExclusionCreateParams $params
      * @param RequestOpts|null $requestOptions
      *

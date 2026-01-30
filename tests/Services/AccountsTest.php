@@ -43,7 +43,15 @@ final class AccountsTest extends TestCase
         $result = $this->client->accounts->create(
             name: 'New Account!',
             entityID: 'entity_n8y8tnk2p9339ti393yi',
+            funding: 'loan',
             informationalEntityID: 'informational_entity_id',
+            loan: [
+                'creditLimit' => 0,
+                'gracePeriodDays' => 0,
+                'statementDayOfMonth' => 1,
+                'statementPaymentType' => 'balance',
+                'maturityDate' => '2019-12-27',
+            ],
             programID: 'program_i2v2os4mwza1oetokh9i',
         );
 

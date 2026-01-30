@@ -7,6 +7,8 @@ namespace Increase\Services;
 use Increase\Accounts\Account;
 use Increase\Accounts\AccountBalanceParams;
 use Increase\Accounts\AccountCreateParams;
+use Increase\Accounts\AccountCreateParams\Funding;
+use Increase\Accounts\AccountCreateParams\Loan;
 use Increase\Accounts\AccountListParams;
 use Increase\Accounts\AccountListParams\CreatedAt;
 use Increase\Accounts\AccountListParams\Status;
@@ -21,6 +23,8 @@ use Increase\RequestOptions;
 use Increase\ServiceContracts\AccountsRawContract;
 
 /**
+ * @phpstan-import-type LoanShape from \Increase\Accounts\AccountCreateParams\Loan
+ * @phpstan-import-type LoanShape from \Increase\Accounts\AccountUpdateParams\Loan as LoanShape1
  * @phpstan-import-type CreatedAtShape from \Increase\Accounts\AccountListParams\CreatedAt
  * @phpstan-import-type StatusShape from \Increase\Accounts\AccountListParams\Status
  * @phpstan-import-type RequestOpts from \Increase\RequestOptions
@@ -41,7 +45,9 @@ final class AccountsRawService implements AccountsRawContract
      * @param array{
      *   name: string,
      *   entityID?: string,
+     *   funding?: Funding|value-of<Funding>,
      *   informationalEntityID?: string,
+     *   loan?: Loan|LoanShape,
      *   programID?: string,
      * }|AccountCreateParams $params
      * @param RequestOpts|null $requestOptions
@@ -100,7 +106,9 @@ final class AccountsRawService implements AccountsRawContract
      * Update an Account
      *
      * @param string $accountID the identifier of the Account to update
-     * @param array{name?: string}|AccountUpdateParams $params
+     * @param array{
+     *   loan?: AccountUpdateParams\Loan|LoanShape1, name?: string
+     * }|AccountUpdateParams $params
      * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<Account>

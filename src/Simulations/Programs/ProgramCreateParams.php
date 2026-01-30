@@ -17,7 +17,10 @@ use Increase\Simulations\Programs\ProgramCreateParams\Bank;
  * @see Increase\Services\Simulations\ProgramsService::create()
  *
  * @phpstan-type ProgramCreateParamsShape = array{
- *   name: string, bank?: null|Bank|value-of<Bank>, reserveAccountID?: string|null
+ *   name: string,
+ *   bank?: null|Bank|value-of<Bank>,
+ *   lendingMaximumExtendableCredit?: int|null,
+ *   reserveAccountID?: string|null,
  * }
  */
 final class ProgramCreateParams implements BaseModel
@@ -39,6 +42,12 @@ final class ProgramCreateParams implements BaseModel
      */
     #[Optional(enum: Bank::class)]
     public ?string $bank;
+
+    /**
+     * The maximum extendable credit of the program being added.
+     */
+    #[Optional('lending_maximum_extendable_credit')]
+    public ?int $lendingMaximumExtendableCredit;
 
     /**
      * The identifier of the Account the Program should be added to is for.
@@ -75,13 +84,15 @@ final class ProgramCreateParams implements BaseModel
     public static function with(
         string $name,
         Bank|string|null $bank = null,
-        ?string $reserveAccountID = null
+        ?int $lendingMaximumExtendableCredit = null,
+        ?string $reserveAccountID = null,
     ): self {
         $self = new self;
 
         $self['name'] = $name;
 
         null !== $bank && $self['bank'] = $bank;
+        null !== $lendingMaximumExtendableCredit && $self['lendingMaximumExtendableCredit'] = $lendingMaximumExtendableCredit;
         null !== $reserveAccountID && $self['reserveAccountID'] = $reserveAccountID;
 
         return $self;
@@ -107,6 +118,18 @@ final class ProgramCreateParams implements BaseModel
     {
         $self = clone $this;
         $self['bank'] = $bank;
+
+        return $self;
+    }
+
+    /**
+     * The maximum extendable credit of the program being added.
+     */
+    public function withLendingMaximumExtendableCredit(
+        int $lendingMaximumExtendableCredit
+    ): self {
+        $self = clone $this;
+        $self['lendingMaximumExtendableCredit'] = $lendingMaximumExtendableCredit;
 
         return $self;
     }

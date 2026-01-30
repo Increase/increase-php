@@ -30,7 +30,10 @@ final class ProgramsRawService implements ProgramsRawContract
      * Simulates a [Program](#programs) being created in your group. By default, your group has one program called Commercial Banking. Note that when your group operates more than one program, `program_id` is a required field when creating accounts.
      *
      * @param array{
-     *   name: string, bank?: value-of<Bank>, reserveAccountID?: string
+     *   name: string,
+     *   bank?: value-of<Bank>,
+     *   lendingMaximumExtendableCredit?: int,
+     *   reserveAccountID?: string,
      * }|ProgramCreateParams $params
      * @param RequestOpts|null $requestOptions
      *

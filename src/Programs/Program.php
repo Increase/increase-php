@@ -8,10 +8,13 @@ use Increase\Core\Attributes\Required;
 use Increase\Core\Concerns\SdkModel;
 use Increase\Core\Contracts\BaseModel;
 use Increase\Programs\Program\Bank;
+use Increase\Programs\Program\Lending;
 use Increase\Programs\Program\Type;
 
 /**
  * Programs determine the compliance and commercial terms of Accounts. By default, you have a Commercial Banking program for managing your own funds. If you are lending or managing funds on behalf of your customers, or otherwise engaged in regulated activity, we will work together to create additional Programs for you.
+ *
+ * @phpstan-import-type LendingShape from \Increase\Programs\Program\Lending
  *
  * @phpstan-type ProgramShape = array{
  *   id: string,
@@ -20,6 +23,7 @@ use Increase\Programs\Program\Type;
  *   createdAt: \DateTimeInterface,
  *   defaultDigitalCardProfileID: string|null,
  *   interestRate: string,
+ *   lending: null|Lending|LendingShape,
  *   name: string,
  *   type: Type|value-of<Type>,
  *   updatedAt: \DateTimeInterface,
@@ -69,6 +73,12 @@ final class Program implements BaseModel
     public string $interestRate;
 
     /**
+     * The lending details for the program.
+     */
+    #[Required]
+    public ?Lending $lending;
+
+    /**
      * The name of the Program.
      */
     #[Required]
@@ -100,6 +110,7 @@ final class Program implements BaseModel
      *   createdAt: ...,
      *   defaultDigitalCardProfileID: ...,
      *   interestRate: ...,
+     *   lending: ...,
      *   name: ...,
      *   type: ...,
      *   updatedAt: ...,
@@ -116,6 +127,7 @@ final class Program implements BaseModel
      *   ->withCreatedAt(...)
      *   ->withDefaultDigitalCardProfileID(...)
      *   ->withInterestRate(...)
+     *   ->withLending(...)
      *   ->withName(...)
      *   ->withType(...)
      *   ->withUpdatedAt(...)
@@ -132,6 +144,7 @@ final class Program implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param Bank|value-of<Bank> $bank
+     * @param Lending|LendingShape|null $lending
      * @param Type|value-of<Type> $type
      */
     public static function with(
@@ -141,6 +154,7 @@ final class Program implements BaseModel
         \DateTimeInterface $createdAt,
         ?string $defaultDigitalCardProfileID,
         string $interestRate,
+        Lending|array|null $lending,
         string $name,
         Type|string $type,
         \DateTimeInterface $updatedAt,
@@ -153,6 +167,7 @@ final class Program implements BaseModel
         $self['createdAt'] = $createdAt;
         $self['defaultDigitalCardProfileID'] = $defaultDigitalCardProfileID;
         $self['interestRate'] = $interestRate;
+        $self['lending'] = $lending;
         $self['name'] = $name;
         $self['type'] = $type;
         $self['updatedAt'] = $updatedAt;
@@ -225,6 +240,19 @@ final class Program implements BaseModel
     {
         $self = clone $this;
         $self['interestRate'] = $interestRate;
+
+        return $self;
+    }
+
+    /**
+     * The lending details for the program.
+     *
+     * @param Lending|LendingShape|null $lending
+     */
+    public function withLending(Lending|array|null $lending): self
+    {
+        $self = clone $this;
+        $self['lending'] = $lending;
 
         return $self;
     }

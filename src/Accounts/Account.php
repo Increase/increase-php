@@ -6,6 +6,8 @@ namespace Increase\Accounts;
 
 use Increase\Accounts\Account\Bank;
 use Increase\Accounts\Account\Currency;
+use Increase\Accounts\Account\Funding;
+use Increase\Accounts\Account\Loan;
 use Increase\Accounts\Account\Status;
 use Increase\Accounts\Account\Type;
 use Increase\Core\Attributes\Required;
@@ -15,6 +17,8 @@ use Increase\Core\Contracts\BaseModel;
 /**
  * Accounts are your bank accounts with Increase. They store money, receive transfers, and send payments. They earn interest and have depository insurance.
  *
+ * @phpstan-import-type LoanShape from \Increase\Accounts\Account\Loan
+ *
  * @phpstan-type AccountShape = array{
  *   id: string,
  *   accountRevenueRate: string|null,
@@ -23,11 +27,13 @@ use Increase\Core\Contracts\BaseModel;
  *   createdAt: \DateTimeInterface,
  *   currency: Currency|value-of<Currency>,
  *   entityID: string,
+ *   funding: null|Funding|value-of<Funding>,
  *   idempotencyKey: string|null,
  *   informationalEntityID: string|null,
  *   interestAccrued: string,
  *   interestAccruedAt: string|null,
  *   interestRate: string,
+ *   loan: null|Loan|LoanShape,
  *   name: string,
  *   programID: string,
  *   status: Status|value-of<Status>,
@@ -86,6 +92,14 @@ final class Account implements BaseModel
     public string $entityID;
 
     /**
+     * Whether the Account is funded by a loan or by deposits.
+     *
+     * @var value-of<Funding>|null $funding
+     */
+    #[Required(enum: Funding::class)]
+    public ?string $funding;
+
+    /**
      * The idempotency key you chose for this object. This value is unique across Increase and is used to ensure that a request is only processed once. Learn more about [idempotency](https://increase.com/documentation/idempotency-keys).
      */
     #[Required('idempotency_key')]
@@ -114,6 +128,12 @@ final class Account implements BaseModel
      */
     #[Required('interest_rate')]
     public string $interestRate;
+
+    /**
+     * The Account's loan-related information, if the Account is a loan account.
+     */
+    #[Required]
+    public ?Loan $loan;
 
     /**
      * The name you choose for the Account.
@@ -156,11 +176,13 @@ final class Account implements BaseModel
      *   createdAt: ...,
      *   currency: ...,
      *   entityID: ...,
+     *   funding: ...,
      *   idempotencyKey: ...,
      *   informationalEntityID: ...,
      *   interestAccrued: ...,
      *   interestAccruedAt: ...,
      *   interestRate: ...,
+     *   loan: ...,
      *   name: ...,
      *   programID: ...,
      *   status: ...,
@@ -179,11 +201,13 @@ final class Account implements BaseModel
      *   ->withCreatedAt(...)
      *   ->withCurrency(...)
      *   ->withEntityID(...)
+     *   ->withFunding(...)
      *   ->withIdempotencyKey(...)
      *   ->withInformationalEntityID(...)
      *   ->withInterestAccrued(...)
      *   ->withInterestAccruedAt(...)
      *   ->withInterestRate(...)
+     *   ->withLoan(...)
      *   ->withName(...)
      *   ->withProgramID(...)
      *   ->withStatus(...)
@@ -202,6 +226,8 @@ final class Account implements BaseModel
      *
      * @param Bank|value-of<Bank> $bank
      * @param Currency|value-of<Currency> $currency
+     * @param Funding|value-of<Funding>|null $funding
+     * @param Loan|LoanShape|null $loan
      * @param Status|value-of<Status> $status
      * @param Type|value-of<Type> $type
      */
@@ -213,11 +239,13 @@ final class Account implements BaseModel
         \DateTimeInterface $createdAt,
         Currency|string $currency,
         string $entityID,
+        Funding|string|null $funding,
         ?string $idempotencyKey,
         ?string $informationalEntityID,
         string $interestAccrued,
         ?string $interestAccruedAt,
         string $interestRate,
+        Loan|array|null $loan,
         string $name,
         string $programID,
         Status|string $status,
@@ -232,11 +260,13 @@ final class Account implements BaseModel
         $self['createdAt'] = $createdAt;
         $self['currency'] = $currency;
         $self['entityID'] = $entityID;
+        $self['funding'] = $funding;
         $self['idempotencyKey'] = $idempotencyKey;
         $self['informationalEntityID'] = $informationalEntityID;
         $self['interestAccrued'] = $interestAccrued;
         $self['interestAccruedAt'] = $interestAccruedAt;
         $self['interestRate'] = $interestRate;
+        $self['loan'] = $loan;
         $self['name'] = $name;
         $self['programID'] = $programID;
         $self['status'] = $status;
@@ -327,6 +357,19 @@ final class Account implements BaseModel
     }
 
     /**
+     * Whether the Account is funded by a loan or by deposits.
+     *
+     * @param Funding|value-of<Funding>|null $funding
+     */
+    public function withFunding(Funding|string|null $funding): self
+    {
+        $self = clone $this;
+        $self['funding'] = $funding;
+
+        return $self;
+    }
+
+    /**
      * The idempotency key you chose for this object. This value is unique across Increase and is used to ensure that a request is only processed once. Learn more about [idempotency](https://increase.com/documentation/idempotency-keys).
      */
     public function withIdempotencyKey(?string $idempotencyKey): self
@@ -378,6 +421,19 @@ final class Account implements BaseModel
     {
         $self = clone $this;
         $self['interestRate'] = $interestRate;
+
+        return $self;
+    }
+
+    /**
+     * The Account's loan-related information, if the Account is a loan account.
+     *
+     * @param Loan|LoanShape|null $loan
+     */
+    public function withLoan(Loan|array|null $loan): self
+    {
+        $self = clone $this;
+        $self['loan'] = $loan;
 
         return $self;
     }

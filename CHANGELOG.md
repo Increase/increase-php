@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.11.0 (2026-01-30)
+
+Full Changelog: [v0.10.0...v0.11.0](https://github.com/Increase/increase-php/compare/v0.10.0...v0.11.0)
+
+### Features
+
+* **api:** api update ([cdaa515](https://github.com/Increase/increase-php/commit/cdaa5150f532bb5518f68aa470a00e04410bb68c))
+
+
+### Chores
+
+* **internal:** ignore stainless-internal artifacts ([5318af3](https://github.com/Increase/increase-php/commit/5318af35c47b6da778888bedded82e8f071de304))
+
 ## 0.10.0 (2026-01-28)
 
 Full Changelog: [v0.9.0...v0.10.0](https://github.com/Increase/increase-php/compare/v0.9.0...v0.10.0)

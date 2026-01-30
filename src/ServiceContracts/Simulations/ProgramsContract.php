@@ -19,6 +19,7 @@ interface ProgramsContract
      *
      * @param string $name the name of the program being added
      * @param Bank|value-of<Bank> $bank the bank for the program's accounts, defaults to First Internet Bank
+     * @param int $lendingMaximumExtendableCredit the maximum extendable credit of the program being added
      * @param string $reserveAccountID the identifier of the Account the Program should be added to is for
      * @param RequestOpts|null $requestOptions
      *
@@ -27,6 +28,7 @@ interface ProgramsContract
     public function create(
         string $name,
         Bank|string|null $bank = null,
+        ?int $lendingMaximumExtendableCredit = null,
         ?string $reserveAccountID = null,
         RequestOptions|array|null $requestOptions = null,
     ): Program;

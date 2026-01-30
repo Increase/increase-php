@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Increase\AccountStatements;
 
+use Increase\AccountStatements\AccountStatement\Loan;
 use Increase\AccountStatements\AccountStatement\Type;
 use Increase\Core\Attributes\Required;
 use Increase\Core\Concerns\SdkModel;
@@ -12,12 +13,15 @@ use Increase\Core\Contracts\BaseModel;
 /**
  * Account Statements are generated monthly for every active Account. You can access the statement's data via the API or retrieve a PDF with its details via its associated File.
  *
+ * @phpstan-import-type LoanShape from \Increase\AccountStatements\AccountStatement\Loan
+ *
  * @phpstan-type AccountStatementShape = array{
  *   id: string,
  *   accountID: string,
  *   createdAt: \DateTimeInterface,
  *   endingBalance: int,
  *   fileID: string,
+ *   loan: null|Loan|LoanShape,
  *   startingBalance: int,
  *   statementPeriodEnd: \DateTimeInterface,
  *   statementPeriodStart: \DateTimeInterface,
@@ -60,6 +64,12 @@ final class AccountStatement implements BaseModel
     public string $fileID;
 
     /**
+     * The loan balances.
+     */
+    #[Required]
+    public ?Loan $loan;
+
+    /**
      * The Account's balance at the start of its statement period.
      */
     #[Required('starting_balance')]
@@ -96,6 +106,7 @@ final class AccountStatement implements BaseModel
      *   createdAt: ...,
      *   endingBalance: ...,
      *   fileID: ...,
+     *   loan: ...,
      *   startingBalance: ...,
      *   statementPeriodEnd: ...,
      *   statementPeriodStart: ...,
@@ -112,6 +123,7 @@ final class AccountStatement implements BaseModel
      *   ->withCreatedAt(...)
      *   ->withEndingBalance(...)
      *   ->withFileID(...)
+     *   ->withLoan(...)
      *   ->withStartingBalance(...)
      *   ->withStatementPeriodEnd(...)
      *   ->withStatementPeriodStart(...)
@@ -128,6 +140,7 @@ final class AccountStatement implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
+     * @param Loan|LoanShape|null $loan
      * @param Type|value-of<Type> $type
      */
     public static function with(
@@ -136,6 +149,7 @@ final class AccountStatement implements BaseModel
         \DateTimeInterface $createdAt,
         int $endingBalance,
         string $fileID,
+        Loan|array|null $loan,
         int $startingBalance,
         \DateTimeInterface $statementPeriodEnd,
         \DateTimeInterface $statementPeriodStart,
@@ -148,6 +162,7 @@ final class AccountStatement implements BaseModel
         $self['createdAt'] = $createdAt;
         $self['endingBalance'] = $endingBalance;
         $self['fileID'] = $fileID;
+        $self['loan'] = $loan;
         $self['startingBalance'] = $startingBalance;
         $self['statementPeriodEnd'] = $statementPeriodEnd;
         $self['statementPeriodStart'] = $statementPeriodStart;
@@ -207,6 +222,19 @@ final class AccountStatement implements BaseModel
     {
         $self = clone $this;
         $self['fileID'] = $fileID;
+
+        return $self;
+    }
+
+    /**
+     * The loan balances.
+     *
+     * @param Loan|LoanShape|null $loan
+     */
+    public function withLoan(Loan|array|null $loan): self
+    {
+        $self = clone $this;
+        $self['loan'] = $loan;
 
         return $self;
     }

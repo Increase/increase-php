@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace Increase\Services;
 
 use Increase\Accounts\Account;
+use Increase\Accounts\AccountCreateParams\Funding;
+use Increase\Accounts\AccountCreateParams\Loan;
 use Increase\Accounts\AccountListParams\CreatedAt;
 use Increase\Accounts\AccountListParams\Status;
 use Increase\Accounts\BalanceLookup;
@@ -16,6 +18,8 @@ use Increase\RequestOptions;
 use Increase\ServiceContracts\AccountsContract;
 
 /**
+ * @phpstan-import-type LoanShape from \Increase\Accounts\AccountCreateParams\Loan
+ * @phpstan-import-type LoanShape from \Increase\Accounts\AccountUpdateParams\Loan as LoanShape1
  * @phpstan-import-type CreatedAtShape from \Increase\Accounts\AccountListParams\CreatedAt
  * @phpstan-import-type StatusShape from \Increase\Accounts\AccountListParams\Status
  * @phpstan-import-type RequestOpts from \Increase\RequestOptions
@@ -42,7 +46,9 @@ final class AccountsService implements AccountsContract
      *
      * @param string $name the name you choose for the Account
      * @param string $entityID the identifier for the Entity that will own the Account
+     * @param Funding|value-of<Funding> $funding whether the Account is funded by a loan or by deposits
      * @param string $informationalEntityID The identifier of an Entity that, while not owning the Account, is associated with its activity. This is generally the beneficiary of the funds.
+     * @param Loan|LoanShape $loan the loan details for the account
      * @param string $programID The identifier for the Program that this Account falls under. Required if you operate more than one Program.
      * @param RequestOpts|null $requestOptions
      *
@@ -51,7 +57,9 @@ final class AccountsService implements AccountsContract
     public function create(
         string $name,
         ?string $entityID = null,
+        Funding|string|null $funding = null,
         ?string $informationalEntityID = null,
+        Loan|array|null $loan = null,
         ?string $programID = null,
         RequestOptions|array|null $requestOptions = null,
     ): Account {
@@ -59,7 +67,9 @@ final class AccountsService implements AccountsContract
             [
                 'name' => $name,
                 'entityID' => $entityID,
+                'funding' => $funding,
                 'informationalEntityID' => $informationalEntityID,
+                'loan' => $loan,
                 'programID' => $programID,
             ],
         );
@@ -96,6 +106,7 @@ final class AccountsService implements AccountsContract
      * Update an Account
      *
      * @param string $accountID the identifier of the Account to update
+     * @param \Increase\Accounts\AccountUpdateParams\Loan|LoanShape1 $loan the loan details for the account
      * @param string $name the new name of the Account
      * @param RequestOpts|null $requestOptions
      *
@@ -103,10 +114,11 @@ final class AccountsService implements AccountsContract
      */
     public function update(
         string $accountID,
+        \Increase\Accounts\AccountUpdateParams\Loan|array|null $loan = null,
         ?string $name = null,
         RequestOptions|array|null $requestOptions = null,
     ): Account {
-        $params = Util::removeNulls(['name' => $name]);
+        $params = Util::removeNulls(['loan' => $loan, 'name' => $name]);
 
         // @phpstan-ignore-next-line argument.type
         $response = $this->raw->update($accountID, params: $params, requestOptions: $requestOptions);

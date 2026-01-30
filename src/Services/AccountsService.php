@@ -96,7 +96,6 @@ final class AccountsService implements AccountsContract
      * Update an Account
      *
      * @param string $accountID the identifier of the Account to update
-     * @param int $creditLimit the new credit limit of the Account, if and only if the Account is a loan account
      * @param string $name the new name of the Account
      * @param RequestOpts|null $requestOptions
      *
@@ -104,13 +103,10 @@ final class AccountsService implements AccountsContract
      */
     public function update(
         string $accountID,
-        ?int $creditLimit = null,
         ?string $name = null,
         RequestOptions|array|null $requestOptions = null,
     ): Account {
-        $params = Util::removeNulls(
-            ['creditLimit' => $creditLimit, 'name' => $name]
-        );
+        $params = Util::removeNulls(['name' => $name]);
 
         // @phpstan-ignore-next-line argument.type
         $response = $this->raw->update($accountID, params: $params, requestOptions: $requestOptions);

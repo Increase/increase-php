@@ -100,7 +100,7 @@ final class AccountsRawService implements AccountsRawContract
      * Update an Account
      *
      * @param string $accountID the identifier of the Account to update
-     * @param array{creditLimit?: int, name?: string}|AccountUpdateParams $params
+     * @param array{name?: string}|AccountUpdateParams $params
      * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<Account>

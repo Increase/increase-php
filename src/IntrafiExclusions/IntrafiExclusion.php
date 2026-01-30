@@ -15,7 +15,7 @@ use Increase\IntrafiExclusions\IntrafiExclusion\Type;
  *
  * @phpstan-type IntrafiExclusionShape = array{
  *   id: string,
- *   bankName: string,
+ *   bankName: string|null,
  *   createdAt: \DateTimeInterface,
  *   entityID: string,
  *   excludedAt: \DateTimeInterface|null,
@@ -41,7 +41,7 @@ final class IntrafiExclusion implements BaseModel
      * The name of the excluded institution.
      */
     #[Required('bank_name')]
-    public string $bankName;
+    public ?string $bankName;
 
     /**
      * The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which the exclusion was created.
@@ -145,7 +145,7 @@ final class IntrafiExclusion implements BaseModel
      */
     public static function with(
         string $id,
-        string $bankName,
+        ?string $bankName,
         \DateTimeInterface $createdAt,
         string $entityID,
         ?\DateTimeInterface $excludedAt,
@@ -185,7 +185,7 @@ final class IntrafiExclusion implements BaseModel
     /**
      * The name of the excluded institution.
      */
-    public function withBankName(string $bankName): self
+    public function withBankName(?string $bankName): self
     {
         $self = clone $this;
         $self['bankName'] = $bankName;

@@ -14,21 +14,13 @@ use Increase\Core\Contracts\BaseModel;
  *
  * @see Increase\Services\AccountsService::update()
  *
- * @phpstan-type AccountUpdateParamsShape = array{
- *   creditLimit?: int|null, name?: string|null
- * }
+ * @phpstan-type AccountUpdateParamsShape = array{name?: string|null}
  */
 final class AccountUpdateParams implements BaseModel
 {
     /** @use SdkModel<AccountUpdateParamsShape> */
     use SdkModel;
     use SdkParams;
-
-    /**
-     * The new credit limit of the Account, if and only if the Account is a loan account.
-     */
-    #[Optional('credit_limit')]
-    public ?int $creditLimit;
 
     /**
      * The new name of the Account.
@@ -46,25 +38,11 @@ final class AccountUpdateParams implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      */
-    public static function with(
-        ?int $creditLimit = null,
-        ?string $name = null
-    ): self {
+    public static function with(?string $name = null): self
+    {
         $self = new self;
 
-        null !== $creditLimit && $self['creditLimit'] = $creditLimit;
         null !== $name && $self['name'] = $name;
-
-        return $self;
-    }
-
-    /**
-     * The new credit limit of the Account, if and only if the Account is a loan account.
-     */
-    public function withCreditLimit(int $creditLimit): self
-    {
-        $self = clone $this;
-        $self['creditLimit'] = $creditLimit;
 
         return $self;
     }

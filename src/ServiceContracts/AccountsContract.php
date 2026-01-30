@@ -55,7 +55,6 @@ interface AccountsContract
      * @api
      *
      * @param string $accountID the identifier of the Account to update
-     * @param int $creditLimit the new credit limit of the Account, if and only if the Account is a loan account
      * @param string $name the new name of the Account
      * @param RequestOpts|null $requestOptions
      *
@@ -63,7 +62,6 @@ interface AccountsContract
      */
     public function update(
         string $accountID,
-        ?int $creditLimit = null,
         ?string $name = null,
         RequestOptions|array|null $requestOptions = null,
     ): Account;

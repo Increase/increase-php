@@ -14,4 +14,6 @@ enum Status: string
     case COMPLETED = 'completed';
 
     case ARCHIVED = 'archived';
+
+    case INELIGIBLE = 'ineligible';
 }

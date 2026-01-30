@@ -17,15 +17,15 @@ interface IntrafiExclusionsContract
     /**
      * @api
      *
-     * @param string $bankName the name of the financial institution to be excluded
      * @param string $entityID the identifier of the Entity whose deposits will be excluded
+     * @param string $fdicCertificateNumber The FDIC certificate number of the financial institution to be excluded. An FDIC certificate number uniquely identifies a financial institution, and is different than a routing number. To find one, we recommend searching by Bank Name using the [FDIC's bankfind tool](https://banks.data.fdic.gov/bankfind-suite/bankfind).
      * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
      */
     public function create(
-        string $bankName,
         string $entityID,
+        string $fdicCertificateNumber,
         RequestOptions|array|null $requestOptions = null,
     ): IntrafiExclusion;
 

@@ -27,7 +27,7 @@ use Increase\Core\Contracts\BaseModel;
  *   createdAt: \DateTimeInterface,
  *   currency: Currency|value-of<Currency>,
  *   entityID: string,
- *   funding: null|Funding|value-of<Funding>,
+ *   funding: Funding|value-of<Funding>,
  *   idempotencyKey: string|null,
  *   informationalEntityID: string|null,
  *   interestAccrued: string,
@@ -94,10 +94,10 @@ final class Account implements BaseModel
     /**
      * Whether the Account is funded by a loan or by deposits.
      *
-     * @var value-of<Funding>|null $funding
+     * @var value-of<Funding> $funding
      */
     #[Required(enum: Funding::class)]
-    public ?string $funding;
+    public string $funding;
 
     /**
      * The idempotency key you chose for this object. This value is unique across Increase and is used to ensure that a request is only processed once. Learn more about [idempotency](https://increase.com/documentation/idempotency-keys).
@@ -226,7 +226,7 @@ final class Account implements BaseModel
      *
      * @param Bank|value-of<Bank> $bank
      * @param Currency|value-of<Currency> $currency
-     * @param Funding|value-of<Funding>|null $funding
+     * @param Funding|value-of<Funding> $funding
      * @param Loan|LoanShape|null $loan
      * @param Status|value-of<Status> $status
      * @param Type|value-of<Type> $type
@@ -239,7 +239,7 @@ final class Account implements BaseModel
         \DateTimeInterface $createdAt,
         Currency|string $currency,
         string $entityID,
-        Funding|string|null $funding,
+        Funding|string $funding,
         ?string $idempotencyKey,
         ?string $informationalEntityID,
         string $interestAccrued,
@@ -359,9 +359,9 @@ final class Account implements BaseModel
     /**
      * Whether the Account is funded by a loan or by deposits.
      *
-     * @param Funding|value-of<Funding>|null $funding
+     * @param Funding|value-of<Funding> $funding
      */
-    public function withFunding(Funding|string|null $funding): self
+    public function withFunding(Funding|string $funding): self
     {
         $self = clone $this;
         $self['funding'] = $funding;

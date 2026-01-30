@@ -11,7 +11,7 @@ The REST API documentation can be found on [increase.com](https://increase.com/d
 <!-- x-release-please-start-version -->
 
 ```
-composer require "increase/increase 0.13.0"
+composer require "increase/increase 0.14.0"
 ```
 
 <!-- x-release-please-end -->

@@ -24,7 +24,7 @@ final class BookkeepingAccountBalanceCsv implements BaseModel
     use SdkModel;
 
     /**
-     * Filter exported Transactions to the specified Bookkeeping Account.
+     * Filter exported Bookkeeping Account Balances to the specified Bookkeeping Account.
      */
     #[Optional('bookkeeping_account_id')]
     public ?string $bookkeepingAccountID;
@@ -60,7 +60,7 @@ final class BookkeepingAccountBalanceCsv implements BaseModel
     }
 
     /**
-     * Filter exported Transactions to the specified Bookkeeping Account.
+     * Filter exported Bookkeeping Account Balances to the specified Bookkeeping Account.
      */
     public function withBookkeepingAccountID(string $bookkeepingAccountID): self
     {

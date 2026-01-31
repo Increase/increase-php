@@ -26,7 +26,7 @@ final class BalanceCsv implements BaseModel
     use SdkModel;
 
     /**
-     * Filter exported Transactions to the specified Account.
+     * Filter exported Balances to the specified Account.
      */
     #[Optional('account_id')]
     public ?string $accountID;
@@ -38,7 +38,7 @@ final class BalanceCsv implements BaseModel
     public ?CreatedAt $createdAt;
 
     /**
-     * Filter exported Transactions to the specified Program.
+     * Filter exported Balances to the specified Program.
      */
     #[Optional('program_id')]
     public ?string $programID;
@@ -70,7 +70,7 @@ final class BalanceCsv implements BaseModel
     }
 
     /**
-     * Filter exported Transactions to the specified Account.
+     * Filter exported Balances to the specified Account.
      */
     public function withAccountID(string $accountID): self
     {
@@ -94,7 +94,7 @@ final class BalanceCsv implements BaseModel
     }
 
     /**
-     * Filter exported Transactions to the specified Program.
+     * Filter exported Balances to the specified Program.
      */
     public function withProgramID(string $programID): self
     {

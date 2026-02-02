@@ -1,5 +1,20 @@
 # Changelog
 
+## 0.17.0 (2026-02-02)
+
+Full Changelog: [v0.16.0...v0.17.0](https://github.com/Increase/increase-php/compare/v0.16.0...v0.17.0)
+
+### Features
+
+* **api:** api update ([ba4d459](https://github.com/Increase/increase-php/commit/ba4d459cd4eb63959d51b7a9884ccd9bd1d4fe80))
+* **api:** api update ([7849715](https://github.com/Increase/increase-php/commit/784971597b134e7435b77212b41a9c4fee57f596))
+* **api:** api update ([4a9d677](https://github.com/Increase/increase-php/commit/4a9d67754fef78e9124fe6f08e169db8377431d2))
+
+
+### Chores
+
+* **internal:** php cs fixer should not be memory limited ([3943f32](https://github.com/Increase/increase-php/commit/3943f32095eb547c381ad43c8229333eba077031))
+
 ## 0.16.0 (2026-01-31)
 
 Full Changelog: [v0.15.1...v0.16.0](https://github.com/Increase/increase-php/compare/v0.15.1...v0.16.0)

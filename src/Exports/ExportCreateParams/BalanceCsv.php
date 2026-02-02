@@ -15,9 +15,7 @@ use Increase\Exports\ExportCreateParams\BalanceCsv\CreatedAt;
  * @phpstan-import-type CreatedAtShape from \Increase\Exports\ExportCreateParams\BalanceCsv\CreatedAt
  *
  * @phpstan-type BalanceCsvShape = array{
- *   accountID?: string|null,
- *   createdAt?: null|CreatedAt|CreatedAtShape,
- *   programID?: string|null,
+ *   accountID?: string|null, createdAt?: null|CreatedAt|CreatedAtShape
  * }
  */
 final class BalanceCsv implements BaseModel
@@ -37,12 +35,6 @@ final class BalanceCsv implements BaseModel
     #[Optional('created_at')]
     public ?CreatedAt $createdAt;
 
-    /**
-     * Filter exported Balances to the specified Program.
-     */
-    #[Optional('program_id')]
-    public ?string $programID;
-
     public function __construct()
     {
         $this->initialize();
@@ -57,14 +49,12 @@ final class BalanceCsv implements BaseModel
      */
     public static function with(
         ?string $accountID = null,
-        CreatedAt|array|null $createdAt = null,
-        ?string $programID = null,
+        CreatedAt|array|null $createdAt = null
     ): self {
         $self = new self;
 
         null !== $accountID && $self['accountID'] = $accountID;
         null !== $createdAt && $self['createdAt'] = $createdAt;
-        null !== $programID && $self['programID'] = $programID;
 
         return $self;
     }
@@ -89,17 +79,6 @@ final class BalanceCsv implements BaseModel
     {
         $self = clone $this;
         $self['createdAt'] = $createdAt;
-
-        return $self;
-    }
-
-    /**
-     * Filter exported Balances to the specified Program.
-     */
-    public function withProgramID(string $programID): self
-    {
-        $self = clone $this;
-        $self['programID'] = $programID;
 
         return $self;
     }

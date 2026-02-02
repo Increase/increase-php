@@ -28,6 +28,18 @@ enum In: string
 
     case ACH_TRANSFER_UPDATED = 'ach_transfer.updated';
 
+    case BLOCKCHAIN_ADDRESS_CREATED = 'blockchain_address.created';
+
+    case BLOCKCHAIN_ADDRESS_UPDATED = 'blockchain_address.updated';
+
+    case BLOCKCHAIN_OFFRAMP_TRANSFER_CREATED = 'blockchain_offramp_transfer.created';
+
+    case BLOCKCHAIN_OFFRAMP_TRANSFER_UPDATED = 'blockchain_offramp_transfer.updated';
+
+    case BLOCKCHAIN_ONRAMP_TRANSFER_CREATED = 'blockchain_onramp_transfer.created';
+
+    case BLOCKCHAIN_ONRAMP_TRANSFER_UPDATED = 'blockchain_onramp_transfer.updated';
+
     case BOOKKEEPING_ACCOUNT_CREATED = 'bookkeeping_account.created';
 
     case BOOKKEEPING_ACCOUNT_UPDATED = 'bookkeeping_account.updated';

@@ -12,6 +12,8 @@ use Increase\Transactions\Transaction\Source\AccountTransferIntention;
 use Increase\Transactions\Transaction\Source\ACHTransferIntention;
 use Increase\Transactions\Transaction\Source\ACHTransferRejection;
 use Increase\Transactions\Transaction\Source\ACHTransferReturn;
+use Increase\Transactions\Transaction\Source\BlockchainOfframpTransferSettlement;
+use Increase\Transactions\Transaction\Source\BlockchainOnrampTransferIntention;
 use Increase\Transactions\Transaction\Source\CardDisputeAcceptance;
 use Increase\Transactions\Transaction\Source\CardDisputeFinancial;
 use Increase\Transactions\Transaction\Source\CardDisputeLoss;
@@ -53,6 +55,8 @@ use Increase\Transactions\Transaction\Source\WireTransferIntention;
  * @phpstan-import-type ACHTransferIntentionShape from \Increase\Transactions\Transaction\Source\ACHTransferIntention
  * @phpstan-import-type ACHTransferRejectionShape from \Increase\Transactions\Transaction\Source\ACHTransferRejection
  * @phpstan-import-type ACHTransferReturnShape from \Increase\Transactions\Transaction\Source\ACHTransferReturn
+ * @phpstan-import-type BlockchainOfframpTransferSettlementShape from \Increase\Transactions\Transaction\Source\BlockchainOfframpTransferSettlement
+ * @phpstan-import-type BlockchainOnrampTransferIntentionShape from \Increase\Transactions\Transaction\Source\BlockchainOnrampTransferIntention
  * @phpstan-import-type CardDisputeAcceptanceShape from \Increase\Transactions\Transaction\Source\CardDisputeAcceptance
  * @phpstan-import-type CardDisputeFinancialShape from \Increase\Transactions\Transaction\Source\CardDisputeFinancial
  * @phpstan-import-type CardDisputeLossShape from \Increase\Transactions\Transaction\Source\CardDisputeLoss
@@ -91,6 +95,8 @@ use Increase\Transactions\Transaction\Source\WireTransferIntention;
  *   achTransferIntention: null|ACHTransferIntention|ACHTransferIntentionShape,
  *   achTransferRejection: null|ACHTransferRejection|ACHTransferRejectionShape,
  *   achTransferReturn: null|ACHTransferReturn|ACHTransferReturnShape,
+ *   blockchainOfframpTransferSettlement: null|BlockchainOfframpTransferSettlement|BlockchainOfframpTransferSettlementShape,
+ *   blockchainOnrampTransferIntention: null|BlockchainOnrampTransferIntention|BlockchainOnrampTransferIntentionShape,
  *   cardDisputeAcceptance: null|CardDisputeAcceptance|CardDisputeAcceptanceShape,
  *   cardDisputeFinancial: null|CardDisputeFinancial|CardDisputeFinancialShape,
  *   cardDisputeLoss: null|CardDisputeLoss|CardDisputeLossShape,
@@ -159,6 +165,18 @@ final class Source implements BaseModel
      */
     #[Required('ach_transfer_return')]
     public ?ACHTransferReturn $achTransferReturn;
+
+    /**
+     * A Blockchain Off-Ramp Transfer Settlement object. This field will be present in the JSON response if and only if `category` is equal to `blockchain_offramp_transfer_settlement`.
+     */
+    #[Required('blockchain_offramp_transfer_settlement')]
+    public ?BlockchainOfframpTransferSettlement $blockchainOfframpTransferSettlement;
+
+    /**
+     * A Blockchain On-Ramp Transfer Intention object. This field will be present in the JSON response if and only if `category` is equal to `blockchain_onramp_transfer_intention`.
+     */
+    #[Required('blockchain_onramp_transfer_intention')]
+    public ?BlockchainOnrampTransferIntention $blockchainOnrampTransferIntention;
 
     /**
      * A Legacy Card Dispute Acceptance object. This field will be present in the JSON response if and only if `category` is equal to `card_dispute_acceptance`. Contains the details of a successful Card Dispute.
@@ -365,6 +383,8 @@ final class Source implements BaseModel
      *   achTransferIntention: ...,
      *   achTransferRejection: ...,
      *   achTransferReturn: ...,
+     *   blockchainOfframpTransferSettlement: ...,
+     *   blockchainOnrampTransferIntention: ...,
      *   cardDisputeAcceptance: ...,
      *   cardDisputeFinancial: ...,
      *   cardDisputeLoss: ...,
@@ -409,6 +429,8 @@ final class Source implements BaseModel
      *   ->withACHTransferIntention(...)
      *   ->withACHTransferRejection(...)
      *   ->withACHTransferReturn(...)
+     *   ->withBlockchainOfframpTransferSettlement(...)
+     *   ->withBlockchainOnrampTransferIntention(...)
      *   ->withCardDisputeAcceptance(...)
      *   ->withCardDisputeFinancial(...)
      *   ->withCardDisputeLoss(...)
@@ -458,6 +480,8 @@ final class Source implements BaseModel
      * @param ACHTransferIntention|ACHTransferIntentionShape|null $achTransferIntention
      * @param ACHTransferRejection|ACHTransferRejectionShape|null $achTransferRejection
      * @param ACHTransferReturn|ACHTransferReturnShape|null $achTransferReturn
+     * @param BlockchainOfframpTransferSettlement|BlockchainOfframpTransferSettlementShape|null $blockchainOfframpTransferSettlement
+     * @param BlockchainOnrampTransferIntention|BlockchainOnrampTransferIntentionShape|null $blockchainOnrampTransferIntention
      * @param CardDisputeAcceptance|CardDisputeAcceptanceShape|null $cardDisputeAcceptance
      * @param CardDisputeFinancial|CardDisputeFinancialShape|null $cardDisputeFinancial
      * @param CardDisputeLoss|CardDisputeLossShape|null $cardDisputeLoss
@@ -497,6 +521,8 @@ final class Source implements BaseModel
         ACHTransferIntention|array|null $achTransferIntention,
         ACHTransferRejection|array|null $achTransferRejection,
         ACHTransferReturn|array|null $achTransferReturn,
+        BlockchainOfframpTransferSettlement|array|null $blockchainOfframpTransferSettlement,
+        BlockchainOnrampTransferIntention|array|null $blockchainOnrampTransferIntention,
         CardDisputeAcceptance|array|null $cardDisputeAcceptance,
         CardDisputeFinancial|array|null $cardDisputeFinancial,
         CardDisputeLoss|array|null $cardDisputeLoss,
@@ -537,6 +563,8 @@ final class Source implements BaseModel
         $self['achTransferIntention'] = $achTransferIntention;
         $self['achTransferRejection'] = $achTransferRejection;
         $self['achTransferReturn'] = $achTransferReturn;
+        $self['blockchainOfframpTransferSettlement'] = $blockchainOfframpTransferSettlement;
+        $self['blockchainOnrampTransferIntention'] = $blockchainOnrampTransferIntention;
         $self['cardDisputeAcceptance'] = $cardDisputeAcceptance;
         $self['cardDisputeFinancial'] = $cardDisputeFinancial;
         $self['cardDisputeLoss'] = $cardDisputeLoss;
@@ -639,6 +667,34 @@ final class Source implements BaseModel
     ): self {
         $self = clone $this;
         $self['achTransferReturn'] = $achTransferReturn;
+
+        return $self;
+    }
+
+    /**
+     * A Blockchain Off-Ramp Transfer Settlement object. This field will be present in the JSON response if and only if `category` is equal to `blockchain_offramp_transfer_settlement`.
+     *
+     * @param BlockchainOfframpTransferSettlement|BlockchainOfframpTransferSettlementShape|null $blockchainOfframpTransferSettlement
+     */
+    public function withBlockchainOfframpTransferSettlement(
+        BlockchainOfframpTransferSettlement|array|null $blockchainOfframpTransferSettlement,
+    ): self {
+        $self = clone $this;
+        $self['blockchainOfframpTransferSettlement'] = $blockchainOfframpTransferSettlement;
+
+        return $self;
+    }
+
+    /**
+     * A Blockchain On-Ramp Transfer Intention object. This field will be present in the JSON response if and only if `category` is equal to `blockchain_onramp_transfer_intention`.
+     *
+     * @param BlockchainOnrampTransferIntention|BlockchainOnrampTransferIntentionShape|null $blockchainOnrampTransferIntention
+     */
+    public function withBlockchainOnrampTransferIntention(
+        BlockchainOnrampTransferIntention|array|null $blockchainOnrampTransferIntention,
+    ): self {
+        $self = clone $this;
+        $self['blockchainOnrampTransferIntention'] = $blockchainOnrampTransferIntention;
 
         return $self;
     }

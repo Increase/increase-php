@@ -76,5 +76,9 @@ enum In: string
 
     case ACCOUNT_REVENUE_PAYMENT = 'account_revenue_payment';
 
+    case BLOCKCHAIN_ONRAMP_TRANSFER_INTENTION = 'blockchain_onramp_transfer_intention';
+
+    case BLOCKCHAIN_OFFRAMP_TRANSFER_SETTLEMENT = 'blockchain_offramp_transfer_settlement';
+
     case OTHER = 'other';
 }

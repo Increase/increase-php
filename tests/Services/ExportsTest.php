@@ -66,7 +66,6 @@ final class ExportsTest extends TestCase
                     'onOrAfter' => new \DateTimeImmutable('2019-12-27T18:11:19.117Z'),
                     'onOrBefore' => new \DateTimeImmutable('2019-12-27T18:11:19.117Z'),
                 ],
-                'programID' => 'program_id',
             ],
             bookkeepingAccountBalanceCsv: [
                 'bookkeepingAccountID' => 'bookkeeping_account_id',

@@ -18,6 +18,7 @@ use Increase\Exports\Export\EntityCsv;
 use Increase\Exports\Export\Form1099Int;
 use Increase\Exports\Export\Form1099Misc;
 use Increase\Exports\Export\FundingInstructions;
+use Increase\Exports\Export\Result;
 use Increase\Exports\Export\Status;
 use Increase\Exports\Export\TransactionCsv;
 use Increase\Exports\Export\Type;
@@ -36,6 +37,7 @@ use Increase\Exports\Export\VendorCsv;
  * @phpstan-import-type Form1099IntShape from \Increase\Exports\Export\Form1099Int
  * @phpstan-import-type Form1099MiscShape from \Increase\Exports\Export\Form1099Misc
  * @phpstan-import-type FundingInstructionsShape from \Increase\Exports\Export\FundingInstructions
+ * @phpstan-import-type ResultShape from \Increase\Exports\Export\Result
  * @phpstan-import-type TransactionCsvShape from \Increase\Exports\Export\TransactionCsv
  * @phpstan-import-type VendorCsvShape from \Increase\Exports\Export\VendorCsv
  *
@@ -50,12 +52,11 @@ use Increase\Exports\Export\VendorCsv;
  *   createdAt: \DateTimeInterface,
  *   dashboardTableCsv: null|DashboardTableCsv|DashboardTableCsvShape,
  *   entityCsv: null|EntityCsv|EntityCsvShape,
- *   fileDownloadURL: string|null,
- *   fileID: string|null,
  *   form1099Int: null|Form1099Int|Form1099IntShape,
  *   form1099Misc: null|Form1099Misc|Form1099MiscShape,
  *   fundingInstructions: null|FundingInstructions|FundingInstructionsShape,
  *   idempotencyKey: string|null,
+ *   result: null|Result|ResultShape,
  *   status: Status|value-of<Status>,
  *   transactionCsv: null|TransactionCsv|TransactionCsvShape,
  *   type: Type|value-of<Type>,
@@ -130,18 +131,6 @@ final class Export implements BaseModel
     public ?EntityCsv $entityCsv;
 
     /**
-     * A URL at which the Export's file can be downloaded. This will be present when the Export's status transitions to `complete`.
-     */
-    #[Required('file_download_url')]
-    public ?string $fileDownloadURL;
-
-    /**
-     * The File containing the contents of the Export. This will be present when the Export's status transitions to `complete`.
-     */
-    #[Required('file_id')]
-    public ?string $fileID;
-
-    /**
      * Details of the Form 1099-INT export. This field will be present when the `category` is equal to `form_1099_int`.
      */
     #[Required('form_1099_int')]
@@ -164,6 +153,12 @@ final class Export implements BaseModel
      */
     #[Required('idempotency_key')]
     public ?string $idempotencyKey;
+
+    /**
+     * The result of the Export. This will be present when the Export's status transitions to `complete`.
+     */
+    #[Required]
+    public ?Result $result;
 
     /**
      * The status of the Export.
@@ -209,12 +204,11 @@ final class Export implements BaseModel
      *   createdAt: ...,
      *   dashboardTableCsv: ...,
      *   entityCsv: ...,
-     *   fileDownloadURL: ...,
-     *   fileID: ...,
      *   form1099Int: ...,
      *   form1099Misc: ...,
      *   fundingInstructions: ...,
      *   idempotencyKey: ...,
+     *   result: ...,
      *   status: ...,
      *   transactionCsv: ...,
      *   type: ...,
@@ -236,12 +230,11 @@ final class Export implements BaseModel
      *   ->withCreatedAt(...)
      *   ->withDashboardTableCsv(...)
      *   ->withEntityCsv(...)
-     *   ->withFileDownloadURL(...)
-     *   ->withFileID(...)
      *   ->withForm1099Int(...)
      *   ->withForm1099Misc(...)
      *   ->withFundingInstructions(...)
      *   ->withIdempotencyKey(...)
+     *   ->withResult(...)
      *   ->withStatus(...)
      *   ->withTransactionCsv(...)
      *   ->withType(...)
@@ -269,6 +262,7 @@ final class Export implements BaseModel
      * @param Form1099Int|Form1099IntShape|null $form1099Int
      * @param Form1099Misc|Form1099MiscShape|null $form1099Misc
      * @param FundingInstructions|FundingInstructionsShape|null $fundingInstructions
+     * @param Result|ResultShape|null $result
      * @param Status|value-of<Status> $status
      * @param TransactionCsv|TransactionCsvShape|null $transactionCsv
      * @param Type|value-of<Type> $type
@@ -285,12 +279,11 @@ final class Export implements BaseModel
         \DateTimeInterface $createdAt,
         DashboardTableCsv|array|null $dashboardTableCsv,
         EntityCsv|array|null $entityCsv,
-        ?string $fileDownloadURL,
-        ?string $fileID,
         Form1099Int|array|null $form1099Int,
         Form1099Misc|array|null $form1099Misc,
         FundingInstructions|array|null $fundingInstructions,
         ?string $idempotencyKey,
+        Result|array|null $result,
         Status|string $status,
         TransactionCsv|array|null $transactionCsv,
         Type|string $type,
@@ -308,12 +301,11 @@ final class Export implements BaseModel
         $self['createdAt'] = $createdAt;
         $self['dashboardTableCsv'] = $dashboardTableCsv;
         $self['entityCsv'] = $entityCsv;
-        $self['fileDownloadURL'] = $fileDownloadURL;
-        $self['fileID'] = $fileID;
         $self['form1099Int'] = $form1099Int;
         $self['form1099Misc'] = $form1099Misc;
         $self['fundingInstructions'] = $fundingInstructions;
         $self['idempotencyKey'] = $idempotencyKey;
+        $self['result'] = $result;
         $self['status'] = $status;
         $self['transactionCsv'] = $transactionCsv;
         $self['type'] = $type;
@@ -454,28 +446,6 @@ final class Export implements BaseModel
     }
 
     /**
-     * A URL at which the Export's file can be downloaded. This will be present when the Export's status transitions to `complete`.
-     */
-    public function withFileDownloadURL(?string $fileDownloadURL): self
-    {
-        $self = clone $this;
-        $self['fileDownloadURL'] = $fileDownloadURL;
-
-        return $self;
-    }
-
-    /**
-     * The File containing the contents of the Export. This will be present when the Export's status transitions to `complete`.
-     */
-    public function withFileID(?string $fileID): self
-    {
-        $self = clone $this;
-        $self['fileID'] = $fileID;
-
-        return $self;
-    }
-
-    /**
      * Details of the Form 1099-INT export. This field will be present when the `category` is equal to `form_1099_int`.
      *
      * @param Form1099Int|Form1099IntShape|null $form1099Int
@@ -523,6 +493,19 @@ final class Export implements BaseModel
     {
         $self = clone $this;
         $self['idempotencyKey'] = $idempotencyKey;
+
+        return $self;
+    }
+
+    /**
+     * The result of the Export. This will be present when the Export's status transitions to `complete`.
+     *
+     * @param Result|ResultShape|null $result
+     */
+    public function withResult(Result|array|null $result): self
+    {
+        $self = clone $this;
+        $self['result'] = $result;
 
         return $self;
     }

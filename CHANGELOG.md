@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.21.0 (2026-02-03)
+
+Full Changelog: [v0.20.0...v0.21.0](https://github.com/Increase/increase-php/compare/v0.20.0...v0.21.0)
+
+### Features
+
+* use `$_ENV` aware getenv helper ([a276c9a](https://github.com/Increase/increase-php/commit/a276c9a73c9005930eee341e1735ea46b894a7b8))
+
 ## 0.20.0 (2026-02-03)
 
 Full Changelog: [v0.19.0...v0.20.0](https://github.com/Increase/increase-php/compare/v0.19.0...v0.20.0)

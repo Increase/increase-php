@@ -20,6 +20,7 @@ use Increase\Entities\EntityUpdateParams\Corporation\Address;
  *   incorporationState?: string|null,
  *   industryCode?: string|null,
  *   name?: string|null,
+ *   taxIdentifier?: string|null,
  * }
  */
 final class Corporation implements BaseModel
@@ -57,6 +58,12 @@ final class Corporation implements BaseModel
     #[Optional]
     public ?string $name;
 
+    /**
+     * The Employer Identification Number (EIN) for the corporation.
+     */
+    #[Optional('tax_identifier')]
+    public ?string $taxIdentifier;
+
     public function __construct()
     {
         $this->initialize();
@@ -75,6 +82,7 @@ final class Corporation implements BaseModel
         ?string $incorporationState = null,
         ?string $industryCode = null,
         ?string $name = null,
+        ?string $taxIdentifier = null,
     ): self {
         $self = new self;
 
@@ -83,6 +91,7 @@ final class Corporation implements BaseModel
         null !== $incorporationState && $self['incorporationState'] = $incorporationState;
         null !== $industryCode && $self['industryCode'] = $industryCode;
         null !== $name && $self['name'] = $name;
+        null !== $taxIdentifier && $self['taxIdentifier'] = $taxIdentifier;
 
         return $self;
     }
@@ -140,6 +149,17 @@ final class Corporation implements BaseModel
     {
         $self = clone $this;
         $self['name'] = $name;
+
+        return $self;
+    }
+
+    /**
+     * The Employer Identification Number (EIN) for the corporation.
+     */
+    public function withTaxIdentifier(string $taxIdentifier): self
+    {
+        $self = clone $this;
+        $self['taxIdentifier'] = $taxIdentifier;
 
         return $self;
     }

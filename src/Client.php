@@ -367,9 +367,11 @@ class Client extends BaseClient
         ?string $baseUrl = null,
         RequestOptions|array|null $requestOptions = null,
     ) {
-        $this->apiKey = (string) ($apiKey ?? getenv('INCREASE_API_KEY'));
+        $this->apiKey = (string) ($apiKey ?? Util::getenv('INCREASE_API_KEY'));
 
-        $baseUrl ??= getenv('INCREASE_BASE_URL') ?: 'https://api.increase.com';
+        $baseUrl ??= Util::getenv(
+            'INCREASE_BASE_URL'
+        ) ?: 'https://api.increase.com';
 
         $options = RequestOptions::parse(
             RequestOptions::with(

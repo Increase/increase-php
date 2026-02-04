@@ -19,6 +19,8 @@ use Increase\Exports\ExportCreateParams\FundingInstructions;
 use Increase\Exports\ExportCreateParams\TransactionCsv;
 use Increase\Exports\ExportCreateParams\VendorCsv;
 use Increase\Exports\ExportListParams\CreatedAt;
+use Increase\Exports\ExportListParams\Form1099Int;
+use Increase\Exports\ExportListParams\Form1099Misc;
 use Increase\Exports\ExportListParams\Status;
 use Increase\Page;
 use Increase\RequestOptions;
@@ -34,8 +36,9 @@ use Increase\ServiceContracts\ExportsContract;
  * @phpstan-import-type FundingInstructionsShape from \Increase\Exports\ExportCreateParams\FundingInstructions
  * @phpstan-import-type TransactionCsvShape from \Increase\Exports\ExportCreateParams\TransactionCsv
  * @phpstan-import-type VendorCsvShape from \Increase\Exports\ExportCreateParams\VendorCsv
- * @phpstan-import-type CategoryShape from \Increase\Exports\ExportListParams\Category
  * @phpstan-import-type CreatedAtShape from \Increase\Exports\ExportListParams\CreatedAt
+ * @phpstan-import-type Form1099IntShape from \Increase\Exports\ExportListParams\Form1099Int
+ * @phpstan-import-type Form1099MiscShape from \Increase\Exports\ExportListParams\Form1099Misc
  * @phpstan-import-type StatusShape from \Increase\Exports\ExportListParams\Status
  * @phpstan-import-type RequestOpts from \Increase\RequestOptions
  */
@@ -132,9 +135,11 @@ final class ExportsService implements ExportsContract
      *
      * List Exports
      *
-     * @param \Increase\Exports\ExportListParams\Category|CategoryShape $category
+     * @param \Increase\Exports\ExportListParams\Category|value-of<\Increase\Exports\ExportListParams\Category> $category filter Exports for those with the specified category
      * @param CreatedAt|CreatedAtShape $createdAt
      * @param string $cursor return the page of entries after this one
+     * @param Form1099Int|Form1099IntShape $form1099Int
+     * @param Form1099Misc|Form1099MiscShape $form1099Misc
      * @param string $idempotencyKey Filter records to the one with the specified `idempotency_key` you chose for that object. This value is unique across Increase and is used to ensure that a request is only processed once. Learn more about [idempotency](https://increase.com/documentation/idempotency-keys).
      * @param int $limit Limit the size of the list that is returned. The default (and maximum) is 100 objects.
      * @param Status|StatusShape $status
@@ -145,9 +150,11 @@ final class ExportsService implements ExportsContract
      * @throws APIException
      */
     public function list(
-        \Increase\Exports\ExportListParams\Category|array|null $category = null,
+        \Increase\Exports\ExportListParams\Category|string|null $category = null,
         CreatedAt|array|null $createdAt = null,
         ?string $cursor = null,
+        Form1099Int|array|null $form1099Int = null,
+        Form1099Misc|array|null $form1099Misc = null,
         ?string $idempotencyKey = null,
         ?int $limit = null,
         Status|array|null $status = null,
@@ -158,6 +165,8 @@ final class ExportsService implements ExportsContract
                 'category' => $category,
                 'createdAt' => $createdAt,
                 'cursor' => $cursor,
+                'form1099Int' => $form1099Int,
+                'form1099Misc' => $form1099Misc,
                 'idempotencyKey' => $idempotencyKey,
                 'limit' => $limit,
                 'status' => $status,

@@ -94,7 +94,7 @@ final class EntityCreateParams implements BaseModel
     public ?NaturalPerson $naturalPerson;
 
     /**
-     * An assessment of the entity’s potential risk of involvement in financial crimes, such as money laundering.
+     * An assessment of the entity's potential risk of involvement in financial crimes, such as money laundering.
      */
     #[Optional('risk_rating')]
     public ?RiskRating $riskRating;
@@ -271,7 +271,7 @@ final class EntityCreateParams implements BaseModel
     }
 
     /**
-     * An assessment of the entity’s potential risk of involvement in financial crimes, such as money laundering.
+     * An assessment of the entity's potential risk of involvement in financial crimes, such as money laundering.
      *
      * @param RiskRating|RiskRatingShape $riskRating
      */

@@ -75,7 +75,7 @@ final class EntitiesService implements EntitiesContract
      * @param GovernmentAuthority|GovernmentAuthorityShape $governmentAuthority Details of the Government Authority entity to create. Required if `structure` is equal to `government_authority`.
      * @param Joint|JointShape $joint Details of the joint entity to create. Required if `structure` is equal to `joint`.
      * @param NaturalPerson|NaturalPersonShape $naturalPerson Details of the natural person entity to create. Required if `structure` is equal to `natural_person`. Natural people entities should be submitted with `social_security_number` or `individual_taxpayer_identification_number` identification methods.
-     * @param RiskRating|RiskRatingShape $riskRating an assessment of the entity’s potential risk of involvement in financial crimes, such as money laundering
+     * @param RiskRating|RiskRatingShape $riskRating an assessment of the entity's potential risk of involvement in financial crimes, such as money laundering
      * @param list<SupplementalDocument|SupplementalDocumentShape> $supplementalDocuments additional documentation associated with the entity
      * @param list<TermsAgreement|TermsAgreementShape> $termsAgreements The terms that the Entity agreed to. Not all programs are required to submit this data.
      * @param ThirdPartyVerification|ThirdPartyVerificationShape $thirdPartyVerification if you are using a third-party service for identity verification, you can use this field to associate this Entity with the identifier that represents them in that service

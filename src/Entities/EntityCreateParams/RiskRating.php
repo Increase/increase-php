@@ -10,7 +10,7 @@ use Increase\Core\Contracts\BaseModel;
 use Increase\Entities\EntityCreateParams\RiskRating\Rating;
 
 /**
- * An assessment of the entity’s potential risk of involvement in financial crimes, such as money laundering.
+ * An assessment of the entity's potential risk of involvement in financial crimes, such as money laundering.
  *
  * @phpstan-type RiskRatingShape = array{
  *   ratedAt: \DateTimeInterface, rating: Rating|value-of<Rating>

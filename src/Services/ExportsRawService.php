@@ -22,6 +22,8 @@ use Increase\Exports\ExportCreateParams\TransactionCsv;
 use Increase\Exports\ExportCreateParams\VendorCsv;
 use Increase\Exports\ExportListParams;
 use Increase\Exports\ExportListParams\CreatedAt;
+use Increase\Exports\ExportListParams\Form1099Int;
+use Increase\Exports\ExportListParams\Form1099Misc;
 use Increase\Exports\ExportListParams\Status;
 use Increase\Page;
 use Increase\RequestOptions;
@@ -37,8 +39,9 @@ use Increase\ServiceContracts\ExportsRawContract;
  * @phpstan-import-type FundingInstructionsShape from \Increase\Exports\ExportCreateParams\FundingInstructions
  * @phpstan-import-type TransactionCsvShape from \Increase\Exports\ExportCreateParams\TransactionCsv
  * @phpstan-import-type VendorCsvShape from \Increase\Exports\ExportCreateParams\VendorCsv
- * @phpstan-import-type CategoryShape from \Increase\Exports\ExportListParams\Category
  * @phpstan-import-type CreatedAtShape from \Increase\Exports\ExportListParams\CreatedAt
+ * @phpstan-import-type Form1099IntShape from \Increase\Exports\ExportListParams\Form1099Int
+ * @phpstan-import-type Form1099MiscShape from \Increase\Exports\ExportListParams\Form1099Misc
  * @phpstan-import-type StatusShape from \Increase\Exports\ExportListParams\Status
  * @phpstan-import-type RequestOpts from \Increase\RequestOptions
  */
@@ -123,9 +126,11 @@ final class ExportsRawService implements ExportsRawContract
      * List Exports
      *
      * @param array{
-     *   category?: ExportListParams\Category|CategoryShape,
+     *   category?: value-of<ExportListParams\Category>,
      *   createdAt?: CreatedAt|CreatedAtShape,
      *   cursor?: string,
+     *   form1099Int?: Form1099Int|Form1099IntShape,
+     *   form1099Misc?: Form1099Misc|Form1099MiscShape,
      *   idempotencyKey?: string,
      *   limit?: int,
      *   status?: Status|StatusShape,
@@ -151,7 +156,12 @@ final class ExportsRawService implements ExportsRawContract
             path: 'exports',
             query: Util::array_transform_keys(
                 $parsed,
-                ['createdAt' => 'created_at', 'idempotencyKey' => 'idempotency_key'],
+                [
+                    'createdAt' => 'created_at',
+                    'form1099Int' => 'form_1099_int',
+                    'form1099Misc' => 'form_1099_misc',
+                    'idempotencyKey' => 'idempotency_key',
+                ],
             ),
             options: $options,
             convert: Export::class,

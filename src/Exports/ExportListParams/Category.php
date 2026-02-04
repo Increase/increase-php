@@ -4,58 +4,32 @@ declare(strict_types=1);
 
 namespace Increase\Exports\ExportListParams;
 
-use Increase\Core\Attributes\Optional;
-use Increase\Core\Concerns\SdkModel;
-use Increase\Core\Contracts\BaseModel;
-use Increase\Exports\ExportListParams\Category\In;
-
 /**
- * @phpstan-type CategoryShape = array{in?: list<In|value-of<In>>|null}
+ * Filter Exports for those with the specified category.
  */
-final class Category implements BaseModel
+enum Category: string
 {
-    /** @use SdkModel<CategoryShape> */
-    use SdkModel;
+    case ACCOUNT_STATEMENT_OFX = 'account_statement_ofx';
 
-    /**
-     * Filter Exports for those with the specified category or categories. For GET requests, this should be encoded as a comma-delimited string, such as `?in=one,two,three`.
-     *
-     * @var list<value-of<In>>|null $in
-     */
-    #[Optional(list: In::class)]
-    public ?array $in;
+    case ACCOUNT_STATEMENT_BAI2 = 'account_statement_bai2';
 
-    public function __construct()
-    {
-        $this->initialize();
-    }
+    case TRANSACTION_CSV = 'transaction_csv';
 
-    /**
-     * Construct an instance from the required parameters.
-     *
-     * You must use named parameters to construct any parameters with a default value.
-     *
-     * @param list<In|value-of<In>>|null $in
-     */
-    public static function with(?array $in = null): self
-    {
-        $self = new self;
+    case BALANCE_CSV = 'balance_csv';
 
-        null !== $in && $self['in'] = $in;
+    case BOOKKEEPING_ACCOUNT_BALANCE_CSV = 'bookkeeping_account_balance_csv';
 
-        return $self;
-    }
+    case ENTITY_CSV = 'entity_csv';
 
-    /**
-     * Filter Exports for those with the specified category or categories. For GET requests, this should be encoded as a comma-delimited string, such as `?in=one,two,three`.
-     *
-     * @param list<In|value-of<In>> $in
-     */
-    public function withIn(array $in): self
-    {
-        $self = clone $this;
-        $self['in'] = $in;
+    case VENDOR_CSV = 'vendor_csv';
 
-        return $self;
-    }
+    case DASHBOARD_TABLE_CSV = 'dashboard_table_csv';
+
+    case ACCOUNT_VERIFICATION_LETTER = 'account_verification_letter';
+
+    case FUNDING_INSTRUCTIONS = 'funding_instructions';
+
+    case FORM_1099_INT = 'form_1099_int';
+
+    case FORM_1099_MISC = 'form_1099_misc';
 }

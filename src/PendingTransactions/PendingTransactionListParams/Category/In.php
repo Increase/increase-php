@@ -36,7 +36,5 @@ enum In: string
 
     case BLOCKCHAIN_OFFRAMP_TRANSFER_INSTRUCTION = 'blockchain_offramp_transfer_instruction';
 
-    case BLOCKCHAIN_OFFRAMP_TRANSFER_INTENTION = 'blockchain_offramp_transfer_intention';
-
     case OTHER = 'other';
 }

@@ -155,7 +155,7 @@ final class ACHPrenotification implements BaseModel
     public string $routingNumber;
 
     /**
-     * The Standard Entry Class (SEC) code to use for the ACH Prenotification.
+     * The [Standard Entry Class (SEC) code](/documentation/ach-standard-entry-class-codes) to use for the ACH Prenotification.
      *
      * @var value-of<StandardEntryClassCode>|null $standardEntryClassCode
      */
@@ -498,7 +498,7 @@ final class ACHPrenotification implements BaseModel
     }
 
     /**
-     * The Standard Entry Class (SEC) code to use for the ACH Prenotification.
+     * The [Standard Entry Class (SEC) code](/documentation/ach-standard-entry-class-codes) to use for the ACH Prenotification.
      *
      * @param StandardEntryClassCode|value-of<StandardEntryClassCode>|null $standardEntryClassCode
      */

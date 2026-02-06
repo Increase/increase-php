@@ -54,7 +54,7 @@ final class ACHTransfersService implements ACHTransfersContract
      * @param Addenda|AddendaShape $addenda Additional information that will be sent to the recipient. This is included in the transfer data sent to the receiving bank.
      * @param string $companyDescriptiveDate The description of the date of the transfer, usually in the format `YYMMDD`. This is included in the transfer data sent to the receiving bank.
      * @param string $companyDiscretionaryData The data you choose to associate with the transfer. This is included in the transfer data sent to the receiving bank.
-     * @param string $companyEntryDescription A description of the transfer. This is included in the transfer data sent to the receiving bank.
+     * @param string $companyEntryDescription A description of the transfer, included in the transfer data sent to the receiving bank. Standardized formatting may be required, for example `PAYROLL` for payroll-related Prearranged Payments and Deposits (PPD) credit transfers.
      * @param string $companyName The name by which the recipient knows you. This is included in the transfer data sent to the receiving bank.
      * @param DestinationAccountHolder|value-of<DestinationAccountHolder> $destinationAccountHolder the type of entity that owns the account to which the ACH Transfer is being sent
      * @param string $externalAccountID The ID of an External Account to initiate a transfer to. If this parameter is provided, `account_number`, `routing_number`, and `funding` must be absent.
@@ -64,7 +64,7 @@ final class ACHTransfersService implements ACHTransfersContract
      * @param PreferredEffectiveDate|PreferredEffectiveDateShape $preferredEffectiveDate Configuration for how the effective date of the transfer will be set. This determines same-day vs future-dated settlement timing. If not set, defaults to a `settlement_schedule` of `same_day`. If set, exactly one of the child attributes must be set.
      * @param bool $requireApproval whether the transfer requires explicit approval via the dashboard or API
      * @param string $routingNumber the American Bankers' Association (ABA) Routing Transit Number (RTN) for the destination account
-     * @param StandardEntryClassCode|value-of<StandardEntryClassCode> $standardEntryClassCode the Standard Entry Class (SEC) code to use for the transfer
+     * @param StandardEntryClassCode|value-of<StandardEntryClassCode> $standardEntryClassCode the [Standard Entry Class (SEC) code](/documentation/ach-standard-entry-class-codes) to use for the transfer
      * @param TransactionTiming|value-of<TransactionTiming> $transactionTiming the timing of the transaction
      * @param RequestOpts|null $requestOptions
      *

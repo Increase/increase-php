@@ -51,7 +51,7 @@ final class ACHPrenotificationsService implements ACHPrenotificationsContract
      * @param string $effectiveDate The ACH Prenotification effective date in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format.
      * @param string $individualID your identifier for the recipient
      * @param string $individualName The name of therecipient. This value is informational and not verified by the recipient's bank.
-     * @param StandardEntryClassCode|value-of<StandardEntryClassCode> $standardEntryClassCode the Standard Entry Class (SEC) code to use for the ACH Prenotification
+     * @param StandardEntryClassCode|value-of<StandardEntryClassCode> $standardEntryClassCode the [Standard Entry Class (SEC) code](/documentation/ach-standard-entry-class-codes) to use for the ACH Prenotification
      * @param RequestOpts|null $requestOptions
      *
      * @throws APIException

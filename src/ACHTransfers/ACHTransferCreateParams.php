@@ -95,7 +95,7 @@ final class ACHTransferCreateParams implements BaseModel
     public ?string $companyDiscretionaryData;
 
     /**
-     * A description of the transfer. This is included in the transfer data sent to the receiving bank.
+     * A description of the transfer, included in the transfer data sent to the receiving bank. Standardized formatting may be required, for example `PAYROLL` for payroll-related Prearranged Payments and Deposits (PPD) credit transfers.
      */
     #[Optional('company_entry_description')]
     public ?string $companyEntryDescription;
@@ -162,7 +162,7 @@ final class ACHTransferCreateParams implements BaseModel
     public ?string $routingNumber;
 
     /**
-     * The Standard Entry Class (SEC) code to use for the transfer.
+     * The [Standard Entry Class (SEC) code](/documentation/ach-standard-entry-class-codes) to use for the transfer.
      *
      * @var value-of<StandardEntryClassCode>|null $standardEntryClassCode
      */
@@ -342,7 +342,7 @@ final class ACHTransferCreateParams implements BaseModel
     }
 
     /**
-     * A description of the transfer. This is included in the transfer data sent to the receiving bank.
+     * A description of the transfer, included in the transfer data sent to the receiving bank. Standardized formatting may be required, for example `PAYROLL` for payroll-related Prearranged Payments and Deposits (PPD) credit transfers.
      */
     public function withCompanyEntryDescription(
         string $companyEntryDescription
@@ -461,7 +461,7 @@ final class ACHTransferCreateParams implements BaseModel
     }
 
     /**
-     * The Standard Entry Class (SEC) code to use for the transfer.
+     * The [Standard Entry Class (SEC) code](/documentation/ach-standard-entry-class-codes) to use for the transfer.
      *
      * @param StandardEntryClassCode|value-of<StandardEntryClassCode> $standardEntryClassCode
      */

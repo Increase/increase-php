@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Increase\ACHTransfers\ACHTransfer;
 
 /**
- * The Standard Entry Class (SEC) code to use for the transfer.
+ * The [Standard Entry Class (SEC) code](/documentation/ach-standard-entry-class-codes) to use for the transfer.
  */
 enum StandardEntryClassCode: string
 {

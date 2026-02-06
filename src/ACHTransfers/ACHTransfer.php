@@ -279,7 +279,7 @@ final class ACHTransfer implements BaseModel
     public ?Settlement $settlement;
 
     /**
-     * The Standard Entry Class (SEC) code to use for the transfer.
+     * The [Standard Entry Class (SEC) code](/documentation/ach-standard-entry-class-codes) to use for the transfer.
      *
      * @var value-of<StandardEntryClassCode> $standardEntryClassCode
      */
@@ -885,7 +885,7 @@ final class ACHTransfer implements BaseModel
     }
 
     /**
-     * The Standard Entry Class (SEC) code to use for the transfer.
+     * The [Standard Entry Class (SEC) code](/documentation/ach-standard-entry-class-codes) to use for the transfer.
      *
      * @param StandardEntryClassCode|value-of<StandardEntryClassCode> $standardEntryClassCode
      */

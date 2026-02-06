@@ -43,7 +43,7 @@ final class ProgramsTest extends TestCase
     {
         $result = $this->client->simulations->programs->create(
             name: 'For Benefit Of',
-            bank: 'blue_ridge_bank',
+            bank: 'core_bank',
             lendingMaximumExtendableCredit: 0,
             reserveAccountID: 'reserve_account_id',
         );

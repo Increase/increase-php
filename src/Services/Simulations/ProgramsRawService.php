@@ -31,7 +31,7 @@ final class ProgramsRawService implements ProgramsRawContract
      *
      * @param array{
      *   name: string,
-     *   bank?: value-of<Bank>,
+     *   bank?: Bank|value-of<Bank>,
      *   lendingMaximumExtendableCredit?: int,
      *   reserveAccountID?: string,
      * }|ProgramCreateParams $params

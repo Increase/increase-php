@@ -10,6 +10,7 @@ use Increase\CardDisputes\CardDispute\Visa\UserSubmission\Chargeback;
 use Increase\CardDisputes\CardDispute\Visa\UserSubmission\MerchantPrearbitrationDecline;
 use Increase\CardDisputes\CardDispute\Visa\UserSubmission\Status;
 use Increase\CardDisputes\CardDispute\Visa\UserSubmission\UserPrearbitration;
+use Increase\Core\Attributes\Optional;
 use Increase\Core\Attributes\Required;
 use Increase\Core\Concerns\SdkModel;
 use Increase\Core\Contracts\BaseModel;
@@ -25,15 +26,15 @@ use Increase\Core\Contracts\BaseModel;
  *   amount: int|null,
  *   attachmentFiles: list<AttachmentFile|AttachmentFileShape>,
  *   category: Category|value-of<Category>,
- *   chargeback: null|Chargeback|ChargebackShape,
  *   createdAt: \DateTimeInterface,
  *   explanation: string|null,
  *   furtherInformationRequestedAt: \DateTimeInterface|null,
  *   furtherInformationRequestedReason: string|null,
- *   merchantPrearbitrationDecline: null|MerchantPrearbitrationDecline|MerchantPrearbitrationDeclineShape,
  *   status: Status|value-of<Status>,
  *   updatedAt: \DateTimeInterface,
- *   userPrearbitration: null|UserPrearbitration|UserPrearbitrationShape,
+ *   chargeback?: null|Chargeback|ChargebackShape,
+ *   merchantPrearbitrationDecline?: null|MerchantPrearbitrationDecline|MerchantPrearbitrationDeclineShape,
+ *   userPrearbitration?: null|UserPrearbitration|UserPrearbitrationShape,
  * }
  */
 final class UserSubmission implements BaseModel
@@ -70,12 +71,6 @@ final class UserSubmission implements BaseModel
     public string $category;
 
     /**
-     * A Visa Card Dispute Chargeback User Submission Chargeback Details object. This field will be present in the JSON response if and only if `category` is equal to `chargeback`. Contains the details specific to a Visa chargeback User Submission for a Card Dispute.
-     */
-    #[Required]
-    public ?Chargeback $chargeback;
-
-    /**
      * The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which the Visa Card Dispute User Submission was created.
      */
     #[Required('created_at')]
@@ -100,12 +95,6 @@ final class UserSubmission implements BaseModel
     public ?string $furtherInformationRequestedReason;
 
     /**
-     * A Visa Card Dispute Merchant Pre-Arbitration Decline User Submission object. This field will be present in the JSON response if and only if `category` is equal to `merchant_prearbitration_decline`. Contains the details specific to a merchant prearbitration decline Visa Card Dispute User Submission.
-     */
-    #[Required('merchant_prearbitration_decline')]
-    public ?MerchantPrearbitrationDecline $merchantPrearbitrationDecline;
-
-    /**
      * The status of the Visa Card Dispute User Submission.
      *
      * @var value-of<Status> $status
@@ -120,9 +109,21 @@ final class UserSubmission implements BaseModel
     public \DateTimeInterface $updatedAt;
 
     /**
+     * A Visa Card Dispute Chargeback User Submission Chargeback Details object. This field will be present in the JSON response if and only if `category` is equal to `chargeback`. Contains the details specific to a Visa chargeback User Submission for a Card Dispute.
+     */
+    #[Optional(nullable: true)]
+    public ?Chargeback $chargeback;
+
+    /**
+     * A Visa Card Dispute Merchant Pre-Arbitration Decline User Submission object. This field will be present in the JSON response if and only if `category` is equal to `merchant_prearbitration_decline`. Contains the details specific to a merchant prearbitration decline Visa Card Dispute User Submission.
+     */
+    #[Optional('merchant_prearbitration_decline', nullable: true)]
+    public ?MerchantPrearbitrationDecline $merchantPrearbitrationDecline;
+
+    /**
      * A Visa Card Dispute User-Initiated Pre-Arbitration User Submission object. This field will be present in the JSON response if and only if `category` is equal to `user_prearbitration`. Contains the details specific to a user-initiated pre-arbitration Visa Card Dispute User Submission.
      */
-    #[Required('user_prearbitration')]
+    #[Optional('user_prearbitration', nullable: true)]
     public ?UserPrearbitration $userPrearbitration;
 
     /**
@@ -135,15 +136,12 @@ final class UserSubmission implements BaseModel
      *   amount: ...,
      *   attachmentFiles: ...,
      *   category: ...,
-     *   chargeback: ...,
      *   createdAt: ...,
      *   explanation: ...,
      *   furtherInformationRequestedAt: ...,
      *   furtherInformationRequestedReason: ...,
-     *   merchantPrearbitrationDecline: ...,
      *   status: ...,
      *   updatedAt: ...,
-     *   userPrearbitration: ...,
      * )
      * ```
      *
@@ -155,15 +153,12 @@ final class UserSubmission implements BaseModel
      *   ->withAmount(...)
      *   ->withAttachmentFiles(...)
      *   ->withCategory(...)
-     *   ->withChargeback(...)
      *   ->withCreatedAt(...)
      *   ->withExplanation(...)
      *   ->withFurtherInformationRequestedAt(...)
      *   ->withFurtherInformationRequestedReason(...)
-     *   ->withMerchantPrearbitrationDecline(...)
      *   ->withStatus(...)
      *   ->withUpdatedAt(...)
-     *   ->withUserPrearbitration(...)
      * ```
      */
     public function __construct()
@@ -178,9 +173,9 @@ final class UserSubmission implements BaseModel
      *
      * @param list<AttachmentFile|AttachmentFileShape> $attachmentFiles
      * @param Category|value-of<Category> $category
+     * @param Status|value-of<Status> $status
      * @param Chargeback|ChargebackShape|null $chargeback
      * @param MerchantPrearbitrationDecline|MerchantPrearbitrationDeclineShape|null $merchantPrearbitrationDecline
-     * @param Status|value-of<Status> $status
      * @param UserPrearbitration|UserPrearbitrationShape|null $userPrearbitration
      */
     public static function with(
@@ -188,15 +183,15 @@ final class UserSubmission implements BaseModel
         ?int $amount,
         array $attachmentFiles,
         Category|string $category,
-        Chargeback|array|null $chargeback,
         \DateTimeInterface $createdAt,
         ?string $explanation,
         ?\DateTimeInterface $furtherInformationRequestedAt,
         ?string $furtherInformationRequestedReason,
-        MerchantPrearbitrationDecline|array|null $merchantPrearbitrationDecline,
         Status|string $status,
         \DateTimeInterface $updatedAt,
-        UserPrearbitration|array|null $userPrearbitration,
+        Chargeback|array|null $chargeback = null,
+        MerchantPrearbitrationDecline|array|null $merchantPrearbitrationDecline = null,
+        UserPrearbitration|array|null $userPrearbitration = null,
     ): self {
         $self = new self;
 
@@ -204,15 +199,16 @@ final class UserSubmission implements BaseModel
         $self['amount'] = $amount;
         $self['attachmentFiles'] = $attachmentFiles;
         $self['category'] = $category;
-        $self['chargeback'] = $chargeback;
         $self['createdAt'] = $createdAt;
         $self['explanation'] = $explanation;
         $self['furtherInformationRequestedAt'] = $furtherInformationRequestedAt;
         $self['furtherInformationRequestedReason'] = $furtherInformationRequestedReason;
-        $self['merchantPrearbitrationDecline'] = $merchantPrearbitrationDecline;
         $self['status'] = $status;
         $self['updatedAt'] = $updatedAt;
-        $self['userPrearbitration'] = $userPrearbitration;
+
+        null !== $chargeback && $self['chargeback'] = $chargeback;
+        null !== $merchantPrearbitrationDecline && $self['merchantPrearbitrationDecline'] = $merchantPrearbitrationDecline;
+        null !== $userPrearbitration && $self['userPrearbitration'] = $userPrearbitration;
 
         return $self;
     }
@@ -266,19 +262,6 @@ final class UserSubmission implements BaseModel
     }
 
     /**
-     * A Visa Card Dispute Chargeback User Submission Chargeback Details object. This field will be present in the JSON response if and only if `category` is equal to `chargeback`. Contains the details specific to a Visa chargeback User Submission for a Card Dispute.
-     *
-     * @param Chargeback|ChargebackShape|null $chargeback
-     */
-    public function withChargeback(Chargeback|array|null $chargeback): self
-    {
-        $self = clone $this;
-        $self['chargeback'] = $chargeback;
-
-        return $self;
-    }
-
-    /**
      * The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which the Visa Card Dispute User Submission was created.
      */
     public function withCreatedAt(\DateTimeInterface $createdAt): self
@@ -325,20 +308,6 @@ final class UserSubmission implements BaseModel
     }
 
     /**
-     * A Visa Card Dispute Merchant Pre-Arbitration Decline User Submission object. This field will be present in the JSON response if and only if `category` is equal to `merchant_prearbitration_decline`. Contains the details specific to a merchant prearbitration decline Visa Card Dispute User Submission.
-     *
-     * @param MerchantPrearbitrationDecline|MerchantPrearbitrationDeclineShape|null $merchantPrearbitrationDecline
-     */
-    public function withMerchantPrearbitrationDecline(
-        MerchantPrearbitrationDecline|array|null $merchantPrearbitrationDecline
-    ): self {
-        $self = clone $this;
-        $self['merchantPrearbitrationDecline'] = $merchantPrearbitrationDecline;
-
-        return $self;
-    }
-
-    /**
      * The status of the Visa Card Dispute User Submission.
      *
      * @param Status|value-of<Status> $status
@@ -358,6 +327,33 @@ final class UserSubmission implements BaseModel
     {
         $self = clone $this;
         $self['updatedAt'] = $updatedAt;
+
+        return $self;
+    }
+
+    /**
+     * A Visa Card Dispute Chargeback User Submission Chargeback Details object. This field will be present in the JSON response if and only if `category` is equal to `chargeback`. Contains the details specific to a Visa chargeback User Submission for a Card Dispute.
+     *
+     * @param Chargeback|ChargebackShape|null $chargeback
+     */
+    public function withChargeback(Chargeback|array|null $chargeback): self
+    {
+        $self = clone $this;
+        $self['chargeback'] = $chargeback;
+
+        return $self;
+    }
+
+    /**
+     * A Visa Card Dispute Merchant Pre-Arbitration Decline User Submission object. This field will be present in the JSON response if and only if `category` is equal to `merchant_prearbitration_decline`. Contains the details specific to a merchant prearbitration decline Visa Card Dispute User Submission.
+     *
+     * @param MerchantPrearbitrationDecline|MerchantPrearbitrationDeclineShape|null $merchantPrearbitrationDecline
+     */
+    public function withMerchantPrearbitrationDecline(
+        MerchantPrearbitrationDecline|array|null $merchantPrearbitrationDecline
+    ): self {
+        $self = clone $this;
+        $self['merchantPrearbitrationDecline'] = $merchantPrearbitrationDecline;
 
         return $self;
     }

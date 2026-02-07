@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Increase\PendingTransactions\PendingTransaction;
 
+use Increase\Core\Attributes\Optional;
 use Increase\Core\Attributes\Required;
 use Increase\Core\Concerns\SdkModel;
 use Increase\Core\Contracts\BaseModel;
@@ -44,65 +45,29 @@ use Increase\PendingTransactions\PendingTransaction\Source\WireTransferInstructi
  * @phpstan-import-type WireTransferInstructionShape from \Increase\PendingTransactions\PendingTransaction\Source\WireTransferInstruction
  *
  * @phpstan-type SourceShape = array{
- *   accountTransferInstruction: null|AccountTransferInstruction|AccountTransferInstructionShape,
- *   achTransferInstruction: null|ACHTransferInstruction|ACHTransferInstructionShape,
- *   blockchainOfframpTransferInstruction: null|BlockchainOfframpTransferInstruction|BlockchainOfframpTransferInstructionShape,
- *   blockchainOnrampTransferInstruction: null|BlockchainOnrampTransferInstruction|BlockchainOnrampTransferInstructionShape,
- *   cardAuthorization: null|CardAuthorization|CardAuthorizationShape,
- *   cardPushTransferInstruction: null|CardPushTransferInstruction|CardPushTransferInstructionShape,
  *   category: Category|value-of<Category>,
- *   checkDepositInstruction: null|CheckDepositInstruction|CheckDepositInstructionShape,
- *   checkTransferInstruction: null|CheckTransferInstruction|CheckTransferInstructionShape,
- *   fednowTransferInstruction: null|FednowTransferInstruction|FednowTransferInstructionShape,
- *   inboundFundsHold: null|InboundFundsHold|InboundFundsHoldShape,
- *   inboundWireTransferReversal: null|InboundWireTransferReversal|InboundWireTransferReversalShape,
- *   other: null|Other|OtherShape,
- *   realTimePaymentsTransferInstruction: null|RealTimePaymentsTransferInstruction|RealTimePaymentsTransferInstructionShape,
- *   swiftTransferInstruction: null|SwiftTransferInstruction|SwiftTransferInstructionShape,
- *   userInitiatedHold: array<string,mixed>|null,
- *   wireTransferInstruction: null|WireTransferInstruction|WireTransferInstructionShape,
+ *   accountTransferInstruction?: null|AccountTransferInstruction|AccountTransferInstructionShape,
+ *   achTransferInstruction?: null|ACHTransferInstruction|ACHTransferInstructionShape,
+ *   blockchainOfframpTransferInstruction?: null|BlockchainOfframpTransferInstruction|BlockchainOfframpTransferInstructionShape,
+ *   blockchainOnrampTransferInstruction?: null|BlockchainOnrampTransferInstruction|BlockchainOnrampTransferInstructionShape,
+ *   cardAuthorization?: null|CardAuthorization|CardAuthorizationShape,
+ *   cardPushTransferInstruction?: null|CardPushTransferInstruction|CardPushTransferInstructionShape,
+ *   checkDepositInstruction?: null|CheckDepositInstruction|CheckDepositInstructionShape,
+ *   checkTransferInstruction?: null|CheckTransferInstruction|CheckTransferInstructionShape,
+ *   fednowTransferInstruction?: null|FednowTransferInstruction|FednowTransferInstructionShape,
+ *   inboundFundsHold?: null|InboundFundsHold|InboundFundsHoldShape,
+ *   inboundWireTransferReversal?: null|InboundWireTransferReversal|InboundWireTransferReversalShape,
+ *   other?: null|Other|OtherShape,
+ *   realTimePaymentsTransferInstruction?: null|RealTimePaymentsTransferInstruction|RealTimePaymentsTransferInstructionShape,
+ *   swiftTransferInstruction?: null|SwiftTransferInstruction|SwiftTransferInstructionShape,
+ *   userInitiatedHold?: array<string,mixed>|null,
+ *   wireTransferInstruction?: null|WireTransferInstruction|WireTransferInstructionShape,
  * }
  */
 final class Source implements BaseModel
 {
     /** @use SdkModel<SourceShape> */
     use SdkModel;
-
-    /**
-     * An Account Transfer Instruction object. This field will be present in the JSON response if and only if `category` is equal to `account_transfer_instruction`.
-     */
-    #[Required('account_transfer_instruction')]
-    public ?AccountTransferInstruction $accountTransferInstruction;
-
-    /**
-     * An ACH Transfer Instruction object. This field will be present in the JSON response if and only if `category` is equal to `ach_transfer_instruction`.
-     */
-    #[Required('ach_transfer_instruction')]
-    public ?ACHTransferInstruction $achTransferInstruction;
-
-    /**
-     * A Blockchain Off-Ramp Transfer Instruction object. This field will be present in the JSON response if and only if `category` is equal to `blockchain_offramp_transfer_instruction`.
-     */
-    #[Required('blockchain_offramp_transfer_instruction')]
-    public ?BlockchainOfframpTransferInstruction $blockchainOfframpTransferInstruction;
-
-    /**
-     * A Blockchain On-Ramp Transfer Instruction object. This field will be present in the JSON response if and only if `category` is equal to `blockchain_onramp_transfer_instruction`.
-     */
-    #[Required('blockchain_onramp_transfer_instruction')]
-    public ?BlockchainOnrampTransferInstruction $blockchainOnrampTransferInstruction;
-
-    /**
-     * A Card Authorization object. This field will be present in the JSON response if and only if `category` is equal to `card_authorization`. Card Authorizations are temporary holds placed on a customers funds with the intent to later clear a transaction.
-     */
-    #[Required('card_authorization')]
-    public ?CardAuthorization $cardAuthorization;
-
-    /**
-     * A Card Push Transfer Instruction object. This field will be present in the JSON response if and only if `category` is equal to `card_push_transfer_instruction`.
-     */
-    #[Required('card_push_transfer_instruction')]
-    public ?CardPushTransferInstruction $cardPushTransferInstruction;
 
     /**
      * The type of the resource. We may add additional possible values for this enum over time; your application should be able to handle such additions gracefully.
@@ -113,51 +78,87 @@ final class Source implements BaseModel
     public string $category;
 
     /**
+     * An Account Transfer Instruction object. This field will be present in the JSON response if and only if `category` is equal to `account_transfer_instruction`.
+     */
+    #[Optional('account_transfer_instruction', nullable: true)]
+    public ?AccountTransferInstruction $accountTransferInstruction;
+
+    /**
+     * An ACH Transfer Instruction object. This field will be present in the JSON response if and only if `category` is equal to `ach_transfer_instruction`.
+     */
+    #[Optional('ach_transfer_instruction', nullable: true)]
+    public ?ACHTransferInstruction $achTransferInstruction;
+
+    /**
+     * A Blockchain Off-Ramp Transfer Instruction object. This field will be present in the JSON response if and only if `category` is equal to `blockchain_offramp_transfer_instruction`.
+     */
+    #[Optional('blockchain_offramp_transfer_instruction', nullable: true)]
+    public ?BlockchainOfframpTransferInstruction $blockchainOfframpTransferInstruction;
+
+    /**
+     * A Blockchain On-Ramp Transfer Instruction object. This field will be present in the JSON response if and only if `category` is equal to `blockchain_onramp_transfer_instruction`.
+     */
+    #[Optional('blockchain_onramp_transfer_instruction', nullable: true)]
+    public ?BlockchainOnrampTransferInstruction $blockchainOnrampTransferInstruction;
+
+    /**
+     * A Card Authorization object. This field will be present in the JSON response if and only if `category` is equal to `card_authorization`. Card Authorizations are temporary holds placed on a customers funds with the intent to later clear a transaction.
+     */
+    #[Optional('card_authorization', nullable: true)]
+    public ?CardAuthorization $cardAuthorization;
+
+    /**
+     * A Card Push Transfer Instruction object. This field will be present in the JSON response if and only if `category` is equal to `card_push_transfer_instruction`.
+     */
+    #[Optional('card_push_transfer_instruction', nullable: true)]
+    public ?CardPushTransferInstruction $cardPushTransferInstruction;
+
+    /**
      * A Check Deposit Instruction object. This field will be present in the JSON response if and only if `category` is equal to `check_deposit_instruction`.
      */
-    #[Required('check_deposit_instruction')]
+    #[Optional('check_deposit_instruction', nullable: true)]
     public ?CheckDepositInstruction $checkDepositInstruction;
 
     /**
      * A Check Transfer Instruction object. This field will be present in the JSON response if and only if `category` is equal to `check_transfer_instruction`.
      */
-    #[Required('check_transfer_instruction')]
+    #[Optional('check_transfer_instruction', nullable: true)]
     public ?CheckTransferInstruction $checkTransferInstruction;
 
     /**
      * A FedNow Transfer Instruction object. This field will be present in the JSON response if and only if `category` is equal to `fednow_transfer_instruction`.
      */
-    #[Required('fednow_transfer_instruction')]
+    #[Optional('fednow_transfer_instruction', nullable: true)]
     public ?FednowTransferInstruction $fednowTransferInstruction;
 
     /**
      * An Inbound Funds Hold object. This field will be present in the JSON response if and only if `category` is equal to `inbound_funds_hold`. We hold funds for certain transaction types to account for return windows where funds might still be clawed back by the sending institution.
      */
-    #[Required('inbound_funds_hold')]
+    #[Optional('inbound_funds_hold', nullable: true)]
     public ?InboundFundsHold $inboundFundsHold;
 
     /**
      * An Inbound Wire Transfer Reversal object. This field will be present in the JSON response if and only if `category` is equal to `inbound_wire_transfer_reversal`. An Inbound Wire Transfer Reversal is created when Increase has received a wire and the User requests that it be reversed.
      */
-    #[Required('inbound_wire_transfer_reversal')]
+    #[Optional('inbound_wire_transfer_reversal', nullable: true)]
     public ?InboundWireTransferReversal $inboundWireTransferReversal;
 
     /**
      * If the category of this Transaction source is equal to `other`, this field will contain an empty object, otherwise it will contain null.
      */
-    #[Required]
+    #[Optional(nullable: true)]
     public ?Other $other;
 
     /**
      * A Real-Time Payments Transfer Instruction object. This field will be present in the JSON response if and only if `category` is equal to `real_time_payments_transfer_instruction`.
      */
-    #[Required('real_time_payments_transfer_instruction')]
+    #[Optional('real_time_payments_transfer_instruction', nullable: true)]
     public ?RealTimePaymentsTransferInstruction $realTimePaymentsTransferInstruction;
 
     /**
      * A Swift Transfer Instruction object. This field will be present in the JSON response if and only if `category` is equal to `swift_transfer_instruction`.
      */
-    #[Required('swift_transfer_instruction')]
+    #[Optional('swift_transfer_instruction', nullable: true)]
     public ?SwiftTransferInstruction $swiftTransferInstruction;
 
     /**
@@ -165,13 +166,13 @@ final class Source implements BaseModel
      *
      * @var array<string,mixed>|null $userInitiatedHold
      */
-    #[Required('user_initiated_hold', map: 'mixed')]
+    #[Optional('user_initiated_hold', map: 'mixed', nullable: true)]
     public ?array $userInitiatedHold;
 
     /**
      * A Wire Transfer Instruction object. This field will be present in the JSON response if and only if `category` is equal to `wire_transfer_instruction`.
      */
-    #[Required('wire_transfer_instruction')]
+    #[Optional('wire_transfer_instruction', nullable: true)]
     public ?WireTransferInstruction $wireTransferInstruction;
 
     /**
@@ -179,48 +180,13 @@ final class Source implements BaseModel
      *
      * To enforce required parameters use
      * ```
-     * Source::with(
-     *   accountTransferInstruction: ...,
-     *   achTransferInstruction: ...,
-     *   blockchainOfframpTransferInstruction: ...,
-     *   blockchainOnrampTransferInstruction: ...,
-     *   cardAuthorization: ...,
-     *   cardPushTransferInstruction: ...,
-     *   category: ...,
-     *   checkDepositInstruction: ...,
-     *   checkTransferInstruction: ...,
-     *   fednowTransferInstruction: ...,
-     *   inboundFundsHold: ...,
-     *   inboundWireTransferReversal: ...,
-     *   other: ...,
-     *   realTimePaymentsTransferInstruction: ...,
-     *   swiftTransferInstruction: ...,
-     *   userInitiatedHold: ...,
-     *   wireTransferInstruction: ...,
-     * )
+     * Source::with(category: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new Source)
-     *   ->withAccountTransferInstruction(...)
-     *   ->withACHTransferInstruction(...)
-     *   ->withBlockchainOfframpTransferInstruction(...)
-     *   ->withBlockchainOnrampTransferInstruction(...)
-     *   ->withCardAuthorization(...)
-     *   ->withCardPushTransferInstruction(...)
-     *   ->withCategory(...)
-     *   ->withCheckDepositInstruction(...)
-     *   ->withCheckTransferInstruction(...)
-     *   ->withFednowTransferInstruction(...)
-     *   ->withInboundFundsHold(...)
-     *   ->withInboundWireTransferReversal(...)
-     *   ->withOther(...)
-     *   ->withRealTimePaymentsTransferInstruction(...)
-     *   ->withSwiftTransferInstruction(...)
-     *   ->withUserInitiatedHold(...)
-     *   ->withWireTransferInstruction(...)
+     * (new Source)->withCategory(...)
      * ```
      */
     public function __construct()
@@ -233,13 +199,13 @@ final class Source implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
+     * @param Category|value-of<Category> $category
      * @param AccountTransferInstruction|AccountTransferInstructionShape|null $accountTransferInstruction
      * @param ACHTransferInstruction|ACHTransferInstructionShape|null $achTransferInstruction
      * @param BlockchainOfframpTransferInstruction|BlockchainOfframpTransferInstructionShape|null $blockchainOfframpTransferInstruction
      * @param BlockchainOnrampTransferInstruction|BlockchainOnrampTransferInstructionShape|null $blockchainOnrampTransferInstruction
      * @param CardAuthorization|CardAuthorizationShape|null $cardAuthorization
      * @param CardPushTransferInstruction|CardPushTransferInstructionShape|null $cardPushTransferInstruction
-     * @param Category|value-of<Category> $category
      * @param CheckDepositInstruction|CheckDepositInstructionShape|null $checkDepositInstruction
      * @param CheckTransferInstruction|CheckTransferInstructionShape|null $checkTransferInstruction
      * @param FednowTransferInstruction|FednowTransferInstructionShape|null $fednowTransferInstruction
@@ -252,43 +218,57 @@ final class Source implements BaseModel
      * @param WireTransferInstruction|WireTransferInstructionShape|null $wireTransferInstruction
      */
     public static function with(
-        AccountTransferInstruction|array|null $accountTransferInstruction,
-        ACHTransferInstruction|array|null $achTransferInstruction,
-        BlockchainOfframpTransferInstruction|array|null $blockchainOfframpTransferInstruction,
-        BlockchainOnrampTransferInstruction|array|null $blockchainOnrampTransferInstruction,
-        CardAuthorization|array|null $cardAuthorization,
-        CardPushTransferInstruction|array|null $cardPushTransferInstruction,
         Category|string $category,
-        CheckDepositInstruction|array|null $checkDepositInstruction,
-        CheckTransferInstruction|array|null $checkTransferInstruction,
-        FednowTransferInstruction|array|null $fednowTransferInstruction,
-        InboundFundsHold|array|null $inboundFundsHold,
-        InboundWireTransferReversal|array|null $inboundWireTransferReversal,
-        Other|array|null $other,
-        RealTimePaymentsTransferInstruction|array|null $realTimePaymentsTransferInstruction,
-        SwiftTransferInstruction|array|null $swiftTransferInstruction,
-        ?array $userInitiatedHold,
-        WireTransferInstruction|array|null $wireTransferInstruction,
+        AccountTransferInstruction|array|null $accountTransferInstruction = null,
+        ACHTransferInstruction|array|null $achTransferInstruction = null,
+        BlockchainOfframpTransferInstruction|array|null $blockchainOfframpTransferInstruction = null,
+        BlockchainOnrampTransferInstruction|array|null $blockchainOnrampTransferInstruction = null,
+        CardAuthorization|array|null $cardAuthorization = null,
+        CardPushTransferInstruction|array|null $cardPushTransferInstruction = null,
+        CheckDepositInstruction|array|null $checkDepositInstruction = null,
+        CheckTransferInstruction|array|null $checkTransferInstruction = null,
+        FednowTransferInstruction|array|null $fednowTransferInstruction = null,
+        InboundFundsHold|array|null $inboundFundsHold = null,
+        InboundWireTransferReversal|array|null $inboundWireTransferReversal = null,
+        Other|array|null $other = null,
+        RealTimePaymentsTransferInstruction|array|null $realTimePaymentsTransferInstruction = null,
+        SwiftTransferInstruction|array|null $swiftTransferInstruction = null,
+        ?array $userInitiatedHold = null,
+        WireTransferInstruction|array|null $wireTransferInstruction = null,
     ): self {
         $self = new self;
 
-        $self['accountTransferInstruction'] = $accountTransferInstruction;
-        $self['achTransferInstruction'] = $achTransferInstruction;
-        $self['blockchainOfframpTransferInstruction'] = $blockchainOfframpTransferInstruction;
-        $self['blockchainOnrampTransferInstruction'] = $blockchainOnrampTransferInstruction;
-        $self['cardAuthorization'] = $cardAuthorization;
-        $self['cardPushTransferInstruction'] = $cardPushTransferInstruction;
         $self['category'] = $category;
-        $self['checkDepositInstruction'] = $checkDepositInstruction;
-        $self['checkTransferInstruction'] = $checkTransferInstruction;
-        $self['fednowTransferInstruction'] = $fednowTransferInstruction;
-        $self['inboundFundsHold'] = $inboundFundsHold;
-        $self['inboundWireTransferReversal'] = $inboundWireTransferReversal;
-        $self['other'] = $other;
-        $self['realTimePaymentsTransferInstruction'] = $realTimePaymentsTransferInstruction;
-        $self['swiftTransferInstruction'] = $swiftTransferInstruction;
-        $self['userInitiatedHold'] = $userInitiatedHold;
-        $self['wireTransferInstruction'] = $wireTransferInstruction;
+
+        null !== $accountTransferInstruction && $self['accountTransferInstruction'] = $accountTransferInstruction;
+        null !== $achTransferInstruction && $self['achTransferInstruction'] = $achTransferInstruction;
+        null !== $blockchainOfframpTransferInstruction && $self['blockchainOfframpTransferInstruction'] = $blockchainOfframpTransferInstruction;
+        null !== $blockchainOnrampTransferInstruction && $self['blockchainOnrampTransferInstruction'] = $blockchainOnrampTransferInstruction;
+        null !== $cardAuthorization && $self['cardAuthorization'] = $cardAuthorization;
+        null !== $cardPushTransferInstruction && $self['cardPushTransferInstruction'] = $cardPushTransferInstruction;
+        null !== $checkDepositInstruction && $self['checkDepositInstruction'] = $checkDepositInstruction;
+        null !== $checkTransferInstruction && $self['checkTransferInstruction'] = $checkTransferInstruction;
+        null !== $fednowTransferInstruction && $self['fednowTransferInstruction'] = $fednowTransferInstruction;
+        null !== $inboundFundsHold && $self['inboundFundsHold'] = $inboundFundsHold;
+        null !== $inboundWireTransferReversal && $self['inboundWireTransferReversal'] = $inboundWireTransferReversal;
+        null !== $other && $self['other'] = $other;
+        null !== $realTimePaymentsTransferInstruction && $self['realTimePaymentsTransferInstruction'] = $realTimePaymentsTransferInstruction;
+        null !== $swiftTransferInstruction && $self['swiftTransferInstruction'] = $swiftTransferInstruction;
+        null !== $userInitiatedHold && $self['userInitiatedHold'] = $userInitiatedHold;
+        null !== $wireTransferInstruction && $self['wireTransferInstruction'] = $wireTransferInstruction;
+
+        return $self;
+    }
+
+    /**
+     * The type of the resource. We may add additional possible values for this enum over time; your application should be able to handle such additions gracefully.
+     *
+     * @param Category|value-of<Category> $category
+     */
+    public function withCategory(Category|string $category): self
+    {
+        $self = clone $this;
+        $self['category'] = $category;
 
         return $self;
     }
@@ -373,19 +353,6 @@ final class Source implements BaseModel
     ): self {
         $self = clone $this;
         $self['cardPushTransferInstruction'] = $cardPushTransferInstruction;
-
-        return $self;
-    }
-
-    /**
-     * The type of the resource. We may add additional possible values for this enum over time; your application should be able to handle such additions gracefully.
-     *
-     * @param Category|value-of<Category> $category
-     */
-    public function withCategory(Category|string $category): self
-    {
-        $self = clone $this;
-        $self['category'] = $category;
 
         return $self;
     }

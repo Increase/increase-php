@@ -18,6 +18,7 @@ use Increase\CardPayments\CardPayment\Element\CardSettlement;
 use Increase\CardPayments\CardPayment\Element\CardValidation;
 use Increase\CardPayments\CardPayment\Element\Category;
 use Increase\CardPayments\CardPayment\Element\Other;
+use Increase\Core\Attributes\Optional;
 use Increase\Core\Attributes\Required;
 use Increase\Core\Concerns\SdkModel;
 use Increase\Core\Contracts\BaseModel;
@@ -38,99 +39,27 @@ use Increase\Core\Contracts\BaseModel;
  * @phpstan-import-type OtherShape from \Increase\CardPayments\CardPayment\Element\Other
  *
  * @phpstan-type ElementShape = array{
- *   cardAuthentication: null|CardAuthentication|CardAuthenticationShape,
- *   cardAuthorization: null|CardAuthorization|CardAuthorizationShape,
- *   cardAuthorizationExpiration: null|CardAuthorizationExpiration|CardAuthorizationExpirationShape,
- *   cardBalanceInquiry: null|CardBalanceInquiry|CardBalanceInquiryShape,
- *   cardDecline: null|CardDecline|CardDeclineShape,
- *   cardFinancial: null|CardFinancial|CardFinancialShape,
- *   cardFuelConfirmation: null|CardFuelConfirmation|CardFuelConfirmationShape,
- *   cardIncrement: null|CardIncrement|CardIncrementShape,
- *   cardRefund: null|CardRefund|CardRefundShape,
- *   cardReversal: null|CardReversal|CardReversalShape,
- *   cardSettlement: null|CardSettlement|CardSettlementShape,
- *   cardValidation: null|CardValidation|CardValidationShape,
  *   category: Category|value-of<Category>,
  *   createdAt: \DateTimeInterface,
- *   other: null|Other|OtherShape,
+ *   cardAuthentication?: null|CardAuthentication|CardAuthenticationShape,
+ *   cardAuthorization?: null|CardAuthorization|CardAuthorizationShape,
+ *   cardAuthorizationExpiration?: null|CardAuthorizationExpiration|CardAuthorizationExpirationShape,
+ *   cardBalanceInquiry?: null|CardBalanceInquiry|CardBalanceInquiryShape,
+ *   cardDecline?: null|CardDecline|CardDeclineShape,
+ *   cardFinancial?: null|CardFinancial|CardFinancialShape,
+ *   cardFuelConfirmation?: null|CardFuelConfirmation|CardFuelConfirmationShape,
+ *   cardIncrement?: null|CardIncrement|CardIncrementShape,
+ *   cardRefund?: null|CardRefund|CardRefundShape,
+ *   cardReversal?: null|CardReversal|CardReversalShape,
+ *   cardSettlement?: null|CardSettlement|CardSettlementShape,
+ *   cardValidation?: null|CardValidation|CardValidationShape,
+ *   other?: null|Other|OtherShape,
  * }
  */
 final class Element implements BaseModel
 {
     /** @use SdkModel<ElementShape> */
     use SdkModel;
-
-    /**
-     * A Card Authentication object. This field will be present in the JSON response if and only if `category` is equal to `card_authentication`. Card Authentications are attempts to authenticate a transaction or a card with 3DS.
-     */
-    #[Required('card_authentication')]
-    public ?CardAuthentication $cardAuthentication;
-
-    /**
-     * A Card Authorization object. This field will be present in the JSON response if and only if `category` is equal to `card_authorization`. Card Authorizations are temporary holds placed on a customers funds with the intent to later clear a transaction.
-     */
-    #[Required('card_authorization')]
-    public ?CardAuthorization $cardAuthorization;
-
-    /**
-     * A Card Authorization Expiration object. This field will be present in the JSON response if and only if `category` is equal to `card_authorization_expiration`. Card Authorization Expirations are cancellations of authorizations that were never settled by the acquirer.
-     */
-    #[Required('card_authorization_expiration')]
-    public ?CardAuthorizationExpiration $cardAuthorizationExpiration;
-
-    /**
-     * A Card Balance Inquiry object. This field will be present in the JSON response if and only if `category` is equal to `card_balance_inquiry`. Card Balance Inquiries are transactions that allow merchants to check the available balance on a card without placing a hold on funds, commonly used when a customer requests their balance at an ATM.
-     */
-    #[Required('card_balance_inquiry')]
-    public ?CardBalanceInquiry $cardBalanceInquiry;
-
-    /**
-     * A Card Decline object. This field will be present in the JSON response if and only if `category` is equal to `card_decline`.
-     */
-    #[Required('card_decline')]
-    public ?CardDecline $cardDecline;
-
-    /**
-     * A Card Financial object. This field will be present in the JSON response if and only if `category` is equal to `card_financial`. Card Financials are temporary holds placed on a customers funds with the intent to later clear a transaction.
-     */
-    #[Required('card_financial')]
-    public ?CardFinancial $cardFinancial;
-
-    /**
-     * A Card Fuel Confirmation object. This field will be present in the JSON response if and only if `category` is equal to `card_fuel_confirmation`. Card Fuel Confirmations update the amount of a Card Authorization after a fuel pump transaction is completed.
-     */
-    #[Required('card_fuel_confirmation')]
-    public ?CardFuelConfirmation $cardFuelConfirmation;
-
-    /**
-     * A Card Increment object. This field will be present in the JSON response if and only if `category` is equal to `card_increment`. Card Increments increase the pending amount of an authorized transaction.
-     */
-    #[Required('card_increment')]
-    public ?CardIncrement $cardIncrement;
-
-    /**
-     * A Card Refund object. This field will be present in the JSON response if and only if `category` is equal to `card_refund`. Card Refunds move money back to the cardholder. While they are usually connected to a Card Settlement an acquirer can also refund money directly to a card without relation to a transaction.
-     */
-    #[Required('card_refund')]
-    public ?CardRefund $cardRefund;
-
-    /**
-     * A Card Reversal object. This field will be present in the JSON response if and only if `category` is equal to `card_reversal`. Card Reversals cancel parts of or the entirety of an existing Card Authorization.
-     */
-    #[Required('card_reversal')]
-    public ?CardReversal $cardReversal;
-
-    /**
-     * A Card Settlement object. This field will be present in the JSON response if and only if `category` is equal to `card_settlement`. Card Settlements are card transactions that have cleared and settled. While a settlement is usually preceded by an authorization, an acquirer can also directly clear a transaction without first authorizing it.
-     */
-    #[Required('card_settlement')]
-    public ?CardSettlement $cardSettlement;
-
-    /**
-     * An Inbound Card Validation object. This field will be present in the JSON response if and only if `category` is equal to `card_validation`. Inbound Card Validations are requests from a merchant to verify that a card number and optionally its address and/or Card Verification Value are valid.
-     */
-    #[Required('card_validation')]
-    public ?CardValidation $cardValidation;
 
     /**
      * The type of the resource. We may add additional possible values for this enum over time; your application should be able to handle such additions gracefully.
@@ -147,9 +76,81 @@ final class Element implements BaseModel
     public \DateTimeInterface $createdAt;
 
     /**
+     * A Card Authentication object. This field will be present in the JSON response if and only if `category` is equal to `card_authentication`. Card Authentications are attempts to authenticate a transaction or a card with 3DS.
+     */
+    #[Optional('card_authentication', nullable: true)]
+    public ?CardAuthentication $cardAuthentication;
+
+    /**
+     * A Card Authorization object. This field will be present in the JSON response if and only if `category` is equal to `card_authorization`. Card Authorizations are temporary holds placed on a customers funds with the intent to later clear a transaction.
+     */
+    #[Optional('card_authorization', nullable: true)]
+    public ?CardAuthorization $cardAuthorization;
+
+    /**
+     * A Card Authorization Expiration object. This field will be present in the JSON response if and only if `category` is equal to `card_authorization_expiration`. Card Authorization Expirations are cancellations of authorizations that were never settled by the acquirer.
+     */
+    #[Optional('card_authorization_expiration', nullable: true)]
+    public ?CardAuthorizationExpiration $cardAuthorizationExpiration;
+
+    /**
+     * A Card Balance Inquiry object. This field will be present in the JSON response if and only if `category` is equal to `card_balance_inquiry`. Card Balance Inquiries are transactions that allow merchants to check the available balance on a card without placing a hold on funds, commonly used when a customer requests their balance at an ATM.
+     */
+    #[Optional('card_balance_inquiry', nullable: true)]
+    public ?CardBalanceInquiry $cardBalanceInquiry;
+
+    /**
+     * A Card Decline object. This field will be present in the JSON response if and only if `category` is equal to `card_decline`.
+     */
+    #[Optional('card_decline', nullable: true)]
+    public ?CardDecline $cardDecline;
+
+    /**
+     * A Card Financial object. This field will be present in the JSON response if and only if `category` is equal to `card_financial`. Card Financials are temporary holds placed on a customers funds with the intent to later clear a transaction.
+     */
+    #[Optional('card_financial', nullable: true)]
+    public ?CardFinancial $cardFinancial;
+
+    /**
+     * A Card Fuel Confirmation object. This field will be present in the JSON response if and only if `category` is equal to `card_fuel_confirmation`. Card Fuel Confirmations update the amount of a Card Authorization after a fuel pump transaction is completed.
+     */
+    #[Optional('card_fuel_confirmation', nullable: true)]
+    public ?CardFuelConfirmation $cardFuelConfirmation;
+
+    /**
+     * A Card Increment object. This field will be present in the JSON response if and only if `category` is equal to `card_increment`. Card Increments increase the pending amount of an authorized transaction.
+     */
+    #[Optional('card_increment', nullable: true)]
+    public ?CardIncrement $cardIncrement;
+
+    /**
+     * A Card Refund object. This field will be present in the JSON response if and only if `category` is equal to `card_refund`. Card Refunds move money back to the cardholder. While they are usually connected to a Card Settlement an acquirer can also refund money directly to a card without relation to a transaction.
+     */
+    #[Optional('card_refund', nullable: true)]
+    public ?CardRefund $cardRefund;
+
+    /**
+     * A Card Reversal object. This field will be present in the JSON response if and only if `category` is equal to `card_reversal`. Card Reversals cancel parts of or the entirety of an existing Card Authorization.
+     */
+    #[Optional('card_reversal', nullable: true)]
+    public ?CardReversal $cardReversal;
+
+    /**
+     * A Card Settlement object. This field will be present in the JSON response if and only if `category` is equal to `card_settlement`. Card Settlements are card transactions that have cleared and settled. While a settlement is usually preceded by an authorization, an acquirer can also directly clear a transaction without first authorizing it.
+     */
+    #[Optional('card_settlement', nullable: true)]
+    public ?CardSettlement $cardSettlement;
+
+    /**
+     * An Inbound Card Validation object. This field will be present in the JSON response if and only if `category` is equal to `card_validation`. Inbound Card Validations are requests from a merchant to verify that a card number and optionally its address and/or Card Verification Value are valid.
+     */
+    #[Optional('card_validation', nullable: true)]
+    public ?CardValidation $cardValidation;
+
+    /**
      * If the category of this Transaction source is equal to `other`, this field will contain an empty object, otherwise it will contain null.
      */
-    #[Required]
+    #[Optional(nullable: true)]
     public ?Other $other;
 
     /**
@@ -157,44 +158,13 @@ final class Element implements BaseModel
      *
      * To enforce required parameters use
      * ```
-     * Element::with(
-     *   cardAuthentication: ...,
-     *   cardAuthorization: ...,
-     *   cardAuthorizationExpiration: ...,
-     *   cardBalanceInquiry: ...,
-     *   cardDecline: ...,
-     *   cardFinancial: ...,
-     *   cardFuelConfirmation: ...,
-     *   cardIncrement: ...,
-     *   cardRefund: ...,
-     *   cardReversal: ...,
-     *   cardSettlement: ...,
-     *   cardValidation: ...,
-     *   category: ...,
-     *   createdAt: ...,
-     *   other: ...,
-     * )
+     * Element::with(category: ..., createdAt: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new Element)
-     *   ->withCardAuthentication(...)
-     *   ->withCardAuthorization(...)
-     *   ->withCardAuthorizationExpiration(...)
-     *   ->withCardBalanceInquiry(...)
-     *   ->withCardDecline(...)
-     *   ->withCardFinancial(...)
-     *   ->withCardFuelConfirmation(...)
-     *   ->withCardIncrement(...)
-     *   ->withCardRefund(...)
-     *   ->withCardReversal(...)
-     *   ->withCardSettlement(...)
-     *   ->withCardValidation(...)
-     *   ->withCategory(...)
-     *   ->withCreatedAt(...)
-     *   ->withOther(...)
+     * (new Element)->withCategory(...)->withCreatedAt(...)
      * ```
      */
     public function __construct()
@@ -207,6 +177,7 @@ final class Element implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
+     * @param Category|value-of<Category> $category
      * @param CardAuthentication|CardAuthenticationShape|null $cardAuthentication
      * @param CardAuthorization|CardAuthorizationShape|null $cardAuthorization
      * @param CardAuthorizationExpiration|CardAuthorizationExpirationShape|null $cardAuthorizationExpiration
@@ -219,43 +190,67 @@ final class Element implements BaseModel
      * @param CardReversal|CardReversalShape|null $cardReversal
      * @param CardSettlement|CardSettlementShape|null $cardSettlement
      * @param CardValidation|CardValidationShape|null $cardValidation
-     * @param Category|value-of<Category> $category
      * @param Other|OtherShape|null $other
      */
     public static function with(
-        CardAuthentication|array|null $cardAuthentication,
-        CardAuthorization|array|null $cardAuthorization,
-        CardAuthorizationExpiration|array|null $cardAuthorizationExpiration,
-        CardBalanceInquiry|array|null $cardBalanceInquiry,
-        CardDecline|array|null $cardDecline,
-        CardFinancial|array|null $cardFinancial,
-        CardFuelConfirmation|array|null $cardFuelConfirmation,
-        CardIncrement|array|null $cardIncrement,
-        CardRefund|array|null $cardRefund,
-        CardReversal|array|null $cardReversal,
-        CardSettlement|array|null $cardSettlement,
-        CardValidation|array|null $cardValidation,
         Category|string $category,
         \DateTimeInterface $createdAt,
-        Other|array|null $other,
+        CardAuthentication|array|null $cardAuthentication = null,
+        CardAuthorization|array|null $cardAuthorization = null,
+        CardAuthorizationExpiration|array|null $cardAuthorizationExpiration = null,
+        CardBalanceInquiry|array|null $cardBalanceInquiry = null,
+        CardDecline|array|null $cardDecline = null,
+        CardFinancial|array|null $cardFinancial = null,
+        CardFuelConfirmation|array|null $cardFuelConfirmation = null,
+        CardIncrement|array|null $cardIncrement = null,
+        CardRefund|array|null $cardRefund = null,
+        CardReversal|array|null $cardReversal = null,
+        CardSettlement|array|null $cardSettlement = null,
+        CardValidation|array|null $cardValidation = null,
+        Other|array|null $other = null,
     ): self {
         $self = new self;
 
-        $self['cardAuthentication'] = $cardAuthentication;
-        $self['cardAuthorization'] = $cardAuthorization;
-        $self['cardAuthorizationExpiration'] = $cardAuthorizationExpiration;
-        $self['cardBalanceInquiry'] = $cardBalanceInquiry;
-        $self['cardDecline'] = $cardDecline;
-        $self['cardFinancial'] = $cardFinancial;
-        $self['cardFuelConfirmation'] = $cardFuelConfirmation;
-        $self['cardIncrement'] = $cardIncrement;
-        $self['cardRefund'] = $cardRefund;
-        $self['cardReversal'] = $cardReversal;
-        $self['cardSettlement'] = $cardSettlement;
-        $self['cardValidation'] = $cardValidation;
         $self['category'] = $category;
         $self['createdAt'] = $createdAt;
-        $self['other'] = $other;
+
+        null !== $cardAuthentication && $self['cardAuthentication'] = $cardAuthentication;
+        null !== $cardAuthorization && $self['cardAuthorization'] = $cardAuthorization;
+        null !== $cardAuthorizationExpiration && $self['cardAuthorizationExpiration'] = $cardAuthorizationExpiration;
+        null !== $cardBalanceInquiry && $self['cardBalanceInquiry'] = $cardBalanceInquiry;
+        null !== $cardDecline && $self['cardDecline'] = $cardDecline;
+        null !== $cardFinancial && $self['cardFinancial'] = $cardFinancial;
+        null !== $cardFuelConfirmation && $self['cardFuelConfirmation'] = $cardFuelConfirmation;
+        null !== $cardIncrement && $self['cardIncrement'] = $cardIncrement;
+        null !== $cardRefund && $self['cardRefund'] = $cardRefund;
+        null !== $cardReversal && $self['cardReversal'] = $cardReversal;
+        null !== $cardSettlement && $self['cardSettlement'] = $cardSettlement;
+        null !== $cardValidation && $self['cardValidation'] = $cardValidation;
+        null !== $other && $self['other'] = $other;
+
+        return $self;
+    }
+
+    /**
+     * The type of the resource. We may add additional possible values for this enum over time; your application should be able to handle such additions gracefully.
+     *
+     * @param Category|value-of<Category> $category
+     */
+    public function withCategory(Category|string $category): self
+    {
+        $self = clone $this;
+        $self['category'] = $category;
+
+        return $self;
+    }
+
+    /**
+     * The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which the card payment element was created.
+     */
+    public function withCreatedAt(\DateTimeInterface $createdAt): self
+    {
+        $self = clone $this;
+        $self['createdAt'] = $createdAt;
 
         return $self;
     }
@@ -422,30 +417,6 @@ final class Element implements BaseModel
     ): self {
         $self = clone $this;
         $self['cardValidation'] = $cardValidation;
-
-        return $self;
-    }
-
-    /**
-     * The type of the resource. We may add additional possible values for this enum over time; your application should be able to handle such additions gracefully.
-     *
-     * @param Category|value-of<Category> $category
-     */
-    public function withCategory(Category|string $category): self
-    {
-        $self = clone $this;
-        $self['category'] = $category;
-
-        return $self;
-    }
-
-    /**
-     * The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which the card payment element was created.
-     */
-    public function withCreatedAt(\DateTimeInterface $createdAt): self
-    {
-        $self = clone $this;
-        $self['createdAt'] = $createdAt;
 
         return $self;
     }

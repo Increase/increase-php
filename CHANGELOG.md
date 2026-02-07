@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.29.0 (2026-02-07)
+
+Full Changelog: [v0.28.0...v0.29.0](https://github.com/Increase/increase-php/compare/v0.28.0...v0.29.0)
+
+### Features
+
+* **api:** api update ([91ee39f](https://github.com/Increase/increase-php/commit/91ee39f28a93655a31f351c982317ce4cabcd645))
+
 ## 0.28.0 (2026-02-06)
 
 Full Changelog: [v0.27.0...v0.28.0](https://github.com/Increase/increase-php/compare/v0.27.0...v0.28.0)

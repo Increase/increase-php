@@ -7,6 +7,7 @@ namespace Increase\ACHTransfers\ACHTransfer;
 use Increase\ACHTransfers\ACHTransfer\Addenda\Category;
 use Increase\ACHTransfers\ACHTransfer\Addenda\Freeform;
 use Increase\ACHTransfers\ACHTransfer\Addenda\PaymentOrderRemittanceAdvice;
+use Increase\Core\Attributes\Optional;
 use Increase\Core\Attributes\Required;
 use Increase\Core\Concerns\SdkModel;
 use Increase\Core\Contracts\BaseModel;
@@ -19,8 +20,8 @@ use Increase\Core\Contracts\BaseModel;
  *
  * @phpstan-type AddendaShape = array{
  *   category: Category|value-of<Category>,
- *   freeform: null|Freeform|FreeformShape,
- *   paymentOrderRemittanceAdvice: null|PaymentOrderRemittanceAdvice|PaymentOrderRemittanceAdviceShape,
+ *   freeform?: null|Freeform|FreeformShape,
+ *   paymentOrderRemittanceAdvice?: null|PaymentOrderRemittanceAdvice|PaymentOrderRemittanceAdviceShape,
  * }
  */
 final class Addenda implements BaseModel
@@ -39,13 +40,13 @@ final class Addenda implements BaseModel
     /**
      * Unstructured `payment_related_information` passed through with the transfer.
      */
-    #[Required]
+    #[Optional(nullable: true)]
     public ?Freeform $freeform;
 
     /**
      * Structured ASC X12 820 remittance advice records. Please reach out to [support@increase.com](mailto:support@increase.com) for more information.
      */
-    #[Required('payment_order_remittance_advice')]
+    #[Optional('payment_order_remittance_advice', nullable: true)]
     public ?PaymentOrderRemittanceAdvice $paymentOrderRemittanceAdvice;
 
     /**
@@ -53,16 +54,13 @@ final class Addenda implements BaseModel
      *
      * To enforce required parameters use
      * ```
-     * Addenda::with(category: ..., freeform: ..., paymentOrderRemittanceAdvice: ...)
+     * Addenda::with(category: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new Addenda)
-     *   ->withCategory(...)
-     *   ->withFreeform(...)
-     *   ->withPaymentOrderRemittanceAdvice(...)
+     * (new Addenda)->withCategory(...)
      * ```
      */
     public function __construct()
@@ -81,14 +79,15 @@ final class Addenda implements BaseModel
      */
     public static function with(
         Category|string $category,
-        Freeform|array|null $freeform,
-        PaymentOrderRemittanceAdvice|array|null $paymentOrderRemittanceAdvice,
+        Freeform|array|null $freeform = null,
+        PaymentOrderRemittanceAdvice|array|null $paymentOrderRemittanceAdvice = null,
     ): self {
         $self = new self;
 
         $self['category'] = $category;
-        $self['freeform'] = $freeform;
-        $self['paymentOrderRemittanceAdvice'] = $paymentOrderRemittanceAdvice;
+
+        null !== $freeform && $self['freeform'] = $freeform;
+        null !== $paymentOrderRemittanceAdvice && $self['paymentOrderRemittanceAdvice'] = $paymentOrderRemittanceAdvice;
 
         return $self;
     }

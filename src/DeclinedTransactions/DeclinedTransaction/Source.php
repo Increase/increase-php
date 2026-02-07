@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Increase\DeclinedTransactions\DeclinedTransaction;
 
+use Increase\Core\Attributes\Optional;
 use Increase\Core\Attributes\Required;
 use Increase\Core\Concerns\SdkModel;
 use Increase\Core\Contracts\BaseModel;
@@ -30,33 +31,21 @@ use Increase\DeclinedTransactions\DeclinedTransaction\Source\WireDecline;
  * @phpstan-import-type WireDeclineShape from \Increase\DeclinedTransactions\DeclinedTransaction\Source\WireDecline
  *
  * @phpstan-type SourceShape = array{
- *   achDecline: null|ACHDecline|ACHDeclineShape,
- *   cardDecline: null|CardDecline|CardDeclineShape,
  *   category: Category|value-of<Category>,
- *   checkDecline: null|CheckDecline|CheckDeclineShape,
- *   checkDepositRejection: null|CheckDepositRejection|CheckDepositRejectionShape,
- *   inboundFednowTransferDecline: null|InboundFednowTransferDecline|InboundFednowTransferDeclineShape,
- *   inboundRealTimePaymentsTransferDecline: null|InboundRealTimePaymentsTransferDecline|InboundRealTimePaymentsTransferDeclineShape,
- *   other: null|Other|OtherShape,
- *   wireDecline: null|WireDecline|WireDeclineShape,
+ *   achDecline?: null|ACHDecline|ACHDeclineShape,
+ *   cardDecline?: null|CardDecline|CardDeclineShape,
+ *   checkDecline?: null|CheckDecline|CheckDeclineShape,
+ *   checkDepositRejection?: null|CheckDepositRejection|CheckDepositRejectionShape,
+ *   inboundFednowTransferDecline?: null|InboundFednowTransferDecline|InboundFednowTransferDeclineShape,
+ *   inboundRealTimePaymentsTransferDecline?: null|InboundRealTimePaymentsTransferDecline|InboundRealTimePaymentsTransferDeclineShape,
+ *   other?: null|Other|OtherShape,
+ *   wireDecline?: null|WireDecline|WireDeclineShape,
  * }
  */
 final class Source implements BaseModel
 {
     /** @use SdkModel<SourceShape> */
     use SdkModel;
-
-    /**
-     * An ACH Decline object. This field will be present in the JSON response if and only if `category` is equal to `ach_decline`.
-     */
-    #[Required('ach_decline')]
-    public ?ACHDecline $achDecline;
-
-    /**
-     * A Card Decline object. This field will be present in the JSON response if and only if `category` is equal to `card_decline`.
-     */
-    #[Required('card_decline')]
-    public ?CardDecline $cardDecline;
 
     /**
      * The type of the resource. We may add additional possible values for this enum over time; your application should be able to handle such additions gracefully.
@@ -67,39 +56,51 @@ final class Source implements BaseModel
     public string $category;
 
     /**
+     * An ACH Decline object. This field will be present in the JSON response if and only if `category` is equal to `ach_decline`.
+     */
+    #[Optional('ach_decline', nullable: true)]
+    public ?ACHDecline $achDecline;
+
+    /**
+     * A Card Decline object. This field will be present in the JSON response if and only if `category` is equal to `card_decline`.
+     */
+    #[Optional('card_decline', nullable: true)]
+    public ?CardDecline $cardDecline;
+
+    /**
      * A Check Decline object. This field will be present in the JSON response if and only if `category` is equal to `check_decline`.
      */
-    #[Required('check_decline')]
+    #[Optional('check_decline', nullable: true)]
     public ?CheckDecline $checkDecline;
 
     /**
      * A Check Deposit Rejection object. This field will be present in the JSON response if and only if `category` is equal to `check_deposit_rejection`.
      */
-    #[Required('check_deposit_rejection')]
+    #[Optional('check_deposit_rejection', nullable: true)]
     public ?CheckDepositRejection $checkDepositRejection;
 
     /**
      * An Inbound FedNow Transfer Decline object. This field will be present in the JSON response if and only if `category` is equal to `inbound_fednow_transfer_decline`.
      */
-    #[Required('inbound_fednow_transfer_decline')]
+    #[Optional('inbound_fednow_transfer_decline', nullable: true)]
     public ?InboundFednowTransferDecline $inboundFednowTransferDecline;
 
     /**
      * An Inbound Real-Time Payments Transfer Decline object. This field will be present in the JSON response if and only if `category` is equal to `inbound_real_time_payments_transfer_decline`.
      */
-    #[Required('inbound_real_time_payments_transfer_decline')]
+    #[Optional('inbound_real_time_payments_transfer_decline', nullable: true)]
     public ?InboundRealTimePaymentsTransferDecline $inboundRealTimePaymentsTransferDecline;
 
     /**
      * If the category of this Transaction source is equal to `other`, this field will contain an empty object, otherwise it will contain null.
      */
-    #[Required]
+    #[Optional(nullable: true)]
     public ?Other $other;
 
     /**
      * A Wire Decline object. This field will be present in the JSON response if and only if `category` is equal to `wire_decline`.
      */
-    #[Required('wire_decline')]
+    #[Optional('wire_decline', nullable: true)]
     public ?WireDecline $wireDecline;
 
     /**
@@ -107,32 +108,13 @@ final class Source implements BaseModel
      *
      * To enforce required parameters use
      * ```
-     * Source::with(
-     *   achDecline: ...,
-     *   cardDecline: ...,
-     *   category: ...,
-     *   checkDecline: ...,
-     *   checkDepositRejection: ...,
-     *   inboundFednowTransferDecline: ...,
-     *   inboundRealTimePaymentsTransferDecline: ...,
-     *   other: ...,
-     *   wireDecline: ...,
-     * )
+     * Source::with(category: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new Source)
-     *   ->withACHDecline(...)
-     *   ->withCardDecline(...)
-     *   ->withCategory(...)
-     *   ->withCheckDecline(...)
-     *   ->withCheckDepositRejection(...)
-     *   ->withInboundFednowTransferDecline(...)
-     *   ->withInboundRealTimePaymentsTransferDecline(...)
-     *   ->withOther(...)
-     *   ->withWireDecline(...)
+     * (new Source)->withCategory(...)
      * ```
      */
     public function __construct()
@@ -145,9 +127,9 @@ final class Source implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
+     * @param Category|value-of<Category> $category
      * @param ACHDecline|ACHDeclineShape|null $achDecline
      * @param CardDecline|CardDeclineShape|null $cardDecline
-     * @param Category|value-of<Category> $category
      * @param CheckDecline|CheckDeclineShape|null $checkDecline
      * @param CheckDepositRejection|CheckDepositRejectionShape|null $checkDepositRejection
      * @param InboundFednowTransferDecline|InboundFednowTransferDeclineShape|null $inboundFednowTransferDecline
@@ -156,27 +138,41 @@ final class Source implements BaseModel
      * @param WireDecline|WireDeclineShape|null $wireDecline
      */
     public static function with(
-        ACHDecline|array|null $achDecline,
-        CardDecline|array|null $cardDecline,
         Category|string $category,
-        CheckDecline|array|null $checkDecline,
-        CheckDepositRejection|array|null $checkDepositRejection,
-        InboundFednowTransferDecline|array|null $inboundFednowTransferDecline,
-        InboundRealTimePaymentsTransferDecline|array|null $inboundRealTimePaymentsTransferDecline,
-        Other|array|null $other,
-        WireDecline|array|null $wireDecline,
+        ACHDecline|array|null $achDecline = null,
+        CardDecline|array|null $cardDecline = null,
+        CheckDecline|array|null $checkDecline = null,
+        CheckDepositRejection|array|null $checkDepositRejection = null,
+        InboundFednowTransferDecline|array|null $inboundFednowTransferDecline = null,
+        InboundRealTimePaymentsTransferDecline|array|null $inboundRealTimePaymentsTransferDecline = null,
+        Other|array|null $other = null,
+        WireDecline|array|null $wireDecline = null,
     ): self {
         $self = new self;
 
-        $self['achDecline'] = $achDecline;
-        $self['cardDecline'] = $cardDecline;
         $self['category'] = $category;
-        $self['checkDecline'] = $checkDecline;
-        $self['checkDepositRejection'] = $checkDepositRejection;
-        $self['inboundFednowTransferDecline'] = $inboundFednowTransferDecline;
-        $self['inboundRealTimePaymentsTransferDecline'] = $inboundRealTimePaymentsTransferDecline;
-        $self['other'] = $other;
-        $self['wireDecline'] = $wireDecline;
+
+        null !== $achDecline && $self['achDecline'] = $achDecline;
+        null !== $cardDecline && $self['cardDecline'] = $cardDecline;
+        null !== $checkDecline && $self['checkDecline'] = $checkDecline;
+        null !== $checkDepositRejection && $self['checkDepositRejection'] = $checkDepositRejection;
+        null !== $inboundFednowTransferDecline && $self['inboundFednowTransferDecline'] = $inboundFednowTransferDecline;
+        null !== $inboundRealTimePaymentsTransferDecline && $self['inboundRealTimePaymentsTransferDecline'] = $inboundRealTimePaymentsTransferDecline;
+        null !== $other && $self['other'] = $other;
+        null !== $wireDecline && $self['wireDecline'] = $wireDecline;
+
+        return $self;
+    }
+
+    /**
+     * The type of the resource. We may add additional possible values for this enum over time; your application should be able to handle such additions gracefully.
+     *
+     * @param Category|value-of<Category> $category
+     */
+    public function withCategory(Category|string $category): self
+    {
+        $self = clone $this;
+        $self['category'] = $category;
 
         return $self;
     }
@@ -203,19 +199,6 @@ final class Source implements BaseModel
     {
         $self = clone $this;
         $self['cardDecline'] = $cardDecline;
-
-        return $self;
-    }
-
-    /**
-     * The type of the resource. We may add additional possible values for this enum over time; your application should be able to handle such additions gracefully.
-     *
-     * @param Category|value-of<Category> $category
-     */
-    public function withCategory(Category|string $category): self
-    {
-        $self = clone $this;
-        $self['category'] = $category;
 
         return $self;
     }

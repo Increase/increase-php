@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Increase\WireTransfers\WireTransfer;
 
+use Increase\Core\Attributes\Optional;
 use Increase\Core\Attributes\Required;
 use Increase\Core\Concerns\SdkModel;
 use Increase\Core\Contracts\BaseModel;
@@ -19,8 +20,8 @@ use Increase\WireTransfers\WireTransfer\Remittance\Unstructured;
  *
  * @phpstan-type RemittanceShape = array{
  *   category: Category|value-of<Category>,
- *   tax: null|Tax|TaxShape,
- *   unstructured: null|Unstructured|UnstructuredShape,
+ *   tax?: null|Tax|TaxShape,
+ *   unstructured?: null|Unstructured|UnstructuredShape,
  * }
  */
 final class Remittance implements BaseModel
@@ -39,13 +40,13 @@ final class Remittance implements BaseModel
     /**
      * Internal Revenue Service (IRS) tax repayment information. Required if `category` is equal to `tax`.
      */
-    #[Required]
+    #[Optional(nullable: true)]
     public ?Tax $tax;
 
     /**
      * Unstructured remittance information. Required if `category` is equal to `unstructured`.
      */
-    #[Required]
+    #[Optional(nullable: true)]
     public ?Unstructured $unstructured;
 
     /**
@@ -53,13 +54,13 @@ final class Remittance implements BaseModel
      *
      * To enforce required parameters use
      * ```
-     * Remittance::with(category: ..., tax: ..., unstructured: ...)
+     * Remittance::with(category: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new Remittance)->withCategory(...)->withTax(...)->withUnstructured(...)
+     * (new Remittance)->withCategory(...)
      * ```
      */
     public function __construct()
@@ -78,14 +79,15 @@ final class Remittance implements BaseModel
      */
     public static function with(
         Category|string $category,
-        Tax|array|null $tax,
-        Unstructured|array|null $unstructured,
+        Tax|array|null $tax = null,
+        Unstructured|array|null $unstructured = null,
     ): self {
         $self = new self;
 
         $self['category'] = $category;
-        $self['tax'] = $tax;
-        $self['unstructured'] = $unstructured;
+
+        null !== $tax && $self['tax'] = $tax;
+        null !== $unstructured && $self['unstructured'] = $unstructured;
 
         return $self;
     }

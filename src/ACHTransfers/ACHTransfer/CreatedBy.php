@@ -8,6 +8,7 @@ use Increase\ACHTransfers\ACHTransfer\CreatedBy\APIKey;
 use Increase\ACHTransfers\ACHTransfer\CreatedBy\Category;
 use Increase\ACHTransfers\ACHTransfer\CreatedBy\OAuthApplication;
 use Increase\ACHTransfers\ACHTransfer\CreatedBy\User;
+use Increase\Core\Attributes\Optional;
 use Increase\Core\Attributes\Required;
 use Increase\Core\Concerns\SdkModel;
 use Increase\Core\Contracts\BaseModel;
@@ -20,22 +21,16 @@ use Increase\Core\Contracts\BaseModel;
  * @phpstan-import-type UserShape from \Increase\ACHTransfers\ACHTransfer\CreatedBy\User
  *
  * @phpstan-type CreatedByShape = array{
- *   apiKey: null|APIKey|APIKeyShape,
  *   category: Category|value-of<Category>,
- *   oauthApplication: null|OAuthApplication|OAuthApplicationShape,
- *   user: null|User|UserShape,
+ *   apiKey?: null|APIKey|APIKeyShape,
+ *   oauthApplication?: null|OAuthApplication|OAuthApplicationShape,
+ *   user?: null|User|UserShape,
  * }
  */
 final class CreatedBy implements BaseModel
 {
     /** @use SdkModel<CreatedByShape> */
     use SdkModel;
-
-    /**
-     * If present, details about the API key that created the transfer.
-     */
-    #[Required('api_key')]
-    public ?APIKey $apiKey;
 
     /**
      * The type of object that created this transfer.
@@ -46,15 +41,21 @@ final class CreatedBy implements BaseModel
     public string $category;
 
     /**
+     * If present, details about the API key that created the transfer.
+     */
+    #[Optional('api_key', nullable: true)]
+    public ?APIKey $apiKey;
+
+    /**
      * If present, details about the OAuth Application that created the transfer.
      */
-    #[Required('oauth_application')]
+    #[Optional('oauth_application', nullable: true)]
     public ?OAuthApplication $oauthApplication;
 
     /**
      * If present, details about the User that created the transfer.
      */
-    #[Required]
+    #[Optional(nullable: true)]
     public ?User $user;
 
     /**
@@ -62,17 +63,13 @@ final class CreatedBy implements BaseModel
      *
      * To enforce required parameters use
      * ```
-     * CreatedBy::with(apiKey: ..., category: ..., oauthApplication: ..., user: ...)
+     * CreatedBy::with(category: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new CreatedBy)
-     *   ->withAPIKey(...)
-     *   ->withCategory(...)
-     *   ->withOAuthApplication(...)
-     *   ->withUser(...)
+     * (new CreatedBy)->withCategory(...)
      * ```
      */
     public function __construct()
@@ -85,36 +82,24 @@ final class CreatedBy implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param APIKey|APIKeyShape|null $apiKey
      * @param Category|value-of<Category> $category
+     * @param APIKey|APIKeyShape|null $apiKey
      * @param OAuthApplication|OAuthApplicationShape|null $oauthApplication
      * @param User|UserShape|null $user
      */
     public static function with(
-        APIKey|array|null $apiKey,
         Category|string $category,
-        OAuthApplication|array|null $oauthApplication,
-        User|array|null $user,
+        APIKey|array|null $apiKey = null,
+        OAuthApplication|array|null $oauthApplication = null,
+        User|array|null $user = null,
     ): self {
         $self = new self;
 
-        $self['apiKey'] = $apiKey;
         $self['category'] = $category;
-        $self['oauthApplication'] = $oauthApplication;
-        $self['user'] = $user;
 
-        return $self;
-    }
-
-    /**
-     * If present, details about the API key that created the transfer.
-     *
-     * @param APIKey|APIKeyShape|null $apiKey
-     */
-    public function withAPIKey(APIKey|array|null $apiKey): self
-    {
-        $self = clone $this;
-        $self['apiKey'] = $apiKey;
+        null !== $apiKey && $self['apiKey'] = $apiKey;
+        null !== $oauthApplication && $self['oauthApplication'] = $oauthApplication;
+        null !== $user && $self['user'] = $user;
 
         return $self;
     }
@@ -128,6 +113,19 @@ final class CreatedBy implements BaseModel
     {
         $self = clone $this;
         $self['category'] = $category;
+
+        return $self;
+    }
+
+    /**
+     * If present, details about the API key that created the transfer.
+     *
+     * @param APIKey|APIKeyShape|null $apiKey
+     */
+    public function withAPIKey(APIKey|array|null $apiKey): self
+    {
+        $self = clone $this;
+        $self['apiKey'] = $apiKey;
 
         return $self;
     }

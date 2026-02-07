@@ -19,6 +19,7 @@ use Increase\CardDisputes\CardDispute\Visa\NetworkEvent\UserPrearbitrationDeclin
 use Increase\CardDisputes\CardDispute\Visa\NetworkEvent\UserPrearbitrationSubmitted;
 use Increase\CardDisputes\CardDispute\Visa\NetworkEvent\UserPrearbitrationTimedOut;
 use Increase\CardDisputes\CardDispute\Visa\NetworkEvent\UserWithdrawalSubmitted;
+use Increase\Core\Attributes\Optional;
 use Increase\Core\Attributes\Required;
 use Increase\Core\Concerns\SdkModel;
 use Increase\Core\Contracts\BaseModel;
@@ -42,21 +43,21 @@ use Increase\Core\Contracts\BaseModel;
  * @phpstan-type NetworkEventShape = array{
  *   attachmentFiles: list<AttachmentFile|AttachmentFileShape>,
  *   category: Category|value-of<Category>,
- *   chargebackAccepted: null|ChargebackAccepted|ChargebackAcceptedShape,
- *   chargebackSubmitted: null|ChargebackSubmitted|ChargebackSubmittedShape,
- *   chargebackTimedOut: null|ChargebackTimedOut|ChargebackTimedOutShape,
  *   createdAt: \DateTimeInterface,
  *   disputeFinancialTransactionID: string|null,
- *   merchantPrearbitrationDeclineSubmitted: null|MerchantPrearbitrationDeclineSubmitted|MerchantPrearbitrationDeclineSubmittedShape,
- *   merchantPrearbitrationReceived: null|MerchantPrearbitrationReceived|MerchantPrearbitrationReceivedShape,
- *   merchantPrearbitrationTimedOut: null|MerchantPrearbitrationTimedOut|MerchantPrearbitrationTimedOutShape,
- *   represented: null|Represented|RepresentedShape,
- *   representmentTimedOut: null|RepresentmentTimedOut|RepresentmentTimedOutShape,
- *   userPrearbitrationAccepted: null|UserPrearbitrationAccepted|UserPrearbitrationAcceptedShape,
- *   userPrearbitrationDeclined: null|UserPrearbitrationDeclined|UserPrearbitrationDeclinedShape,
- *   userPrearbitrationSubmitted: null|UserPrearbitrationSubmitted|UserPrearbitrationSubmittedShape,
- *   userPrearbitrationTimedOut: null|UserPrearbitrationTimedOut|UserPrearbitrationTimedOutShape,
- *   userWithdrawalSubmitted: null|UserWithdrawalSubmitted|UserWithdrawalSubmittedShape,
+ *   chargebackAccepted?: null|ChargebackAccepted|ChargebackAcceptedShape,
+ *   chargebackSubmitted?: null|ChargebackSubmitted|ChargebackSubmittedShape,
+ *   chargebackTimedOut?: null|ChargebackTimedOut|ChargebackTimedOutShape,
+ *   merchantPrearbitrationDeclineSubmitted?: null|MerchantPrearbitrationDeclineSubmitted|MerchantPrearbitrationDeclineSubmittedShape,
+ *   merchantPrearbitrationReceived?: null|MerchantPrearbitrationReceived|MerchantPrearbitrationReceivedShape,
+ *   merchantPrearbitrationTimedOut?: null|MerchantPrearbitrationTimedOut|MerchantPrearbitrationTimedOutShape,
+ *   represented?: null|Represented|RepresentedShape,
+ *   representmentTimedOut?: null|RepresentmentTimedOut|RepresentmentTimedOutShape,
+ *   userPrearbitrationAccepted?: null|UserPrearbitrationAccepted|UserPrearbitrationAcceptedShape,
+ *   userPrearbitrationDeclined?: null|UserPrearbitrationDeclined|UserPrearbitrationDeclinedShape,
+ *   userPrearbitrationSubmitted?: null|UserPrearbitrationSubmitted|UserPrearbitrationSubmittedShape,
+ *   userPrearbitrationTimedOut?: null|UserPrearbitrationTimedOut|UserPrearbitrationTimedOutShape,
+ *   userWithdrawalSubmitted?: null|UserWithdrawalSubmitted|UserWithdrawalSubmittedShape,
  * }
  */
 final class NetworkEvent implements BaseModel
@@ -81,24 +82,6 @@ final class NetworkEvent implements BaseModel
     public string $category;
 
     /**
-     * A Card Dispute Chargeback Accepted Visa Network Event object. This field will be present in the JSON response if and only if `category` is equal to `chargeback_accepted`. Contains the details specific to a chargeback accepted Visa Card Dispute Network Event, which represents that a chargeback has been accepted by the merchant.
-     */
-    #[Required('chargeback_accepted')]
-    public ?ChargebackAccepted $chargebackAccepted;
-
-    /**
-     * A Card Dispute Chargeback Submitted Visa Network Event object. This field will be present in the JSON response if and only if `category` is equal to `chargeback_submitted`. Contains the details specific to a chargeback submitted Visa Card Dispute Network Event, which represents that a chargeback has been submitted to the network.
-     */
-    #[Required('chargeback_submitted')]
-    public ?ChargebackSubmitted $chargebackSubmitted;
-
-    /**
-     * A Card Dispute Chargeback Timed Out Visa Network Event object. This field will be present in the JSON response if and only if `category` is equal to `chargeback_timed_out`. Contains the details specific to a chargeback timed out Visa Card Dispute Network Event, which represents that the chargeback has timed out in the user's favor.
-     */
-    #[Required('chargeback_timed_out')]
-    public ?ChargebackTimedOut $chargebackTimedOut;
-
-    /**
      * The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which the Visa Card Dispute Network Event was created.
      */
     #[Required('created_at')]
@@ -111,63 +94,81 @@ final class NetworkEvent implements BaseModel
     public ?string $disputeFinancialTransactionID;
 
     /**
+     * A Card Dispute Chargeback Accepted Visa Network Event object. This field will be present in the JSON response if and only if `category` is equal to `chargeback_accepted`. Contains the details specific to a chargeback accepted Visa Card Dispute Network Event, which represents that a chargeback has been accepted by the merchant.
+     */
+    #[Optional('chargeback_accepted', nullable: true)]
+    public ?ChargebackAccepted $chargebackAccepted;
+
+    /**
+     * A Card Dispute Chargeback Submitted Visa Network Event object. This field will be present in the JSON response if and only if `category` is equal to `chargeback_submitted`. Contains the details specific to a chargeback submitted Visa Card Dispute Network Event, which represents that a chargeback has been submitted to the network.
+     */
+    #[Optional('chargeback_submitted', nullable: true)]
+    public ?ChargebackSubmitted $chargebackSubmitted;
+
+    /**
+     * A Card Dispute Chargeback Timed Out Visa Network Event object. This field will be present in the JSON response if and only if `category` is equal to `chargeback_timed_out`. Contains the details specific to a chargeback timed out Visa Card Dispute Network Event, which represents that the chargeback has timed out in the user's favor.
+     */
+    #[Optional('chargeback_timed_out', nullable: true)]
+    public ?ChargebackTimedOut $chargebackTimedOut;
+
+    /**
      * A Card Dispute Merchant Pre-Arbitration Decline Submitted Visa Network Event object. This field will be present in the JSON response if and only if `category` is equal to `merchant_prearbitration_decline_submitted`. Contains the details specific to a merchant prearbitration decline submitted Visa Card Dispute Network Event, which represents that the user has declined the merchant's request for a prearbitration request decision in their favor.
      */
-    #[Required('merchant_prearbitration_decline_submitted')]
+    #[Optional('merchant_prearbitration_decline_submitted', nullable: true)]
     public ?MerchantPrearbitrationDeclineSubmitted $merchantPrearbitrationDeclineSubmitted;
 
     /**
      * A Card Dispute Merchant Pre-Arbitration Received Visa Network Event object. This field will be present in the JSON response if and only if `category` is equal to `merchant_prearbitration_received`. Contains the details specific to a merchant prearbitration received Visa Card Dispute Network Event, which represents that the merchant has issued a prearbitration request in the user's favor.
      */
-    #[Required('merchant_prearbitration_received')]
+    #[Optional('merchant_prearbitration_received', nullable: true)]
     public ?MerchantPrearbitrationReceived $merchantPrearbitrationReceived;
 
     /**
      * A Card Dispute Merchant Pre-Arbitration Timed Out Visa Network Event object. This field will be present in the JSON response if and only if `category` is equal to `merchant_prearbitration_timed_out`. Contains the details specific to a merchant prearbitration timed out Visa Card Dispute Network Event, which represents that the user has timed out responding to the merchant's prearbitration request.
      */
-    #[Required('merchant_prearbitration_timed_out')]
+    #[Optional('merchant_prearbitration_timed_out', nullable: true)]
     public ?MerchantPrearbitrationTimedOut $merchantPrearbitrationTimedOut;
 
     /**
      * A Card Dispute Re-presented Visa Network Event object. This field will be present in the JSON response if and only if `category` is equal to `represented`. Contains the details specific to a re-presented Visa Card Dispute Network Event, which represents that the merchant has declined the user's chargeback and has re-presented the payment.
      */
-    #[Required]
+    #[Optional(nullable: true)]
     public ?Represented $represented;
 
     /**
      * A Card Dispute Re-presentment Timed Out Visa Network Event object. This field will be present in the JSON response if and only if `category` is equal to `representment_timed_out`. Contains the details specific to a re-presentment time-out Visa Card Dispute Network Event, which represents that the user did not respond to the re-presentment by the merchant within the time limit.
      */
-    #[Required('representment_timed_out')]
+    #[Optional('representment_timed_out', nullable: true)]
     public ?RepresentmentTimedOut $representmentTimedOut;
 
     /**
      * A Card Dispute User Pre-Arbitration Accepted Visa Network Event object. This field will be present in the JSON response if and only if `category` is equal to `user_prearbitration_accepted`. Contains the details specific to a user prearbitration accepted Visa Card Dispute Network Event, which represents that the merchant has accepted the user's prearbitration request in the user's favor.
      */
-    #[Required('user_prearbitration_accepted')]
+    #[Optional('user_prearbitration_accepted', nullable: true)]
     public ?UserPrearbitrationAccepted $userPrearbitrationAccepted;
 
     /**
      * A Card Dispute User Pre-Arbitration Declined Visa Network Event object. This field will be present in the JSON response if and only if `category` is equal to `user_prearbitration_declined`. Contains the details specific to a user prearbitration declined Visa Card Dispute Network Event, which represents that the merchant has declined the user's prearbitration request.
      */
-    #[Required('user_prearbitration_declined')]
+    #[Optional('user_prearbitration_declined', nullable: true)]
     public ?UserPrearbitrationDeclined $userPrearbitrationDeclined;
 
     /**
      * A Card Dispute User Pre-Arbitration Submitted Visa Network Event object. This field will be present in the JSON response if and only if `category` is equal to `user_prearbitration_submitted`. Contains the details specific to a user prearbitration submitted Visa Card Dispute Network Event, which represents that the user's request for prearbitration has been submitted to the network.
      */
-    #[Required('user_prearbitration_submitted')]
+    #[Optional('user_prearbitration_submitted', nullable: true)]
     public ?UserPrearbitrationSubmitted $userPrearbitrationSubmitted;
 
     /**
      * A Card Dispute User Pre-Arbitration Timed Out Visa Network Event object. This field will be present in the JSON response if and only if `category` is equal to `user_prearbitration_timed_out`. Contains the details specific to a user prearbitration timed out Visa Card Dispute Network Event, which represents that the merchant has timed out responding to the user's prearbitration request.
      */
-    #[Required('user_prearbitration_timed_out')]
+    #[Optional('user_prearbitration_timed_out', nullable: true)]
     public ?UserPrearbitrationTimedOut $userPrearbitrationTimedOut;
 
     /**
      * A Card Dispute User Withdrawal Submitted Visa Network Event object. This field will be present in the JSON response if and only if `category` is equal to `user_withdrawal_submitted`. Contains the details specific to a user withdrawal submitted Visa Card Dispute Network Event, which represents that the user's request to withdraw the dispute has been submitted to the network.
      */
-    #[Required('user_withdrawal_submitted')]
+    #[Optional('user_withdrawal_submitted', nullable: true)]
     public ?UserWithdrawalSubmitted $userWithdrawalSubmitted;
 
     /**
@@ -178,21 +179,8 @@ final class NetworkEvent implements BaseModel
      * NetworkEvent::with(
      *   attachmentFiles: ...,
      *   category: ...,
-     *   chargebackAccepted: ...,
-     *   chargebackSubmitted: ...,
-     *   chargebackTimedOut: ...,
      *   createdAt: ...,
      *   disputeFinancialTransactionID: ...,
-     *   merchantPrearbitrationDeclineSubmitted: ...,
-     *   merchantPrearbitrationReceived: ...,
-     *   merchantPrearbitrationTimedOut: ...,
-     *   represented: ...,
-     *   representmentTimedOut: ...,
-     *   userPrearbitrationAccepted: ...,
-     *   userPrearbitrationDeclined: ...,
-     *   userPrearbitrationSubmitted: ...,
-     *   userPrearbitrationTimedOut: ...,
-     *   userWithdrawalSubmitted: ...,
      * )
      * ```
      *
@@ -202,21 +190,8 @@ final class NetworkEvent implements BaseModel
      * (new NetworkEvent)
      *   ->withAttachmentFiles(...)
      *   ->withCategory(...)
-     *   ->withChargebackAccepted(...)
-     *   ->withChargebackSubmitted(...)
-     *   ->withChargebackTimedOut(...)
      *   ->withCreatedAt(...)
      *   ->withDisputeFinancialTransactionID(...)
-     *   ->withMerchantPrearbitrationDeclineSubmitted(...)
-     *   ->withMerchantPrearbitrationReceived(...)
-     *   ->withMerchantPrearbitrationTimedOut(...)
-     *   ->withRepresented(...)
-     *   ->withRepresentmentTimedOut(...)
-     *   ->withUserPrearbitrationAccepted(...)
-     *   ->withUserPrearbitrationDeclined(...)
-     *   ->withUserPrearbitrationSubmitted(...)
-     *   ->withUserPrearbitrationTimedOut(...)
-     *   ->withUserWithdrawalSubmitted(...)
      * ```
      */
     public function __construct()
@@ -248,41 +223,42 @@ final class NetworkEvent implements BaseModel
     public static function with(
         array $attachmentFiles,
         Category|string $category,
-        ChargebackAccepted|array|null $chargebackAccepted,
-        ChargebackSubmitted|array|null $chargebackSubmitted,
-        ChargebackTimedOut|array|null $chargebackTimedOut,
         \DateTimeInterface $createdAt,
         ?string $disputeFinancialTransactionID,
-        MerchantPrearbitrationDeclineSubmitted|array|null $merchantPrearbitrationDeclineSubmitted,
-        MerchantPrearbitrationReceived|array|null $merchantPrearbitrationReceived,
-        MerchantPrearbitrationTimedOut|array|null $merchantPrearbitrationTimedOut,
-        Represented|array|null $represented,
-        RepresentmentTimedOut|array|null $representmentTimedOut,
-        UserPrearbitrationAccepted|array|null $userPrearbitrationAccepted,
-        UserPrearbitrationDeclined|array|null $userPrearbitrationDeclined,
-        UserPrearbitrationSubmitted|array|null $userPrearbitrationSubmitted,
-        UserPrearbitrationTimedOut|array|null $userPrearbitrationTimedOut,
-        UserWithdrawalSubmitted|array|null $userWithdrawalSubmitted,
+        ChargebackAccepted|array|null $chargebackAccepted = null,
+        ChargebackSubmitted|array|null $chargebackSubmitted = null,
+        ChargebackTimedOut|array|null $chargebackTimedOut = null,
+        MerchantPrearbitrationDeclineSubmitted|array|null $merchantPrearbitrationDeclineSubmitted = null,
+        MerchantPrearbitrationReceived|array|null $merchantPrearbitrationReceived = null,
+        MerchantPrearbitrationTimedOut|array|null $merchantPrearbitrationTimedOut = null,
+        Represented|array|null $represented = null,
+        RepresentmentTimedOut|array|null $representmentTimedOut = null,
+        UserPrearbitrationAccepted|array|null $userPrearbitrationAccepted = null,
+        UserPrearbitrationDeclined|array|null $userPrearbitrationDeclined = null,
+        UserPrearbitrationSubmitted|array|null $userPrearbitrationSubmitted = null,
+        UserPrearbitrationTimedOut|array|null $userPrearbitrationTimedOut = null,
+        UserWithdrawalSubmitted|array|null $userWithdrawalSubmitted = null,
     ): self {
         $self = new self;
 
         $self['attachmentFiles'] = $attachmentFiles;
         $self['category'] = $category;
-        $self['chargebackAccepted'] = $chargebackAccepted;
-        $self['chargebackSubmitted'] = $chargebackSubmitted;
-        $self['chargebackTimedOut'] = $chargebackTimedOut;
         $self['createdAt'] = $createdAt;
         $self['disputeFinancialTransactionID'] = $disputeFinancialTransactionID;
-        $self['merchantPrearbitrationDeclineSubmitted'] = $merchantPrearbitrationDeclineSubmitted;
-        $self['merchantPrearbitrationReceived'] = $merchantPrearbitrationReceived;
-        $self['merchantPrearbitrationTimedOut'] = $merchantPrearbitrationTimedOut;
-        $self['represented'] = $represented;
-        $self['representmentTimedOut'] = $representmentTimedOut;
-        $self['userPrearbitrationAccepted'] = $userPrearbitrationAccepted;
-        $self['userPrearbitrationDeclined'] = $userPrearbitrationDeclined;
-        $self['userPrearbitrationSubmitted'] = $userPrearbitrationSubmitted;
-        $self['userPrearbitrationTimedOut'] = $userPrearbitrationTimedOut;
-        $self['userWithdrawalSubmitted'] = $userWithdrawalSubmitted;
+
+        null !== $chargebackAccepted && $self['chargebackAccepted'] = $chargebackAccepted;
+        null !== $chargebackSubmitted && $self['chargebackSubmitted'] = $chargebackSubmitted;
+        null !== $chargebackTimedOut && $self['chargebackTimedOut'] = $chargebackTimedOut;
+        null !== $merchantPrearbitrationDeclineSubmitted && $self['merchantPrearbitrationDeclineSubmitted'] = $merchantPrearbitrationDeclineSubmitted;
+        null !== $merchantPrearbitrationReceived && $self['merchantPrearbitrationReceived'] = $merchantPrearbitrationReceived;
+        null !== $merchantPrearbitrationTimedOut && $self['merchantPrearbitrationTimedOut'] = $merchantPrearbitrationTimedOut;
+        null !== $represented && $self['represented'] = $represented;
+        null !== $representmentTimedOut && $self['representmentTimedOut'] = $representmentTimedOut;
+        null !== $userPrearbitrationAccepted && $self['userPrearbitrationAccepted'] = $userPrearbitrationAccepted;
+        null !== $userPrearbitrationDeclined && $self['userPrearbitrationDeclined'] = $userPrearbitrationDeclined;
+        null !== $userPrearbitrationSubmitted && $self['userPrearbitrationSubmitted'] = $userPrearbitrationSubmitted;
+        null !== $userPrearbitrationTimedOut && $self['userPrearbitrationTimedOut'] = $userPrearbitrationTimedOut;
+        null !== $userWithdrawalSubmitted && $self['userWithdrawalSubmitted'] = $userWithdrawalSubmitted;
 
         return $self;
     }
@@ -309,6 +285,29 @@ final class NetworkEvent implements BaseModel
     {
         $self = clone $this;
         $self['category'] = $category;
+
+        return $self;
+    }
+
+    /**
+     * The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which the Visa Card Dispute Network Event was created.
+     */
+    public function withCreatedAt(\DateTimeInterface $createdAt): self
+    {
+        $self = clone $this;
+        $self['createdAt'] = $createdAt;
+
+        return $self;
+    }
+
+    /**
+     * The dispute financial transaction that resulted from the network event, if any.
+     */
+    public function withDisputeFinancialTransactionID(
+        ?string $disputeFinancialTransactionID
+    ): self {
+        $self = clone $this;
+        $self['disputeFinancialTransactionID'] = $disputeFinancialTransactionID;
 
         return $self;
     }
@@ -351,29 +350,6 @@ final class NetworkEvent implements BaseModel
     ): self {
         $self = clone $this;
         $self['chargebackTimedOut'] = $chargebackTimedOut;
-
-        return $self;
-    }
-
-    /**
-     * The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which the Visa Card Dispute Network Event was created.
-     */
-    public function withCreatedAt(\DateTimeInterface $createdAt): self
-    {
-        $self = clone $this;
-        $self['createdAt'] = $createdAt;
-
-        return $self;
-    }
-
-    /**
-     * The dispute financial transaction that resulted from the network event, if any.
-     */
-    public function withDisputeFinancialTransactionID(
-        ?string $disputeFinancialTransactionID
-    ): self {
-        $self = clone $this;
-        $self['disputeFinancialTransactionID'] = $disputeFinancialTransactionID;
 
         return $self;
     }

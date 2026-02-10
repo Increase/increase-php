@@ -33,5 +33,7 @@ enum Category: string
 
     case FORM_1099_MISC = 'form_1099_misc';
 
+    case FEE_CSV = 'fee_csv';
+
     case VOIDED_CHECK = 'voided_check';
 }

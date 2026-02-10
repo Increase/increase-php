@@ -10,7 +10,7 @@ use Increase\Core\Contracts\BaseModel;
 use Increase\InboundWireTransfers\InboundWireTransfer\Reversal\Reason;
 
 /**
- * Information about the reversal of the inbound wire transfer if it has been reversed.
+ * If the transfer is reversed, this will contain details of the reversal.
  *
  * @phpstan-type ReversalShape = array{
  *   reason: Reason|value-of<Reason>, reversedAt: \DateTimeInterface

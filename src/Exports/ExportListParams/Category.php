@@ -32,4 +32,6 @@ enum Category: string
     case FORM_1099_INT = 'form_1099_int';
 
     case FORM_1099_MISC = 'form_1099_misc';
+
+    case VOIDED_CHECK = 'voided_check';
 }

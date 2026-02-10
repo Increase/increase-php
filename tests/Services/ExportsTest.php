@@ -89,6 +89,9 @@ final class ExportsTest extends TestCase
                 ],
             ],
             vendorCsv: [],
+            voidedCheck: [
+                'accountNumberID' => 'account_number_id', 'payer' => [['line' => 'x']],
+            ],
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType

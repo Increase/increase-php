@@ -26,4 +26,6 @@ enum Category: string
     case ACCOUNT_VERIFICATION_LETTER = 'account_verification_letter';
 
     case FUNDING_INSTRUCTIONS = 'funding_instructions';
+
+    case VOIDED_CHECK = 'voided_check';
 }

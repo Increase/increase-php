@@ -16,6 +16,7 @@ use Increase\Exports\ExportCreateParams\EntityCsv;
 use Increase\Exports\ExportCreateParams\FundingInstructions;
 use Increase\Exports\ExportCreateParams\TransactionCsv;
 use Increase\Exports\ExportCreateParams\VendorCsv;
+use Increase\Exports\ExportCreateParams\VoidedCheck;
 use Increase\Exports\ExportListParams\CreatedAt;
 use Increase\Exports\ExportListParams\Form1099Int;
 use Increase\Exports\ExportListParams\Form1099Misc;
@@ -33,6 +34,7 @@ use Increase\RequestOptions;
  * @phpstan-import-type FundingInstructionsShape from \Increase\Exports\ExportCreateParams\FundingInstructions
  * @phpstan-import-type TransactionCsvShape from \Increase\Exports\ExportCreateParams\TransactionCsv
  * @phpstan-import-type VendorCsvShape from \Increase\Exports\ExportCreateParams\VendorCsv
+ * @phpstan-import-type VoidedCheckShape from \Increase\Exports\ExportCreateParams\VoidedCheck
  * @phpstan-import-type CreatedAtShape from \Increase\Exports\ExportListParams\CreatedAt
  * @phpstan-import-type Form1099IntShape from \Increase\Exports\ExportListParams\Form1099Int
  * @phpstan-import-type Form1099MiscShape from \Increase\Exports\ExportListParams\Form1099Misc
@@ -54,6 +56,7 @@ interface ExportsContract
      * @param FundingInstructions|FundingInstructionsShape $fundingInstructions Options for the created export. Required if `category` is equal to `funding_instructions`.
      * @param TransactionCsv|TransactionCsvShape $transactionCsv Options for the created export. Required if `category` is equal to `transaction_csv`.
      * @param VendorCsv|VendorCsvShape $vendorCsv Options for the created export. Required if `category` is equal to `vendor_csv`.
+     * @param VoidedCheck|VoidedCheckShape $voidedCheck Options for the created export. Required if `category` is equal to `voided_check`.
      * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
@@ -69,6 +72,7 @@ interface ExportsContract
         FundingInstructions|array|null $fundingInstructions = null,
         TransactionCsv|array|null $transactionCsv = null,
         VendorCsv|array|null $vendorCsv = null,
+        VoidedCheck|array|null $voidedCheck = null,
         RequestOptions|array|null $requestOptions = null,
     ): Export;
 

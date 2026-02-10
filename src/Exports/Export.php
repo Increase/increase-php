@@ -15,6 +15,7 @@ use Increase\Exports\Export\BookkeepingAccountBalanceCsv;
 use Increase\Exports\Export\Category;
 use Increase\Exports\Export\DashboardTableCsv;
 use Increase\Exports\Export\EntityCsv;
+use Increase\Exports\Export\FeeCsv;
 use Increase\Exports\Export\Form1099Int;
 use Increase\Exports\Export\Form1099Misc;
 use Increase\Exports\Export\FundingInstructions;
@@ -35,6 +36,7 @@ use Increase\Exports\Export\VoidedCheck;
  * @phpstan-import-type BookkeepingAccountBalanceCsvShape from \Increase\Exports\Export\BookkeepingAccountBalanceCsv
  * @phpstan-import-type DashboardTableCsvShape from \Increase\Exports\Export\DashboardTableCsv
  * @phpstan-import-type EntityCsvShape from \Increase\Exports\Export\EntityCsv
+ * @phpstan-import-type FeeCsvShape from \Increase\Exports\Export\FeeCsv
  * @phpstan-import-type Form1099IntShape from \Increase\Exports\Export\Form1099Int
  * @phpstan-import-type Form1099MiscShape from \Increase\Exports\Export\Form1099Misc
  * @phpstan-import-type FundingInstructionsShape from \Increase\Exports\Export\FundingInstructions
@@ -54,6 +56,7 @@ use Increase\Exports\Export\VoidedCheck;
  *   createdAt: \DateTimeInterface,
  *   dashboardTableCsv: null|DashboardTableCsv|DashboardTableCsvShape,
  *   entityCsv: null|EntityCsv|EntityCsvShape,
+ *   feeCsv: null|FeeCsv|FeeCsvShape,
  *   form1099Int: null|Form1099Int|Form1099IntShape,
  *   form1099Misc: null|Form1099Misc|Form1099MiscShape,
  *   fundingInstructions: null|FundingInstructions|FundingInstructionsShape,
@@ -132,6 +135,12 @@ final class Export implements BaseModel
      */
     #[Required('entity_csv')]
     public ?EntityCsv $entityCsv;
+
+    /**
+     * Details of the fee CSV export. This field will be present when the `category` is equal to `fee_csv`.
+     */
+    #[Required('fee_csv')]
+    public ?FeeCsv $feeCsv;
 
     /**
      * Details of the Form 1099-INT export. This field will be present when the `category` is equal to `form_1099_int`.
@@ -213,6 +222,7 @@ final class Export implements BaseModel
      *   createdAt: ...,
      *   dashboardTableCsv: ...,
      *   entityCsv: ...,
+     *   feeCsv: ...,
      *   form1099Int: ...,
      *   form1099Misc: ...,
      *   fundingInstructions: ...,
@@ -240,6 +250,7 @@ final class Export implements BaseModel
      *   ->withCreatedAt(...)
      *   ->withDashboardTableCsv(...)
      *   ->withEntityCsv(...)
+     *   ->withFeeCsv(...)
      *   ->withForm1099Int(...)
      *   ->withForm1099Misc(...)
      *   ->withFundingInstructions(...)
@@ -270,6 +281,7 @@ final class Export implements BaseModel
      * @param Category|value-of<Category> $category
      * @param DashboardTableCsv|DashboardTableCsvShape|null $dashboardTableCsv
      * @param EntityCsv|EntityCsvShape|null $entityCsv
+     * @param FeeCsv|FeeCsvShape|null $feeCsv
      * @param Form1099Int|Form1099IntShape|null $form1099Int
      * @param Form1099Misc|Form1099MiscShape|null $form1099Misc
      * @param FundingInstructions|FundingInstructionsShape|null $fundingInstructions
@@ -291,6 +303,7 @@ final class Export implements BaseModel
         \DateTimeInterface $createdAt,
         DashboardTableCsv|array|null $dashboardTableCsv,
         EntityCsv|array|null $entityCsv,
+        FeeCsv|array|null $feeCsv,
         Form1099Int|array|null $form1099Int,
         Form1099Misc|array|null $form1099Misc,
         FundingInstructions|array|null $fundingInstructions,
@@ -314,6 +327,7 @@ final class Export implements BaseModel
         $self['createdAt'] = $createdAt;
         $self['dashboardTableCsv'] = $dashboardTableCsv;
         $self['entityCsv'] = $entityCsv;
+        $self['feeCsv'] = $feeCsv;
         $self['form1099Int'] = $form1099Int;
         $self['form1099Misc'] = $form1099Misc;
         $self['fundingInstructions'] = $fundingInstructions;
@@ -455,6 +469,19 @@ final class Export implements BaseModel
     {
         $self = clone $this;
         $self['entityCsv'] = $entityCsv;
+
+        return $self;
+    }
+
+    /**
+     * Details of the fee CSV export. This field will be present when the `category` is equal to `fee_csv`.
+     *
+     * @param FeeCsv|FeeCsvShape|null $feeCsv
+     */
+    public function withFeeCsv(FeeCsv|array|null $feeCsv): self
+    {
+        $self = clone $this;
+        $self['feeCsv'] = $feeCsv;
 
         return $self;
     }

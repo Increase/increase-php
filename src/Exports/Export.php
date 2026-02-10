@@ -23,6 +23,7 @@ use Increase\Exports\Export\Status;
 use Increase\Exports\Export\TransactionCsv;
 use Increase\Exports\Export\Type;
 use Increase\Exports\Export\VendorCsv;
+use Increase\Exports\Export\VoidedCheck;
 
 /**
  * Exports are generated files. Some exports can contain a lot of data, like a CSV of your transactions. Others can be a single document, like a tax form. Since they can take a while, they are generated asynchronously. We send a webhook when they are ready. For more information, please read our [Exports documentation](https://increase.com/documentation/exports).
@@ -40,6 +41,7 @@ use Increase\Exports\Export\VendorCsv;
  * @phpstan-import-type ResultShape from \Increase\Exports\Export\Result
  * @phpstan-import-type TransactionCsvShape from \Increase\Exports\Export\TransactionCsv
  * @phpstan-import-type VendorCsvShape from \Increase\Exports\Export\VendorCsv
+ * @phpstan-import-type VoidedCheckShape from \Increase\Exports\Export\VoidedCheck
  *
  * @phpstan-type ExportShape = array{
  *   id: string,
@@ -61,6 +63,7 @@ use Increase\Exports\Export\VendorCsv;
  *   transactionCsv: null|TransactionCsv|TransactionCsvShape,
  *   type: Type|value-of<Type>,
  *   vendorCsv: null|VendorCsv|VendorCsvShape,
+ *   voidedCheck: null|VoidedCheck|VoidedCheckShape,
  * }
  */
 final class Export implements BaseModel
@@ -189,6 +192,12 @@ final class Export implements BaseModel
     public ?VendorCsv $vendorCsv;
 
     /**
+     * Details of the voided check export. This field will be present when the `category` is equal to `voided_check`.
+     */
+    #[Required('voided_check')]
+    public ?VoidedCheck $voidedCheck;
+
+    /**
      * `new Export()` is missing required properties by the API.
      *
      * To enforce required parameters use
@@ -213,6 +222,7 @@ final class Export implements BaseModel
      *   transactionCsv: ...,
      *   type: ...,
      *   vendorCsv: ...,
+     *   voidedCheck: ...,
      * )
      * ```
      *
@@ -239,6 +249,7 @@ final class Export implements BaseModel
      *   ->withTransactionCsv(...)
      *   ->withType(...)
      *   ->withVendorCsv(...)
+     *   ->withVoidedCheck(...)
      * ```
      */
     public function __construct()
@@ -267,6 +278,7 @@ final class Export implements BaseModel
      * @param TransactionCsv|TransactionCsvShape|null $transactionCsv
      * @param Type|value-of<Type> $type
      * @param VendorCsv|VendorCsvShape|null $vendorCsv
+     * @param VoidedCheck|VoidedCheckShape|null $voidedCheck
      */
     public static function with(
         string $id,
@@ -288,6 +300,7 @@ final class Export implements BaseModel
         TransactionCsv|array|null $transactionCsv,
         Type|string $type,
         VendorCsv|array|null $vendorCsv,
+        VoidedCheck|array|null $voidedCheck,
     ): self {
         $self = new self;
 
@@ -310,6 +323,7 @@ final class Export implements BaseModel
         $self['transactionCsv'] = $transactionCsv;
         $self['type'] = $type;
         $self['vendorCsv'] = $vendorCsv;
+        $self['voidedCheck'] = $voidedCheck;
 
         return $self;
     }
@@ -559,6 +573,19 @@ final class Export implements BaseModel
     {
         $self = clone $this;
         $self['vendorCsv'] = $vendorCsv;
+
+        return $self;
+    }
+
+    /**
+     * Details of the voided check export. This field will be present when the `category` is equal to `voided_check`.
+     *
+     * @param VoidedCheck|VoidedCheckShape|null $voidedCheck
+     */
+    public function withVoidedCheck(VoidedCheck|array|null $voidedCheck): self
+    {
+        $self = clone $this;
+        $self['voidedCheck'] = $voidedCheck;
 
         return $self;
     }

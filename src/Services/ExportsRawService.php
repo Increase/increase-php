@@ -20,6 +20,7 @@ use Increase\Exports\ExportCreateParams\EntityCsv;
 use Increase\Exports\ExportCreateParams\FundingInstructions;
 use Increase\Exports\ExportCreateParams\TransactionCsv;
 use Increase\Exports\ExportCreateParams\VendorCsv;
+use Increase\Exports\ExportCreateParams\VoidedCheck;
 use Increase\Exports\ExportListParams;
 use Increase\Exports\ExportListParams\CreatedAt;
 use Increase\Exports\ExportListParams\Form1099Int;
@@ -39,6 +40,7 @@ use Increase\ServiceContracts\ExportsRawContract;
  * @phpstan-import-type FundingInstructionsShape from \Increase\Exports\ExportCreateParams\FundingInstructions
  * @phpstan-import-type TransactionCsvShape from \Increase\Exports\ExportCreateParams\TransactionCsv
  * @phpstan-import-type VendorCsvShape from \Increase\Exports\ExportCreateParams\VendorCsv
+ * @phpstan-import-type VoidedCheckShape from \Increase\Exports\ExportCreateParams\VoidedCheck
  * @phpstan-import-type CreatedAtShape from \Increase\Exports\ExportListParams\CreatedAt
  * @phpstan-import-type Form1099IntShape from \Increase\Exports\ExportListParams\Form1099Int
  * @phpstan-import-type Form1099MiscShape from \Increase\Exports\ExportListParams\Form1099Misc
@@ -69,6 +71,7 @@ final class ExportsRawService implements ExportsRawContract
      *   fundingInstructions?: FundingInstructions|FundingInstructionsShape,
      *   transactionCsv?: TransactionCsv|TransactionCsvShape,
      *   vendorCsv?: VendorCsv|VendorCsvShape,
+     *   voidedCheck?: VoidedCheck|VoidedCheckShape,
      * }|ExportCreateParams $params
      * @param RequestOpts|null $requestOptions
      *

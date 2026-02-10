@@ -19,6 +19,7 @@ use Increase\Exports\ExportCreateParams\EntityCsv;
 use Increase\Exports\ExportCreateParams\FundingInstructions;
 use Increase\Exports\ExportCreateParams\TransactionCsv;
 use Increase\Exports\ExportCreateParams\VendorCsv;
+use Increase\Exports\ExportCreateParams\VoidedCheck;
 
 /**
  * Create an Export.
@@ -34,6 +35,7 @@ use Increase\Exports\ExportCreateParams\VendorCsv;
  * @phpstan-import-type FundingInstructionsShape from \Increase\Exports\ExportCreateParams\FundingInstructions
  * @phpstan-import-type TransactionCsvShape from \Increase\Exports\ExportCreateParams\TransactionCsv
  * @phpstan-import-type VendorCsvShape from \Increase\Exports\ExportCreateParams\VendorCsv
+ * @phpstan-import-type VoidedCheckShape from \Increase\Exports\ExportCreateParams\VoidedCheck
  *
  * @phpstan-type ExportCreateParamsShape = array{
  *   category: Category|value-of<Category>,
@@ -46,6 +48,7 @@ use Increase\Exports\ExportCreateParams\VendorCsv;
  *   fundingInstructions?: null|FundingInstructions|FundingInstructionsShape,
  *   transactionCsv?: null|TransactionCsv|TransactionCsvShape,
  *   vendorCsv?: null|VendorCsv|VendorCsvShape,
+ *   voidedCheck?: null|VoidedCheck|VoidedCheckShape,
  * }
  */
 final class ExportCreateParams implements BaseModel
@@ -117,6 +120,12 @@ final class ExportCreateParams implements BaseModel
     public ?VendorCsv $vendorCsv;
 
     /**
+     * Options for the created export. Required if `category` is equal to `voided_check`.
+     */
+    #[Optional('voided_check')]
+    public ?VoidedCheck $voidedCheck;
+
+    /**
      * `new ExportCreateParams()` is missing required properties by the API.
      *
      * To enforce required parameters use
@@ -150,6 +159,7 @@ final class ExportCreateParams implements BaseModel
      * @param FundingInstructions|FundingInstructionsShape|null $fundingInstructions
      * @param TransactionCsv|TransactionCsvShape|null $transactionCsv
      * @param VendorCsv|VendorCsvShape|null $vendorCsv
+     * @param VoidedCheck|VoidedCheckShape|null $voidedCheck
      */
     public static function with(
         Category|string $category,
@@ -162,6 +172,7 @@ final class ExportCreateParams implements BaseModel
         FundingInstructions|array|null $fundingInstructions = null,
         TransactionCsv|array|null $transactionCsv = null,
         VendorCsv|array|null $vendorCsv = null,
+        VoidedCheck|array|null $voidedCheck = null,
     ): self {
         $self = new self;
 
@@ -176,6 +187,7 @@ final class ExportCreateParams implements BaseModel
         null !== $fundingInstructions && $self['fundingInstructions'] = $fundingInstructions;
         null !== $transactionCsv && $self['transactionCsv'] = $transactionCsv;
         null !== $vendorCsv && $self['vendorCsv'] = $vendorCsv;
+        null !== $voidedCheck && $self['voidedCheck'] = $voidedCheck;
 
         return $self;
     }
@@ -312,6 +324,19 @@ final class ExportCreateParams implements BaseModel
     {
         $self = clone $this;
         $self['vendorCsv'] = $vendorCsv;
+
+        return $self;
+    }
+
+    /**
+     * Options for the created export. Required if `category` is equal to `voided_check`.
+     *
+     * @param VoidedCheck|VoidedCheckShape $voidedCheck
+     */
+    public function withVoidedCheck(VoidedCheck|array $voidedCheck): self
+    {
+        $self = clone $this;
+        $self['voidedCheck'] = $voidedCheck;
 
         return $self;
     }

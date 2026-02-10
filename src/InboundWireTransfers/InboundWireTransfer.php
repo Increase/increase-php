@@ -7,6 +7,7 @@ namespace Increase\InboundWireTransfers;
 use Increase\Core\Attributes\Required;
 use Increase\Core\Concerns\SdkModel;
 use Increase\Core\Contracts\BaseModel;
+use Increase\InboundWireTransfers\InboundWireTransfer\Acceptance;
 use Increase\InboundWireTransfers\InboundWireTransfer\Reversal;
 use Increase\InboundWireTransfers\InboundWireTransfer\Status;
 use Increase\InboundWireTransfers\InboundWireTransfer\Type;
@@ -14,10 +15,12 @@ use Increase\InboundWireTransfers\InboundWireTransfer\Type;
 /**
  * An Inbound Wire Transfer is a wire transfer initiated outside of Increase to your account.
  *
+ * @phpstan-import-type AcceptanceShape from \Increase\InboundWireTransfers\InboundWireTransfer\Acceptance
  * @phpstan-import-type ReversalShape from \Increase\InboundWireTransfers\InboundWireTransfer\Reversal
  *
  * @phpstan-type InboundWireTransferShape = array{
  *   id: string,
+ *   acceptance: null|Acceptance|AcceptanceShape,
  *   accountID: string,
  *   accountNumberID: string,
  *   amount: int,
@@ -53,6 +56,12 @@ final class InboundWireTransfer implements BaseModel
      */
     #[Required]
     public string $id;
+
+    /**
+     * If the transfer is accepted, this will contain details of the acceptance.
+     */
+    #[Required]
+    public ?Acceptance $acceptance;
 
     /**
      * The Account to which the transfer belongs.
@@ -157,7 +166,7 @@ final class InboundWireTransfer implements BaseModel
     public ?string $instructionIdentification;
 
     /**
-     * Information about the reversal of the inbound wire transfer if it has been reversed.
+     * If the transfer is reversed, this will contain details of the reversal.
      */
     #[Required]
     public ?Reversal $reversal;
@@ -203,6 +212,7 @@ final class InboundWireTransfer implements BaseModel
      * ```
      * InboundWireTransfer::with(
      *   id: ...,
+     *   acceptance: ...,
      *   accountID: ...,
      *   accountNumberID: ...,
      *   amount: ...,
@@ -234,6 +244,7 @@ final class InboundWireTransfer implements BaseModel
      * ```
      * (new InboundWireTransfer)
      *   ->withID(...)
+     *   ->withAcceptance(...)
      *   ->withAccountID(...)
      *   ->withAccountNumberID(...)
      *   ->withAmount(...)
@@ -269,12 +280,14 @@ final class InboundWireTransfer implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
+     * @param Acceptance|AcceptanceShape|null $acceptance
      * @param Reversal|ReversalShape|null $reversal
      * @param Status|value-of<Status> $status
      * @param Type|value-of<Type> $type
      */
     public static function with(
         string $id,
+        Acceptance|array|null $acceptance,
         string $accountID,
         string $accountNumberID,
         int $amount,
@@ -302,6 +315,7 @@ final class InboundWireTransfer implements BaseModel
         $self = new self;
 
         $self['id'] = $id;
+        $self['acceptance'] = $acceptance;
         $self['accountID'] = $accountID;
         $self['accountNumberID'] = $accountNumberID;
         $self['amount'] = $amount;
@@ -336,6 +350,19 @@ final class InboundWireTransfer implements BaseModel
     {
         $self = clone $this;
         $self['id'] = $id;
+
+        return $self;
+    }
+
+    /**
+     * If the transfer is accepted, this will contain details of the acceptance.
+     *
+     * @param Acceptance|AcceptanceShape|null $acceptance
+     */
+    public function withAcceptance(Acceptance|array|null $acceptance): self
+    {
+        $self = clone $this;
+        $self['acceptance'] = $acceptance;
 
         return $self;
     }
@@ -535,7 +562,7 @@ final class InboundWireTransfer implements BaseModel
     }
 
     /**
-     * Information about the reversal of the inbound wire transfer if it has been reversed.
+     * If the transfer is reversed, this will contain details of the reversal.
      *
      * @param Reversal|ReversalShape|null $reversal
      */

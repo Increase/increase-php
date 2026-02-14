@@ -32,7 +32,7 @@ final class CardIncrementCreateParams implements BaseModel
     public int $amount;
 
     /**
-     * The identifier of the Card Payment to create a increment on.
+     * The identifier of the Card Payment to create an increment on.
      */
     #[Required('card_payment_id')]
     public string $cardPaymentID;
@@ -94,7 +94,7 @@ final class CardIncrementCreateParams implements BaseModel
     }
 
     /**
-     * The identifier of the Card Payment to create a increment on.
+     * The identifier of the Card Payment to create an increment on.
      */
     public function withCardPaymentID(string $cardPaymentID): self
     {

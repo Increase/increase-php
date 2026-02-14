@@ -15,7 +15,7 @@ use Increase\Transactions\Transaction\Source\CardRefund\PurchaseDetails;
 use Increase\Transactions\Transaction\Source\CardRefund\Type;
 
 /**
- * A Card Refund object. This field will be present in the JSON response if and only if `category` is equal to `card_refund`. Card Refunds move money back to the cardholder. While they are usually connected to a Card Settlement an acquirer can also refund money directly to a card without relation to a transaction.
+ * A Card Refund object. This field will be present in the JSON response if and only if `category` is equal to `card_refund`. Card Refunds move money back to the cardholder. While they are usually connected to a Card Settlement, an acquirer can also refund money directly to a card without relation to a transaction.
  *
  * @phpstan-import-type CashbackShape from \Increase\Transactions\Transaction\Source\CardRefund\Cashback
  * @phpstan-import-type InterchangeShape from \Increase\Transactions\Transaction\Source\CardRefund\Interchange
@@ -82,7 +82,7 @@ final class CardRefund implements BaseModel
     public string $currency;
 
     /**
-     * Interchange assessed as a part of this transaciton.
+     * Interchange assessed as a part of this transaction.
      */
     #[Required]
     public ?Interchange $interchange;
@@ -343,7 +343,7 @@ final class CardRefund implements BaseModel
     }
 
     /**
-     * Interchange assessed as a part of this transaciton.
+     * Interchange assessed as a part of this transaction.
      *
      * @param Interchange|InterchangeShape|null $interchange
      */

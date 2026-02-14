@@ -54,7 +54,7 @@ final class InboundWireDrawdownRequest implements BaseModel
     public int $amount;
 
     /**
-     * The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which the inbound wire drawdown requested was created.
+     * The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which the inbound wire drawdown request was created.
      */
     #[Required('created_at')]
     public \DateTimeInterface $createdAt;
@@ -311,7 +311,7 @@ final class InboundWireDrawdownRequest implements BaseModel
     }
 
     /**
-     * The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which the inbound wire drawdown requested was created.
+     * The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which the inbound wire drawdown request was created.
      */
     public function withCreatedAt(\DateTimeInterface $createdAt): self
     {

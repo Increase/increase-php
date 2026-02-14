@@ -10,7 +10,7 @@ use Increase\Core\Concerns\SdkModel;
 use Increase\Core\Contracts\BaseModel;
 
 /**
- * Interchange assessed as a part of this transaciton.
+ * Interchange assessed as a part of this transaction.
  *
  * @phpstan-type InterchangeShape = array{
  *   amount: string,

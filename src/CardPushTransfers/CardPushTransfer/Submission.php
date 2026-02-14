@@ -36,7 +36,7 @@ final class Submission implements BaseModel
     public string $senderReference;
 
     /**
-     * The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which the transfer was submitted to card network.
+     * The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which the transfer was submitted to the card network.
      */
     #[Required('submitted_at')]
     public \DateTimeInterface $submittedAt;
@@ -120,7 +120,7 @@ final class Submission implements BaseModel
     }
 
     /**
-     * The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which the transfer was submitted to card network.
+     * The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which the transfer was submitted to the card network.
      */
     public function withSubmittedAt(\DateTimeInterface $submittedAt): self
     {

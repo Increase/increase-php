@@ -27,7 +27,7 @@ final class NotificationOfChange implements BaseModel
     public ?string $updatedAccountNumber;
 
     /**
-     * The new account number provided in the notification of change.
+     * The new routing number provided in the notification of change.
      */
     #[Required('updated_routing_number')]
     public ?string $updatedRoutingNumber;
@@ -83,7 +83,7 @@ final class NotificationOfChange implements BaseModel
     }
 
     /**
-     * The new account number provided in the notification of change.
+     * The new routing number provided in the notification of change.
      */
     public function withUpdatedRoutingNumber(
         ?string $updatedRoutingNumber

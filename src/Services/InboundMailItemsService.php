@@ -94,7 +94,7 @@ final class InboundMailItemsService implements InboundMailItemsContract
     /**
      * @api
      *
-     * Action a Inbound Mail Item
+     * Action an Inbound Mail Item
      *
      * @param string $inboundMailItemID the identifier of the Inbound Mail Item to action
      * @param list<Check|CheckShape> $checks the actions to perform on the Inbound Mail Item

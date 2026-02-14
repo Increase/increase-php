@@ -206,7 +206,7 @@ final class Source implements BaseModel
     public ?CardDisputeLoss $cardDisputeLoss;
 
     /**
-     * A Card Financial object. This field will be present in the JSON response if and only if `category` is equal to `card_financial`. Card Financials are temporary holds placed on a customers funds with the intent to later clear a transaction.
+     * A Card Financial object. This field will be present in the JSON response if and only if `category` is equal to `card_financial`. Card Financials are temporary holds placed on a customer's funds with the intent to later clear a transaction.
      */
     #[Optional('card_financial', nullable: true)]
     public ?CardFinancial $cardFinancial;
@@ -218,7 +218,7 @@ final class Source implements BaseModel
     public ?CardPushTransferAcceptance $cardPushTransferAcceptance;
 
     /**
-     * A Card Refund object. This field will be present in the JSON response if and only if `category` is equal to `card_refund`. Card Refunds move money back to the cardholder. While they are usually connected to a Card Settlement an acquirer can also refund money directly to a card without relation to a transaction.
+     * A Card Refund object. This field will be present in the JSON response if and only if `category` is equal to `card_refund`. Card Refunds move money back to the cardholder. While they are usually connected to a Card Settlement, an acquirer can also refund money directly to a card without relation to a transaction.
      */
     #[Optional('card_refund', nullable: true)]
     public ?CardRefund $cardRefund;
@@ -681,7 +681,7 @@ final class Source implements BaseModel
     }
 
     /**
-     * A Card Financial object. This field will be present in the JSON response if and only if `category` is equal to `card_financial`. Card Financials are temporary holds placed on a customers funds with the intent to later clear a transaction.
+     * A Card Financial object. This field will be present in the JSON response if and only if `category` is equal to `card_financial`. Card Financials are temporary holds placed on a customer's funds with the intent to later clear a transaction.
      *
      * @param CardFinancial|CardFinancialShape|null $cardFinancial
      */
@@ -709,7 +709,7 @@ final class Source implements BaseModel
     }
 
     /**
-     * A Card Refund object. This field will be present in the JSON response if and only if `category` is equal to `card_refund`. Card Refunds move money back to the cardholder. While they are usually connected to a Card Settlement an acquirer can also refund money directly to a card without relation to a transaction.
+     * A Card Refund object. This field will be present in the JSON response if and only if `category` is equal to `card_refund`. Card Refunds move money back to the cardholder. While they are usually connected to a Card Settlement, an acquirer can also refund money directly to a card without relation to a transaction.
      *
      * @param CardRefund|CardRefundShape|null $cardRefund
      */

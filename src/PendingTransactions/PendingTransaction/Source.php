@@ -102,7 +102,7 @@ final class Source implements BaseModel
     public ?BlockchainOnrampTransferInstruction $blockchainOnrampTransferInstruction;
 
     /**
-     * A Card Authorization object. This field will be present in the JSON response if and only if `category` is equal to `card_authorization`. Card Authorizations are temporary holds placed on a customers funds with the intent to later clear a transaction.
+     * A Card Authorization object. This field will be present in the JSON response if and only if `category` is equal to `card_authorization`. Card Authorizations are temporary holds placed on a customer's funds with the intent to later clear a transaction.
      */
     #[Optional('card_authorization', nullable: true)]
     public ?CardAuthorization $cardAuthorization;
@@ -330,7 +330,7 @@ final class Source implements BaseModel
     }
 
     /**
-     * A Card Authorization object. This field will be present in the JSON response if and only if `category` is equal to `card_authorization`. Card Authorizations are temporary holds placed on a customers funds with the intent to later clear a transaction.
+     * A Card Authorization object. This field will be present in the JSON response if and only if `category` is equal to `card_authorization`. Card Authorizations are temporary holds placed on a customer's funds with the intent to later clear a transaction.
      *
      * @param CardAuthorization|CardAuthorizationShape|null $cardAuthorization
      */

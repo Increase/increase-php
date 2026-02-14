@@ -98,7 +98,7 @@ final class InboundMailItemsRawService implements InboundMailItemsRawContract
     /**
      * @api
      *
-     * Action a Inbound Mail Item
+     * Action an Inbound Mail Item
      *
      * @param string $inboundMailItemID the identifier of the Inbound Mail Item to action
      * @param array{checks: list<Check|CheckShape>}|InboundMailItemActionParams $params

@@ -11,7 +11,7 @@ use Increase\Core\Contracts\BaseModel;
 use Increase\InboundMailItems\InboundMailItemActionParams\Check;
 
 /**
- * Action a Inbound Mail Item.
+ * Action an Inbound Mail Item.
  *
  * @see Increase\Services\InboundMailItemsService::action()
  *

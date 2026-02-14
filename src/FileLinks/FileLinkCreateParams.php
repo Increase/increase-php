@@ -32,7 +32,7 @@ final class FileLinkCreateParams implements BaseModel
     public string $fileID;
 
     /**
-     * The time at which the File Link will expire. The default is 1 hour from the time of the request. The maxiumum is 1 day from the time of the request.
+     * The time at which the File Link will expire. The default is 1 hour from the time of the request. The maximum is 1 day from the time of the request.
      */
     #[Optional('expires_at')]
     public ?\DateTimeInterface $expiresAt;
@@ -86,7 +86,7 @@ final class FileLinkCreateParams implements BaseModel
     }
 
     /**
-     * The time at which the File Link will expire. The default is 1 hour from the time of the request. The maxiumum is 1 day from the time of the request.
+     * The time at which the File Link will expire. The default is 1 hour from the time of the request. The maximum is 1 day from the time of the request.
      */
     public function withExpiresAt(\DateTimeInterface $expiresAt): self
     {

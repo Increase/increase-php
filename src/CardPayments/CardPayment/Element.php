@@ -82,7 +82,7 @@ final class Element implements BaseModel
     public ?CardAuthentication $cardAuthentication;
 
     /**
-     * A Card Authorization object. This field will be present in the JSON response if and only if `category` is equal to `card_authorization`. Card Authorizations are temporary holds placed on a customers funds with the intent to later clear a transaction.
+     * A Card Authorization object. This field will be present in the JSON response if and only if `category` is equal to `card_authorization`. Card Authorizations are temporary holds placed on a customer's funds with the intent to later clear a transaction.
      */
     #[Optional('card_authorization', nullable: true)]
     public ?CardAuthorization $cardAuthorization;
@@ -106,7 +106,7 @@ final class Element implements BaseModel
     public ?CardDecline $cardDecline;
 
     /**
-     * A Card Financial object. This field will be present in the JSON response if and only if `category` is equal to `card_financial`. Card Financials are temporary holds placed on a customers funds with the intent to later clear a transaction.
+     * A Card Financial object. This field will be present in the JSON response if and only if `category` is equal to `card_financial`. Card Financials are temporary holds placed on a customer's funds with the intent to later clear a transaction.
      */
     #[Optional('card_financial', nullable: true)]
     public ?CardFinancial $cardFinancial;
@@ -124,7 +124,7 @@ final class Element implements BaseModel
     public ?CardIncrement $cardIncrement;
 
     /**
-     * A Card Refund object. This field will be present in the JSON response if and only if `category` is equal to `card_refund`. Card Refunds move money back to the cardholder. While they are usually connected to a Card Settlement an acquirer can also refund money directly to a card without relation to a transaction.
+     * A Card Refund object. This field will be present in the JSON response if and only if `category` is equal to `card_refund`. Card Refunds move money back to the cardholder. While they are usually connected to a Card Settlement, an acquirer can also refund money directly to a card without relation to a transaction.
      */
     #[Optional('card_refund', nullable: true)]
     public ?CardRefund $cardRefund;
@@ -270,7 +270,7 @@ final class Element implements BaseModel
     }
 
     /**
-     * A Card Authorization object. This field will be present in the JSON response if and only if `category` is equal to `card_authorization`. Card Authorizations are temporary holds placed on a customers funds with the intent to later clear a transaction.
+     * A Card Authorization object. This field will be present in the JSON response if and only if `category` is equal to `card_authorization`. Card Authorizations are temporary holds placed on a customer's funds with the intent to later clear a transaction.
      *
      * @param CardAuthorization|CardAuthorizationShape|null $cardAuthorization
      */
@@ -325,7 +325,7 @@ final class Element implements BaseModel
     }
 
     /**
-     * A Card Financial object. This field will be present in the JSON response if and only if `category` is equal to `card_financial`. Card Financials are temporary holds placed on a customers funds with the intent to later clear a transaction.
+     * A Card Financial object. This field will be present in the JSON response if and only if `category` is equal to `card_financial`. Card Financials are temporary holds placed on a customer's funds with the intent to later clear a transaction.
      *
      * @param CardFinancial|CardFinancialShape|null $cardFinancial
      */
@@ -367,7 +367,7 @@ final class Element implements BaseModel
     }
 
     /**
-     * A Card Refund object. This field will be present in the JSON response if and only if `category` is equal to `card_refund`. Card Refunds move money back to the cardholder. While they are usually connected to a Card Settlement an acquirer can also refund money directly to a card without relation to a transaction.
+     * A Card Refund object. This field will be present in the JSON response if and only if `category` is equal to `card_refund`. Card Refunds move money back to the cardholder. While they are usually connected to a Card Settlement, an acquirer can also refund money directly to a card without relation to a transaction.
      *
      * @param CardRefund|CardRefundShape|null $cardRefund
      */

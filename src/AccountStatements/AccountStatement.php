@@ -52,7 +52,7 @@ final class AccountStatement implements BaseModel
     public \DateTimeInterface $createdAt;
 
     /**
-     * The Account's balance at the start of its statement period.
+     * The Account's balance at the end of its statement period.
      */
     #[Required('ending_balance')]
     public int $endingBalance;
@@ -205,7 +205,7 @@ final class AccountStatement implements BaseModel
     }
 
     /**
-     * The Account's balance at the start of its statement period.
+     * The Account's balance at the end of its statement period.
      */
     public function withEndingBalance(int $endingBalance): self
     {

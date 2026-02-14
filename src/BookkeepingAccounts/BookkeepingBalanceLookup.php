@@ -10,7 +10,7 @@ use Increase\Core\Concerns\SdkModel;
 use Increase\Core\Contracts\BaseModel;
 
 /**
- * Represents a request to lookup the balance of an Bookkeeping Account at a given point in time.
+ * Represents a request to lookup the balance of a Bookkeeping Account at a given point in time.
  *
  * @phpstan-type BookkeepingBalanceLookupShape = array{
  *   balance: int, bookkeepingAccountID: string, type: Type|value-of<Type>

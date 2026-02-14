@@ -51,7 +51,7 @@ final class BookkeepingEntry implements BaseModel
     public \DateTimeInterface $createdAt;
 
     /**
-     * The identifier for the Account the Entry belongs to.
+     * The identifier for the Entry Set the Entry belongs to.
      */
     #[Required('entry_set_id')]
     public string $entrySetID;
@@ -168,7 +168,7 @@ final class BookkeepingEntry implements BaseModel
     }
 
     /**
-     * The identifier for the Account the Entry belongs to.
+     * The identifier for the Entry Set the Entry belongs to.
      */
     public function withEntrySetID(string $entrySetID): self
     {

@@ -227,7 +227,7 @@ final class ACHTransfer implements BaseModel
     public ?string $individualID;
 
     /**
-     * The name of the transfer recipient. This value is information and not verified by the recipient's bank.
+     * The name of the transfer recipient. This value is informational and not verified by the recipient's bank.
      */
     #[Required('individual_name')]
     public ?string $individualName;
@@ -784,7 +784,7 @@ final class ACHTransfer implements BaseModel
     }
 
     /**
-     * The name of the transfer recipient. This value is information and not verified by the recipient's bank.
+     * The name of the transfer recipient. This value is informational and not verified by the recipient's bank.
      */
     public function withIndividualName(?string $individualName): self
     {

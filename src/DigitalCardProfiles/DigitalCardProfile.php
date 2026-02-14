@@ -81,7 +81,7 @@ final class DigitalCardProfile implements BaseModel
     public ?string $contactWebsite;
 
     /**
-     * The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which the Card Dispute was created.
+     * The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which the Digital Card Profile was created.
      */
     #[Required('created_at')]
     public \DateTimeInterface $createdAt;
@@ -298,7 +298,7 @@ final class DigitalCardProfile implements BaseModel
     }
 
     /**
-     * The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which the Card Dispute was created.
+     * The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which the Digital Card Profile was created.
      */
     public function withCreatedAt(\DateTimeInterface $createdAt): self
     {

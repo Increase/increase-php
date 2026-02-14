@@ -10,7 +10,7 @@ use Increase\Core\Concerns\SdkParams;
 use Increase\Core\Contracts\BaseModel;
 
 /**
- * Simulates a user attempting add a [Card](#cards) to a digital wallet such as Apple Pay.
+ * Simulates a user attempting to add a [Card](#cards) to a digital wallet such as Apple Pay.
  *
  * @see Increase\Services\Simulations\DigitalWalletTokenRequestsService::create()
  *

@@ -181,7 +181,7 @@ final class CardSettlement implements BaseModel
     public ?PurchaseDetails $purchaseDetails;
 
     /**
-     * Surcharge amount details, if applicable. The amount is positive if the surcharge is added to to the overall transaction amount (surcharge), and negative if the surcharge is deducted from the overall transaction amount (discount).
+     * Surcharge amount details, if applicable. The amount is positive if the surcharge is added to the overall transaction amount (surcharge), and negative if the surcharge is deducted from the overall transaction amount (discount).
      */
     #[Required]
     public ?Surcharge $surcharge;
@@ -570,7 +570,7 @@ final class CardSettlement implements BaseModel
     }
 
     /**
-     * Surcharge amount details, if applicable. The amount is positive if the surcharge is added to to the overall transaction amount (surcharge), and negative if the surcharge is deducted from the overall transaction amount (discount).
+     * Surcharge amount details, if applicable. The amount is positive if the surcharge is added to the overall transaction amount (surcharge), and negative if the surcharge is deducted from the overall transaction amount (discount).
      *
      * @param Surcharge|SurchargeShape|null $surcharge
      */

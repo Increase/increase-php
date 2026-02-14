@@ -39,7 +39,7 @@ final class Submission implements BaseModel
     public string $effectiveDate;
 
     /**
-     * When the transfer is expected to settle in the recipient's account. Credits may be available sooner, at the receiving banks discretion. The FedACH schedule is published [here](https://www.frbservices.org/resources/resource-centers/same-day-ach/fedach-processing-schedule.html).
+     * When the transfer is expected to settle in the recipient's account. Credits may be available sooner, at the receiving bank's discretion. The FedACH schedule is published [here](https://www.frbservices.org/resources/resource-centers/same-day-ach/fedach-processing-schedule.html).
      */
     #[Required('expected_funds_settlement_at')]
     public \DateTimeInterface $expectedFundsSettlementAt;
@@ -150,7 +150,7 @@ final class Submission implements BaseModel
     }
 
     /**
-     * When the transfer is expected to settle in the recipient's account. Credits may be available sooner, at the receiving banks discretion. The FedACH schedule is published [here](https://www.frbservices.org/resources/resource-centers/same-day-ach/fedach-processing-schedule.html).
+     * When the transfer is expected to settle in the recipient's account. Credits may be available sooner, at the receiving bank's discretion. The FedACH schedule is published [here](https://www.frbservices.org/resources/resource-centers/same-day-ach/fedach-processing-schedule.html).
      */
     public function withExpectedFundsSettlementAt(
         \DateTimeInterface $expectedFundsSettlementAt

@@ -18,7 +18,7 @@ use Increase\Core\Concerns\SdkModel;
 use Increase\Core\Contracts\BaseModel;
 
 /**
- * A Card Financial object. This field will be present in the JSON response if and only if `category` is equal to `card_financial`. Card Financials are temporary holds placed on a customers funds with the intent to later clear a transaction.
+ * A Card Financial object. This field will be present in the JSON response if and only if `category` is equal to `card_financial`. Card Financials are temporary holds placed on a customer's funds with the intent to later clear a transaction.
  *
  * @phpstan-import-type AdditionalAmountsShape from \Increase\CardPayments\CardPayment\Element\CardFinancial\AdditionalAmounts
  * @phpstan-import-type NetworkDetailsShape from \Increase\CardPayments\CardPayment\Element\CardFinancial\NetworkDetails

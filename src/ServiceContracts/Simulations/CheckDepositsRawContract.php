@@ -8,6 +8,7 @@ use Increase\CheckDeposits\CheckDeposit;
 use Increase\Core\Contracts\BaseResponse;
 use Increase\Core\Exceptions\APIException;
 use Increase\RequestOptions;
+use Increase\Simulations\CheckDeposits\CheckDepositSubmitParams;
 
 /**
  * @phpstan-import-type RequestOpts from \Increase\RequestOptions
@@ -48,6 +49,7 @@ interface CheckDepositsRawContract
      * @api
      *
      * @param string $checkDepositID the identifier of the Check Deposit you wish to submit
+     * @param array<string,mixed>|CheckDepositSubmitParams $params
      * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<CheckDeposit>
@@ -56,6 +58,7 @@ interface CheckDepositsRawContract
      */
     public function submit(
         string $checkDepositID,
-        RequestOptions|array|null $requestOptions = null
+        array|CheckDepositSubmitParams $params,
+        RequestOptions|array|null $requestOptions = null,
     ): BaseResponse;
 }

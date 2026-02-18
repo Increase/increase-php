@@ -10,8 +10,11 @@ use Increase\Core\Contracts\BaseResponse;
 use Increase\Core\Exceptions\APIException;
 use Increase\RequestOptions;
 use Increase\ServiceContracts\Simulations\CheckDepositsRawContract;
+use Increase\Simulations\CheckDeposits\CheckDepositSubmitParams;
+use Increase\Simulations\CheckDeposits\CheckDepositSubmitParams\Scan;
 
 /**
+ * @phpstan-import-type ScanShape from \Increase\Simulations\CheckDeposits\CheckDepositSubmitParams\Scan
  * @phpstan-import-type RequestOpts from \Increase\RequestOptions
  */
 final class CheckDepositsRawService implements CheckDepositsRawContract
@@ -78,6 +81,7 @@ final class CheckDepositsRawService implements CheckDepositsRawContract
      * Simulates the submission of a [Check Deposit](#check-deposits) to the Federal Reserve. This Check Deposit must first have a `status` of `pending`.
      *
      * @param string $checkDepositID the identifier of the Check Deposit you wish to submit
+     * @param array{scan?: Scan|ScanShape}|CheckDepositSubmitParams $params
      * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<CheckDeposit>
@@ -86,13 +90,20 @@ final class CheckDepositsRawService implements CheckDepositsRawContract
      */
     public function submit(
         string $checkDepositID,
-        RequestOptions|array|null $requestOptions = null
+        array|CheckDepositSubmitParams $params,
+        RequestOptions|array|null $requestOptions = null,
     ): BaseResponse {
+        [$parsed, $options] = CheckDepositSubmitParams::parseRequest(
+            $params,
+            $requestOptions,
+        );
+
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'post',
             path: ['simulations/check_deposits/%1$s/submit', $checkDepositID],
-            options: $requestOptions,
+            body: (object) $parsed,
+            options: $options,
             convert: CheckDeposit::class,
         );
     }

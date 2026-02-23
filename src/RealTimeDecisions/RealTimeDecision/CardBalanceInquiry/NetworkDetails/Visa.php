@@ -10,6 +10,7 @@ use Increase\Core\Contracts\BaseModel;
 use Increase\RealTimeDecisions\RealTimeDecision\CardBalanceInquiry\NetworkDetails\Visa\ElectronicCommerceIndicator;
 use Increase\RealTimeDecisions\RealTimeDecision\CardBalanceInquiry\NetworkDetails\Visa\PointOfServiceEntryMode;
 use Increase\RealTimeDecisions\RealTimeDecision\CardBalanceInquiry\NetworkDetails\Visa\StandInProcessingReason;
+use Increase\RealTimeDecisions\RealTimeDecision\CardBalanceInquiry\NetworkDetails\Visa\TerminalEntryCapability;
 
 /**
  * Fields specific to the `visa` network.
@@ -18,6 +19,7 @@ use Increase\RealTimeDecisions\RealTimeDecision\CardBalanceInquiry\NetworkDetail
  *   electronicCommerceIndicator: null|ElectronicCommerceIndicator|value-of<ElectronicCommerceIndicator>,
  *   pointOfServiceEntryMode: null|PointOfServiceEntryMode|value-of<PointOfServiceEntryMode>,
  *   standInProcessingReason: null|StandInProcessingReason|value-of<StandInProcessingReason>,
+ *   terminalEntryCapability: null|TerminalEntryCapability|value-of<TerminalEntryCapability>,
  * }
  */
 final class Visa implements BaseModel
@@ -59,6 +61,14 @@ final class Visa implements BaseModel
     public ?string $standInProcessingReason;
 
     /**
+     * The capability of the terminal being used to read the card. Shows whether a terminal can e.g., accept chip cards or if it only supports magnetic stripe reads. This reflects the highest capability of the terminal — for example, a terminal that supports both chip and magnetic stripe will be identified as chip-capable.
+     *
+     * @var value-of<TerminalEntryCapability>|null $terminalEntryCapability
+     */
+    #[Required('terminal_entry_capability', enum: TerminalEntryCapability::class)]
+    public ?string $terminalEntryCapability;
+
+    /**
      * `new Visa()` is missing required properties by the API.
      *
      * To enforce required parameters use
@@ -67,6 +77,7 @@ final class Visa implements BaseModel
      *   electronicCommerceIndicator: ...,
      *   pointOfServiceEntryMode: ...,
      *   standInProcessingReason: ...,
+     *   terminalEntryCapability: ...,
      * )
      * ```
      *
@@ -77,6 +88,7 @@ final class Visa implements BaseModel
      *   ->withElectronicCommerceIndicator(...)
      *   ->withPointOfServiceEntryMode(...)
      *   ->withStandInProcessingReason(...)
+     *   ->withTerminalEntryCapability(...)
      * ```
      */
     public function __construct()
@@ -92,17 +104,20 @@ final class Visa implements BaseModel
      * @param ElectronicCommerceIndicator|value-of<ElectronicCommerceIndicator>|null $electronicCommerceIndicator
      * @param PointOfServiceEntryMode|value-of<PointOfServiceEntryMode>|null $pointOfServiceEntryMode
      * @param StandInProcessingReason|value-of<StandInProcessingReason>|null $standInProcessingReason
+     * @param TerminalEntryCapability|value-of<TerminalEntryCapability>|null $terminalEntryCapability
      */
     public static function with(
         ElectronicCommerceIndicator|string|null $electronicCommerceIndicator,
         PointOfServiceEntryMode|string|null $pointOfServiceEntryMode,
         StandInProcessingReason|string|null $standInProcessingReason,
+        TerminalEntryCapability|string|null $terminalEntryCapability,
     ): self {
         $self = new self;
 
         $self['electronicCommerceIndicator'] = $electronicCommerceIndicator;
         $self['pointOfServiceEntryMode'] = $pointOfServiceEntryMode;
         $self['standInProcessingReason'] = $standInProcessingReason;
+        $self['terminalEntryCapability'] = $terminalEntryCapability;
 
         return $self;
     }
@@ -145,6 +160,20 @@ final class Visa implements BaseModel
     ): self {
         $self = clone $this;
         $self['standInProcessingReason'] = $standInProcessingReason;
+
+        return $self;
+    }
+
+    /**
+     * The capability of the terminal being used to read the card. Shows whether a terminal can e.g., accept chip cards or if it only supports magnetic stripe reads. This reflects the highest capability of the terminal — for example, a terminal that supports both chip and magnetic stripe will be identified as chip-capable.
+     *
+     * @param TerminalEntryCapability|value-of<TerminalEntryCapability>|null $terminalEntryCapability
+     */
+    public function withTerminalEntryCapability(
+        TerminalEntryCapability|string|null $terminalEntryCapability
+    ): self {
+        $self = clone $this;
+        $self['terminalEntryCapability'] = $terminalEntryCapability;
 
         return $self;
     }

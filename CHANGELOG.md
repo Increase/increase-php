@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.35.0 (2026-02-23)
+
+Full Changelog: [v0.34.0...v0.35.0](https://github.com/Increase/increase-php/compare/v0.34.0...v0.35.0)
+
+### Features
+
+* **api:** api update ([5a257d5](https://github.com/Increase/increase-php/commit/5a257d51773aafae5e54d06fdb3333b9ed150059))
+
+
+### Chores
+
+* **release:** add packagist trigger on published release ([7edc818](https://github.com/Increase/increase-php/commit/7edc818c5db7f92ffbc780e8b40704d0631e76b8))
+
 ## 0.34.0 (2026-02-18)
 
 Full Changelog: [v0.33.0...v0.34.0](https://github.com/Increase/increase-php/compare/v0.33.0...v0.34.0)

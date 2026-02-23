@@ -29,5 +29,7 @@ enum Reason: string
 
     case REQUESTED_BY_USER = 'requested_by_user';
 
+    case INTERNATIONAL = 'international';
+
     case UNKNOWN = 'unknown';
 }

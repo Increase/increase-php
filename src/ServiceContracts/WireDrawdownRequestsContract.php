@@ -33,6 +33,7 @@ interface WireDrawdownRequestsContract
      * @param string $debtorAccountNumber the debtor's account number
      * @param string $debtorExternalAccountID The ID of an External Account to initiate a transfer to. If this parameter is provided, `debtor_account_number` and `debtor_routing_number` must be absent.
      * @param string $debtorRoutingNumber the debtor's routing number
+     * @param string $endToEndIdentification a free-form reference string set by the sender mirrored back in the subsequent wire transfer
      * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
@@ -48,6 +49,7 @@ interface WireDrawdownRequestsContract
         ?string $debtorAccountNumber = null,
         ?string $debtorExternalAccountID = null,
         ?string $debtorRoutingNumber = null,
+        ?string $endToEndIdentification = null,
         RequestOptions|array|null $requestOptions = null,
     ): WireDrawdownRequest;
 

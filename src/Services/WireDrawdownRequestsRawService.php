@@ -48,6 +48,7 @@ final class WireDrawdownRequestsRawService implements WireDrawdownRequestsRawCon
      *   debtorAccountNumber?: string,
      *   debtorExternalAccountID?: string,
      *   debtorRoutingNumber?: string,
+     *   endToEndIdentification?: string,
      * }|WireDrawdownRequestCreateParams $params
      * @param RequestOpts|null $requestOptions
      *

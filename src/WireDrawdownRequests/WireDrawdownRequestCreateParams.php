@@ -31,6 +31,7 @@ use Increase\WireDrawdownRequests\WireDrawdownRequestCreateParams\DebtorAddress;
  *   debtorAccountNumber?: string|null,
  *   debtorExternalAccountID?: string|null,
  *   debtorRoutingNumber?: string|null,
+ *   endToEndIdentification?: string|null,
  * }
  */
 final class WireDrawdownRequestCreateParams implements BaseModel
@@ -100,6 +101,12 @@ final class WireDrawdownRequestCreateParams implements BaseModel
     public ?string $debtorRoutingNumber;
 
     /**
+     * A free-form reference string set by the sender mirrored back in the subsequent wire transfer.
+     */
+    #[Optional('end_to_end_identification')]
+    public ?string $endToEndIdentification;
+
+    /**
      * `new WireDrawdownRequestCreateParams()` is missing required properties by the API.
      *
      * To enforce required parameters use
@@ -152,6 +159,7 @@ final class WireDrawdownRequestCreateParams implements BaseModel
         ?string $debtorAccountNumber = null,
         ?string $debtorExternalAccountID = null,
         ?string $debtorRoutingNumber = null,
+        ?string $endToEndIdentification = null,
     ): self {
         $self = new self;
 
@@ -166,6 +174,7 @@ final class WireDrawdownRequestCreateParams implements BaseModel
         null !== $debtorAccountNumber && $self['debtorAccountNumber'] = $debtorAccountNumber;
         null !== $debtorExternalAccountID && $self['debtorExternalAccountID'] = $debtorExternalAccountID;
         null !== $debtorRoutingNumber && $self['debtorRoutingNumber'] = $debtorRoutingNumber;
+        null !== $endToEndIdentification && $self['endToEndIdentification'] = $endToEndIdentification;
 
         return $self;
     }
@@ -283,6 +292,18 @@ final class WireDrawdownRequestCreateParams implements BaseModel
     {
         $self = clone $this;
         $self['debtorRoutingNumber'] = $debtorRoutingNumber;
+
+        return $self;
+    }
+
+    /**
+     * A free-form reference string set by the sender mirrored back in the subsequent wire transfer.
+     */
+    public function withEndToEndIdentification(
+        string $endToEndIdentification
+    ): self {
+        $self = clone $this;
+        $self['endToEndIdentification'] = $endToEndIdentification;
 
         return $self;
     }

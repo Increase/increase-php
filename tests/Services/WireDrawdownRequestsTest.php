@@ -77,6 +77,7 @@ final class WireDrawdownRequestsTest extends TestCase
             debtorAccountNumber: '987654321',
             debtorExternalAccountID: 'debtor_external_account_id',
             debtorRoutingNumber: '101050001',
+            endToEndIdentification: 'x',
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType

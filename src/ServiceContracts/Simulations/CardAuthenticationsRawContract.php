@@ -1,0 +1,65 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Increase\ServiceContracts\Simulations;
+
+use Increase\CardPayments\CardPayment;
+use Increase\Core\Contracts\BaseResponse;
+use Increase\Core\Exceptions\APIException;
+use Increase\RequestOptions;
+use Increase\Simulations\CardAuthentications\CardAuthenticationChallengeAttemptsParams;
+use Increase\Simulations\CardAuthentications\CardAuthenticationCreateParams;
+
+/**
+ * @phpstan-import-type RequestOpts from \Increase\RequestOptions
+ */
+interface CardAuthenticationsRawContract
+{
+    /**
+     * @api
+     *
+     * @param array<string,mixed>|CardAuthenticationCreateParams $params
+     * @param RequestOpts|null $requestOptions
+     *
+     * @return BaseResponse<CardPayment>
+     *
+     * @throws APIException
+     */
+    public function create(
+        array|CardAuthenticationCreateParams $params,
+        RequestOptions|array|null $requestOptions = null,
+    ): BaseResponse;
+
+    /**
+     * @api
+     *
+     * @param string $cardPaymentID the identifier of the Card Payment to be challenged
+     * @param array<string,mixed>|CardAuthenticationChallengeAttemptsParams $params
+     * @param RequestOpts|null $requestOptions
+     *
+     * @return BaseResponse<CardPayment>
+     *
+     * @throws APIException
+     */
+    public function challengeAttempts(
+        string $cardPaymentID,
+        array|CardAuthenticationChallengeAttemptsParams $params,
+        RequestOptions|array|null $requestOptions = null,
+    ): BaseResponse;
+
+    /**
+     * @api
+     *
+     * @param string $cardPaymentID the identifier of the Card Payment to be challenged
+     * @param RequestOpts|null $requestOptions
+     *
+     * @return BaseResponse<CardPayment>
+     *
+     * @throws APIException
+     */
+    public function challenges(
+        string $cardPaymentID,
+        RequestOptions|array|null $requestOptions = null
+    ): BaseResponse;
+}

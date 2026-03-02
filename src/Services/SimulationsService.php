@@ -9,6 +9,7 @@ use Increase\ServiceContracts\SimulationsContract;
 use Increase\Services\Simulations\AccountStatementsService;
 use Increase\Services\Simulations\AccountTransfersService;
 use Increase\Services\Simulations\ACHTransfersService;
+use Increase\Services\Simulations\CardAuthenticationsService;
 use Increase\Services\Simulations\CardAuthorizationExpirationsService;
 use Increase\Services\Simulations\CardAuthorizationsService;
 use Increase\Services\Simulations\CardBalanceInquiriesService;
@@ -94,6 +95,11 @@ final class SimulationsService implements SimulationsContract
      * @api
      */
     public CardRefundsService $cardRefunds;
+
+    /**
+     * @api
+     */
+    public CardAuthenticationsService $cardAuthentications;
 
     /**
      * @api
@@ -216,6 +222,7 @@ final class SimulationsService implements SimulationsContract
         $this->cardIncrements = new CardIncrementsService($client);
         $this->cardFuelConfirmations = new CardFuelConfirmationsService($client);
         $this->cardRefunds = new CardRefundsService($client);
+        $this->cardAuthentications = new CardAuthenticationsService($client);
         $this->cardDisputes = new CardDisputesService($client);
         $this->physicalCards = new PhysicalCardsService($client);
         $this->digitalWalletTokenRequests = new DigitalWalletTokenRequestsService($client);

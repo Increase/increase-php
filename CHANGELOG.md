@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.39.0 (2026-03-02)
+
+Full Changelog: [v0.38.0...v0.39.0](https://github.com/Increase/increase-php/compare/v0.38.0...v0.39.0)
+
+### Features
+
+* **api:** api update ([c006300](https://github.com/Increase/increase-php/commit/c006300fe430b8c1bb93e8c7b2b9ec15712b1d99))
+
+
+### Chores
+
+* **internal:** upgrade phpunit ([24bcddf](https://github.com/Increase/increase-php/commit/24bcddff58f83a42f1b3d2edd44ab639501ff393))
+
 ## 0.38.0 (2026-02-24)
 
 Full Changelog: [v0.37.0...v0.38.0](https://github.com/Increase/increase-php/compare/v0.37.0...v0.38.0)

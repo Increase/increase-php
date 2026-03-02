@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Increase\EventSubscriptions\EventSubscription\SelectedEventCategory1;
+namespace Increase\EventSubscriptions\EventSubscription\SelectedEventCategory;
 
 /**
  * The category of the Event.

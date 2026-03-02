@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Increase\CheckDeposits;
 
 use Increase\CheckDeposits\CheckDeposit\DepositAcceptance;
+use Increase\CheckDeposits\CheckDeposit\DepositAdjustment;
 use Increase\CheckDeposits\CheckDeposit\DepositRejection;
 use Increase\CheckDeposits\CheckDeposit\DepositReturn;
 use Increase\CheckDeposits\CheckDeposit\DepositSubmission;
@@ -19,6 +20,7 @@ use Increase\Core\Contracts\BaseModel;
  * Check Deposits allow you to deposit images of paper checks into your account.
  *
  * @phpstan-import-type DepositAcceptanceShape from \Increase\CheckDeposits\CheckDeposit\DepositAcceptance
+ * @phpstan-import-type DepositAdjustmentShape from \Increase\CheckDeposits\CheckDeposit\DepositAdjustment
  * @phpstan-import-type DepositRejectionShape from \Increase\CheckDeposits\CheckDeposit\DepositRejection
  * @phpstan-import-type DepositReturnShape from \Increase\CheckDeposits\CheckDeposit\DepositReturn
  * @phpstan-import-type DepositSubmissionShape from \Increase\CheckDeposits\CheckDeposit\DepositSubmission
@@ -31,6 +33,7 @@ use Increase\Core\Contracts\BaseModel;
  *   backImageFileID: string|null,
  *   createdAt: \DateTimeInterface,
  *   depositAcceptance: null|DepositAcceptance|DepositAcceptanceShape,
+ *   depositAdjustments: list<DepositAdjustment|DepositAdjustmentShape>,
  *   depositRejection: null|DepositRejection|DepositRejectionShape,
  *   depositReturn: null|DepositReturn|DepositReturnShape,
  *   depositSubmission: null|DepositSubmission|DepositSubmissionShape,
@@ -85,6 +88,14 @@ final class CheckDeposit implements BaseModel
      */
     #[Required('deposit_acceptance')]
     public ?DepositAcceptance $depositAcceptance;
+
+    /**
+     * If the deposit or the return was adjusted by the receiving institution, this will contain details of the adjustments.
+     *
+     * @var list<DepositAdjustment> $depositAdjustments
+     */
+    #[Required('deposit_adjustments', list: DepositAdjustment::class)]
+    public array $depositAdjustments;
 
     /**
      * If your deposit is rejected by Increase, this will contain details as to why it was rejected.
@@ -174,6 +185,7 @@ final class CheckDeposit implements BaseModel
      *   backImageFileID: ...,
      *   createdAt: ...,
      *   depositAcceptance: ...,
+     *   depositAdjustments: ...,
      *   depositRejection: ...,
      *   depositReturn: ...,
      *   depositSubmission: ...,
@@ -199,6 +211,7 @@ final class CheckDeposit implements BaseModel
      *   ->withBackImageFileID(...)
      *   ->withCreatedAt(...)
      *   ->withDepositAcceptance(...)
+     *   ->withDepositAdjustments(...)
      *   ->withDepositRejection(...)
      *   ->withDepositReturn(...)
      *   ->withDepositSubmission(...)
@@ -224,6 +237,7 @@ final class CheckDeposit implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param DepositAcceptance|DepositAcceptanceShape|null $depositAcceptance
+     * @param list<DepositAdjustment|DepositAdjustmentShape> $depositAdjustments
      * @param DepositRejection|DepositRejectionShape|null $depositRejection
      * @param DepositReturn|DepositReturnShape|null $depositReturn
      * @param DepositSubmission|DepositSubmissionShape|null $depositSubmission
@@ -238,6 +252,7 @@ final class CheckDeposit implements BaseModel
         ?string $backImageFileID,
         \DateTimeInterface $createdAt,
         DepositAcceptance|array|null $depositAcceptance,
+        array $depositAdjustments,
         DepositRejection|array|null $depositRejection,
         DepositReturn|array|null $depositReturn,
         DepositSubmission|array|null $depositSubmission,
@@ -259,6 +274,7 @@ final class CheckDeposit implements BaseModel
         $self['backImageFileID'] = $backImageFileID;
         $self['createdAt'] = $createdAt;
         $self['depositAcceptance'] = $depositAcceptance;
+        $self['depositAdjustments'] = $depositAdjustments;
         $self['depositRejection'] = $depositRejection;
         $self['depositReturn'] = $depositReturn;
         $self['depositSubmission'] = $depositSubmission;
@@ -340,6 +356,19 @@ final class CheckDeposit implements BaseModel
     ): self {
         $self = clone $this;
         $self['depositAcceptance'] = $depositAcceptance;
+
+        return $self;
+    }
+
+    /**
+     * If the deposit or the return was adjusted by the receiving institution, this will contain details of the adjustments.
+     *
+     * @param list<DepositAdjustment|DepositAdjustmentShape> $depositAdjustments
+     */
+    public function withDepositAdjustments(array $depositAdjustments): self
+    {
+        $self = clone $this;
+        $self['depositAdjustments'] = $depositAdjustments;
 
         return $self;
     }

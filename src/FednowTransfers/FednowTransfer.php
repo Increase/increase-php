@@ -9,6 +9,7 @@ use Increase\Core\Concerns\SdkModel;
 use Increase\Core\Contracts\BaseModel;
 use Increase\FednowTransfers\FednowTransfer\Acknowledgement;
 use Increase\FednowTransfers\FednowTransfer\CreatedBy;
+use Increase\FednowTransfers\FednowTransfer\CreditorAddress;
 use Increase\FednowTransfers\FednowTransfer\Currency;
 use Increase\FednowTransfers\FednowTransfer\Rejection;
 use Increase\FednowTransfers\FednowTransfer\Status;
@@ -20,6 +21,7 @@ use Increase\FednowTransfers\FednowTransfer\Type;
  *
  * @phpstan-import-type AcknowledgementShape from \Increase\FednowTransfers\FednowTransfer\Acknowledgement
  * @phpstan-import-type CreatedByShape from \Increase\FednowTransfers\FednowTransfer\CreatedBy
+ * @phpstan-import-type CreditorAddressShape from \Increase\FednowTransfers\FednowTransfer\CreditorAddress
  * @phpstan-import-type RejectionShape from \Increase\FednowTransfers\FednowTransfer\Rejection
  * @phpstan-import-type SubmissionShape from \Increase\FednowTransfers\FednowTransfer\Submission
  *
@@ -31,6 +33,7 @@ use Increase\FednowTransfers\FednowTransfer\Type;
  *   amount: int,
  *   createdAt: \DateTimeInterface,
  *   createdBy: null|CreatedBy|CreatedByShape,
+ *   creditorAddress: null|CreditorAddress|CreditorAddressShape,
  *   creditorName: string,
  *   currency: Currency|value-of<Currency>,
  *   debtorName: string,
@@ -94,6 +97,12 @@ final class FednowTransfer implements BaseModel
      */
     #[Required('created_by')]
     public ?CreatedBy $createdBy;
+
+    /**
+     * The creditor's address.
+     */
+    #[Required('creditor_address')]
+    public ?CreditorAddress $creditorAddress;
 
     /**
      * The name of the transfer's recipient. This is set by the sender when creating the transfer.
@@ -204,6 +213,7 @@ final class FednowTransfer implements BaseModel
      *   amount: ...,
      *   createdAt: ...,
      *   createdBy: ...,
+     *   creditorAddress: ...,
      *   creditorName: ...,
      *   currency: ...,
      *   debtorName: ...,
@@ -233,6 +243,7 @@ final class FednowTransfer implements BaseModel
      *   ->withAmount(...)
      *   ->withCreatedAt(...)
      *   ->withCreatedBy(...)
+     *   ->withCreditorAddress(...)
      *   ->withCreditorName(...)
      *   ->withCurrency(...)
      *   ->withDebtorName(...)
@@ -262,6 +273,7 @@ final class FednowTransfer implements BaseModel
      *
      * @param Acknowledgement|AcknowledgementShape|null $acknowledgement
      * @param CreatedBy|CreatedByShape|null $createdBy
+     * @param CreditorAddress|CreditorAddressShape|null $creditorAddress
      * @param Currency|value-of<Currency> $currency
      * @param Rejection|RejectionShape|null $rejection
      * @param Status|value-of<Status> $status
@@ -276,6 +288,7 @@ final class FednowTransfer implements BaseModel
         int $amount,
         \DateTimeInterface $createdAt,
         CreatedBy|array|null $createdBy,
+        CreditorAddress|array|null $creditorAddress,
         string $creditorName,
         Currency|string $currency,
         string $debtorName,
@@ -301,6 +314,7 @@ final class FednowTransfer implements BaseModel
         $self['amount'] = $amount;
         $self['createdAt'] = $createdAt;
         $self['createdBy'] = $createdBy;
+        $self['creditorAddress'] = $creditorAddress;
         $self['creditorName'] = $creditorName;
         $self['currency'] = $currency;
         $self['debtorName'] = $debtorName;
@@ -398,6 +412,20 @@ final class FednowTransfer implements BaseModel
     {
         $self = clone $this;
         $self['createdBy'] = $createdBy;
+
+        return $self;
+    }
+
+    /**
+     * The creditor's address.
+     *
+     * @param CreditorAddress|CreditorAddressShape|null $creditorAddress
+     */
+    public function withCreditorAddress(
+        CreditorAddress|array|null $creditorAddress
+    ): self {
+        $self = clone $this;
+        $self['creditorAddress'] = $creditorAddress;
 
         return $self;
     }

@@ -5,9 +5,11 @@ declare(strict_types=1);
 namespace Increase\ServiceContracts;
 
 use Increase\Core\Exceptions\APIException;
+use Increase\Core\Exceptions\WebhookException;
 use Increase\Events\Event;
 use Increase\Events\EventListParams\Category;
 use Increase\Events\EventListParams\CreatedAt;
+use Increase\Events\UnwrapWebhookEvent;
 use Increase\Page;
 use Increase\RequestOptions;
 
@@ -53,4 +55,19 @@ interface EventsContract
         ?int $limit = null,
         RequestOptions|array|null $requestOptions = null,
     ): Page;
+
+    /**
+     * @api
+     *
+     * Unwraps a webhook event from its JSON representation.
+     *
+     * @param array<string,string|list<string>>|null $headers
+     *
+     * @throws WebhookException
+     */
+    public function unwrap(
+        string $body,
+        ?array $headers = null,
+        ?string $secret = null
+    ): UnwrapWebhookEvent;
 }

@@ -5,14 +5,19 @@ declare(strict_types=1);
 namespace Increase\Services;
 
 use Increase\Client;
+use Increase\Core\Conversion;
 use Increase\Core\Exceptions\APIException;
+use Increase\Core\Exceptions\WebhookException;
 use Increase\Core\Util;
 use Increase\Events\Event;
 use Increase\Events\EventListParams\Category;
 use Increase\Events\EventListParams\CreatedAt;
+use Increase\Events\UnwrapWebhookEvent;
 use Increase\Page;
 use Increase\RequestOptions;
 use Increase\ServiceContracts\EventsContract;
+use StandardWebhooks\Exception\WebhookVerificationException;
+use StandardWebhooks\Webhook;
 
 /**
  * @phpstan-import-type CategoryShape from \Increase\Events\EventListParams\Category
@@ -92,5 +97,44 @@ final class EventsService implements EventsContract
         $response = $this->raw->list(params: $params, requestOptions: $requestOptions);
 
         return $response->parse();
+    }
+
+    /**
+     * @api
+     *
+     * Unwraps a webhook event from its JSON representation.
+     *
+     * @param array<string,string|list<string>>|null $headers
+     *
+     * @throws WebhookException
+     */
+    public function unwrap(
+        string $body,
+        ?array $headers = null,
+        ?string $secret = null
+    ): UnwrapWebhookEvent {
+        if (null !== $headers) {
+            $secret = $secret ?? ($this->client->webhookSecret ?: null);
+            if (null === $secret) {
+                throw new WebhookException('Webhook key must not be null in order to unwrap');
+            }
+
+            try {
+                $flatHeaders = array_map(fn (string|array $v): string => is_array($v) ? $v[0] : $v, $headers);
+                $webhook = new Webhook($secret);
+                $webhook->verify($body, $flatHeaders);
+            } catch (WebhookVerificationException $e) {
+                throw new WebhookException('Could not verify webhook event signature', previous: $e);
+            }
+        }
+
+        try {
+            $decoded = Util::decodeJson($body);
+
+            // @phpstan-ignore return.type
+            return Conversion::coerce(UnwrapWebhookEvent::class, value: $decoded);
+        } catch (\Throwable $e) {
+            throw new WebhookException('Error parsing webhook body', previous: $e);
+        }
     }
 }

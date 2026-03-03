@@ -16,4 +16,6 @@ enum Vendor: string
     case OSCILAR = 'oscilar';
 
     case PERSONA = 'persona';
+
+    case TAKTILE = 'taktile';
 }

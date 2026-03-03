@@ -10,7 +10,6 @@ use Increase\Core\Exceptions\APIException;
 use Increase\Core\Util;
 use Increase\Entities\Entity;
 use Increase\Entities\EntityArchiveBeneficialOwnerParams;
-use Increase\Entities\EntityConfirmParams;
 use Increase\Entities\EntityCreateBeneficialOwnerParams;
 use Increase\Entities\EntityCreateBeneficialOwnerParams\BeneficialOwner;
 use Increase\Entities\EntityCreateParams;
@@ -27,10 +26,8 @@ use Increase\Entities\EntityCreateParams\Trust;
 use Increase\Entities\EntityListParams;
 use Increase\Entities\EntityListParams\CreatedAt;
 use Increase\Entities\EntityListParams\Status;
-use Increase\Entities\EntityUpdateAddressParams;
-use Increase\Entities\EntityUpdateAddressParams\Address;
 use Increase\Entities\EntityUpdateBeneficialOwnerAddressParams;
-use Increase\Entities\EntityUpdateIndustryCodeParams;
+use Increase\Entities\EntityUpdateBeneficialOwnerAddressParams\Address;
 use Increase\Entities\EntityUpdateParams;
 use Increase\Page;
 use Increase\RequestOptions;
@@ -55,8 +52,7 @@ use Increase\ServiceContracts\EntitiesRawContract;
  * @phpstan-import-type CreatedAtShape from \Increase\Entities\EntityListParams\CreatedAt
  * @phpstan-import-type StatusShape from \Increase\Entities\EntityListParams\Status
  * @phpstan-import-type BeneficialOwnerShape from \Increase\Entities\EntityCreateBeneficialOwnerParams\BeneficialOwner
- * @phpstan-import-type AddressShape from \Increase\Entities\EntityUpdateAddressParams\Address
- * @phpstan-import-type AddressShape from \Increase\Entities\EntityUpdateBeneficialOwnerAddressParams\Address as AddressShape1
+ * @phpstan-import-type AddressShape from \Increase\Entities\EntityUpdateBeneficialOwnerAddressParams\Address
  * @phpstan-import-type RequestOpts from \Increase\RequestOptions
  */
 final class EntitiesRawService implements EntitiesRawContract
@@ -280,39 +276,6 @@ final class EntitiesRawService implements EntitiesRawContract
     /**
      * @api
      *
-     * Depending on your program, you may be required to re-confirm an Entity's details on a recurring basis. After making any required updates, call this endpoint to record that your user confirmed their details.
-     *
-     * @param string $entityID the identifier of the Entity to confirm the details of
-     * @param array{confirmedAt?: \DateTimeInterface}|EntityConfirmParams $params
-     * @param RequestOpts|null $requestOptions
-     *
-     * @return BaseResponse<Entity>
-     *
-     * @throws APIException
-     */
-    public function confirm(
-        string $entityID,
-        array|EntityConfirmParams $params,
-        RequestOptions|array|null $requestOptions = null,
-    ): BaseResponse {
-        [$parsed, $options] = EntityConfirmParams::parseRequest(
-            $params,
-            $requestOptions,
-        );
-
-        // @phpstan-ignore-next-line return.type
-        return $this->client->request(
-            method: 'post',
-            path: ['entities/%1$s/confirm', $entityID],
-            body: (object) $parsed,
-            options: $options,
-            convert: Entity::class,
-        );
-    }
-
-    /**
-     * @api
-     *
      * Create a beneficial owner for a corporate Entity
      *
      * @param string $entityID the identifier of the Entity to associate with the new Beneficial Owner
@@ -348,45 +311,11 @@ final class EntitiesRawService implements EntitiesRawContract
     /**
      * @api
      *
-     * Update a Natural Person or Corporation's address
-     *
-     * @param string $entityID the identifier of the Entity whose address is being updated
-     * @param array{address: Address|AddressShape}|EntityUpdateAddressParams $params
-     * @param RequestOpts|null $requestOptions
-     *
-     * @return BaseResponse<Entity>
-     *
-     * @throws APIException
-     */
-    public function updateAddress(
-        string $entityID,
-        array|EntityUpdateAddressParams $params,
-        RequestOptions|array|null $requestOptions = null,
-    ): BaseResponse {
-        [$parsed, $options] = EntityUpdateAddressParams::parseRequest(
-            $params,
-            $requestOptions,
-        );
-
-        // @phpstan-ignore-next-line return.type
-        return $this->client->request(
-            method: 'post',
-            path: ['entities/%1$s/update_address', $entityID],
-            body: (object) $parsed,
-            options: $options,
-            convert: Entity::class,
-        );
-    }
-
-    /**
-     * @api
-     *
      * Update the address for a beneficial owner belonging to a corporate Entity
      *
      * @param string $entityID the identifier of the Entity associated with the Beneficial Owner whose address is being updated
      * @param array{
-     *   address: EntityUpdateBeneficialOwnerAddressParams\Address|AddressShape1,
-     *   beneficialOwnerID: string,
+     *   address: Address|AddressShape, beneficialOwnerID: string
      * }|EntityUpdateBeneficialOwnerAddressParams $params
      * @param RequestOpts|null $requestOptions
      *
@@ -408,39 +337,6 @@ final class EntitiesRawService implements EntitiesRawContract
         return $this->client->request(
             method: 'post',
             path: ['entities/%1$s/update_beneficial_owner_address', $entityID],
-            body: (object) $parsed,
-            options: $options,
-            convert: Entity::class,
-        );
-    }
-
-    /**
-     * @api
-     *
-     * Update the industry code for a corporate Entity
-     *
-     * @param string $entityID The identifier of the Entity to update. This endpoint only accepts `corporation` entities.
-     * @param array{industryCode: string}|EntityUpdateIndustryCodeParams $params
-     * @param RequestOpts|null $requestOptions
-     *
-     * @return BaseResponse<Entity>
-     *
-     * @throws APIException
-     */
-    public function updateIndustryCode(
-        string $entityID,
-        array|EntityUpdateIndustryCodeParams $params,
-        RequestOptions|array|null $requestOptions = null,
-    ): BaseResponse {
-        [$parsed, $options] = EntityUpdateIndustryCodeParams::parseRequest(
-            $params,
-            $requestOptions,
-        );
-
-        // @phpstan-ignore-next-line return.type
-        return $this->client->request(
-            method: 'post',
-            path: ['entities/%1$s/update_industry_code', $entityID],
             body: (object) $parsed,
             options: $options,
             convert: Entity::class,

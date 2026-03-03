@@ -19,7 +19,7 @@ use Increase\Entities\EntityCreateParams\ThirdPartyVerification;
 use Increase\Entities\EntityCreateParams\Trust;
 use Increase\Entities\EntityListParams\CreatedAt;
 use Increase\Entities\EntityListParams\Status;
-use Increase\Entities\EntityUpdateAddressParams\Address;
+use Increase\Entities\EntityUpdateBeneficialOwnerAddressParams\Address;
 use Increase\Page;
 use Increase\RequestOptions;
 
@@ -42,8 +42,7 @@ use Increase\RequestOptions;
  * @phpstan-import-type CreatedAtShape from \Increase\Entities\EntityListParams\CreatedAt
  * @phpstan-import-type StatusShape from \Increase\Entities\EntityListParams\Status
  * @phpstan-import-type BeneficialOwnerShape from \Increase\Entities\EntityCreateBeneficialOwnerParams\BeneficialOwner
- * @phpstan-import-type AddressShape from \Increase\Entities\EntityUpdateAddressParams\Address
- * @phpstan-import-type AddressShape from \Increase\Entities\EntityUpdateBeneficialOwnerAddressParams\Address as AddressShape1
+ * @phpstan-import-type AddressShape from \Increase\Entities\EntityUpdateBeneficialOwnerAddressParams\Address
  * @phpstan-import-type RequestOpts from \Increase\RequestOptions
  */
 interface EntitiesContract
@@ -175,21 +174,6 @@ interface EntitiesContract
     /**
      * @api
      *
-     * @param string $entityID the identifier of the Entity to confirm the details of
-     * @param \DateTimeInterface $confirmedAt When your user confirmed the Entity's details. If not provided, the current time will be used.
-     * @param RequestOpts|null $requestOptions
-     *
-     * @throws APIException
-     */
-    public function confirm(
-        string $entityID,
-        ?\DateTimeInterface $confirmedAt = null,
-        RequestOptions|array|null $requestOptions = null,
-    ): Entity;
-
-    /**
-     * @api
-     *
      * @param string $entityID the identifier of the Entity to associate with the new Beneficial Owner
      * @param BeneficialOwner|BeneficialOwnerShape $beneficialOwner the identifying details of anyone controlling or owning 25% or more of the corporation
      * @param RequestOpts|null $requestOptions
@@ -205,23 +189,8 @@ interface EntitiesContract
     /**
      * @api
      *
-     * @param string $entityID the identifier of the Entity whose address is being updated
-     * @param Address|AddressShape $address The entity's physical address. Mail receiving locations like PO Boxes and PMB's are disallowed.
-     * @param RequestOpts|null $requestOptions
-     *
-     * @throws APIException
-     */
-    public function updateAddress(
-        string $entityID,
-        Address|array $address,
-        RequestOptions|array|null $requestOptions = null,
-    ): Entity;
-
-    /**
-     * @api
-     *
      * @param string $entityID the identifier of the Entity associated with the Beneficial Owner whose address is being updated
-     * @param \Increase\Entities\EntityUpdateBeneficialOwnerAddressParams\Address|AddressShape1 $address The individual's physical address. Mail receiving locations like PO Boxes and PMB's are disallowed.
+     * @param Address|AddressShape $address The individual's physical address. Mail receiving locations like PO Boxes and PMB's are disallowed.
      * @param string $beneficialOwnerID the identifying details of anyone controlling or owning 25% or more of the corporation
      * @param RequestOpts|null $requestOptions
      *
@@ -229,23 +198,8 @@ interface EntitiesContract
      */
     public function updateBeneficialOwnerAddress(
         string $entityID,
-        \Increase\Entities\EntityUpdateBeneficialOwnerAddressParams\Address|array $address,
+        Address|array $address,
         string $beneficialOwnerID,
-        RequestOptions|array|null $requestOptions = null,
-    ): Entity;
-
-    /**
-     * @api
-     *
-     * @param string $entityID The identifier of the Entity to update. This endpoint only accepts `corporation` entities.
-     * @param string $industryCode The North American Industry Classification System (NAICS) code for the corporation's primary line of business. This is a number, like `5132` for `Software Publishers`. A full list of classification codes is available [here](https://increase.com/documentation/data-dictionary#north-american-industry-classification-system-codes).
-     * @param RequestOpts|null $requestOptions
-     *
-     * @throws APIException
-     */
-    public function updateIndustryCode(
-        string $entityID,
-        string $industryCode,
         RequestOptions|array|null $requestOptions = null,
     ): Entity;
 }

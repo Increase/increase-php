@@ -17,10 +17,12 @@ use Increase\EventSubscriptions\EventSubscriptionCreateParams\Status;
  *
  * @see Increase\Services\EventSubscriptionsService::create()
  *
+ * @phpstan-import-type SelectedEventCategoryShape from \Increase\EventSubscriptions\EventSubscriptionCreateParams\SelectedEventCategory
+ *
  * @phpstan-type EventSubscriptionCreateParamsShape = array{
  *   url: string,
  *   oauthConnectionID?: string|null,
- *   selectedEventCategory?: null|SelectedEventCategory|value-of<SelectedEventCategory>,
+ *   selectedEventCategories?: list<SelectedEventCategory|SelectedEventCategoryShape>|null,
  *   sharedSecret?: string|null,
  *   status?: null|Status|value-of<Status>,
  * }
@@ -44,12 +46,12 @@ final class EventSubscriptionCreateParams implements BaseModel
     public ?string $oauthConnectionID;
 
     /**
-     * If specified, this subscription will only receive webhooks for Events with the specified `category`.
+     * If specified, this subscription will only receive webhooks for Events with the specified `category`. If specifying a Real-Time Decision event category, only one Event Category can be specified for the Event Subscription.
      *
-     * @var value-of<SelectedEventCategory>|null $selectedEventCategory
+     * @var list<SelectedEventCategory>|null $selectedEventCategories
      */
-    #[Optional('selected_event_category', enum: SelectedEventCategory::class)]
-    public ?string $selectedEventCategory;
+    #[Optional('selected_event_categories', list: SelectedEventCategory::class)]
+    public ?array $selectedEventCategories;
 
     /**
      * The key that will be used to sign webhooks. If no value is passed, a random string will be used as default.
@@ -89,13 +91,13 @@ final class EventSubscriptionCreateParams implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param SelectedEventCategory|value-of<SelectedEventCategory>|null $selectedEventCategory
+     * @param list<SelectedEventCategory|SelectedEventCategoryShape>|null $selectedEventCategories
      * @param Status|value-of<Status>|null $status
      */
     public static function with(
         string $url,
         ?string $oauthConnectionID = null,
-        SelectedEventCategory|string|null $selectedEventCategory = null,
+        ?array $selectedEventCategories = null,
         ?string $sharedSecret = null,
         Status|string|null $status = null,
     ): self {
@@ -104,7 +106,7 @@ final class EventSubscriptionCreateParams implements BaseModel
         $self['url'] = $url;
 
         null !== $oauthConnectionID && $self['oauthConnectionID'] = $oauthConnectionID;
-        null !== $selectedEventCategory && $self['selectedEventCategory'] = $selectedEventCategory;
+        null !== $selectedEventCategories && $self['selectedEventCategories'] = $selectedEventCategories;
         null !== $sharedSecret && $self['sharedSecret'] = $sharedSecret;
         null !== $status && $self['status'] = $status;
 
@@ -134,15 +136,15 @@ final class EventSubscriptionCreateParams implements BaseModel
     }
 
     /**
-     * If specified, this subscription will only receive webhooks for Events with the specified `category`.
+     * If specified, this subscription will only receive webhooks for Events with the specified `category`. If specifying a Real-Time Decision event category, only one Event Category can be specified for the Event Subscription.
      *
-     * @param SelectedEventCategory|value-of<SelectedEventCategory> $selectedEventCategory
+     * @param list<SelectedEventCategory|SelectedEventCategoryShape> $selectedEventCategories
      */
-    public function withSelectedEventCategory(
-        SelectedEventCategory|string $selectedEventCategory
+    public function withSelectedEventCategories(
+        array $selectedEventCategories
     ): self {
         $self = clone $this;
-        $self['selectedEventCategory'] = $selectedEventCategory;
+        $self['selectedEventCategories'] = $selectedEventCategories;
 
         return $self;
     }

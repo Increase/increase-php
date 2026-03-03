@@ -19,6 +19,7 @@ use Increase\RequestOptions;
 use Increase\ServiceContracts\EventSubscriptionsRawContract;
 
 /**
+ * @phpstan-import-type SelectedEventCategoryShape from \Increase\EventSubscriptions\EventSubscriptionCreateParams\SelectedEventCategory
  * @phpstan-import-type RequestOpts from \Increase\RequestOptions
  */
 final class EventSubscriptionsRawService implements EventSubscriptionsRawContract
@@ -37,7 +38,7 @@ final class EventSubscriptionsRawService implements EventSubscriptionsRawContrac
      * @param array{
      *   url: string,
      *   oauthConnectionID?: string,
-     *   selectedEventCategory?: value-of<SelectedEventCategory>,
+     *   selectedEventCategories?: list<SelectedEventCategory|SelectedEventCategoryShape>,
      *   sharedSecret?: string,
      *   status?: Status|value-of<Status>,
      * }|EventSubscriptionCreateParams $params

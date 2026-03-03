@@ -21,6 +21,13 @@ use Increase\Core\Contracts\BaseModel;
  *
  * @phpstan-type CardAuthenticationShape = array{
  *   id: string,
+ *   billingAddressCity: string|null,
+ *   billingAddressCountry: string|null,
+ *   billingAddressLine1: string|null,
+ *   billingAddressLine2: string|null,
+ *   billingAddressLine3: string|null,
+ *   billingAddressPostalCode: string|null,
+ *   billingAddressState: string|null,
  *   cardID: string,
  *   cardPaymentID: string,
  *   cardholderEmail: string|null,
@@ -51,6 +58,48 @@ final class CardAuthentication implements BaseModel
      */
     #[Required]
     public string $id;
+
+    /**
+     * The city of the cardholder billing address associated with the card used for this purchase.
+     */
+    #[Required('billing_address_city')]
+    public ?string $billingAddressCity;
+
+    /**
+     * The country of the cardholder billing address associated with the card used for this purchase.
+     */
+    #[Required('billing_address_country')]
+    public ?string $billingAddressCountry;
+
+    /**
+     * The first line of the cardholder billing address associated with the card used for this purchase.
+     */
+    #[Required('billing_address_line1')]
+    public ?string $billingAddressLine1;
+
+    /**
+     * The second line of the cardholder billing address associated with the card used for this purchase.
+     */
+    #[Required('billing_address_line2')]
+    public ?string $billingAddressLine2;
+
+    /**
+     * The third line of the cardholder billing address associated with the card used for this purchase.
+     */
+    #[Required('billing_address_line3')]
+    public ?string $billingAddressLine3;
+
+    /**
+     * The postal code of the cardholder billing address associated with the card used for this purchase.
+     */
+    #[Required('billing_address_postal_code')]
+    public ?string $billingAddressPostalCode;
+
+    /**
+     * The US state of the cardholder billing address associated with the card used for this purchase.
+     */
+    #[Required('billing_address_state')]
+    public ?string $billingAddressState;
 
     /**
      * The identifier of the Card.
@@ -179,6 +228,13 @@ final class CardAuthentication implements BaseModel
      * ```
      * CardAuthentication::with(
      *   id: ...,
+     *   billingAddressCity: ...,
+     *   billingAddressCountry: ...,
+     *   billingAddressLine1: ...,
+     *   billingAddressLine2: ...,
+     *   billingAddressLine3: ...,
+     *   billingAddressPostalCode: ...,
+     *   billingAddressState: ...,
      *   cardID: ...,
      *   cardPaymentID: ...,
      *   cardholderEmail: ...,
@@ -205,6 +261,13 @@ final class CardAuthentication implements BaseModel
      * ```
      * (new CardAuthentication)
      *   ->withID(...)
+     *   ->withBillingAddressCity(...)
+     *   ->withBillingAddressCountry(...)
+     *   ->withBillingAddressLine1(...)
+     *   ->withBillingAddressLine2(...)
+     *   ->withBillingAddressLine3(...)
+     *   ->withBillingAddressPostalCode(...)
+     *   ->withBillingAddressState(...)
      *   ->withCardID(...)
      *   ->withCardPaymentID(...)
      *   ->withCardholderEmail(...)
@@ -244,6 +307,13 @@ final class CardAuthentication implements BaseModel
      */
     public static function with(
         string $id,
+        ?string $billingAddressCity,
+        ?string $billingAddressCountry,
+        ?string $billingAddressLine1,
+        ?string $billingAddressLine2,
+        ?string $billingAddressLine3,
+        ?string $billingAddressPostalCode,
+        ?string $billingAddressState,
         string $cardID,
         string $cardPaymentID,
         ?string $cardholderEmail,
@@ -266,6 +336,13 @@ final class CardAuthentication implements BaseModel
         $self = new self;
 
         $self['id'] = $id;
+        $self['billingAddressCity'] = $billingAddressCity;
+        $self['billingAddressCountry'] = $billingAddressCountry;
+        $self['billingAddressLine1'] = $billingAddressLine1;
+        $self['billingAddressLine2'] = $billingAddressLine2;
+        $self['billingAddressLine3'] = $billingAddressLine3;
+        $self['billingAddressPostalCode'] = $billingAddressPostalCode;
+        $self['billingAddressState'] = $billingAddressState;
         $self['cardID'] = $cardID;
         $self['cardPaymentID'] = $cardPaymentID;
         $self['cardholderEmail'] = $cardholderEmail;
@@ -295,6 +372,85 @@ final class CardAuthentication implements BaseModel
     {
         $self = clone $this;
         $self['id'] = $id;
+
+        return $self;
+    }
+
+    /**
+     * The city of the cardholder billing address associated with the card used for this purchase.
+     */
+    public function withBillingAddressCity(?string $billingAddressCity): self
+    {
+        $self = clone $this;
+        $self['billingAddressCity'] = $billingAddressCity;
+
+        return $self;
+    }
+
+    /**
+     * The country of the cardholder billing address associated with the card used for this purchase.
+     */
+    public function withBillingAddressCountry(
+        ?string $billingAddressCountry
+    ): self {
+        $self = clone $this;
+        $self['billingAddressCountry'] = $billingAddressCountry;
+
+        return $self;
+    }
+
+    /**
+     * The first line of the cardholder billing address associated with the card used for this purchase.
+     */
+    public function withBillingAddressLine1(?string $billingAddressLine1): self
+    {
+        $self = clone $this;
+        $self['billingAddressLine1'] = $billingAddressLine1;
+
+        return $self;
+    }
+
+    /**
+     * The second line of the cardholder billing address associated with the card used for this purchase.
+     */
+    public function withBillingAddressLine2(?string $billingAddressLine2): self
+    {
+        $self = clone $this;
+        $self['billingAddressLine2'] = $billingAddressLine2;
+
+        return $self;
+    }
+
+    /**
+     * The third line of the cardholder billing address associated with the card used for this purchase.
+     */
+    public function withBillingAddressLine3(?string $billingAddressLine3): self
+    {
+        $self = clone $this;
+        $self['billingAddressLine3'] = $billingAddressLine3;
+
+        return $self;
+    }
+
+    /**
+     * The postal code of the cardholder billing address associated with the card used for this purchase.
+     */
+    public function withBillingAddressPostalCode(
+        ?string $billingAddressPostalCode
+    ): self {
+        $self = clone $this;
+        $self['billingAddressPostalCode'] = $billingAddressPostalCode;
+
+        return $self;
+    }
+
+    /**
+     * The US state of the cardholder billing address associated with the card used for this purchase.
+     */
+    public function withBillingAddressState(?string $billingAddressState): self
+    {
+        $self = clone $this;
+        $self['billingAddressState'] = $billingAddressState;
 
         return $self;
     }

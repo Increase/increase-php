@@ -18,6 +18,7 @@ use Increase\Core\Contracts\BaseModel;
  * A Card Authentication object. This field will be present in the JSON response if and only if `category` is equal to `card_authentication`. Card Authentications are attempts to authenticate a transaction or a card with 3DS.
  *
  * @phpstan-import-type ChallengeShape from \Increase\CardPayments\CardPayment\Element\CardAuthentication\Challenge
+ * @phpstan-import-type DeviceChannelShape from \Increase\CardPayments\CardPayment\Element\CardAuthentication\DeviceChannel
  *
  * @phpstan-type CardAuthenticationShape = array{
  *   id: string,
@@ -36,7 +37,7 @@ use Increase\Core\Contracts\BaseModel;
  *   challenge: null|Challenge|ChallengeShape,
  *   createdAt: \DateTimeInterface,
  *   denyReason: null|DenyReason|value-of<DenyReason>,
- *   deviceChannel: null|DeviceChannel|value-of<DeviceChannel>,
+ *   deviceChannel: DeviceChannel|DeviceChannelShape,
  *   merchantAcceptorID: string,
  *   merchantCategoryCode: string,
  *   merchantCountry: string,
@@ -157,11 +158,9 @@ final class CardAuthentication implements BaseModel
 
     /**
      * The device channel of the card authentication attempt.
-     *
-     * @var value-of<DeviceChannel>|null $deviceChannel
      */
-    #[Required('device_channel', enum: DeviceChannel::class)]
-    public ?string $deviceChannel;
+    #[Required('device_channel')]
+    public DeviceChannel $deviceChannel;
 
     /**
      * The merchant identifier (commonly abbreviated as MID) of the merchant the card is transacting with.
@@ -301,7 +300,7 @@ final class CardAuthentication implements BaseModel
      * @param Category|value-of<Category>|null $category
      * @param Challenge|ChallengeShape|null $challenge
      * @param DenyReason|value-of<DenyReason>|null $denyReason
-     * @param DeviceChannel|value-of<DeviceChannel>|null $deviceChannel
+     * @param DeviceChannel|DeviceChannelShape $deviceChannel
      * @param Status|value-of<Status> $status
      * @param Type|value-of<Type> $type
      */
@@ -322,7 +321,7 @@ final class CardAuthentication implements BaseModel
         Challenge|array|null $challenge,
         \DateTimeInterface $createdAt,
         DenyReason|string|null $denyReason,
-        DeviceChannel|string|null $deviceChannel,
+        DeviceChannel|array $deviceChannel,
         string $merchantAcceptorID,
         string $merchantCategoryCode,
         string $merchantCountry,
@@ -553,11 +552,10 @@ final class CardAuthentication implements BaseModel
     /**
      * The device channel of the card authentication attempt.
      *
-     * @param DeviceChannel|value-of<DeviceChannel>|null $deviceChannel
+     * @param DeviceChannel|DeviceChannelShape $deviceChannel
      */
-    public function withDeviceChannel(
-        DeviceChannel|string|null $deviceChannel
-    ): self {
+    public function withDeviceChannel(DeviceChannel|array $deviceChannel): self
+    {
         $self = clone $this;
         $self['deviceChannel'] = $deviceChannel;
 

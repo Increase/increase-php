@@ -12,6 +12,7 @@ use Increase\Page;
 use Increase\RequestOptions;
 
 /**
+ * @phpstan-import-type SelectedEventCategoryShape from \Increase\EventSubscriptions\EventSubscriptionCreateParams\SelectedEventCategory
  * @phpstan-import-type RequestOpts from \Increase\RequestOptions
  */
 interface EventSubscriptionsContract
@@ -21,7 +22,7 @@ interface EventSubscriptionsContract
      *
      * @param string $url the URL you'd like us to send webhooks to
      * @param string $oauthConnectionID if specified, this subscription will only receive webhooks for Events associated with the specified OAuth Connection
-     * @param SelectedEventCategory|value-of<SelectedEventCategory> $selectedEventCategory if specified, this subscription will only receive webhooks for Events with the specified `category`
+     * @param list<SelectedEventCategory|SelectedEventCategoryShape> $selectedEventCategories If specified, this subscription will only receive webhooks for Events with the specified `category`. If specifying a Real-Time Decision event category, only one Event Category can be specified for the Event Subscription.
      * @param string $sharedSecret The key that will be used to sign webhooks. If no value is passed, a random string will be used as default.
      * @param Status|value-of<Status> $status The status of the event subscription. Defaults to `active` if not specified.
      * @param RequestOpts|null $requestOptions
@@ -31,7 +32,7 @@ interface EventSubscriptionsContract
     public function create(
         string $url,
         ?string $oauthConnectionID = null,
-        SelectedEventCategory|string|null $selectedEventCategory = null,
+        ?array $selectedEventCategories = null,
         ?string $sharedSecret = null,
         Status|string|null $status = null,
         RequestOptions|array|null $requestOptions = null,

@@ -45,7 +45,7 @@ final class EventSubscriptionsTest extends TestCase
         $result = $this->client->eventSubscriptions->create(
             url: 'https://website.com/webhooks',
             oauthConnectionID: 'x',
-            selectedEventCategory: 'account.created',
+            selectedEventCategories: [['eventCategory' => 'account.created']],
             sharedSecret: 'x',
             status: 'active',
         );

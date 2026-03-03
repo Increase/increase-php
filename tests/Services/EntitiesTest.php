@@ -358,15 +358,6 @@ final class EntitiesTest extends TestCase
     }
 
     #[Test]
-    public function testConfirm(): void
-    {
-        $result = $this->client->entities->confirm('entity_n8y8tnk2p9339ti393yi');
-
-        // @phpstan-ignore-next-line method.alreadyNarrowedType
-        $this->assertInstanceOf(Entity::class, $result);
-    }
-
-    #[Test]
     public function testCreateBeneficialOwner(): void
     {
         $result = $this->client->entities->createBeneficialOwner(
@@ -443,41 +434,6 @@ final class EntitiesTest extends TestCase
     }
 
     #[Test]
-    public function testUpdateAddress(): void
-    {
-        $result = $this->client->entities->updateAddress(
-            'entity_n8y8tnk2p9339ti393yi',
-            address: [
-                'city' => 'New York',
-                'line1' => '33 Liberty Street',
-                'state' => 'NY',
-                'zip' => '10045',
-            ],
-        );
-
-        // @phpstan-ignore-next-line method.alreadyNarrowedType
-        $this->assertInstanceOf(Entity::class, $result);
-    }
-
-    #[Test]
-    public function testUpdateAddressWithOptionalParams(): void
-    {
-        $result = $this->client->entities->updateAddress(
-            'entity_n8y8tnk2p9339ti393yi',
-            address: [
-                'city' => 'New York',
-                'line1' => '33 Liberty Street',
-                'state' => 'NY',
-                'zip' => '10045',
-                'line2' => 'Unit 2',
-            ],
-        );
-
-        // @phpstan-ignore-next-line method.alreadyNarrowedType
-        $this->assertInstanceOf(Entity::class, $result);
-    }
-
-    #[Test]
     public function testUpdateBeneficialOwnerAddress(): void
     {
         $result = $this->client->entities->updateBeneficialOwnerAddress(
@@ -506,30 +462,6 @@ final class EntitiesTest extends TestCase
                 'zip' => '10045',
             ],
             beneficialOwnerID: 'entity_setup_beneficial_owner_submission_vgkyk7dj5eb4sfhdbkx7',
-        );
-
-        // @phpstan-ignore-next-line method.alreadyNarrowedType
-        $this->assertInstanceOf(Entity::class, $result);
-    }
-
-    #[Test]
-    public function testUpdateIndustryCode(): void
-    {
-        $result = $this->client->entities->updateIndustryCode(
-            'entity_n8y8tnk2p9339ti393yi',
-            industryCode: '5132'
-        );
-
-        // @phpstan-ignore-next-line method.alreadyNarrowedType
-        $this->assertInstanceOf(Entity::class, $result);
-    }
-
-    #[Test]
-    public function testUpdateIndustryCodeWithOptionalParams(): void
-    {
-        $result = $this->client->entities->updateIndustryCode(
-            'entity_n8y8tnk2p9339ti393yi',
-            industryCode: '5132'
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType

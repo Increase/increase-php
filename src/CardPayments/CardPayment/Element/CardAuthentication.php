@@ -23,6 +23,8 @@ use Increase\Core\Contracts\BaseModel;
  *   id: string,
  *   cardID: string,
  *   cardPaymentID: string,
+ *   cardholderEmail: string|null,
+ *   cardholderName: string|null,
  *   category: null|\Increase\CardPayments\CardPayment\Element\CardAuthentication\Category|value-of<\Increase\CardPayments\CardPayment\Element\CardAuthentication\Category>,
  *   challenge: null|Challenge|ChallengeShape,
  *   createdAt: \DateTimeInterface,
@@ -61,6 +63,18 @@ final class CardAuthentication implements BaseModel
      */
     #[Required('card_payment_id')]
     public string $cardPaymentID;
+
+    /**
+     * The email address of the cardholder.
+     */
+    #[Required('cardholder_email')]
+    public ?string $cardholderEmail;
+
+    /**
+     * The name of the cardholder.
+     */
+    #[Required('cardholder_name')]
+    public ?string $cardholderName;
 
     /**
      * The category of the card authentication attempt.
@@ -167,6 +181,8 @@ final class CardAuthentication implements BaseModel
      *   id: ...,
      *   cardID: ...,
      *   cardPaymentID: ...,
+     *   cardholderEmail: ...,
+     *   cardholderName: ...,
      *   category: ...,
      *   challenge: ...,
      *   createdAt: ...,
@@ -191,6 +207,8 @@ final class CardAuthentication implements BaseModel
      *   ->withID(...)
      *   ->withCardID(...)
      *   ->withCardPaymentID(...)
+     *   ->withCardholderEmail(...)
+     *   ->withCardholderName(...)
      *   ->withCategory(...)
      *   ->withChallenge(...)
      *   ->withCreatedAt(...)
@@ -228,6 +246,8 @@ final class CardAuthentication implements BaseModel
         string $id,
         string $cardID,
         string $cardPaymentID,
+        ?string $cardholderEmail,
+        ?string $cardholderName,
         Category|string|null $category,
         Challenge|array|null $challenge,
         \DateTimeInterface $createdAt,
@@ -248,6 +268,8 @@ final class CardAuthentication implements BaseModel
         $self['id'] = $id;
         $self['cardID'] = $cardID;
         $self['cardPaymentID'] = $cardPaymentID;
+        $self['cardholderEmail'] = $cardholderEmail;
+        $self['cardholderName'] = $cardholderName;
         $self['category'] = $category;
         $self['challenge'] = $challenge;
         $self['createdAt'] = $createdAt;
@@ -295,6 +317,28 @@ final class CardAuthentication implements BaseModel
     {
         $self = clone $this;
         $self['cardPaymentID'] = $cardPaymentID;
+
+        return $self;
+    }
+
+    /**
+     * The email address of the cardholder.
+     */
+    public function withCardholderEmail(?string $cardholderEmail): self
+    {
+        $self = clone $this;
+        $self['cardholderEmail'] = $cardholderEmail;
+
+        return $self;
+    }
+
+    /**
+     * The name of the cardholder.
+     */
+    public function withCardholderName(?string $cardholderName): self
+    {
+        $self = clone $this;
+        $self['cardholderName'] = $cardholderName;
 
         return $self;
     }

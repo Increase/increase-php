@@ -74,6 +74,8 @@ class Client extends BaseClient
 {
     public string $apiKey;
 
+    public string $webhookSecret;
+
     /**
      * @api
      */
@@ -364,10 +366,14 @@ class Client extends BaseClient
      */
     public function __construct(
         ?string $apiKey = null,
+        ?string $webhookSecret = null,
         ?string $baseUrl = null,
         RequestOptions|array|null $requestOptions = null,
     ) {
         $this->apiKey = (string) ($apiKey ?? Util::getenv('INCREASE_API_KEY'));
+        $this->webhookSecret = (string) ($webhookSecret ?? Util::getenv(
+            'INCREASE_WEBHOOK_SECRET'
+        ));
 
         $baseUrl ??= Util::getenv(
             'INCREASE_BASE_URL'

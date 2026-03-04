@@ -17,7 +17,7 @@ use Increase\Entities\Entity\Corporation\BeneficialOwner\Prong;
  *   beneficialOwnerID: string,
  *   companyTitle: string|null,
  *   individual: Individual|IndividualShape,
- *   prong: Prong|value-of<Prong>,
+ *   prongs: list<Prong|value-of<Prong>>,
  * }
  */
 final class BeneficialOwner implements BaseModel
@@ -46,10 +46,10 @@ final class BeneficialOwner implements BaseModel
     /**
      * Why this person is considered a beneficial owner of the entity.
      *
-     * @var value-of<Prong> $prong
+     * @var list<value-of<Prong>> $prongs
      */
-    #[Required(enum: Prong::class)]
-    public string $prong;
+    #[Required(list: Prong::class)]
+    public array $prongs;
 
     /**
      * `new BeneficialOwner()` is missing required properties by the API.
@@ -57,7 +57,7 @@ final class BeneficialOwner implements BaseModel
      * To enforce required parameters use
      * ```
      * BeneficialOwner::with(
-     *   beneficialOwnerID: ..., companyTitle: ..., individual: ..., prong: ...
+     *   beneficialOwnerID: ..., companyTitle: ..., individual: ..., prongs: ...
      * )
      * ```
      *
@@ -68,7 +68,7 @@ final class BeneficialOwner implements BaseModel
      *   ->withBeneficialOwnerID(...)
      *   ->withCompanyTitle(...)
      *   ->withIndividual(...)
-     *   ->withProng(...)
+     *   ->withProngs(...)
      * ```
      */
     public function __construct()
@@ -82,20 +82,20 @@ final class BeneficialOwner implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param Individual|IndividualShape $individual
-     * @param Prong|value-of<Prong> $prong
+     * @param list<Prong|value-of<Prong>> $prongs
      */
     public static function with(
         string $beneficialOwnerID,
         ?string $companyTitle,
         Individual|array $individual,
-        Prong|string $prong,
+        array $prongs,
     ): self {
         $self = new self;
 
         $self['beneficialOwnerID'] = $beneficialOwnerID;
         $self['companyTitle'] = $companyTitle;
         $self['individual'] = $individual;
-        $self['prong'] = $prong;
+        $self['prongs'] = $prongs;
 
         return $self;
     }
@@ -138,12 +138,12 @@ final class BeneficialOwner implements BaseModel
     /**
      * Why this person is considered a beneficial owner of the entity.
      *
-     * @param Prong|value-of<Prong> $prong
+     * @param list<Prong|value-of<Prong>> $prongs
      */
-    public function withProng(Prong|string $prong): self
+    public function withProngs(array $prongs): self
     {
         $self = clone $this;
-        $self['prong'] = $prong;
+        $self['prongs'] = $prongs;
 
         return $self;
     }

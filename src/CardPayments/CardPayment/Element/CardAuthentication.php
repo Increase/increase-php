@@ -42,6 +42,7 @@ use Increase\Core\Contracts\BaseModel;
  *   merchantCategoryCode: string,
  *   merchantCountry: string,
  *   merchantName: string,
+ *   priorCardAuthenticationID: string|null,
  *   purchaseAmount: int|null,
  *   purchaseCurrency: string|null,
  *   realTimeDecisionID: string|null,
@@ -187,6 +188,12 @@ final class CardAuthentication implements BaseModel
     public string $merchantName;
 
     /**
+     * The ID of a prior Card Authentication that the requestor used to authenticate this cardholder for a previous transaction.
+     */
+    #[Required('prior_card_authentication_id')]
+    public ?string $priorCardAuthenticationID;
+
+    /**
      * The purchase amount in minor units.
      */
     #[Required('purchase_amount')]
@@ -247,6 +254,7 @@ final class CardAuthentication implements BaseModel
      *   merchantCategoryCode: ...,
      *   merchantCountry: ...,
      *   merchantName: ...,
+     *   priorCardAuthenticationID: ...,
      *   purchaseAmount: ...,
      *   purchaseCurrency: ...,
      *   realTimeDecisionID: ...,
@@ -280,6 +288,7 @@ final class CardAuthentication implements BaseModel
      *   ->withMerchantCategoryCode(...)
      *   ->withMerchantCountry(...)
      *   ->withMerchantName(...)
+     *   ->withPriorCardAuthenticationID(...)
      *   ->withPurchaseAmount(...)
      *   ->withPurchaseCurrency(...)
      *   ->withRealTimeDecisionID(...)
@@ -326,6 +335,7 @@ final class CardAuthentication implements BaseModel
         string $merchantCategoryCode,
         string $merchantCountry,
         string $merchantName,
+        ?string $priorCardAuthenticationID,
         ?int $purchaseAmount,
         ?string $purchaseCurrency,
         ?string $realTimeDecisionID,
@@ -355,6 +365,7 @@ final class CardAuthentication implements BaseModel
         $self['merchantCategoryCode'] = $merchantCategoryCode;
         $self['merchantCountry'] = $merchantCountry;
         $self['merchantName'] = $merchantName;
+        $self['priorCardAuthenticationID'] = $priorCardAuthenticationID;
         $self['purchaseAmount'] = $purchaseAmount;
         $self['purchaseCurrency'] = $purchaseCurrency;
         $self['realTimeDecisionID'] = $realTimeDecisionID;
@@ -602,6 +613,18 @@ final class CardAuthentication implements BaseModel
     {
         $self = clone $this;
         $self['merchantName'] = $merchantName;
+
+        return $self;
+    }
+
+    /**
+     * The ID of a prior Card Authentication that the requestor used to authenticate this cardholder for a previous transaction.
+     */
+    public function withPriorCardAuthenticationID(
+        ?string $priorCardAuthenticationID
+    ): self {
+        $self = clone $this;
+        $self['priorCardAuthenticationID'] = $priorCardAuthenticationID;
 
         return $self;
     }

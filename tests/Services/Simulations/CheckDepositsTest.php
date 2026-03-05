@@ -28,6 +28,17 @@ final class CheckDepositsTest extends TestCase
     }
 
     #[Test]
+    public function testAdjustment(): void
+    {
+        $result = $this->client->simulations->checkDeposits->adjustment(
+            'check_deposit_f06n9gpg7sxn8t19lfc1'
+        );
+
+        // @phpstan-ignore-next-line method.alreadyNarrowedType
+        $this->assertInstanceOf(CheckDeposit::class, $result);
+    }
+
+    #[Test]
     public function testReject(): void
     {
         $result = $this->client->simulations->checkDeposits->reject(

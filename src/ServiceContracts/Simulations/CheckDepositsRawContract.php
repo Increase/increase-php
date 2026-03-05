@@ -8,6 +8,7 @@ use Increase\CheckDeposits\CheckDeposit;
 use Increase\Core\Contracts\BaseResponse;
 use Increase\Core\Exceptions\APIException;
 use Increase\RequestOptions;
+use Increase\Simulations\CheckDeposits\CheckDepositAdjustmentParams;
 use Increase\Simulations\CheckDeposits\CheckDepositSubmitParams;
 
 /**
@@ -15,6 +16,23 @@ use Increase\Simulations\CheckDeposits\CheckDepositSubmitParams;
  */
 interface CheckDepositsRawContract
 {
+    /**
+     * @api
+     *
+     * @param string $checkDepositID the identifier of the Check Deposit you wish to adjust
+     * @param array<string,mixed>|CheckDepositAdjustmentParams $params
+     * @param RequestOpts|null $requestOptions
+     *
+     * @return BaseResponse<CheckDeposit>
+     *
+     * @throws APIException
+     */
+    public function adjustment(
+        string $checkDepositID,
+        array|CheckDepositAdjustmentParams $params,
+        RequestOptions|array|null $requestOptions = null,
+    ): BaseResponse;
+
     /**
      * @api
      *

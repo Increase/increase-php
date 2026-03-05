@@ -10,6 +10,7 @@ use Increase\Core\Util;
 use Increase\InboundCheckDeposits\InboundCheckDeposit;
 use Increase\RequestOptions;
 use Increase\ServiceContracts\Simulations\InboundCheckDepositsContract;
+use Increase\Simulations\InboundCheckDeposits\InboundCheckDepositAdjustmentParams\Reason;
 use Increase\Simulations\InboundCheckDeposits\InboundCheckDepositCreateParams\PayeeNameAnalysis;
 
 /**
@@ -61,6 +62,32 @@ final class InboundCheckDepositsService implements InboundCheckDepositsContract
 
         // @phpstan-ignore-next-line argument.type
         $response = $this->raw->create(params: $params, requestOptions: $requestOptions);
+
+        return $response->parse();
+    }
+
+    /**
+     * @api
+     *
+     * Simulates an adjustment on an Inbound Check Deposit. The Inbound Check Deposit must have a `status` of `accepted`.
+     *
+     * @param string $inboundCheckDepositID the identifier of the Inbound Check Deposit to adjust
+     * @param int $amount The adjustment amount in cents. Defaults to the amount of the Inbound Check Deposit.
+     * @param Reason|value-of<Reason> $reason The reason for the adjustment. Defaults to `wrong_payee_credit`.
+     * @param RequestOpts|null $requestOptions
+     *
+     * @throws APIException
+     */
+    public function adjustment(
+        string $inboundCheckDepositID,
+        ?int $amount = null,
+        Reason|string|null $reason = null,
+        RequestOptions|array|null $requestOptions = null,
+    ): InboundCheckDeposit {
+        $params = Util::removeNulls(['amount' => $amount, 'reason' => $reason]);
+
+        // @phpstan-ignore-next-line argument.type
+        $response = $this->raw->adjustment($inboundCheckDepositID, params: $params, requestOptions: $requestOptions);
 
         return $response->parse();
     }

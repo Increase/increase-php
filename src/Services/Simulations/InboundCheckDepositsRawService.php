@@ -10,6 +10,8 @@ use Increase\Core\Exceptions\APIException;
 use Increase\InboundCheckDeposits\InboundCheckDeposit;
 use Increase\RequestOptions;
 use Increase\ServiceContracts\Simulations\InboundCheckDepositsRawContract;
+use Increase\Simulations\InboundCheckDeposits\InboundCheckDepositAdjustmentParams;
+use Increase\Simulations\InboundCheckDeposits\InboundCheckDepositAdjustmentParams\Reason;
 use Increase\Simulations\InboundCheckDeposits\InboundCheckDepositCreateParams;
 use Increase\Simulations\InboundCheckDeposits\InboundCheckDepositCreateParams\PayeeNameAnalysis;
 
@@ -54,6 +56,44 @@ final class InboundCheckDepositsRawService implements InboundCheckDepositsRawCon
         return $this->client->request(
             method: 'post',
             path: 'simulations/inbound_check_deposits',
+            body: (object) $parsed,
+            options: $options,
+            convert: InboundCheckDeposit::class,
+        );
+    }
+
+    /**
+     * @api
+     *
+     * Simulates an adjustment on an Inbound Check Deposit. The Inbound Check Deposit must have a `status` of `accepted`.
+     *
+     * @param string $inboundCheckDepositID the identifier of the Inbound Check Deposit to adjust
+     * @param array{
+     *   amount?: int, reason?: value-of<Reason>
+     * }|InboundCheckDepositAdjustmentParams $params
+     * @param RequestOpts|null $requestOptions
+     *
+     * @return BaseResponse<InboundCheckDeposit>
+     *
+     * @throws APIException
+     */
+    public function adjustment(
+        string $inboundCheckDepositID,
+        array|InboundCheckDepositAdjustmentParams $params,
+        RequestOptions|array|null $requestOptions = null,
+    ): BaseResponse {
+        [$parsed, $options] = InboundCheckDepositAdjustmentParams::parseRequest(
+            $params,
+            $requestOptions,
+        );
+
+        // @phpstan-ignore-next-line return.type
+        return $this->client->request(
+            method: 'post',
+            path: [
+                'simulations/inbound_check_deposits/%1$s/adjustment',
+                $inboundCheckDepositID,
+            ],
             body: (object) $parsed,
             options: $options,
             convert: InboundCheckDeposit::class,

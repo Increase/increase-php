@@ -9,6 +9,7 @@ use Increase\Core\Concerns\SdkModel;
 use Increase\Core\Concerns\SdkParams;
 use Increase\Core\Contracts\BaseModel;
 use Increase\WireTransfers\WireTransferListParams\CreatedAt;
+use Increase\WireTransfers\WireTransferListParams\Status;
 
 /**
  * List Wire Transfers.
@@ -16,6 +17,7 @@ use Increase\WireTransfers\WireTransferListParams\CreatedAt;
  * @see Increase\Services\WireTransfersService::list()
  *
  * @phpstan-import-type CreatedAtShape from \Increase\WireTransfers\WireTransferListParams\CreatedAt
+ * @phpstan-import-type StatusShape from \Increase\WireTransfers\WireTransferListParams\Status
  *
  * @phpstan-type WireTransferListParamsShape = array{
  *   accountID?: string|null,
@@ -24,6 +26,7 @@ use Increase\WireTransfers\WireTransferListParams\CreatedAt;
  *   externalAccountID?: string|null,
  *   idempotencyKey?: string|null,
  *   limit?: int|null,
+ *   status?: null|Status|StatusShape,
  * }
  */
 final class WireTransferListParams implements BaseModel
@@ -65,6 +68,9 @@ final class WireTransferListParams implements BaseModel
     #[Optional]
     public ?int $limit;
 
+    #[Optional]
+    public ?Status $status;
+
     public function __construct()
     {
         $this->initialize();
@@ -76,6 +82,7 @@ final class WireTransferListParams implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param CreatedAt|CreatedAtShape|null $createdAt
+     * @param Status|StatusShape|null $status
      */
     public static function with(
         ?string $accountID = null,
@@ -84,6 +91,7 @@ final class WireTransferListParams implements BaseModel
         ?string $externalAccountID = null,
         ?string $idempotencyKey = null,
         ?int $limit = null,
+        Status|array|null $status = null,
     ): self {
         $self = new self;
 
@@ -93,6 +101,7 @@ final class WireTransferListParams implements BaseModel
         null !== $externalAccountID && $self['externalAccountID'] = $externalAccountID;
         null !== $idempotencyKey && $self['idempotencyKey'] = $idempotencyKey;
         null !== $limit && $self['limit'] = $limit;
+        null !== $status && $self['status'] = $status;
 
         return $self;
     }
@@ -159,6 +168,17 @@ final class WireTransferListParams implements BaseModel
     {
         $self = clone $this;
         $self['limit'] = $limit;
+
+        return $self;
+    }
+
+    /**
+     * @param Status|StatusShape $status
+     */
+    public function withStatus(Status|array $status): self
+    {
+        $self = clone $this;
+        $self['status'] = $status;
 
         return $self;
     }

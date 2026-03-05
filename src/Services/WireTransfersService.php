@@ -15,12 +15,14 @@ use Increase\WireTransfers\WireTransferCreateParams\Creditor;
 use Increase\WireTransfers\WireTransferCreateParams\Debtor;
 use Increase\WireTransfers\WireTransferCreateParams\Remittance;
 use Increase\WireTransfers\WireTransferListParams\CreatedAt;
+use Increase\WireTransfers\WireTransferListParams\Status;
 
 /**
  * @phpstan-import-type CreditorShape from \Increase\WireTransfers\WireTransferCreateParams\Creditor
  * @phpstan-import-type RemittanceShape from \Increase\WireTransfers\WireTransferCreateParams\Remittance
  * @phpstan-import-type DebtorShape from \Increase\WireTransfers\WireTransferCreateParams\Debtor
  * @phpstan-import-type CreatedAtShape from \Increase\WireTransfers\WireTransferListParams\CreatedAt
+ * @phpstan-import-type StatusShape from \Increase\WireTransfers\WireTransferListParams\Status
  * @phpstan-import-type RequestOpts from \Increase\RequestOptions
  */
 final class WireTransfersService implements WireTransfersContract
@@ -125,6 +127,7 @@ final class WireTransfersService implements WireTransfersContract
      * @param string $externalAccountID filter Wire Transfers to those made to the specified External Account
      * @param string $idempotencyKey Filter records to the one with the specified `idempotency_key` you chose for that object. This value is unique across Increase and is used to ensure that a request is only processed once. Learn more about [idempotency](https://increase.com/documentation/idempotency-keys).
      * @param int $limit Limit the size of the list that is returned. The default (and maximum) is 100 objects.
+     * @param Status|StatusShape $status
      * @param RequestOpts|null $requestOptions
      *
      * @return Page<WireTransfer>
@@ -138,6 +141,7 @@ final class WireTransfersService implements WireTransfersContract
         ?string $externalAccountID = null,
         ?string $idempotencyKey = null,
         ?int $limit = null,
+        Status|array|null $status = null,
         RequestOptions|array|null $requestOptions = null,
     ): Page {
         $params = Util::removeNulls(
@@ -148,6 +152,7 @@ final class WireTransfersService implements WireTransfersContract
                 'externalAccountID' => $externalAccountID,
                 'idempotencyKey' => $idempotencyKey,
                 'limit' => $limit,
+                'status' => $status,
             ],
         );
 

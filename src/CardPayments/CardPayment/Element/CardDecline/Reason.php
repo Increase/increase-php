@@ -43,6 +43,8 @@ enum Reason: string
 
     case MISSING_ORIGINAL_AUTHORIZATION = 'missing_original_authorization';
 
+    case INVALID_CRYPTOGRAM = 'invalid_cryptogram';
+
     case FAILED_3DS_AUTHENTICATION = 'failed_3ds_authentication';
 
     case SUSPECTED_CARD_TESTING = 'suspected_card_testing';

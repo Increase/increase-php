@@ -6,6 +6,7 @@ namespace Increase\CardPayments\CardPayment\Element\CardAuthentication;
 
 use Increase\CardPayments\CardPayment\Element\CardAuthentication\DeviceChannel\Browser;
 use Increase\CardPayments\CardPayment\Element\CardAuthentication\DeviceChannel\Category;
+use Increase\CardPayments\CardPayment\Element\CardAuthentication\DeviceChannel\MerchantInitiated;
 use Increase\Core\Attributes\Required;
 use Increase\Core\Concerns\SdkModel;
 use Increase\Core\Contracts\BaseModel;
@@ -14,10 +15,12 @@ use Increase\Core\Contracts\BaseModel;
  * The device channel of the card authentication attempt.
  *
  * @phpstan-import-type BrowserShape from \Increase\CardPayments\CardPayment\Element\CardAuthentication\DeviceChannel\Browser
+ * @phpstan-import-type MerchantInitiatedShape from \Increase\CardPayments\CardPayment\Element\CardAuthentication\DeviceChannel\MerchantInitiated
  *
  * @phpstan-type DeviceChannelShape = array{
  *   browser: null|Browser|BrowserShape,
  *   category: \Increase\CardPayments\CardPayment\Element\CardAuthentication\DeviceChannel\Category|value-of<\Increase\CardPayments\CardPayment\Element\CardAuthentication\DeviceChannel\Category>,
+ *   merchantInitiated: null|MerchantInitiated|MerchantInitiatedShape,
  * }
  */
 final class DeviceChannel implements BaseModel
@@ -42,17 +45,26 @@ final class DeviceChannel implements BaseModel
     public string $category;
 
     /**
+     * Fields specific to merchant initiated transactions.
+     */
+    #[Required('merchant_initiated')]
+    public ?MerchantInitiated $merchantInitiated;
+
+    /**
      * `new DeviceChannel()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
-     * DeviceChannel::with(browser: ..., category: ...)
+     * DeviceChannel::with(browser: ..., category: ..., merchantInitiated: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new DeviceChannel)->withBrowser(...)->withCategory(...)
+     * (new DeviceChannel)
+     *   ->withBrowser(...)
+     *   ->withCategory(...)
+     *   ->withMerchantInitiated(...)
      * ```
      */
     public function __construct()
@@ -67,15 +79,18 @@ final class DeviceChannel implements BaseModel
      *
      * @param Browser|BrowserShape|null $browser
      * @param Category|value-of<Category> $category
+     * @param MerchantInitiated|MerchantInitiatedShape|null $merchantInitiated
      */
     public static function with(
         Browser|array|null $browser,
         Category|string $category,
+        MerchantInitiated|array|null $merchantInitiated,
     ): self {
         $self = new self;
 
         $self['browser'] = $browser;
         $self['category'] = $category;
+        $self['merchantInitiated'] = $merchantInitiated;
 
         return $self;
     }
@@ -103,6 +118,20 @@ final class DeviceChannel implements BaseModel
     ): self {
         $self = clone $this;
         $self['category'] = $category;
+
+        return $self;
+    }
+
+    /**
+     * Fields specific to merchant initiated transactions.
+     *
+     * @param MerchantInitiated|MerchantInitiatedShape|null $merchantInitiated
+     */
+    public function withMerchantInitiated(
+        MerchantInitiated|array|null $merchantInitiated
+    ): self {
+        $self = clone $this;
+        $self['merchantInitiated'] = $merchantInitiated;
 
         return $self;
     }

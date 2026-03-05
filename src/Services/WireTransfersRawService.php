@@ -18,12 +18,14 @@ use Increase\WireTransfers\WireTransferCreateParams\Debtor;
 use Increase\WireTransfers\WireTransferCreateParams\Remittance;
 use Increase\WireTransfers\WireTransferListParams;
 use Increase\WireTransfers\WireTransferListParams\CreatedAt;
+use Increase\WireTransfers\WireTransferListParams\Status;
 
 /**
  * @phpstan-import-type CreditorShape from \Increase\WireTransfers\WireTransferCreateParams\Creditor
  * @phpstan-import-type RemittanceShape from \Increase\WireTransfers\WireTransferCreateParams\Remittance
  * @phpstan-import-type DebtorShape from \Increase\WireTransfers\WireTransferCreateParams\Debtor
  * @phpstan-import-type CreatedAtShape from \Increase\WireTransfers\WireTransferListParams\CreatedAt
+ * @phpstan-import-type StatusShape from \Increase\WireTransfers\WireTransferListParams\Status
  * @phpstan-import-type RequestOpts from \Increase\RequestOptions
  */
 final class WireTransfersRawService implements WireTransfersRawContract
@@ -114,6 +116,7 @@ final class WireTransfersRawService implements WireTransfersRawContract
      *   externalAccountID?: string,
      *   idempotencyKey?: string,
      *   limit?: int,
+     *   status?: Status|StatusShape,
      * }|WireTransferListParams $params
      * @param RequestOpts|null $requestOptions
      *

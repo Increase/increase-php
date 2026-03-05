@@ -11,6 +11,7 @@ use Increase\CardPayments\CardPayment\Element\CardAuthentication\DeviceChannel;
 use Increase\CardPayments\CardPayment\Element\CardAuthentication\RequestorAuthenticationIndicator;
 use Increase\CardPayments\CardPayment\Element\CardAuthentication\RequestorChallengeIndicator;
 use Increase\CardPayments\CardPayment\Element\CardAuthentication\Status;
+use Increase\CardPayments\CardPayment\Element\CardAuthentication\TransactionType;
 use Increase\CardPayments\CardPayment\Element\CardAuthentication\Type;
 use Increase\Core\Attributes\Required;
 use Increase\Core\Concerns\SdkModel;
@@ -24,6 +25,7 @@ use Increase\Core\Contracts\BaseModel;
  *
  * @phpstan-type CardAuthenticationShape = array{
  *   id: string,
+ *   accessControlServerTransactionID: string,
  *   billingAddressCity: string|null,
  *   billingAddressCountry: string|null,
  *   billingAddressLine1: string|null,
@@ -40,6 +42,7 @@ use Increase\Core\Contracts\BaseModel;
  *   createdAt: \DateTimeInterface,
  *   denyReason: null|DenyReason|value-of<DenyReason>,
  *   deviceChannel: DeviceChannel|DeviceChannelShape,
+ *   directoryServerTransactionID: string,
  *   merchantAcceptorID: string,
  *   merchantCategoryCode: string,
  *   merchantCountry: string,
@@ -52,7 +55,16 @@ use Increase\Core\Contracts\BaseModel;
  *   requestorChallengeIndicator: null|RequestorChallengeIndicator|value-of<RequestorChallengeIndicator>,
  *   requestorName: string,
  *   requestorURL: string,
+ *   shippingAddressCity: string|null,
+ *   shippingAddressCountry: string|null,
+ *   shippingAddressLine1: string|null,
+ *   shippingAddressLine2: string|null,
+ *   shippingAddressLine3: string|null,
+ *   shippingAddressPostalCode: string|null,
+ *   shippingAddressState: string|null,
  *   status: Status|value-of<Status>,
+ *   threeDSecureServerTransactionID: string,
+ *   transactionType: null|TransactionType|value-of<TransactionType>,
  *   type: Type|value-of<Type>,
  * }
  */
@@ -66,6 +78,12 @@ final class CardAuthentication implements BaseModel
      */
     #[Required]
     public string $id;
+
+    /**
+     * A unique identifier assigned by the Access Control Server (us) for this transaction.
+     */
+    #[Required('access_control_server_transaction_id')]
+    public string $accessControlServerTransactionID;
 
     /**
      * The city of the cardholder billing address associated with the card used for this purchase.
@@ -170,6 +188,12 @@ final class CardAuthentication implements BaseModel
     public DeviceChannel $deviceChannel;
 
     /**
+     * A unique identifier assigned by the Directory Server (the card network) for this transaction.
+     */
+    #[Required('directory_server_transaction_id')]
+    public string $directoryServerTransactionID;
+
+    /**
      * The merchant identifier (commonly abbreviated as MID) of the merchant the card is transacting with.
      */
     #[Required('merchant_acceptor_id')]
@@ -252,12 +276,68 @@ final class CardAuthentication implements BaseModel
     public string $requestorURL;
 
     /**
+     * The city of the shipping address associated with this purchase.
+     */
+    #[Required('shipping_address_city')]
+    public ?string $shippingAddressCity;
+
+    /**
+     * The country of the shipping address associated with this purchase.
+     */
+    #[Required('shipping_address_country')]
+    public ?string $shippingAddressCountry;
+
+    /**
+     * The first line of the shipping address associated with this purchase.
+     */
+    #[Required('shipping_address_line1')]
+    public ?string $shippingAddressLine1;
+
+    /**
+     * The second line of the shipping address associated with this purchase.
+     */
+    #[Required('shipping_address_line2')]
+    public ?string $shippingAddressLine2;
+
+    /**
+     * The third line of the shipping address associated with this purchase.
+     */
+    #[Required('shipping_address_line3')]
+    public ?string $shippingAddressLine3;
+
+    /**
+     * The postal code of the shipping address associated with this purchase.
+     */
+    #[Required('shipping_address_postal_code')]
+    public ?string $shippingAddressPostalCode;
+
+    /**
+     * The US state of the shipping address associated with this purchase.
+     */
+    #[Required('shipping_address_state')]
+    public ?string $shippingAddressState;
+
+    /**
      * The status of the card authentication.
      *
      * @var value-of<Status> $status
      */
     #[Required(enum: Status::class)]
     public string $status;
+
+    /**
+     * A unique identifier assigned by the 3DS Server initiating the authentication attempt for this transaction.
+     */
+    #[Required('three_d_secure_server_transaction_id')]
+    public string $threeDSecureServerTransactionID;
+
+    /**
+     * The type of transaction being authenticated.
+     *
+     * @var value-of<TransactionType>|null $transactionType
+     */
+    #[Required('transaction_type', enum: TransactionType::class)]
+    public ?string $transactionType;
 
     /**
      * A constant representing the object's type. For this resource it will always be `card_authentication`.
@@ -274,6 +354,7 @@ final class CardAuthentication implements BaseModel
      * ```
      * CardAuthentication::with(
      *   id: ...,
+     *   accessControlServerTransactionID: ...,
      *   billingAddressCity: ...,
      *   billingAddressCountry: ...,
      *   billingAddressLine1: ...,
@@ -290,6 +371,7 @@ final class CardAuthentication implements BaseModel
      *   createdAt: ...,
      *   denyReason: ...,
      *   deviceChannel: ...,
+     *   directoryServerTransactionID: ...,
      *   merchantAcceptorID: ...,
      *   merchantCategoryCode: ...,
      *   merchantCountry: ...,
@@ -302,7 +384,16 @@ final class CardAuthentication implements BaseModel
      *   requestorChallengeIndicator: ...,
      *   requestorName: ...,
      *   requestorURL: ...,
+     *   shippingAddressCity: ...,
+     *   shippingAddressCountry: ...,
+     *   shippingAddressLine1: ...,
+     *   shippingAddressLine2: ...,
+     *   shippingAddressLine3: ...,
+     *   shippingAddressPostalCode: ...,
+     *   shippingAddressState: ...,
      *   status: ...,
+     *   threeDSecureServerTransactionID: ...,
+     *   transactionType: ...,
      *   type: ...,
      * )
      * ```
@@ -312,6 +403,7 @@ final class CardAuthentication implements BaseModel
      * ```
      * (new CardAuthentication)
      *   ->withID(...)
+     *   ->withAccessControlServerTransactionID(...)
      *   ->withBillingAddressCity(...)
      *   ->withBillingAddressCountry(...)
      *   ->withBillingAddressLine1(...)
@@ -328,6 +420,7 @@ final class CardAuthentication implements BaseModel
      *   ->withCreatedAt(...)
      *   ->withDenyReason(...)
      *   ->withDeviceChannel(...)
+     *   ->withDirectoryServerTransactionID(...)
      *   ->withMerchantAcceptorID(...)
      *   ->withMerchantCategoryCode(...)
      *   ->withMerchantCountry(...)
@@ -340,7 +433,16 @@ final class CardAuthentication implements BaseModel
      *   ->withRequestorChallengeIndicator(...)
      *   ->withRequestorName(...)
      *   ->withRequestorURL(...)
+     *   ->withShippingAddressCity(...)
+     *   ->withShippingAddressCountry(...)
+     *   ->withShippingAddressLine1(...)
+     *   ->withShippingAddressLine2(...)
+     *   ->withShippingAddressLine3(...)
+     *   ->withShippingAddressPostalCode(...)
+     *   ->withShippingAddressState(...)
      *   ->withStatus(...)
+     *   ->withThreeDSecureServerTransactionID(...)
+     *   ->withTransactionType(...)
      *   ->withType(...)
      * ```
      */
@@ -361,10 +463,12 @@ final class CardAuthentication implements BaseModel
      * @param RequestorAuthenticationIndicator|value-of<RequestorAuthenticationIndicator>|null $requestorAuthenticationIndicator
      * @param RequestorChallengeIndicator|value-of<RequestorChallengeIndicator>|null $requestorChallengeIndicator
      * @param Status|value-of<Status> $status
+     * @param TransactionType|value-of<TransactionType>|null $transactionType
      * @param Type|value-of<Type> $type
      */
     public static function with(
         string $id,
+        string $accessControlServerTransactionID,
         ?string $billingAddressCity,
         ?string $billingAddressCountry,
         ?string $billingAddressLine1,
@@ -381,6 +485,7 @@ final class CardAuthentication implements BaseModel
         \DateTimeInterface $createdAt,
         DenyReason|string|null $denyReason,
         DeviceChannel|array $deviceChannel,
+        string $directoryServerTransactionID,
         string $merchantAcceptorID,
         string $merchantCategoryCode,
         string $merchantCountry,
@@ -393,12 +498,22 @@ final class CardAuthentication implements BaseModel
         RequestorChallengeIndicator|string|null $requestorChallengeIndicator,
         string $requestorName,
         string $requestorURL,
+        ?string $shippingAddressCity,
+        ?string $shippingAddressCountry,
+        ?string $shippingAddressLine1,
+        ?string $shippingAddressLine2,
+        ?string $shippingAddressLine3,
+        ?string $shippingAddressPostalCode,
+        ?string $shippingAddressState,
         Status|string $status,
+        string $threeDSecureServerTransactionID,
+        TransactionType|string|null $transactionType,
         Type|string $type,
     ): self {
         $self = new self;
 
         $self['id'] = $id;
+        $self['accessControlServerTransactionID'] = $accessControlServerTransactionID;
         $self['billingAddressCity'] = $billingAddressCity;
         $self['billingAddressCountry'] = $billingAddressCountry;
         $self['billingAddressLine1'] = $billingAddressLine1;
@@ -415,6 +530,7 @@ final class CardAuthentication implements BaseModel
         $self['createdAt'] = $createdAt;
         $self['denyReason'] = $denyReason;
         $self['deviceChannel'] = $deviceChannel;
+        $self['directoryServerTransactionID'] = $directoryServerTransactionID;
         $self['merchantAcceptorID'] = $merchantAcceptorID;
         $self['merchantCategoryCode'] = $merchantCategoryCode;
         $self['merchantCountry'] = $merchantCountry;
@@ -427,7 +543,16 @@ final class CardAuthentication implements BaseModel
         $self['requestorChallengeIndicator'] = $requestorChallengeIndicator;
         $self['requestorName'] = $requestorName;
         $self['requestorURL'] = $requestorURL;
+        $self['shippingAddressCity'] = $shippingAddressCity;
+        $self['shippingAddressCountry'] = $shippingAddressCountry;
+        $self['shippingAddressLine1'] = $shippingAddressLine1;
+        $self['shippingAddressLine2'] = $shippingAddressLine2;
+        $self['shippingAddressLine3'] = $shippingAddressLine3;
+        $self['shippingAddressPostalCode'] = $shippingAddressPostalCode;
+        $self['shippingAddressState'] = $shippingAddressState;
         $self['status'] = $status;
+        $self['threeDSecureServerTransactionID'] = $threeDSecureServerTransactionID;
+        $self['transactionType'] = $transactionType;
         $self['type'] = $type;
 
         return $self;
@@ -440,6 +565,18 @@ final class CardAuthentication implements BaseModel
     {
         $self = clone $this;
         $self['id'] = $id;
+
+        return $self;
+    }
+
+    /**
+     * A unique identifier assigned by the Access Control Server (us) for this transaction.
+     */
+    public function withAccessControlServerTransactionID(
+        string $accessControlServerTransactionID
+    ): self {
+        $self = clone $this;
+        $self['accessControlServerTransactionID'] = $accessControlServerTransactionID;
 
         return $self;
     }
@@ -632,6 +769,18 @@ final class CardAuthentication implements BaseModel
     }
 
     /**
+     * A unique identifier assigned by the Directory Server (the card network) for this transaction.
+     */
+    public function withDirectoryServerTransactionID(
+        string $directoryServerTransactionID
+    ): self {
+        $self = clone $this;
+        $self['directoryServerTransactionID'] = $directoryServerTransactionID;
+
+        return $self;
+    }
+
+    /**
      * The merchant identifier (commonly abbreviated as MID) of the merchant the card is transacting with.
      */
     public function withMerchantAcceptorID(string $merchantAcceptorID): self
@@ -771,6 +920,89 @@ final class CardAuthentication implements BaseModel
     }
 
     /**
+     * The city of the shipping address associated with this purchase.
+     */
+    public function withShippingAddressCity(?string $shippingAddressCity): self
+    {
+        $self = clone $this;
+        $self['shippingAddressCity'] = $shippingAddressCity;
+
+        return $self;
+    }
+
+    /**
+     * The country of the shipping address associated with this purchase.
+     */
+    public function withShippingAddressCountry(
+        ?string $shippingAddressCountry
+    ): self {
+        $self = clone $this;
+        $self['shippingAddressCountry'] = $shippingAddressCountry;
+
+        return $self;
+    }
+
+    /**
+     * The first line of the shipping address associated with this purchase.
+     */
+    public function withShippingAddressLine1(
+        ?string $shippingAddressLine1
+    ): self {
+        $self = clone $this;
+        $self['shippingAddressLine1'] = $shippingAddressLine1;
+
+        return $self;
+    }
+
+    /**
+     * The second line of the shipping address associated with this purchase.
+     */
+    public function withShippingAddressLine2(
+        ?string $shippingAddressLine2
+    ): self {
+        $self = clone $this;
+        $self['shippingAddressLine2'] = $shippingAddressLine2;
+
+        return $self;
+    }
+
+    /**
+     * The third line of the shipping address associated with this purchase.
+     */
+    public function withShippingAddressLine3(
+        ?string $shippingAddressLine3
+    ): self {
+        $self = clone $this;
+        $self['shippingAddressLine3'] = $shippingAddressLine3;
+
+        return $self;
+    }
+
+    /**
+     * The postal code of the shipping address associated with this purchase.
+     */
+    public function withShippingAddressPostalCode(
+        ?string $shippingAddressPostalCode
+    ): self {
+        $self = clone $this;
+        $self['shippingAddressPostalCode'] = $shippingAddressPostalCode;
+
+        return $self;
+    }
+
+    /**
+     * The US state of the shipping address associated with this purchase.
+     */
+    public function withShippingAddressState(
+        ?string $shippingAddressState
+    ): self {
+        $self = clone $this;
+        $self['shippingAddressState'] = $shippingAddressState;
+
+        return $self;
+    }
+
+    /**
      * The status of the card authentication.
      *
      * @param Status|value-of<Status> $status
@@ -779,6 +1011,32 @@ final class CardAuthentication implements BaseModel
     {
         $self = clone $this;
         $self['status'] = $status;
+
+        return $self;
+    }
+
+    /**
+     * A unique identifier assigned by the 3DS Server initiating the authentication attempt for this transaction.
+     */
+    public function withThreeDSecureServerTransactionID(
+        string $threeDSecureServerTransactionID
+    ): self {
+        $self = clone $this;
+        $self['threeDSecureServerTransactionID'] = $threeDSecureServerTransactionID;
+
+        return $self;
+    }
+
+    /**
+     * The type of transaction being authenticated.
+     *
+     * @param TransactionType|value-of<TransactionType>|null $transactionType
+     */
+    public function withTransactionType(
+        TransactionType|string|null $transactionType
+    ): self {
+        $self = clone $this;
+        $self['transactionType'] = $transactionType;
 
         return $self;
     }

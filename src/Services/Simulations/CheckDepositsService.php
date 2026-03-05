@@ -10,6 +10,7 @@ use Increase\Core\Exceptions\APIException;
 use Increase\Core\Util;
 use Increase\RequestOptions;
 use Increase\ServiceContracts\Simulations\CheckDepositsContract;
+use Increase\Simulations\CheckDeposits\CheckDepositAdjustmentParams\Reason;
 use Increase\Simulations\CheckDeposits\CheckDepositSubmitParams\Scan;
 
 /**
@@ -29,6 +30,32 @@ final class CheckDepositsService implements CheckDepositsContract
     public function __construct(private Client $client)
     {
         $this->raw = new CheckDepositsRawService($client);
+    }
+
+    /**
+     * @api
+     *
+     * Simulates the creation of a [Check Deposit Adjustment](#check-deposit-adjustments) on a [Check Deposit](#check-deposits). This Check Deposit must first have a `status` of `submitted`.
+     *
+     * @param string $checkDepositID the identifier of the Check Deposit you wish to adjust
+     * @param int $amount The adjustment amount in the minor unit of the Check Deposit's currency (e.g., cents). A negative amount means that the funds are being clawed back by the other bank and is a debit to your account. Defaults to the negative of the Check Deposit amount.
+     * @param Reason|value-of<Reason> $reason The reason for the adjustment. Defaults to `non_conforming_item`, which is often used for a low quality image that the recipient wasn't able to handle.
+     * @param RequestOpts|null $requestOptions
+     *
+     * @throws APIException
+     */
+    public function adjustment(
+        string $checkDepositID,
+        ?int $amount = null,
+        Reason|string|null $reason = null,
+        RequestOptions|array|null $requestOptions = null,
+    ): CheckDeposit {
+        $params = Util::removeNulls(['amount' => $amount, 'reason' => $reason]);
+
+        // @phpstan-ignore-next-line argument.type
+        $response = $this->raw->adjustment($checkDepositID, params: $params, requestOptions: $requestOptions);
+
+        return $response->parse();
     }
 
     /**

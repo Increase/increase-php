@@ -10,6 +10,8 @@ use Increase\Core\Contracts\BaseResponse;
 use Increase\Core\Exceptions\APIException;
 use Increase\RequestOptions;
 use Increase\ServiceContracts\Simulations\CheckDepositsRawContract;
+use Increase\Simulations\CheckDeposits\CheckDepositAdjustmentParams;
+use Increase\Simulations\CheckDeposits\CheckDepositAdjustmentParams\Reason;
 use Increase\Simulations\CheckDeposits\CheckDepositSubmitParams;
 use Increase\Simulations\CheckDeposits\CheckDepositSubmitParams\Scan;
 
@@ -24,6 +26,41 @@ final class CheckDepositsRawService implements CheckDepositsRawContract
      * @internal
      */
     public function __construct(private Client $client) {}
+
+    /**
+     * @api
+     *
+     * Simulates the creation of a [Check Deposit Adjustment](#check-deposit-adjustments) on a [Check Deposit](#check-deposits). This Check Deposit must first have a `status` of `submitted`.
+     *
+     * @param string $checkDepositID the identifier of the Check Deposit you wish to adjust
+     * @param array{
+     *   amount?: int, reason?: value-of<Reason>
+     * }|CheckDepositAdjustmentParams $params
+     * @param RequestOpts|null $requestOptions
+     *
+     * @return BaseResponse<CheckDeposit>
+     *
+     * @throws APIException
+     */
+    public function adjustment(
+        string $checkDepositID,
+        array|CheckDepositAdjustmentParams $params,
+        RequestOptions|array|null $requestOptions = null,
+    ): BaseResponse {
+        [$parsed, $options] = CheckDepositAdjustmentParams::parseRequest(
+            $params,
+            $requestOptions,
+        );
+
+        // @phpstan-ignore-next-line return.type
+        return $this->client->request(
+            method: 'post',
+            path: ['simulations/check_deposits/%1$s/adjustment', $checkDepositID],
+            body: (object) $parsed,
+            options: $options,
+            convert: CheckDeposit::class,
+        );
+    }
 
     /**
      * @api

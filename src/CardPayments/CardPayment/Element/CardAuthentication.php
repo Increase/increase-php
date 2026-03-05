@@ -8,6 +8,8 @@ use Increase\CardPayments\CardPayment\Element\CardAuthentication\Category;
 use Increase\CardPayments\CardPayment\Element\CardAuthentication\Challenge;
 use Increase\CardPayments\CardPayment\Element\CardAuthentication\DenyReason;
 use Increase\CardPayments\CardPayment\Element\CardAuthentication\DeviceChannel;
+use Increase\CardPayments\CardPayment\Element\CardAuthentication\RequestorAuthenticationIndicator;
+use Increase\CardPayments\CardPayment\Element\CardAuthentication\RequestorChallengeIndicator;
 use Increase\CardPayments\CardPayment\Element\CardAuthentication\Status;
 use Increase\CardPayments\CardPayment\Element\CardAuthentication\Type;
 use Increase\Core\Attributes\Required;
@@ -46,6 +48,10 @@ use Increase\Core\Contracts\BaseModel;
  *   purchaseAmount: int|null,
  *   purchaseCurrency: string|null,
  *   realTimeDecisionID: string|null,
+ *   requestorAuthenticationIndicator: null|RequestorAuthenticationIndicator|value-of<RequestorAuthenticationIndicator>,
+ *   requestorChallengeIndicator: null|RequestorChallengeIndicator|value-of<RequestorChallengeIndicator>,
+ *   requestorName: string,
+ *   requestorURL: string,
  *   status: Status|value-of<Status>,
  *   type: Type|value-of<Type>,
  * }
@@ -212,6 +218,40 @@ final class CardAuthentication implements BaseModel
     public ?string $realTimeDecisionID;
 
     /**
+     * The 3DS requestor authentication indicator describes why the authentication attempt is performed, such as for a recurring transaction.
+     *
+     * @var value-of<RequestorAuthenticationIndicator>|null $requestorAuthenticationIndicator
+     */
+    #[Required(
+        'requestor_authentication_indicator',
+        enum: RequestorAuthenticationIndicator::class,
+    )]
+    public ?string $requestorAuthenticationIndicator;
+
+    /**
+     * Indicates whether a challenge is requested for this transaction.
+     *
+     * @var value-of<RequestorChallengeIndicator>|null $requestorChallengeIndicator
+     */
+    #[Required(
+        'requestor_challenge_indicator',
+        enum: RequestorChallengeIndicator::class
+    )]
+    public ?string $requestorChallengeIndicator;
+
+    /**
+     * The name of the 3DS requestor.
+     */
+    #[Required('requestor_name')]
+    public string $requestorName;
+
+    /**
+     * The URL of the 3DS requestor.
+     */
+    #[Required('requestor_url')]
+    public string $requestorURL;
+
+    /**
      * The status of the card authentication.
      *
      * @var value-of<Status> $status
@@ -258,6 +298,10 @@ final class CardAuthentication implements BaseModel
      *   purchaseAmount: ...,
      *   purchaseCurrency: ...,
      *   realTimeDecisionID: ...,
+     *   requestorAuthenticationIndicator: ...,
+     *   requestorChallengeIndicator: ...,
+     *   requestorName: ...,
+     *   requestorURL: ...,
      *   status: ...,
      *   type: ...,
      * )
@@ -292,6 +336,10 @@ final class CardAuthentication implements BaseModel
      *   ->withPurchaseAmount(...)
      *   ->withPurchaseCurrency(...)
      *   ->withRealTimeDecisionID(...)
+     *   ->withRequestorAuthenticationIndicator(...)
+     *   ->withRequestorChallengeIndicator(...)
+     *   ->withRequestorName(...)
+     *   ->withRequestorURL(...)
      *   ->withStatus(...)
      *   ->withType(...)
      * ```
@@ -310,6 +358,8 @@ final class CardAuthentication implements BaseModel
      * @param Challenge|ChallengeShape|null $challenge
      * @param DenyReason|value-of<DenyReason>|null $denyReason
      * @param DeviceChannel|DeviceChannelShape $deviceChannel
+     * @param RequestorAuthenticationIndicator|value-of<RequestorAuthenticationIndicator>|null $requestorAuthenticationIndicator
+     * @param RequestorChallengeIndicator|value-of<RequestorChallengeIndicator>|null $requestorChallengeIndicator
      * @param Status|value-of<Status> $status
      * @param Type|value-of<Type> $type
      */
@@ -339,6 +389,10 @@ final class CardAuthentication implements BaseModel
         ?int $purchaseAmount,
         ?string $purchaseCurrency,
         ?string $realTimeDecisionID,
+        RequestorAuthenticationIndicator|string|null $requestorAuthenticationIndicator,
+        RequestorChallengeIndicator|string|null $requestorChallengeIndicator,
+        string $requestorName,
+        string $requestorURL,
         Status|string $status,
         Type|string $type,
     ): self {
@@ -369,6 +423,10 @@ final class CardAuthentication implements BaseModel
         $self['purchaseAmount'] = $purchaseAmount;
         $self['purchaseCurrency'] = $purchaseCurrency;
         $self['realTimeDecisionID'] = $realTimeDecisionID;
+        $self['requestorAuthenticationIndicator'] = $requestorAuthenticationIndicator;
+        $self['requestorChallengeIndicator'] = $requestorChallengeIndicator;
+        $self['requestorName'] = $requestorName;
+        $self['requestorURL'] = $requestorURL;
         $self['status'] = $status;
         $self['type'] = $type;
 
@@ -658,6 +716,56 @@ final class CardAuthentication implements BaseModel
     {
         $self = clone $this;
         $self['realTimeDecisionID'] = $realTimeDecisionID;
+
+        return $self;
+    }
+
+    /**
+     * The 3DS requestor authentication indicator describes why the authentication attempt is performed, such as for a recurring transaction.
+     *
+     * @param RequestorAuthenticationIndicator|value-of<RequestorAuthenticationIndicator>|null $requestorAuthenticationIndicator
+     */
+    public function withRequestorAuthenticationIndicator(
+        RequestorAuthenticationIndicator|string|null $requestorAuthenticationIndicator,
+    ): self {
+        $self = clone $this;
+        $self['requestorAuthenticationIndicator'] = $requestorAuthenticationIndicator;
+
+        return $self;
+    }
+
+    /**
+     * Indicates whether a challenge is requested for this transaction.
+     *
+     * @param RequestorChallengeIndicator|value-of<RequestorChallengeIndicator>|null $requestorChallengeIndicator
+     */
+    public function withRequestorChallengeIndicator(
+        RequestorChallengeIndicator|string|null $requestorChallengeIndicator
+    ): self {
+        $self = clone $this;
+        $self['requestorChallengeIndicator'] = $requestorChallengeIndicator;
+
+        return $self;
+    }
+
+    /**
+     * The name of the 3DS requestor.
+     */
+    public function withRequestorName(string $requestorName): self
+    {
+        $self = clone $this;
+        $self['requestorName'] = $requestorName;
+
+        return $self;
+    }
+
+    /**
+     * The URL of the 3DS requestor.
+     */
+    public function withRequestorURL(string $requestorURL): self
+    {
+        $self = clone $this;
+        $self['requestorURL'] = $requestorURL;
 
         return $self;
     }

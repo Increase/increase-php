@@ -13,6 +13,8 @@ enum StandInProcessingReason: string
 
     case INVALID_PHYSICAL_CARD = 'invalid_physical_card';
 
+    case INVALID_CRYPTOGRAM = 'invalid_cryptogram';
+
     case INVALID_CARDHOLDER_AUTHENTICATION_VERIFICATION_VALUE = 'invalid_cardholder_authentication_verification_value';
 
     case INTERNAL_VISA_ERROR = 'internal_visa_error';

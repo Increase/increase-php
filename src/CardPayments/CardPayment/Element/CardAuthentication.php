@@ -49,6 +49,7 @@ use Increase\Core\Contracts\BaseModel;
  *   merchantName: string,
  *   priorCardAuthenticationID: string|null,
  *   purchaseAmount: int|null,
+ *   purchaseAmountCardholderEstimated: int|null,
  *   purchaseCurrency: string|null,
  *   realTimeDecisionID: string|null,
  *   requestorAuthenticationIndicator: null|RequestorAuthenticationIndicator|value-of<RequestorAuthenticationIndicator>,
@@ -230,6 +231,12 @@ final class CardAuthentication implements BaseModel
     public ?int $purchaseAmount;
 
     /**
+     * The purchase amount in the cardholder's currency (i.e., USD) estimated using daily conversion rates from the card network.
+     */
+    #[Required('purchase_amount_cardholder_estimated')]
+    public ?int $purchaseAmountCardholderEstimated;
+
+    /**
      * The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the authentication attempt's purchase currency.
      */
     #[Required('purchase_currency')]
@@ -378,6 +385,7 @@ final class CardAuthentication implements BaseModel
      *   merchantName: ...,
      *   priorCardAuthenticationID: ...,
      *   purchaseAmount: ...,
+     *   purchaseAmountCardholderEstimated: ...,
      *   purchaseCurrency: ...,
      *   realTimeDecisionID: ...,
      *   requestorAuthenticationIndicator: ...,
@@ -427,6 +435,7 @@ final class CardAuthentication implements BaseModel
      *   ->withMerchantName(...)
      *   ->withPriorCardAuthenticationID(...)
      *   ->withPurchaseAmount(...)
+     *   ->withPurchaseAmountCardholderEstimated(...)
      *   ->withPurchaseCurrency(...)
      *   ->withRealTimeDecisionID(...)
      *   ->withRequestorAuthenticationIndicator(...)
@@ -492,6 +501,7 @@ final class CardAuthentication implements BaseModel
         string $merchantName,
         ?string $priorCardAuthenticationID,
         ?int $purchaseAmount,
+        ?int $purchaseAmountCardholderEstimated,
         ?string $purchaseCurrency,
         ?string $realTimeDecisionID,
         RequestorAuthenticationIndicator|string|null $requestorAuthenticationIndicator,
@@ -537,6 +547,7 @@ final class CardAuthentication implements BaseModel
         $self['merchantName'] = $merchantName;
         $self['priorCardAuthenticationID'] = $priorCardAuthenticationID;
         $self['purchaseAmount'] = $purchaseAmount;
+        $self['purchaseAmountCardholderEstimated'] = $purchaseAmountCardholderEstimated;
         $self['purchaseCurrency'] = $purchaseCurrency;
         $self['realTimeDecisionID'] = $realTimeDecisionID;
         $self['requestorAuthenticationIndicator'] = $requestorAuthenticationIndicator;
@@ -843,6 +854,18 @@ final class CardAuthentication implements BaseModel
     {
         $self = clone $this;
         $self['purchaseAmount'] = $purchaseAmount;
+
+        return $self;
+    }
+
+    /**
+     * The purchase amount in the cardholder's currency (i.e., USD) estimated using daily conversion rates from the card network.
+     */
+    public function withPurchaseAmountCardholderEstimated(
+        ?int $purchaseAmountCardholderEstimated
+    ): self {
+        $self = clone $this;
+        $self['purchaseAmountCardholderEstimated'] = $purchaseAmountCardholderEstimated;
 
         return $self;
     }

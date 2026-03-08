@@ -78,6 +78,7 @@ final class EventsTest extends TestCase
     {
         $payload = '{"id":"event_001dzz0r20rzr4zrhrr1364hy80","associated_object_id":"account_in71c4amph0vgo2qllky","associated_object_type":"account","category":"account.created","created_at":"2020-01-31T23:59:59Z","type":"event"}';
         $secret = 'whsec_c2VjcmV0Cg==';
+        $rawSecret = "secret\n";
         $webhook = new Webhook($secret);
         $messageId = '1';
         $timestamp = time();
@@ -89,7 +90,7 @@ final class EventsTest extends TestCase
             'webhook-id' => [$messageId],
             'webhook-timestamp' => [(string) $timestamp],
         ];
-        $this->client->events->unwrap($payload, $headers, $secret);
+        $this->client->events->unwrap($payload, $headers, $rawSecret);
         // unwrap successful if not error thrown, increment assertion count to avoid risky test warning
         $this->addToAssertionCount(1);
     }
@@ -101,6 +102,7 @@ final class EventsTest extends TestCase
 
         $payload = '{"id":"event_001dzz0r20rzr4zrhrr1364hy80","associated_object_id":"account_in71c4amph0vgo2qllky","associated_object_type":"account","category":"account.created","created_at":"2020-01-31T23:59:59Z","type":"event"}';
         $secret = 'whsec_c2VjcmV0Cg==';
+        $rawSecret = "secret\n";
         $webhook = new Webhook($secret);
         $messageId = '1';
         $timestamp = time();
@@ -123,6 +125,7 @@ final class EventsTest extends TestCase
 
         $payload = '{"id":"event_001dzz0r20rzr4zrhrr1364hy80","associated_object_id":"account_in71c4amph0vgo2qllky","associated_object_type":"account","category":"account.created","created_at":"2020-01-31T23:59:59Z","type":"event"}';
         $secret = 'whsec_c2VjcmV0Cg==';
+        $rawSecret = "secret\n";
         $webhook = new Webhook($secret);
         $messageId = '1';
         $timestamp = time();
@@ -134,7 +137,7 @@ final class EventsTest extends TestCase
             'webhook-id' => [$messageId],
             'webhook-timestamp' => [(string) $timestamp],
         ];
-        $this->client->events->unwrap($payload, $headers, $secret);
+        $this->client->events->unwrap($payload, $headers, $rawSecret);
     }
 
     #[Test]
@@ -144,6 +147,7 @@ final class EventsTest extends TestCase
 
         $payload = '{"id":"event_001dzz0r20rzr4zrhrr1364hy80","associated_object_id":"account_in71c4amph0vgo2qllky","associated_object_type":"account","category":"account.created","created_at":"2020-01-31T23:59:59Z","type":"event"}';
         $secret = 'whsec_c2VjcmV0Cg==';
+        $rawSecret = "secret\n";
         $webhook = new Webhook($secret);
         $messageId = '1';
         $timestamp = time();
@@ -155,7 +159,7 @@ final class EventsTest extends TestCase
             'webhook-id' => [$messageId],
             'webhook-timestamp' => ['5'],
         ];
-        $this->client->events->unwrap($payload, $headers, $secret);
+        $this->client->events->unwrap($payload, $headers, $rawSecret);
     }
 
     #[Test]
@@ -165,6 +169,7 @@ final class EventsTest extends TestCase
 
         $payload = '{"id":"event_001dzz0r20rzr4zrhrr1364hy80","associated_object_id":"account_in71c4amph0vgo2qllky","associated_object_type":"account","category":"account.created","created_at":"2020-01-31T23:59:59Z","type":"event"}';
         $secret = 'whsec_c2VjcmV0Cg==';
+        $rawSecret = "secret\n";
         $webhook = new Webhook($secret);
         $messageId = '1';
         $timestamp = time();
@@ -176,6 +181,6 @@ final class EventsTest extends TestCase
             'webhook-id' => ['wrong'],
             'webhook-timestamp' => [(string) $timestamp],
         ];
-        $this->client->events->unwrap($payload, $headers, $secret);
+        $this->client->events->unwrap($payload, $headers, $rawSecret);
     }
 }

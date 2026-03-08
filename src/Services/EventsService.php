@@ -121,7 +121,7 @@ final class EventsService implements EventsContract
 
             try {
                 $flatHeaders = array_map(fn (string|array $v): string => is_array($v) ? $v[0] : $v, $headers);
-                $webhook = new Webhook($secret);
+                $webhook = new Webhook('whsec_'.base64_encode($secret));
                 $webhook->verify($body, $flatHeaders);
             } catch (WebhookVerificationException $e) {
                 throw new WebhookException('Could not verify webhook event signature', previous: $e);

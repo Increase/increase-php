@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Increase\RealTimeDecisions\RealTimeDecision\CardAuthentication;
+namespace Increase\RealTimeDecisions\RealTimeDecision\CardAuthentication\MessageCategory\Payment;
 
 /**
  * The type of transaction being authenticated.

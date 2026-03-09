@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Increase\CardPayments\CardPayment\Element\CardAuthentication;
+namespace Increase\CardPayments\CardPayment\Element\CardAuthentication\MessageCategory\Payment;
 
 /**
  * The type of transaction being authenticated.

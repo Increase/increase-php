@@ -19,7 +19,7 @@ use Increase\Core\Contracts\BaseModel;
  *
  * @phpstan-type DeviceChannelShape = array{
  *   browser: null|Browser|BrowserShape,
- *   category: \Increase\CardPayments\CardPayment\Element\CardAuthentication\DeviceChannel\Category|value-of<\Increase\CardPayments\CardPayment\Element\CardAuthentication\DeviceChannel\Category>,
+ *   category: Category|value-of<Category>,
  *   merchantInitiated: null|MerchantInitiated|MerchantInitiatedShape,
  * }
  */
@@ -39,9 +39,7 @@ final class DeviceChannel implements BaseModel
      *
      * @var value-of<Category> $category
      */
-    #[Required(
-        enum: Category::class,
-    )]
+    #[Required(enum: Category::class)]
     public string $category;
 
     /**
@@ -113,9 +111,8 @@ final class DeviceChannel implements BaseModel
      *
      * @param Category|value-of<Category> $category
      */
-    public function withCategory(
-        Category|string $category,
-    ): self {
+    public function withCategory(Category|string $category): self
+    {
         $self = clone $this;
         $self['category'] = $category;
 

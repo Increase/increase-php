@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Increase\RealTimeDecisions\RealTimeDecision\CardAuthentication;
+namespace Increase\CardPayments\CardPayment\Element\CardAuthentication\MessageCategory;
 
 /**
  * The category of the card authentication attempt.

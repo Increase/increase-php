@@ -19,7 +19,7 @@ use Increase\RealTimeDecisions\RealTimeDecision\CardAuthentication\DeviceChannel
  *
  * @phpstan-type DeviceChannelShape = array{
  *   browser: null|Browser|BrowserShape,
- *   category: \Increase\RealTimeDecisions\RealTimeDecision\CardAuthentication\DeviceChannel\Category|value-of<\Increase\RealTimeDecisions\RealTimeDecision\CardAuthentication\DeviceChannel\Category>,
+ *   category: Category|value-of<Category>,
  *   merchantInitiated: null|MerchantInitiated|MerchantInitiatedShape,
  * }
  */
@@ -39,9 +39,7 @@ final class DeviceChannel implements BaseModel
      *
      * @var value-of<Category> $category
      */
-    #[Required(
-        enum: Category::class,
-    )]
+    #[Required(enum: Category::class)]
     public string $category;
 
     /**
@@ -113,9 +111,8 @@ final class DeviceChannel implements BaseModel
      *
      * @param Category|value-of<Category> $category
      */
-    public function withCategory(
-        Category|string $category,
-    ): self {
+    public function withCategory(Category|string $category): self
+    {
         $self = clone $this;
         $self['category'] = $category;
 

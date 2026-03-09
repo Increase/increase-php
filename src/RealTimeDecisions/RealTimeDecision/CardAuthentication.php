@@ -36,10 +36,10 @@ use Increase\RealTimeDecisions\RealTimeDecision\CardAuthentication\TransactionTy
  *   decision: null|Decision|value-of<Decision>,
  *   deviceChannel: DeviceChannel|DeviceChannelShape,
  *   directoryServerTransactionID: string,
- *   merchantAcceptorID: string,
- *   merchantCategoryCode: string,
- *   merchantCountry: string,
- *   merchantName: string,
+ *   merchantAcceptorID: string|null,
+ *   merchantCategoryCode: string|null,
+ *   merchantCountry: string|null,
+ *   merchantName: string|null,
  *   priorCardAuthenticationID: string|null,
  *   purchaseAmount: int|null,
  *   purchaseAmountCardholderEstimated: int|null,
@@ -171,25 +171,25 @@ final class CardAuthentication implements BaseModel
      * The merchant identifier (commonly abbreviated as MID) of the merchant the card is transacting with.
      */
     #[Required('merchant_acceptor_id')]
-    public string $merchantAcceptorID;
+    public ?string $merchantAcceptorID;
 
     /**
      * The Merchant Category Code (commonly abbreviated as MCC) of the merchant the card is transacting with.
      */
     #[Required('merchant_category_code')]
-    public string $merchantCategoryCode;
+    public ?string $merchantCategoryCode;
 
     /**
      * The country the merchant resides in.
      */
     #[Required('merchant_country')]
-    public string $merchantCountry;
+    public ?string $merchantCountry;
 
     /**
      * The name of the merchant.
      */
     #[Required('merchant_name')]
-    public string $merchantName;
+    public ?string $merchantName;
 
     /**
      * The ID of a prior Card Authentication that the requestor used to authenticate this cardholder for a previous transaction.
@@ -436,10 +436,10 @@ final class CardAuthentication implements BaseModel
         Decision|string|null $decision,
         DeviceChannel|array $deviceChannel,
         string $directoryServerTransactionID,
-        string $merchantAcceptorID,
-        string $merchantCategoryCode,
-        string $merchantCountry,
-        string $merchantName,
+        ?string $merchantAcceptorID,
+        ?string $merchantCategoryCode,
+        ?string $merchantCountry,
+        ?string $merchantName,
         ?string $priorCardAuthenticationID,
         ?int $purchaseAmount,
         ?int $purchaseAmountCardholderEstimated,
@@ -693,7 +693,7 @@ final class CardAuthentication implements BaseModel
     /**
      * The merchant identifier (commonly abbreviated as MID) of the merchant the card is transacting with.
      */
-    public function withMerchantAcceptorID(string $merchantAcceptorID): self
+    public function withMerchantAcceptorID(?string $merchantAcceptorID): self
     {
         $self = clone $this;
         $self['merchantAcceptorID'] = $merchantAcceptorID;
@@ -704,8 +704,9 @@ final class CardAuthentication implements BaseModel
     /**
      * The Merchant Category Code (commonly abbreviated as MCC) of the merchant the card is transacting with.
      */
-    public function withMerchantCategoryCode(string $merchantCategoryCode): self
-    {
+    public function withMerchantCategoryCode(
+        ?string $merchantCategoryCode
+    ): self {
         $self = clone $this;
         $self['merchantCategoryCode'] = $merchantCategoryCode;
 
@@ -715,7 +716,7 @@ final class CardAuthentication implements BaseModel
     /**
      * The country the merchant resides in.
      */
-    public function withMerchantCountry(string $merchantCountry): self
+    public function withMerchantCountry(?string $merchantCountry): self
     {
         $self = clone $this;
         $self['merchantCountry'] = $merchantCountry;
@@ -726,7 +727,7 @@ final class CardAuthentication implements BaseModel
     /**
      * The name of the merchant.
      */
-    public function withMerchantName(string $merchantName): self
+    public function withMerchantName(?string $merchantName): self
     {
         $self = clone $this;
         $self['merchantName'] = $merchantName;

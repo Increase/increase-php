@@ -7,17 +7,17 @@ namespace Increase\RealTimeDecisions\RealTimeDecision;
 use Increase\Core\Attributes\Required;
 use Increase\Core\Concerns\SdkModel;
 use Increase\Core\Contracts\BaseModel;
-use Increase\RealTimeDecisions\RealTimeDecision\CardAuthentication\Category;
 use Increase\RealTimeDecisions\RealTimeDecision\CardAuthentication\Decision;
 use Increase\RealTimeDecisions\RealTimeDecision\CardAuthentication\DeviceChannel;
+use Increase\RealTimeDecisions\RealTimeDecision\CardAuthentication\MessageCategory;
 use Increase\RealTimeDecisions\RealTimeDecision\CardAuthentication\RequestorAuthenticationIndicator;
 use Increase\RealTimeDecisions\RealTimeDecision\CardAuthentication\RequestorChallengeIndicator;
-use Increase\RealTimeDecisions\RealTimeDecision\CardAuthentication\TransactionType;
 
 /**
  * Fields related to a 3DS authentication attempt.
  *
  * @phpstan-import-type DeviceChannelShape from \Increase\RealTimeDecisions\RealTimeDecision\CardAuthentication\DeviceChannel
+ * @phpstan-import-type MessageCategoryShape from \Increase\RealTimeDecisions\RealTimeDecision\CardAuthentication\MessageCategory
  *
  * @phpstan-type CardAuthenticationShape = array{
  *   accessControlServerTransactionID: string,
@@ -32,7 +32,6 @@ use Increase\RealTimeDecisions\RealTimeDecision\CardAuthentication\TransactionTy
  *   cardID: string,
  *   cardholderEmail: string|null,
  *   cardholderName: string|null,
- *   category: null|\Increase\RealTimeDecisions\RealTimeDecision\CardAuthentication\Category|value-of<\Increase\RealTimeDecisions\RealTimeDecision\CardAuthentication\Category>,
  *   decision: null|Decision|value-of<Decision>,
  *   deviceChannel: DeviceChannel|DeviceChannelShape,
  *   directoryServerTransactionID: string,
@@ -40,10 +39,8 @@ use Increase\RealTimeDecisions\RealTimeDecision\CardAuthentication\TransactionTy
  *   merchantCategoryCode: string|null,
  *   merchantCountry: string|null,
  *   merchantName: string|null,
+ *   messageCategory: MessageCategory|MessageCategoryShape,
  *   priorAuthenticatedCardPaymentID: string|null,
- *   purchaseAmount: int|null,
- *   purchaseAmountCardholderEstimated: int|null,
- *   purchaseCurrency: string|null,
  *   requestorAuthenticationIndicator: null|RequestorAuthenticationIndicator|value-of<RequestorAuthenticationIndicator>,
  *   requestorChallengeIndicator: null|RequestorChallengeIndicator|value-of<RequestorChallengeIndicator>,
  *   requestorName: string,
@@ -56,7 +53,6 @@ use Increase\RealTimeDecisions\RealTimeDecision\CardAuthentication\TransactionTy
  *   shippingAddressPostalCode: string|null,
  *   shippingAddressState: string|null,
  *   threeDSecureServerTransactionID: string,
- *   transactionType: null|TransactionType|value-of<TransactionType>,
  *   upcomingCardPaymentID: string,
  * }
  */
@@ -138,16 +134,6 @@ final class CardAuthentication implements BaseModel
     public ?string $cardholderName;
 
     /**
-     * The category of the card authentication attempt.
-     *
-     * @var value-of<Category>|null $category
-     */
-    #[Required(
-        enum: Category::class,
-    )]
-    public ?string $category;
-
-    /**
      * Whether or not the authentication attempt was approved.
      *
      * @var value-of<Decision>|null $decision
@@ -192,28 +178,16 @@ final class CardAuthentication implements BaseModel
     public ?string $merchantName;
 
     /**
+     * The message category of the card authentication attempt.
+     */
+    #[Required('message_category')]
+    public MessageCategory $messageCategory;
+
+    /**
      * The ID of a prior Card Authentication that the requestor used to authenticate this cardholder for a previous transaction.
      */
     #[Required('prior_authenticated_card_payment_id')]
     public ?string $priorAuthenticatedCardPaymentID;
-
-    /**
-     * The purchase amount in minor units.
-     */
-    #[Required('purchase_amount')]
-    public ?int $purchaseAmount;
-
-    /**
-     * The purchase amount in the cardholder's currency (i.e., USD) estimated using daily conversion rates from the card network.
-     */
-    #[Required('purchase_amount_cardholder_estimated')]
-    public ?int $purchaseAmountCardholderEstimated;
-
-    /**
-     * The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the authentication attempt's purchase currency.
-     */
-    #[Required('purchase_currency')]
-    public ?string $purchaseCurrency;
 
     /**
      * The 3DS requestor authentication indicator describes why the authentication attempt is performed, such as for a recurring transaction.
@@ -298,14 +272,6 @@ final class CardAuthentication implements BaseModel
     public string $threeDSecureServerTransactionID;
 
     /**
-     * The type of transaction being authenticated.
-     *
-     * @var value-of<TransactionType>|null $transactionType
-     */
-    #[Required('transaction_type', enum: TransactionType::class)]
-    public ?string $transactionType;
-
-    /**
      * The identifier of the Card Payment this authentication attempt will belong to. Available in the API once the card authentication has completed.
      */
     #[Required('upcoming_card_payment_id')]
@@ -329,7 +295,6 @@ final class CardAuthentication implements BaseModel
      *   cardID: ...,
      *   cardholderEmail: ...,
      *   cardholderName: ...,
-     *   category: ...,
      *   decision: ...,
      *   deviceChannel: ...,
      *   directoryServerTransactionID: ...,
@@ -337,10 +302,8 @@ final class CardAuthentication implements BaseModel
      *   merchantCategoryCode: ...,
      *   merchantCountry: ...,
      *   merchantName: ...,
+     *   messageCategory: ...,
      *   priorAuthenticatedCardPaymentID: ...,
-     *   purchaseAmount: ...,
-     *   purchaseAmountCardholderEstimated: ...,
-     *   purchaseCurrency: ...,
      *   requestorAuthenticationIndicator: ...,
      *   requestorChallengeIndicator: ...,
      *   requestorName: ...,
@@ -353,7 +316,6 @@ final class CardAuthentication implements BaseModel
      *   shippingAddressPostalCode: ...,
      *   shippingAddressState: ...,
      *   threeDSecureServerTransactionID: ...,
-     *   transactionType: ...,
      *   upcomingCardPaymentID: ...,
      * )
      * ```
@@ -374,7 +336,6 @@ final class CardAuthentication implements BaseModel
      *   ->withCardID(...)
      *   ->withCardholderEmail(...)
      *   ->withCardholderName(...)
-     *   ->withCategory(...)
      *   ->withDecision(...)
      *   ->withDeviceChannel(...)
      *   ->withDirectoryServerTransactionID(...)
@@ -382,10 +343,8 @@ final class CardAuthentication implements BaseModel
      *   ->withMerchantCategoryCode(...)
      *   ->withMerchantCountry(...)
      *   ->withMerchantName(...)
+     *   ->withMessageCategory(...)
      *   ->withPriorAuthenticatedCardPaymentID(...)
-     *   ->withPurchaseAmount(...)
-     *   ->withPurchaseAmountCardholderEstimated(...)
-     *   ->withPurchaseCurrency(...)
      *   ->withRequestorAuthenticationIndicator(...)
      *   ->withRequestorChallengeIndicator(...)
      *   ->withRequestorName(...)
@@ -398,7 +357,6 @@ final class CardAuthentication implements BaseModel
      *   ->withShippingAddressPostalCode(...)
      *   ->withShippingAddressState(...)
      *   ->withThreeDSecureServerTransactionID(...)
-     *   ->withTransactionType(...)
      *   ->withUpcomingCardPaymentID(...)
      * ```
      */
@@ -412,12 +370,11 @@ final class CardAuthentication implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param Category|value-of<Category>|null $category
      * @param Decision|value-of<Decision>|null $decision
      * @param DeviceChannel|DeviceChannelShape $deviceChannel
+     * @param MessageCategory|MessageCategoryShape $messageCategory
      * @param RequestorAuthenticationIndicator|value-of<RequestorAuthenticationIndicator>|null $requestorAuthenticationIndicator
      * @param RequestorChallengeIndicator|value-of<RequestorChallengeIndicator>|null $requestorChallengeIndicator
-     * @param TransactionType|value-of<TransactionType>|null $transactionType
      */
     public static function with(
         string $accessControlServerTransactionID,
@@ -432,7 +389,6 @@ final class CardAuthentication implements BaseModel
         string $cardID,
         ?string $cardholderEmail,
         ?string $cardholderName,
-        Category|string|null $category,
         Decision|string|null $decision,
         DeviceChannel|array $deviceChannel,
         string $directoryServerTransactionID,
@@ -440,10 +396,8 @@ final class CardAuthentication implements BaseModel
         ?string $merchantCategoryCode,
         ?string $merchantCountry,
         ?string $merchantName,
+        MessageCategory|array $messageCategory,
         ?string $priorAuthenticatedCardPaymentID,
-        ?int $purchaseAmount,
-        ?int $purchaseAmountCardholderEstimated,
-        ?string $purchaseCurrency,
         RequestorAuthenticationIndicator|string|null $requestorAuthenticationIndicator,
         RequestorChallengeIndicator|string|null $requestorChallengeIndicator,
         string $requestorName,
@@ -456,7 +410,6 @@ final class CardAuthentication implements BaseModel
         ?string $shippingAddressPostalCode,
         ?string $shippingAddressState,
         string $threeDSecureServerTransactionID,
-        TransactionType|string|null $transactionType,
         string $upcomingCardPaymentID,
     ): self {
         $self = new self;
@@ -473,7 +426,6 @@ final class CardAuthentication implements BaseModel
         $self['cardID'] = $cardID;
         $self['cardholderEmail'] = $cardholderEmail;
         $self['cardholderName'] = $cardholderName;
-        $self['category'] = $category;
         $self['decision'] = $decision;
         $self['deviceChannel'] = $deviceChannel;
         $self['directoryServerTransactionID'] = $directoryServerTransactionID;
@@ -481,10 +433,8 @@ final class CardAuthentication implements BaseModel
         $self['merchantCategoryCode'] = $merchantCategoryCode;
         $self['merchantCountry'] = $merchantCountry;
         $self['merchantName'] = $merchantName;
+        $self['messageCategory'] = $messageCategory;
         $self['priorAuthenticatedCardPaymentID'] = $priorAuthenticatedCardPaymentID;
-        $self['purchaseAmount'] = $purchaseAmount;
-        $self['purchaseAmountCardholderEstimated'] = $purchaseAmountCardholderEstimated;
-        $self['purchaseCurrency'] = $purchaseCurrency;
         $self['requestorAuthenticationIndicator'] = $requestorAuthenticationIndicator;
         $self['requestorChallengeIndicator'] = $requestorChallengeIndicator;
         $self['requestorName'] = $requestorName;
@@ -497,7 +447,6 @@ final class CardAuthentication implements BaseModel
         $self['shippingAddressPostalCode'] = $shippingAddressPostalCode;
         $self['shippingAddressState'] = $shippingAddressState;
         $self['threeDSecureServerTransactionID'] = $threeDSecureServerTransactionID;
-        $self['transactionType'] = $transactionType;
         $self['upcomingCardPaymentID'] = $upcomingCardPaymentID;
 
         return $self;
@@ -639,20 +588,6 @@ final class CardAuthentication implements BaseModel
     }
 
     /**
-     * The category of the card authentication attempt.
-     *
-     * @param Category|value-of<Category>|null $category
-     */
-    public function withCategory(
-        Category|string|null $category,
-    ): self {
-        $self = clone $this;
-        $self['category'] = $category;
-
-        return $self;
-    }
-
-    /**
      * Whether or not the authentication attempt was approved.
      *
      * @param Decision|value-of<Decision>|null $decision
@@ -736,6 +671,20 @@ final class CardAuthentication implements BaseModel
     }
 
     /**
+     * The message category of the card authentication attempt.
+     *
+     * @param MessageCategory|MessageCategoryShape $messageCategory
+     */
+    public function withMessageCategory(
+        MessageCategory|array $messageCategory
+    ): self {
+        $self = clone $this;
+        $self['messageCategory'] = $messageCategory;
+
+        return $self;
+    }
+
+    /**
      * The ID of a prior Card Authentication that the requestor used to authenticate this cardholder for a previous transaction.
      */
     public function withPriorAuthenticatedCardPaymentID(
@@ -743,40 +692,6 @@ final class CardAuthentication implements BaseModel
     ): self {
         $self = clone $this;
         $self['priorAuthenticatedCardPaymentID'] = $priorAuthenticatedCardPaymentID;
-
-        return $self;
-    }
-
-    /**
-     * The purchase amount in minor units.
-     */
-    public function withPurchaseAmount(?int $purchaseAmount): self
-    {
-        $self = clone $this;
-        $self['purchaseAmount'] = $purchaseAmount;
-
-        return $self;
-    }
-
-    /**
-     * The purchase amount in the cardholder's currency (i.e., USD) estimated using daily conversion rates from the card network.
-     */
-    public function withPurchaseAmountCardholderEstimated(
-        ?int $purchaseAmountCardholderEstimated
-    ): self {
-        $self = clone $this;
-        $self['purchaseAmountCardholderEstimated'] = $purchaseAmountCardholderEstimated;
-
-        return $self;
-    }
-
-    /**
-     * The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the authentication attempt's purchase currency.
-     */
-    public function withPurchaseCurrency(?string $purchaseCurrency): self
-    {
-        $self = clone $this;
-        $self['purchaseCurrency'] = $purchaseCurrency;
 
         return $self;
     }
@@ -922,20 +837,6 @@ final class CardAuthentication implements BaseModel
     ): self {
         $self = clone $this;
         $self['threeDSecureServerTransactionID'] = $threeDSecureServerTransactionID;
-
-        return $self;
-    }
-
-    /**
-     * The type of transaction being authenticated.
-     *
-     * @param TransactionType|value-of<TransactionType>|null $transactionType
-     */
-    public function withTransactionType(
-        TransactionType|string|null $transactionType
-    ): self {
-        $self = clone $this;
-        $self['transactionType'] = $transactionType;
 
         return $self;
     }

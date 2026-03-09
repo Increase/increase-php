@@ -40,7 +40,7 @@ use Increase\RealTimeDecisions\RealTimeDecision\CardAuthentication\TransactionTy
  *   merchantCategoryCode: string|null,
  *   merchantCountry: string|null,
  *   merchantName: string|null,
- *   priorCardAuthenticationID: string|null,
+ *   priorAuthenticatedCardPaymentID: string|null,
  *   purchaseAmount: int|null,
  *   purchaseAmountCardholderEstimated: int|null,
  *   purchaseCurrency: string|null,
@@ -194,8 +194,8 @@ final class CardAuthentication implements BaseModel
     /**
      * The ID of a prior Card Authentication that the requestor used to authenticate this cardholder for a previous transaction.
      */
-    #[Required('prior_card_authentication_id')]
-    public ?string $priorCardAuthenticationID;
+    #[Required('prior_authenticated_card_payment_id')]
+    public ?string $priorAuthenticatedCardPaymentID;
 
     /**
      * The purchase amount in minor units.
@@ -337,7 +337,7 @@ final class CardAuthentication implements BaseModel
      *   merchantCategoryCode: ...,
      *   merchantCountry: ...,
      *   merchantName: ...,
-     *   priorCardAuthenticationID: ...,
+     *   priorAuthenticatedCardPaymentID: ...,
      *   purchaseAmount: ...,
      *   purchaseAmountCardholderEstimated: ...,
      *   purchaseCurrency: ...,
@@ -382,7 +382,7 @@ final class CardAuthentication implements BaseModel
      *   ->withMerchantCategoryCode(...)
      *   ->withMerchantCountry(...)
      *   ->withMerchantName(...)
-     *   ->withPriorCardAuthenticationID(...)
+     *   ->withPriorAuthenticatedCardPaymentID(...)
      *   ->withPurchaseAmount(...)
      *   ->withPurchaseAmountCardholderEstimated(...)
      *   ->withPurchaseCurrency(...)
@@ -440,7 +440,7 @@ final class CardAuthentication implements BaseModel
         ?string $merchantCategoryCode,
         ?string $merchantCountry,
         ?string $merchantName,
-        ?string $priorCardAuthenticationID,
+        ?string $priorAuthenticatedCardPaymentID,
         ?int $purchaseAmount,
         ?int $purchaseAmountCardholderEstimated,
         ?string $purchaseCurrency,
@@ -481,7 +481,7 @@ final class CardAuthentication implements BaseModel
         $self['merchantCategoryCode'] = $merchantCategoryCode;
         $self['merchantCountry'] = $merchantCountry;
         $self['merchantName'] = $merchantName;
-        $self['priorCardAuthenticationID'] = $priorCardAuthenticationID;
+        $self['priorAuthenticatedCardPaymentID'] = $priorAuthenticatedCardPaymentID;
         $self['purchaseAmount'] = $purchaseAmount;
         $self['purchaseAmountCardholderEstimated'] = $purchaseAmountCardholderEstimated;
         $self['purchaseCurrency'] = $purchaseCurrency;
@@ -738,11 +738,11 @@ final class CardAuthentication implements BaseModel
     /**
      * The ID of a prior Card Authentication that the requestor used to authenticate this cardholder for a previous transaction.
      */
-    public function withPriorCardAuthenticationID(
-        ?string $priorCardAuthenticationID
+    public function withPriorAuthenticatedCardPaymentID(
+        ?string $priorAuthenticatedCardPaymentID
     ): self {
         $self = clone $this;
-        $self['priorCardAuthenticationID'] = $priorCardAuthenticationID;
+        $self['priorAuthenticatedCardPaymentID'] = $priorAuthenticatedCardPaymentID;
 
         return $self;
     }

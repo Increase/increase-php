@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Increase\Entities\Entity\Corporation\BeneficialOwner;
+namespace Increase\BeneficialOwners\EntityBeneficialOwner;
 
 enum Prong: string
 {

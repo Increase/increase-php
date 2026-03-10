@@ -2,27 +2,30 @@
 
 declare(strict_types=1);
 
-namespace Increase\Entities\Entity\Corporation;
+namespace Increase\BeneficialOwners;
 
+use Increase\BeneficialOwners\EntityBeneficialOwner\Individual;
+use Increase\BeneficialOwners\EntityBeneficialOwner\Prong;
+use Increase\BeneficialOwners\EntityBeneficialOwner\Type;
 use Increase\Core\Attributes\Required;
 use Increase\Core\Concerns\SdkModel;
 use Increase\Core\Contracts\BaseModel;
-use Increase\Entities\Entity\Corporation\BeneficialOwner\Individual;
-use Increase\Entities\Entity\Corporation\BeneficialOwner\Prong;
 
 /**
- * @phpstan-import-type IndividualShape from \Increase\Entities\Entity\Corporation\BeneficialOwner\Individual
+ * @phpstan-import-type IndividualShape from \Increase\BeneficialOwners\EntityBeneficialOwner\Individual
  *
- * @phpstan-type BeneficialOwnerShape = array{
+ * @phpstan-type EntityBeneficialOwnerShape = array{
  *   id: string,
  *   companyTitle: string|null,
+ *   createdAt: \DateTimeInterface,
  *   individual: Individual|IndividualShape,
  *   prongs: list<Prong|value-of<Prong>>,
+ *   type: Type|value-of<Type>,
  * }
  */
-final class BeneficialOwner implements BaseModel
+final class EntityBeneficialOwner implements BaseModel
 {
-    /** @use SdkModel<BeneficialOwnerShape> */
+    /** @use SdkModel<EntityBeneficialOwnerShape> */
     use SdkModel;
 
     /**
@@ -36,6 +39,12 @@ final class BeneficialOwner implements BaseModel
      */
     #[Required('company_title')]
     public ?string $companyTitle;
+
+    /**
+     * The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) time at which the Beneficial Owner was created.
+     */
+    #[Required('created_at')]
+    public \DateTimeInterface $createdAt;
 
     /**
      * Personal details for the beneficial owner.
@@ -52,21 +61,38 @@ final class BeneficialOwner implements BaseModel
     public array $prongs;
 
     /**
-     * `new BeneficialOwner()` is missing required properties by the API.
+     * A constant representing the object's type. For this resource it will always be `entity_beneficial_owner`.
+     *
+     * @var value-of<Type> $type
+     */
+    #[Required(enum: Type::class)]
+    public string $type;
+
+    /**
+     * `new EntityBeneficialOwner()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
-     * BeneficialOwner::with(id: ..., companyTitle: ..., individual: ..., prongs: ...)
+     * EntityBeneficialOwner::with(
+     *   id: ...,
+     *   companyTitle: ...,
+     *   createdAt: ...,
+     *   individual: ...,
+     *   prongs: ...,
+     *   type: ...,
+     * )
      * ```
      *
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BeneficialOwner)
+     * (new EntityBeneficialOwner)
      *   ->withID(...)
      *   ->withCompanyTitle(...)
+     *   ->withCreatedAt(...)
      *   ->withIndividual(...)
      *   ->withProngs(...)
+     *   ->withType(...)
      * ```
      */
     public function __construct()
@@ -81,19 +107,24 @@ final class BeneficialOwner implements BaseModel
      *
      * @param Individual|IndividualShape $individual
      * @param list<Prong|value-of<Prong>> $prongs
+     * @param Type|value-of<Type> $type
      */
     public static function with(
         string $id,
         ?string $companyTitle,
+        \DateTimeInterface $createdAt,
         Individual|array $individual,
         array $prongs,
+        Type|string $type,
     ): self {
         $self = new self;
 
         $self['id'] = $id;
         $self['companyTitle'] = $companyTitle;
+        $self['createdAt'] = $createdAt;
         $self['individual'] = $individual;
         $self['prongs'] = $prongs;
+        $self['type'] = $type;
 
         return $self;
     }
@@ -121,6 +152,17 @@ final class BeneficialOwner implements BaseModel
     }
 
     /**
+     * The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) time at which the Beneficial Owner was created.
+     */
+    public function withCreatedAt(\DateTimeInterface $createdAt): self
+    {
+        $self = clone $this;
+        $self['createdAt'] = $createdAt;
+
+        return $self;
+    }
+
+    /**
      * Personal details for the beneficial owner.
      *
      * @param Individual|IndividualShape $individual
@@ -142,6 +184,19 @@ final class BeneficialOwner implements BaseModel
     {
         $self = clone $this;
         $self['prongs'] = $prongs;
+
+        return $self;
+    }
+
+    /**
+     * A constant representing the object's type. For this resource it will always be `entity_beneficial_owner`.
+     *
+     * @param Type|value-of<Type> $type
+     */
+    public function withType(Type|string $type): self
+    {
+        $self = clone $this;
+        $self['type'] = $type;
 
         return $self;
     }

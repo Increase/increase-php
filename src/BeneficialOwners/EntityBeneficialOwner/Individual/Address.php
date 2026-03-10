@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Increase\Entities\Entity\Corporation\BeneficialOwner\Individual;
+namespace Increase\BeneficialOwners\EntityBeneficialOwner\Individual;
 
 use Increase\Core\Attributes\Required;
 use Increase\Core\Concerns\SdkModel;

@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Increase\Entities\Entity\Corporation\BeneficialOwner\Individual;
+namespace Increase\BeneficialOwners\EntityBeneficialOwner\Individual;
 
+use Increase\BeneficialOwners\EntityBeneficialOwner\Individual\Identification\Method;
 use Increase\Core\Attributes\Required;
 use Increase\Core\Concerns\SdkModel;
 use Increase\Core\Contracts\BaseModel;
-use Increase\Entities\Entity\Corporation\BeneficialOwner\Individual\Identification\Method;
 
 /**
  * A means of verifying the person's identity.

@@ -2,19 +2,19 @@
 
 declare(strict_types=1);
 
-namespace Increase\Entities\Entity\Corporation\BeneficialOwner;
+namespace Increase\BeneficialOwners\EntityBeneficialOwner;
 
+use Increase\BeneficialOwners\EntityBeneficialOwner\Individual\Address;
+use Increase\BeneficialOwners\EntityBeneficialOwner\Individual\Identification;
 use Increase\Core\Attributes\Required;
 use Increase\Core\Concerns\SdkModel;
 use Increase\Core\Contracts\BaseModel;
-use Increase\Entities\Entity\Corporation\BeneficialOwner\Individual\Address;
-use Increase\Entities\Entity\Corporation\BeneficialOwner\Individual\Identification;
 
 /**
  * Personal details for the beneficial owner.
  *
- * @phpstan-import-type AddressShape from \Increase\Entities\Entity\Corporation\BeneficialOwner\Individual\Address
- * @phpstan-import-type IdentificationShape from \Increase\Entities\Entity\Corporation\BeneficialOwner\Individual\Identification
+ * @phpstan-import-type AddressShape from \Increase\BeneficialOwners\EntityBeneficialOwner\Individual\Address
+ * @phpstan-import-type IdentificationShape from \Increase\BeneficialOwners\EntityBeneficialOwner\Individual\Identification
  *
  * @phpstan-type IndividualShape = array{
  *   address: Address|AddressShape,

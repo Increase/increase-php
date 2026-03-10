@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Increase\Entities\Entity\Corporation\BeneficialOwner\Individual\Identification;
+namespace Increase\BeneficialOwners\EntityBeneficialOwner\Individual\Identification;
 
 /**
  * A method that can be used to verify the individual's identity.

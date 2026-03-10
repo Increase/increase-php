@@ -14,6 +14,7 @@ use Increase\Services\AccountStatementsService;
 use Increase\Services\AccountTransfersService;
 use Increase\Services\ACHPrenotificationsService;
 use Increase\Services\ACHTransfersService;
+use Increase\Services\BeneficialOwnersService;
 use Increase\Services\BookkeepingAccountsService;
 use Increase\Services\BookkeepingEntriesService;
 use Increase\Services\BookkeepingEntrySetsService;
@@ -249,6 +250,11 @@ class Client extends BaseClient
     /**
      * @api
      */
+    public BeneficialOwnersService $beneficialOwners;
+
+    /**
+     * @api
+     */
     public SupplementalDocumentsService $supplementalDocuments;
 
     /**
@@ -440,6 +446,7 @@ class Client extends BaseClient
         $this->routingNumbers = new RoutingNumbersService($this);
         $this->externalAccounts = new ExternalAccountsService($this);
         $this->entities = new EntitiesService($this);
+        $this->beneficialOwners = new BeneficialOwnersService($this);
         $this->supplementalDocuments = new SupplementalDocumentsService($this);
         $this->programs = new ProgramsService($this);
         $this->accountStatements = new AccountStatementsService($this);

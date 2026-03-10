@@ -8,9 +8,11 @@ use Increase\CardTokens\CardToken;
 use Increase\Core\Exceptions\APIException;
 use Increase\RequestOptions;
 use Increase\Simulations\CardTokens\CardTokenCreateParams\Capability;
+use Increase\Simulations\CardTokens\CardTokenCreateParams\Outcome;
 
 /**
  * @phpstan-import-type CapabilityShape from \Increase\Simulations\CardTokens\CardTokenCreateParams\Capability
+ * @phpstan-import-type OutcomeShape from \Increase\Simulations\CardTokens\CardTokenCreateParams\Outcome
  * @phpstan-import-type RequestOpts from \Increase\RequestOptions
  */
 interface CardTokensContract
@@ -21,6 +23,7 @@ interface CardTokensContract
      * @param list<Capability|CapabilityShape> $capabilities the capabilities of the outbound card token
      * @param string $expiration the expiration date of the card
      * @param string $last4 the last 4 digits of the card number
+     * @param Outcome|OutcomeShape $outcome the outcome to simulate for card push transfers using this token
      * @param string $prefix the prefix of the card number, usually the first 8 digits
      * @param int $primaryAccountNumberLength the total length of the card number, including prefix and last4
      * @param RequestOpts|null $requestOptions
@@ -31,6 +34,7 @@ interface CardTokensContract
         ?array $capabilities = null,
         ?string $expiration = null,
         ?string $last4 = null,
+        Outcome|array|null $outcome = null,
         ?string $prefix = null,
         ?int $primaryAccountNumberLength = null,
         RequestOptions|array|null $requestOptions = null,

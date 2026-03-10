@@ -12,9 +12,11 @@ use Increase\RequestOptions;
 use Increase\ServiceContracts\Simulations\CardTokensRawContract;
 use Increase\Simulations\CardTokens\CardTokenCreateParams;
 use Increase\Simulations\CardTokens\CardTokenCreateParams\Capability;
+use Increase\Simulations\CardTokens\CardTokenCreateParams\Outcome;
 
 /**
  * @phpstan-import-type CapabilityShape from \Increase\Simulations\CardTokens\CardTokenCreateParams\Capability
+ * @phpstan-import-type OutcomeShape from \Increase\Simulations\CardTokens\CardTokenCreateParams\Outcome
  * @phpstan-import-type RequestOpts from \Increase\RequestOptions
  */
 final class CardTokensRawService implements CardTokensRawContract
@@ -34,6 +36,7 @@ final class CardTokensRawService implements CardTokensRawContract
      *   capabilities?: list<Capability|CapabilityShape>,
      *   expiration?: string,
      *   last4?: string,
+     *   outcome?: Outcome|OutcomeShape,
      *   prefix?: string,
      *   primaryAccountNumberLength?: int,
      * }|CardTokenCreateParams $params

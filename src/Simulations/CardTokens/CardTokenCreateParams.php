@@ -9,6 +9,7 @@ use Increase\Core\Concerns\SdkModel;
 use Increase\Core\Concerns\SdkParams;
 use Increase\Core\Contracts\BaseModel;
 use Increase\Simulations\CardTokens\CardTokenCreateParams\Capability;
+use Increase\Simulations\CardTokens\CardTokenCreateParams\Outcome;
 
 /**
  * Simulates tokenizing a card in the sandbox environment.
@@ -16,11 +17,13 @@ use Increase\Simulations\CardTokens\CardTokenCreateParams\Capability;
  * @see Increase\Services\Simulations\CardTokensService::create()
  *
  * @phpstan-import-type CapabilityShape from \Increase\Simulations\CardTokens\CardTokenCreateParams\Capability
+ * @phpstan-import-type OutcomeShape from \Increase\Simulations\CardTokens\CardTokenCreateParams\Outcome
  *
  * @phpstan-type CardTokenCreateParamsShape = array{
  *   capabilities?: list<Capability|CapabilityShape>|null,
  *   expiration?: string|null,
  *   last4?: string|null,
+ *   outcome?: null|Outcome|OutcomeShape,
  *   prefix?: string|null,
  *   primaryAccountNumberLength?: int|null,
  * }
@@ -52,6 +55,12 @@ final class CardTokenCreateParams implements BaseModel
     public ?string $last4;
 
     /**
+     * The outcome to simulate for card push transfers using this token.
+     */
+    #[Optional]
+    public ?Outcome $outcome;
+
+    /**
      * The prefix of the card number, usually the first 8 digits.
      */
     #[Optional]
@@ -74,11 +83,13 @@ final class CardTokenCreateParams implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param list<Capability|CapabilityShape>|null $capabilities
+     * @param Outcome|OutcomeShape|null $outcome
      */
     public static function with(
         ?array $capabilities = null,
         ?string $expiration = null,
         ?string $last4 = null,
+        Outcome|array|null $outcome = null,
         ?string $prefix = null,
         ?int $primaryAccountNumberLength = null,
     ): self {
@@ -87,6 +98,7 @@ final class CardTokenCreateParams implements BaseModel
         null !== $capabilities && $self['capabilities'] = $capabilities;
         null !== $expiration && $self['expiration'] = $expiration;
         null !== $last4 && $self['last4'] = $last4;
+        null !== $outcome && $self['outcome'] = $outcome;
         null !== $prefix && $self['prefix'] = $prefix;
         null !== $primaryAccountNumberLength && $self['primaryAccountNumberLength'] = $primaryAccountNumberLength;
 
@@ -124,6 +136,19 @@ final class CardTokenCreateParams implements BaseModel
     {
         $self = clone $this;
         $self['last4'] = $last4;
+
+        return $self;
+    }
+
+    /**
+     * The outcome to simulate for card push transfers using this token.
+     *
+     * @param Outcome|OutcomeShape $outcome
+     */
+    public function withOutcome(Outcome|array $outcome): self
+    {
+        $self = clone $this;
+        $self['outcome'] = $outcome;
 
         return $self;
     }

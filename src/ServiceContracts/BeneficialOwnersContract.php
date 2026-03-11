@@ -4,12 +4,14 @@ declare(strict_types=1);
 
 namespace Increase\ServiceContracts;
 
+use Increase\BeneficialOwners\BeneficialOwnerUpdateParams\Address;
 use Increase\BeneficialOwners\EntityBeneficialOwner;
 use Increase\Core\Exceptions\APIException;
 use Increase\Page;
 use Increase\RequestOptions;
 
 /**
+ * @phpstan-import-type AddressShape from \Increase\BeneficialOwners\BeneficialOwnerUpdateParams\Address
  * @phpstan-import-type RequestOpts from \Increase\RequestOptions
  */
 interface BeneficialOwnersContract
@@ -24,6 +26,21 @@ interface BeneficialOwnersContract
      */
     public function retrieve(
         string $entityBeneficialOwnerID,
+        RequestOptions|array|null $requestOptions = null,
+    ): EntityBeneficialOwner;
+
+    /**
+     * @api
+     *
+     * @param string $entityBeneficialOwnerID the identifier of the Beneficial Owner to update
+     * @param Address|AddressShape $address The individual's physical address. Mail receiving locations like PO Boxes and PMB's are disallowed.
+     * @param RequestOpts|null $requestOptions
+     *
+     * @throws APIException
+     */
+    public function update(
+        string $entityBeneficialOwnerID,
+        Address|array|null $address = null,
         RequestOptions|array|null $requestOptions = null,
     ): EntityBeneficialOwner;
 

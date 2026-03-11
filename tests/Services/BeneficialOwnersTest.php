@@ -40,6 +40,17 @@ final class BeneficialOwnersTest extends TestCase
     }
 
     #[Test]
+    public function testUpdate(): void
+    {
+        $result = $this->client->beneficialOwners->update(
+            'entity_setup_beneficial_owner_submission_vgkyk7dj5eb4sfhdbkx7'
+        );
+
+        // @phpstan-ignore-next-line method.alreadyNarrowedType
+        $this->assertInstanceOf(EntityBeneficialOwner::class, $result);
+    }
+
+    #[Test]
     public function testList(): void
     {
         $page = $this->client->beneficialOwners->list(entityID: 'entity_id');

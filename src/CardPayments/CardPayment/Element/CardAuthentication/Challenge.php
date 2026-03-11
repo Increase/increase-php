@@ -19,6 +19,7 @@ use Increase\Core\Contracts\BaseModel;
  *   attempts: list<Attempt|AttemptShape>,
  *   createdAt: \DateTimeInterface,
  *   oneTimeCode: string,
+ *   realTimeDecisionID: string|null,
  *   verificationMethod: VerificationMethod|value-of<VerificationMethod>,
  *   verificationValue: string|null,
  * }
@@ -49,6 +50,12 @@ final class Challenge implements BaseModel
     public string $oneTimeCode;
 
     /**
+     * The identifier of the Real-Time Decision used to deliver this challenge.
+     */
+    #[Required('real_time_decision_id')]
+    public ?string $realTimeDecisionID;
+
+    /**
      * The method used to verify the Card Authentication Challenge.
      *
      * @var value-of<VerificationMethod> $verificationMethod
@@ -71,6 +78,7 @@ final class Challenge implements BaseModel
      *   attempts: ...,
      *   createdAt: ...,
      *   oneTimeCode: ...,
+     *   realTimeDecisionID: ...,
      *   verificationMethod: ...,
      *   verificationValue: ...,
      * )
@@ -83,6 +91,7 @@ final class Challenge implements BaseModel
      *   ->withAttempts(...)
      *   ->withCreatedAt(...)
      *   ->withOneTimeCode(...)
+     *   ->withRealTimeDecisionID(...)
      *   ->withVerificationMethod(...)
      *   ->withVerificationValue(...)
      * ```
@@ -104,6 +113,7 @@ final class Challenge implements BaseModel
         array $attempts,
         \DateTimeInterface $createdAt,
         string $oneTimeCode,
+        ?string $realTimeDecisionID,
         VerificationMethod|string $verificationMethod,
         ?string $verificationValue,
     ): self {
@@ -112,6 +122,7 @@ final class Challenge implements BaseModel
         $self['attempts'] = $attempts;
         $self['createdAt'] = $createdAt;
         $self['oneTimeCode'] = $oneTimeCode;
+        $self['realTimeDecisionID'] = $realTimeDecisionID;
         $self['verificationMethod'] = $verificationMethod;
         $self['verificationValue'] = $verificationValue;
 
@@ -149,6 +160,17 @@ final class Challenge implements BaseModel
     {
         $self = clone $this;
         $self['oneTimeCode'] = $oneTimeCode;
+
+        return $self;
+    }
+
+    /**
+     * The identifier of the Real-Time Decision used to deliver this challenge.
+     */
+    public function withRealTimeDecisionID(?string $realTimeDecisionID): self
+    {
+        $self = clone $this;
+        $self['realTimeDecisionID'] = $realTimeDecisionID;
 
         return $self;
     }

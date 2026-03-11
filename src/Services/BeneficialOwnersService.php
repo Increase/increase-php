@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Increase\Services;
 
 use Increase\BeneficialOwners\BeneficialOwnerUpdateParams\Address;
+use Increase\BeneficialOwners\BeneficialOwnerUpdateParams\Identification;
 use Increase\BeneficialOwners\EntityBeneficialOwner;
 use Increase\Client;
 use Increase\Core\Exceptions\APIException;
@@ -15,6 +16,7 @@ use Increase\ServiceContracts\BeneficialOwnersContract;
 
 /**
  * @phpstan-import-type AddressShape from \Increase\BeneficialOwners\BeneficialOwnerUpdateParams\Address
+ * @phpstan-import-type IdentificationShape from \Increase\BeneficialOwners\BeneficialOwnerUpdateParams\Identification
  * @phpstan-import-type RequestOpts from \Increase\RequestOptions
  */
 final class BeneficialOwnersService implements BeneficialOwnersContract
@@ -59,6 +61,8 @@ final class BeneficialOwnersService implements BeneficialOwnersContract
      *
      * @param string $entityBeneficialOwnerID the identifier of the Beneficial Owner to update
      * @param Address|AddressShape $address The individual's physical address. Mail receiving locations like PO Boxes and PMB's are disallowed.
+     * @param bool $confirmedNoUsTaxID the identification method for an individual can only be a passport, driver's license, or other document if you've confirmed the individual does not have a US tax id (either a Social Security Number or Individual Taxpayer Identification Number)
+     * @param Identification|IdentificationShape $identification a means of verifying the person's identity
      * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
@@ -66,9 +70,17 @@ final class BeneficialOwnersService implements BeneficialOwnersContract
     public function update(
         string $entityBeneficialOwnerID,
         Address|array|null $address = null,
+        ?bool $confirmedNoUsTaxID = null,
+        Identification|array|null $identification = null,
         RequestOptions|array|null $requestOptions = null,
     ): EntityBeneficialOwner {
-        $params = Util::removeNulls(['address' => $address]);
+        $params = Util::removeNulls(
+            [
+                'address' => $address,
+                'confirmedNoUsTaxID' => $confirmedNoUsTaxID,
+                'identification' => $identification,
+            ],
+        );
 
         // @phpstan-ignore-next-line argument.type
         $response = $this->raw->update($entityBeneficialOwnerID, params: $params, requestOptions: $requestOptions);

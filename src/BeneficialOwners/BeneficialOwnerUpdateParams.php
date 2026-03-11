@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Increase\BeneficialOwners;
 
 use Increase\BeneficialOwners\BeneficialOwnerUpdateParams\Address;
+use Increase\BeneficialOwners\BeneficialOwnerUpdateParams\Identification;
 use Increase\Core\Attributes\Optional;
 use Increase\Core\Concerns\SdkModel;
 use Increase\Core\Concerns\SdkParams;
@@ -16,9 +17,12 @@ use Increase\Core\Contracts\BaseModel;
  * @see Increase\Services\BeneficialOwnersService::update()
  *
  * @phpstan-import-type AddressShape from \Increase\BeneficialOwners\BeneficialOwnerUpdateParams\Address
+ * @phpstan-import-type IdentificationShape from \Increase\BeneficialOwners\BeneficialOwnerUpdateParams\Identification
  *
  * @phpstan-type BeneficialOwnerUpdateParamsShape = array{
- *   address?: null|Address|AddressShape
+ *   address?: null|Address|AddressShape,
+ *   confirmedNoUsTaxID?: bool|null,
+ *   identification?: null|Identification|IdentificationShape,
  * }
  */
 final class BeneficialOwnerUpdateParams implements BaseModel
@@ -33,6 +37,18 @@ final class BeneficialOwnerUpdateParams implements BaseModel
     #[Optional]
     public ?Address $address;
 
+    /**
+     * The identification method for an individual can only be a passport, driver's license, or other document if you've confirmed the individual does not have a US tax id (either a Social Security Number or Individual Taxpayer Identification Number).
+     */
+    #[Optional('confirmed_no_us_tax_id')]
+    public ?bool $confirmedNoUsTaxID;
+
+    /**
+     * A means of verifying the person's identity.
+     */
+    #[Optional]
+    public ?Identification $identification;
+
     public function __construct()
     {
         $this->initialize();
@@ -44,12 +60,18 @@ final class BeneficialOwnerUpdateParams implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param Address|AddressShape|null $address
+     * @param Identification|IdentificationShape|null $identification
      */
-    public static function with(Address|array|null $address = null): self
-    {
+    public static function with(
+        Address|array|null $address = null,
+        ?bool $confirmedNoUsTaxID = null,
+        Identification|array|null $identification = null,
+    ): self {
         $self = new self;
 
         null !== $address && $self['address'] = $address;
+        null !== $confirmedNoUsTaxID && $self['confirmedNoUsTaxID'] = $confirmedNoUsTaxID;
+        null !== $identification && $self['identification'] = $identification;
 
         return $self;
     }
@@ -63,6 +85,31 @@ final class BeneficialOwnerUpdateParams implements BaseModel
     {
         $self = clone $this;
         $self['address'] = $address;
+
+        return $self;
+    }
+
+    /**
+     * The identification method for an individual can only be a passport, driver's license, or other document if you've confirmed the individual does not have a US tax id (either a Social Security Number or Individual Taxpayer Identification Number).
+     */
+    public function withConfirmedNoUsTaxID(bool $confirmedNoUsTaxID): self
+    {
+        $self = clone $this;
+        $self['confirmedNoUsTaxID'] = $confirmedNoUsTaxID;
+
+        return $self;
+    }
+
+    /**
+     * A means of verifying the person's identity.
+     *
+     * @param Identification|IdentificationShape $identification
+     */
+    public function withIdentification(
+        Identification|array $identification
+    ): self {
+        $self = clone $this;
+        $self['identification'] = $identification;
 
         return $self;
     }

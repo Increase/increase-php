@@ -7,6 +7,7 @@ namespace Increase\Services;
 use Increase\BeneficialOwners\BeneficialOwnerListParams;
 use Increase\BeneficialOwners\BeneficialOwnerUpdateParams;
 use Increase\BeneficialOwners\BeneficialOwnerUpdateParams\Address;
+use Increase\BeneficialOwners\BeneficialOwnerUpdateParams\Identification;
 use Increase\BeneficialOwners\EntityBeneficialOwner;
 use Increase\Client;
 use Increase\Core\Contracts\BaseResponse;
@@ -18,6 +19,7 @@ use Increase\ServiceContracts\BeneficialOwnersRawContract;
 
 /**
  * @phpstan-import-type AddressShape from \Increase\BeneficialOwners\BeneficialOwnerUpdateParams\Address
+ * @phpstan-import-type IdentificationShape from \Increase\BeneficialOwners\BeneficialOwnerUpdateParams\Identification
  * @phpstan-import-type RequestOpts from \Increase\RequestOptions
  */
 final class BeneficialOwnersRawService implements BeneficialOwnersRawContract
@@ -59,7 +61,11 @@ final class BeneficialOwnersRawService implements BeneficialOwnersRawContract
      * Update a Beneficial Owner
      *
      * @param string $entityBeneficialOwnerID the identifier of the Beneficial Owner to update
-     * @param array{address?: Address|AddressShape}|BeneficialOwnerUpdateParams $params
+     * @param array{
+     *   address?: Address|AddressShape,
+     *   confirmedNoUsTaxID?: bool,
+     *   identification?: Identification|IdentificationShape,
+     * }|BeneficialOwnerUpdateParams $params
      * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<EntityBeneficialOwner>

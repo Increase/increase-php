@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Increase\ServiceContracts;
 
 use Increase\BeneficialOwners\BeneficialOwnerListParams;
+use Increase\BeneficialOwners\BeneficialOwnerUpdateParams;
 use Increase\BeneficialOwners\EntityBeneficialOwner;
 use Increase\Core\Contracts\BaseResponse;
 use Increase\Core\Exceptions\APIException;
@@ -28,6 +29,23 @@ interface BeneficialOwnersRawContract
      */
     public function retrieve(
         string $entityBeneficialOwnerID,
+        RequestOptions|array|null $requestOptions = null,
+    ): BaseResponse;
+
+    /**
+     * @api
+     *
+     * @param string $entityBeneficialOwnerID the identifier of the Beneficial Owner to update
+     * @param array<string,mixed>|BeneficialOwnerUpdateParams $params
+     * @param RequestOpts|null $requestOptions
+     *
+     * @return BaseResponse<EntityBeneficialOwner>
+     *
+     * @throws APIException
+     */
+    public function update(
+        string $entityBeneficialOwnerID,
+        array|BeneficialOwnerUpdateParams $params,
         RequestOptions|array|null $requestOptions = null,
     ): BaseResponse;
 

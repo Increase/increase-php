@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Increase\Services;
 
+use Increase\BeneficialOwners\BeneficialOwnerUpdateParams\Address;
 use Increase\BeneficialOwners\EntityBeneficialOwner;
 use Increase\Client;
 use Increase\Core\Exceptions\APIException;
@@ -13,6 +14,7 @@ use Increase\RequestOptions;
 use Increase\ServiceContracts\BeneficialOwnersContract;
 
 /**
+ * @phpstan-import-type AddressShape from \Increase\BeneficialOwners\BeneficialOwnerUpdateParams\Address
  * @phpstan-import-type RequestOpts from \Increase\RequestOptions
  */
 final class BeneficialOwnersService implements BeneficialOwnersContract
@@ -46,6 +48,30 @@ final class BeneficialOwnersService implements BeneficialOwnersContract
     ): EntityBeneficialOwner {
         // @phpstan-ignore-next-line argument.type
         $response = $this->raw->retrieve($entityBeneficialOwnerID, requestOptions: $requestOptions);
+
+        return $response->parse();
+    }
+
+    /**
+     * @api
+     *
+     * Update a Beneficial Owner
+     *
+     * @param string $entityBeneficialOwnerID the identifier of the Beneficial Owner to update
+     * @param Address|AddressShape $address The individual's physical address. Mail receiving locations like PO Boxes and PMB's are disallowed.
+     * @param RequestOpts|null $requestOptions
+     *
+     * @throws APIException
+     */
+    public function update(
+        string $entityBeneficialOwnerID,
+        Address|array|null $address = null,
+        RequestOptions|array|null $requestOptions = null,
+    ): EntityBeneficialOwner {
+        $params = Util::removeNulls(['address' => $address]);
+
+        // @phpstan-ignore-next-line argument.type
+        $response = $this->raw->update($entityBeneficialOwnerID, params: $params, requestOptions: $requestOptions);
 
         return $response->parse();
     }

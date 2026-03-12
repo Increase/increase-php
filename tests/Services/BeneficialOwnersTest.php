@@ -104,7 +104,7 @@ final class BeneficialOwnersTest extends TestCase
     public function testRetrieve(): void
     {
         $result = $this->client->beneficialOwners->retrieve(
-            'entity_setup_beneficial_owner_submission_vgkyk7dj5eb4sfhdbkx7'
+            'entity_beneficial_owner_vozma8szzu1sxezp5zq6'
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -115,7 +115,7 @@ final class BeneficialOwnersTest extends TestCase
     public function testUpdate(): void
     {
         $result = $this->client->beneficialOwners->update(
-            'entity_setup_beneficial_owner_submission_vgkyk7dj5eb4sfhdbkx7'
+            'entity_beneficial_owner_vozma8szzu1sxezp5zq6'
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -159,7 +159,7 @@ final class BeneficialOwnersTest extends TestCase
     public function testArchive(): void
     {
         $result = $this->client->beneficialOwners->archive(
-            'entity_setup_beneficial_owner_submission_vgkyk7dj5eb4sfhdbkx7'
+            'entity_beneficial_owner_vozma8szzu1sxezp5zq6'
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType

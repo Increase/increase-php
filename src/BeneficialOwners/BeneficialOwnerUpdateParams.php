@@ -23,6 +23,7 @@ use Increase\Core\Contracts\BaseModel;
  *   address?: null|Address|AddressShape,
  *   confirmedNoUsTaxID?: bool|null,
  *   identification?: null|Identification|IdentificationShape,
+ *   name?: string|null,
  * }
  */
 final class BeneficialOwnerUpdateParams implements BaseModel
@@ -49,6 +50,12 @@ final class BeneficialOwnerUpdateParams implements BaseModel
     #[Optional]
     public ?Identification $identification;
 
+    /**
+     * The individual's legal name.
+     */
+    #[Optional]
+    public ?string $name;
+
     public function __construct()
     {
         $this->initialize();
@@ -66,12 +73,14 @@ final class BeneficialOwnerUpdateParams implements BaseModel
         Address|array|null $address = null,
         ?bool $confirmedNoUsTaxID = null,
         Identification|array|null $identification = null,
+        ?string $name = null,
     ): self {
         $self = new self;
 
         null !== $address && $self['address'] = $address;
         null !== $confirmedNoUsTaxID && $self['confirmedNoUsTaxID'] = $confirmedNoUsTaxID;
         null !== $identification && $self['identification'] = $identification;
+        null !== $name && $self['name'] = $name;
 
         return $self;
     }
@@ -110,6 +119,17 @@ final class BeneficialOwnerUpdateParams implements BaseModel
     ): self {
         $self = clone $this;
         $self['identification'] = $identification;
+
+        return $self;
+    }
+
+    /**
+     * The individual's legal name.
+     */
+    public function withName(string $name): self
+    {
+        $self = clone $this;
+        $self['name'] = $name;
 
         return $self;
     }

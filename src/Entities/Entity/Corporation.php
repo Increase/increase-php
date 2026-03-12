@@ -4,21 +4,21 @@ declare(strict_types=1);
 
 namespace Increase\Entities\Entity;
 
-use Increase\BeneficialOwners\EntityBeneficialOwner;
 use Increase\Core\Attributes\Required;
 use Increase\Core\Concerns\SdkModel;
 use Increase\Core\Contracts\BaseModel;
 use Increase\Entities\Entity\Corporation\Address;
+use Increase\Entities\Entity\Corporation\BeneficialOwner;
 
 /**
  * Details of the corporation entity. Will be present if `structure` is equal to `corporation`.
  *
  * @phpstan-import-type AddressShape from \Increase\Entities\Entity\Corporation\Address
- * @phpstan-import-type EntityBeneficialOwnerShape from \Increase\BeneficialOwners\EntityBeneficialOwner
+ * @phpstan-import-type BeneficialOwnerShape from \Increase\Entities\Entity\Corporation\BeneficialOwner
  *
  * @phpstan-type CorporationShape = array{
  *   address: Address|AddressShape,
- *   beneficialOwners: list<EntityBeneficialOwner|EntityBeneficialOwnerShape>,
+ *   beneficialOwners: list<BeneficialOwner|BeneficialOwnerShape>,
  *   email: string|null,
  *   incorporationState: string|null,
  *   industryCode: string|null,
@@ -41,9 +41,9 @@ final class Corporation implements BaseModel
     /**
      * The identifying details of anyone controlling or owning 25% or more of the corporation.
      *
-     * @var list<EntityBeneficialOwner> $beneficialOwners
+     * @var list<BeneficialOwner> $beneficialOwners
      */
-    #[Required('beneficial_owners', list: EntityBeneficialOwner::class)]
+    #[Required('beneficial_owners', list: BeneficialOwner::class)]
     public array $beneficialOwners;
 
     /**
@@ -124,7 +124,7 @@ final class Corporation implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param Address|AddressShape $address
-     * @param list<EntityBeneficialOwner|EntityBeneficialOwnerShape> $beneficialOwners
+     * @param list<BeneficialOwner|BeneficialOwnerShape> $beneficialOwners
      */
     public static function with(
         Address|array $address,
@@ -166,7 +166,7 @@ final class Corporation implements BaseModel
     /**
      * The identifying details of anyone controlling or owning 25% or more of the corporation.
      *
-     * @param list<EntityBeneficialOwner|EntityBeneficialOwnerShape> $beneficialOwners
+     * @param list<BeneficialOwner|BeneficialOwnerShape> $beneficialOwners
      */
     public function withBeneficialOwners(array $beneficialOwners): self
     {

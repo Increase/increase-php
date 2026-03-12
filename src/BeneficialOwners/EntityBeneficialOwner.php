@@ -20,6 +20,7 @@ use Increase\Core\Contracts\BaseModel;
  *   id: string,
  *   companyTitle: string|null,
  *   createdAt: \DateTimeInterface,
+ *   entityID: string,
  *   idempotencyKey: string|null,
  *   individual: Individual|IndividualShape,
  *   prongs: list<Prong|value-of<Prong>>,
@@ -48,6 +49,12 @@ final class EntityBeneficialOwner implements BaseModel
      */
     #[Required('created_at')]
     public \DateTimeInterface $createdAt;
+
+    /**
+     * The identifier of the Entity to which this beneficial owner belongs.
+     */
+    #[Required('entity_id')]
+    public string $entityID;
 
     /**
      * The idempotency key you chose for this object. This value is unique across Increase and is used to ensure that a request is only processed once. Learn more about [idempotency](https://increase.com/documentation/idempotency-keys).
@@ -86,6 +93,7 @@ final class EntityBeneficialOwner implements BaseModel
      *   id: ...,
      *   companyTitle: ...,
      *   createdAt: ...,
+     *   entityID: ...,
      *   idempotencyKey: ...,
      *   individual: ...,
      *   prongs: ...,
@@ -100,6 +108,7 @@ final class EntityBeneficialOwner implements BaseModel
      *   ->withID(...)
      *   ->withCompanyTitle(...)
      *   ->withCreatedAt(...)
+     *   ->withEntityID(...)
      *   ->withIdempotencyKey(...)
      *   ->withIndividual(...)
      *   ->withProngs(...)
@@ -124,6 +133,7 @@ final class EntityBeneficialOwner implements BaseModel
         string $id,
         ?string $companyTitle,
         \DateTimeInterface $createdAt,
+        string $entityID,
         ?string $idempotencyKey,
         Individual|array $individual,
         array $prongs,
@@ -134,6 +144,7 @@ final class EntityBeneficialOwner implements BaseModel
         $self['id'] = $id;
         $self['companyTitle'] = $companyTitle;
         $self['createdAt'] = $createdAt;
+        $self['entityID'] = $entityID;
         $self['idempotencyKey'] = $idempotencyKey;
         $self['individual'] = $individual;
         $self['prongs'] = $prongs;
@@ -171,6 +182,17 @@ final class EntityBeneficialOwner implements BaseModel
     {
         $self = clone $this;
         $self['createdAt'] = $createdAt;
+
+        return $self;
+    }
+
+    /**
+     * The identifier of the Entity to which this beneficial owner belongs.
+     */
+    public function withEntityID(string $entityID): self
+    {
+        $self = clone $this;
+        $self['entityID'] = $entityID;
 
         return $self;
     }

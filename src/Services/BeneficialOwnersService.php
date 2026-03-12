@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Increase\Services;
 
+use Increase\BeneficialOwners\BeneficialOwnerCreateParams\Individual;
+use Increase\BeneficialOwners\BeneficialOwnerCreateParams\Prong;
 use Increase\BeneficialOwners\BeneficialOwnerUpdateParams\Address;
 use Increase\BeneficialOwners\BeneficialOwnerUpdateParams\Identification;
 use Increase\BeneficialOwners\EntityBeneficialOwner;
@@ -15,6 +17,7 @@ use Increase\RequestOptions;
 use Increase\ServiceContracts\BeneficialOwnersContract;
 
 /**
+ * @phpstan-import-type IndividualShape from \Increase\BeneficialOwners\BeneficialOwnerCreateParams\Individual
  * @phpstan-import-type AddressShape from \Increase\BeneficialOwners\BeneficialOwnerUpdateParams\Address
  * @phpstan-import-type IdentificationShape from \Increase\BeneficialOwners\BeneficialOwnerUpdateParams\Identification
  * @phpstan-import-type RequestOpts from \Increase\RequestOptions
@@ -32,6 +35,41 @@ final class BeneficialOwnersService implements BeneficialOwnersContract
     public function __construct(private Client $client)
     {
         $this->raw = new BeneficialOwnersRawService($client);
+    }
+
+    /**
+     * @api
+     *
+     * Create a beneficial owner
+     *
+     * @param string $entityID the identifier of the Entity to associate with the new Beneficial Owner
+     * @param Individual|IndividualShape $individual personal details for the beneficial owner
+     * @param list<Prong|value-of<Prong>> $prongs Why this person is considered a beneficial owner of the entity. At least one option is required, if a person is both a control person and owner, submit an array containing both.
+     * @param string $companyTitle this person's role or title within the entity
+     * @param RequestOpts|null $requestOptions
+     *
+     * @throws APIException
+     */
+    public function create(
+        string $entityID,
+        Individual|array $individual,
+        array $prongs,
+        ?string $companyTitle = null,
+        RequestOptions|array|null $requestOptions = null,
+    ): EntityBeneficialOwner {
+        $params = Util::removeNulls(
+            [
+                'entityID' => $entityID,
+                'individual' => $individual,
+                'prongs' => $prongs,
+                'companyTitle' => $companyTitle,
+            ],
+        );
+
+        // @phpstan-ignore-next-line argument.type
+        $response = $this->raw->create(params: $params, requestOptions: $requestOptions);
+
+        return $response->parse();
     }
 
     /**

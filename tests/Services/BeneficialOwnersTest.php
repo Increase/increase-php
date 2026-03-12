@@ -29,6 +29,78 @@ final class BeneficialOwnersTest extends TestCase
     }
 
     #[Test]
+    public function testCreate(): void
+    {
+        $result = $this->client->beneficialOwners->create(
+            entityID: 'entity_n8y8tnk2p9339ti393yi',
+            individual: [
+                'address' => [
+                    'city' => 'New York',
+                    'country' => 'US',
+                    'line1' => '33 Liberty Street',
+                ],
+                'dateOfBirth' => '1970-01-31',
+                'identification' => [
+                    'method' => 'social_security_number', 'number' => '078051120',
+                ],
+                'name' => 'Ian Crease',
+            ],
+            prongs: ['control'],
+        );
+
+        // @phpstan-ignore-next-line method.alreadyNarrowedType
+        $this->assertInstanceOf(EntityBeneficialOwner::class, $result);
+    }
+
+    #[Test]
+    public function testCreateWithOptionalParams(): void
+    {
+        $result = $this->client->beneficialOwners->create(
+            entityID: 'entity_n8y8tnk2p9339ti393yi',
+            individual: [
+                'address' => [
+                    'city' => 'New York',
+                    'country' => 'US',
+                    'line1' => '33 Liberty Street',
+                    'line2' => 'x',
+                    'state' => 'NY',
+                    'zip' => '10045',
+                ],
+                'dateOfBirth' => '1970-01-31',
+                'identification' => [
+                    'method' => 'social_security_number',
+                    'number' => '078051120',
+                    'driversLicense' => [
+                        'expirationDate' => '2019-12-27',
+                        'fileID' => 'file_id',
+                        'state' => 'x',
+                        'backFileID' => 'back_file_id',
+                    ],
+                    'other' => [
+                        'country' => 'x',
+                        'description' => 'x',
+                        'fileID' => 'file_id',
+                        'backFileID' => 'back_file_id',
+                        'expirationDate' => '2019-12-27',
+                    ],
+                    'passport' => [
+                        'country' => 'x',
+                        'expirationDate' => '2019-12-27',
+                        'fileID' => 'file_id',
+                    ],
+                ],
+                'name' => 'Ian Crease',
+                'confirmedNoUsTaxID' => true,
+            ],
+            prongs: ['control'],
+            companyTitle: 'CEO',
+        );
+
+        // @phpstan-ignore-next-line method.alreadyNarrowedType
+        $this->assertInstanceOf(EntityBeneficialOwner::class, $result);
+    }
+
+    #[Test]
     public function testRetrieve(): void
     {
         $result = $this->client->beneficialOwners->retrieve(

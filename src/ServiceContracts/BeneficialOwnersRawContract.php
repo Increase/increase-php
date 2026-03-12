@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Increase\ServiceContracts;
 
+use Increase\BeneficialOwners\BeneficialOwnerCreateParams;
 use Increase\BeneficialOwners\BeneficialOwnerListParams;
 use Increase\BeneficialOwners\BeneficialOwnerUpdateParams;
 use Increase\BeneficialOwners\EntityBeneficialOwner;
@@ -17,6 +18,21 @@ use Increase\RequestOptions;
  */
 interface BeneficialOwnersRawContract
 {
+    /**
+     * @api
+     *
+     * @param array<string,mixed>|BeneficialOwnerCreateParams $params
+     * @param RequestOpts|null $requestOptions
+     *
+     * @return BaseResponse<EntityBeneficialOwner>
+     *
+     * @throws APIException
+     */
+    public function create(
+        array|BeneficialOwnerCreateParams $params,
+        RequestOptions|array|null $requestOptions = null,
+    ): BaseResponse;
+
     /**
      * @api
      *

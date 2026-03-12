@@ -6,7 +6,6 @@ namespace Increase\ServiceContracts;
 
 use Increase\Core\Exceptions\APIException;
 use Increase\Entities\Entity;
-use Increase\Entities\EntityCreateBeneficialOwnerParams\BeneficialOwner;
 use Increase\Entities\EntityCreateParams\Corporation;
 use Increase\Entities\EntityCreateParams\GovernmentAuthority;
 use Increase\Entities\EntityCreateParams\Joint;
@@ -40,7 +39,6 @@ use Increase\RequestOptions;
  * @phpstan-import-type TrustShape from \Increase\Entities\EntityUpdateParams\Trust as TrustShape1
  * @phpstan-import-type CreatedAtShape from \Increase\Entities\EntityListParams\CreatedAt
  * @phpstan-import-type StatusShape from \Increase\Entities\EntityListParams\Status
- * @phpstan-import-type BeneficialOwnerShape from \Increase\Entities\EntityCreateBeneficialOwnerParams\BeneficialOwner
  * @phpstan-import-type RequestOpts from \Increase\RequestOptions
  */
 interface EntitiesContract
@@ -152,20 +150,5 @@ interface EntitiesContract
     public function archive(
         string $entityID,
         RequestOptions|array|null $requestOptions = null
-    ): Entity;
-
-    /**
-     * @api
-     *
-     * @param string $entityID the identifier of the Entity to associate with the new Beneficial Owner
-     * @param BeneficialOwner|BeneficialOwnerShape $beneficialOwner the identifying details of anyone controlling or owning 25% or more of the corporation
-     * @param RequestOpts|null $requestOptions
-     *
-     * @throws APIException
-     */
-    public function createBeneficialOwner(
-        string $entityID,
-        BeneficialOwner|array $beneficialOwner,
-        RequestOptions|array|null $requestOptions = null,
     ): Entity;
 }

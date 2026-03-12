@@ -65,6 +65,7 @@ final class BeneficialOwnersRawService implements BeneficialOwnersRawContract
      *   address?: Address|AddressShape,
      *   confirmedNoUsTaxID?: bool,
      *   identification?: Identification|IdentificationShape,
+     *   name?: string,
      * }|BeneficialOwnerUpdateParams $params
      * @param RequestOpts|null $requestOptions
      *

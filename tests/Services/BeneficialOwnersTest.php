@@ -82,4 +82,15 @@ final class BeneficialOwnersTest extends TestCase
             $this->assertInstanceOf(EntityBeneficialOwner::class, $item);
         }
     }
+
+    #[Test]
+    public function testArchive(): void
+    {
+        $result = $this->client->beneficialOwners->archive(
+            'entity_setup_beneficial_owner_submission_vgkyk7dj5eb4sfhdbkx7'
+        );
+
+        // @phpstan-ignore-next-line method.alreadyNarrowedType
+        $this->assertInstanceOf(EntityBeneficialOwner::class, $result);
+    }
 }

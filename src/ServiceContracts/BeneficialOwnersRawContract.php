@@ -63,4 +63,19 @@ interface BeneficialOwnersRawContract
         array|BeneficialOwnerListParams $params,
         RequestOptions|array|null $requestOptions = null,
     ): BaseResponse;
+
+    /**
+     * @api
+     *
+     * @param string $entityBeneficialOwnerID the identifier of the Beneficial Owner to archive
+     * @param RequestOpts|null $requestOptions
+     *
+     * @return BaseResponse<EntityBeneficialOwner>
+     *
+     * @throws APIException
+     */
+    public function archive(
+        string $entityBeneficialOwnerID,
+        RequestOptions|array|null $requestOptions = null,
+    ): BaseResponse;
 }

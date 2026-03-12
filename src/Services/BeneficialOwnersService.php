@@ -127,4 +127,24 @@ final class BeneficialOwnersService implements BeneficialOwnersContract
 
         return $response->parse();
     }
+
+    /**
+     * @api
+     *
+     * Archive a Beneficial Owner
+     *
+     * @param string $entityBeneficialOwnerID the identifier of the Beneficial Owner to archive
+     * @param RequestOpts|null $requestOptions
+     *
+     * @throws APIException
+     */
+    public function archive(
+        string $entityBeneficialOwnerID,
+        RequestOptions|array|null $requestOptions = null,
+    ): EntityBeneficialOwner {
+        // @phpstan-ignore-next-line argument.type
+        $response = $this->raw->archive($entityBeneficialOwnerID, requestOptions: $requestOptions);
+
+        return $response->parse();
+    }
 }

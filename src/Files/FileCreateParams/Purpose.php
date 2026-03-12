@@ -21,6 +21,8 @@ enum Purpose: string
 
     case CHECK_VOUCHER_IMAGE = 'check_voucher_image';
 
+    case CHECK_SIGNATURE = 'check_signature';
+
     case FORM_SS_4 = 'form_ss_4';
 
     case IDENTITY_DOCUMENT = 'identity_document';

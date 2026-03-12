@@ -20,6 +20,7 @@ use Increase\Core\Contracts\BaseModel;
  *   id: string,
  *   companyTitle: string|null,
  *   createdAt: \DateTimeInterface,
+ *   idempotencyKey: string|null,
  *   individual: Individual|IndividualShape,
  *   prongs: list<Prong|value-of<Prong>>,
  *   type: Type|value-of<Type>,
@@ -47,6 +48,12 @@ final class EntityBeneficialOwner implements BaseModel
      */
     #[Required('created_at')]
     public \DateTimeInterface $createdAt;
+
+    /**
+     * The idempotency key you chose for this object. This value is unique across Increase and is used to ensure that a request is only processed once. Learn more about [idempotency](https://increase.com/documentation/idempotency-keys).
+     */
+    #[Required('idempotency_key')]
+    public ?string $idempotencyKey;
 
     /**
      * Personal details for the beneficial owner.
@@ -79,6 +86,7 @@ final class EntityBeneficialOwner implements BaseModel
      *   id: ...,
      *   companyTitle: ...,
      *   createdAt: ...,
+     *   idempotencyKey: ...,
      *   individual: ...,
      *   prongs: ...,
      *   type: ...,
@@ -92,6 +100,7 @@ final class EntityBeneficialOwner implements BaseModel
      *   ->withID(...)
      *   ->withCompanyTitle(...)
      *   ->withCreatedAt(...)
+     *   ->withIdempotencyKey(...)
      *   ->withIndividual(...)
      *   ->withProngs(...)
      *   ->withType(...)
@@ -115,6 +124,7 @@ final class EntityBeneficialOwner implements BaseModel
         string $id,
         ?string $companyTitle,
         \DateTimeInterface $createdAt,
+        ?string $idempotencyKey,
         Individual|array $individual,
         array $prongs,
         Type|string $type,
@@ -124,6 +134,7 @@ final class EntityBeneficialOwner implements BaseModel
         $self['id'] = $id;
         $self['companyTitle'] = $companyTitle;
         $self['createdAt'] = $createdAt;
+        $self['idempotencyKey'] = $idempotencyKey;
         $self['individual'] = $individual;
         $self['prongs'] = $prongs;
         $self['type'] = $type;
@@ -160,6 +171,17 @@ final class EntityBeneficialOwner implements BaseModel
     {
         $self = clone $this;
         $self['createdAt'] = $createdAt;
+
+        return $self;
+    }
+
+    /**
+     * The idempotency key you chose for this object. This value is unique across Increase and is used to ensure that a request is only processed once. Learn more about [idempotency](https://increase.com/documentation/idempotency-keys).
+     */
+    public function withIdempotencyKey(?string $idempotencyKey): self
+    {
+        $self = clone $this;
+        $self['idempotencyKey'] = $idempotencyKey;
 
         return $self;
     }

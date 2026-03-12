@@ -334,30 +334,6 @@ final class EntitiesTest extends TestCase
     }
 
     #[Test]
-    public function testArchiveBeneficialOwner(): void
-    {
-        $result = $this->client->entities->archiveBeneficialOwner(
-            'entity_n8y8tnk2p9339ti393yi',
-            beneficialOwnerID: 'entity_setup_beneficial_owner_submission_vgkyk7dj5eb4sfhdbkx7',
-        );
-
-        // @phpstan-ignore-next-line method.alreadyNarrowedType
-        $this->assertInstanceOf(Entity::class, $result);
-    }
-
-    #[Test]
-    public function testArchiveBeneficialOwnerWithOptionalParams(): void
-    {
-        $result = $this->client->entities->archiveBeneficialOwner(
-            'entity_n8y8tnk2p9339ti393yi',
-            beneficialOwnerID: 'entity_setup_beneficial_owner_submission_vgkyk7dj5eb4sfhdbkx7',
-        );
-
-        // @phpstan-ignore-next-line method.alreadyNarrowedType
-        $this->assertInstanceOf(Entity::class, $result);
-    }
-
-    #[Test]
     public function testCreateBeneficialOwner(): void
     {
         $result = $this->client->entities->createBeneficialOwner(
@@ -427,41 +403,6 @@ final class EntitiesTest extends TestCase
                 'prongs' => ['control'],
                 'companyTitle' => 'CEO',
             ],
-        );
-
-        // @phpstan-ignore-next-line method.alreadyNarrowedType
-        $this->assertInstanceOf(Entity::class, $result);
-    }
-
-    #[Test]
-    public function testUpdateBeneficialOwnerAddress(): void
-    {
-        $result = $this->client->entities->updateBeneficialOwnerAddress(
-            'entity_n8y8tnk2p9339ti393yi',
-            address: [
-                'city' => 'New York', 'country' => 'US', 'line1' => '33 Liberty Street',
-            ],
-            beneficialOwnerID: 'entity_setup_beneficial_owner_submission_vgkyk7dj5eb4sfhdbkx7',
-        );
-
-        // @phpstan-ignore-next-line method.alreadyNarrowedType
-        $this->assertInstanceOf(Entity::class, $result);
-    }
-
-    #[Test]
-    public function testUpdateBeneficialOwnerAddressWithOptionalParams(): void
-    {
-        $result = $this->client->entities->updateBeneficialOwnerAddress(
-            'entity_n8y8tnk2p9339ti393yi',
-            address: [
-                'city' => 'New York',
-                'country' => 'US',
-                'line1' => '33 Liberty Street',
-                'line2' => 'Unit 2',
-                'state' => 'NY',
-                'zip' => '10045',
-            ],
-            beneficialOwnerID: 'entity_setup_beneficial_owner_submission_vgkyk7dj5eb4sfhdbkx7',
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType

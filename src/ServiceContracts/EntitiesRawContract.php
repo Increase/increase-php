@@ -7,11 +7,9 @@ namespace Increase\ServiceContracts;
 use Increase\Core\Contracts\BaseResponse;
 use Increase\Core\Exceptions\APIException;
 use Increase\Entities\Entity;
-use Increase\Entities\EntityArchiveBeneficialOwnerParams;
 use Increase\Entities\EntityCreateBeneficialOwnerParams;
 use Increase\Entities\EntityCreateParams;
 use Increase\Entities\EntityListParams;
-use Increase\Entities\EntityUpdateBeneficialOwnerAddressParams;
 use Increase\Entities\EntityUpdateParams;
 use Increase\Page;
 use Increase\RequestOptions;
@@ -101,23 +99,6 @@ interface EntitiesRawContract
     /**
      * @api
      *
-     * @param string $entityID the identifier of the Entity associated with the Beneficial Owner that is being archived
-     * @param array<string,mixed>|EntityArchiveBeneficialOwnerParams $params
-     * @param RequestOpts|null $requestOptions
-     *
-     * @return BaseResponse<Entity>
-     *
-     * @throws APIException
-     */
-    public function archiveBeneficialOwner(
-        string $entityID,
-        array|EntityArchiveBeneficialOwnerParams $params,
-        RequestOptions|array|null $requestOptions = null,
-    ): BaseResponse;
-
-    /**
-     * @api
-     *
      * @param string $entityID the identifier of the Entity to associate with the new Beneficial Owner
      * @param array<string,mixed>|EntityCreateBeneficialOwnerParams $params
      * @param RequestOpts|null $requestOptions
@@ -129,23 +110,6 @@ interface EntitiesRawContract
     public function createBeneficialOwner(
         string $entityID,
         array|EntityCreateBeneficialOwnerParams $params,
-        RequestOptions|array|null $requestOptions = null,
-    ): BaseResponse;
-
-    /**
-     * @api
-     *
-     * @param string $entityID the identifier of the Entity associated with the Beneficial Owner whose address is being updated
-     * @param array<string,mixed>|EntityUpdateBeneficialOwnerAddressParams $params
-     * @param RequestOpts|null $requestOptions
-     *
-     * @return BaseResponse<Entity>
-     *
-     * @throws APIException
-     */
-    public function updateBeneficialOwnerAddress(
-        string $entityID,
-        array|EntityUpdateBeneficialOwnerAddressParams $params,
         RequestOptions|array|null $requestOptions = null,
     ): BaseResponse;
 }

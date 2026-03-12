@@ -7,7 +7,6 @@ namespace Increase\ServiceContracts;
 use Increase\Core\Contracts\BaseResponse;
 use Increase\Core\Exceptions\APIException;
 use Increase\Entities\Entity;
-use Increase\Entities\EntityCreateBeneficialOwnerParams;
 use Increase\Entities\EntityCreateParams;
 use Increase\Entities\EntityListParams;
 use Increase\Entities\EntityUpdateParams;
@@ -94,22 +93,5 @@ interface EntitiesRawContract
     public function archive(
         string $entityID,
         RequestOptions|array|null $requestOptions = null
-    ): BaseResponse;
-
-    /**
-     * @api
-     *
-     * @param string $entityID the identifier of the Entity to associate with the new Beneficial Owner
-     * @param array<string,mixed>|EntityCreateBeneficialOwnerParams $params
-     * @param RequestOpts|null $requestOptions
-     *
-     * @return BaseResponse<Entity>
-     *
-     * @throws APIException
-     */
-    public function createBeneficialOwner(
-        string $entityID,
-        array|EntityCreateBeneficialOwnerParams $params,
-        RequestOptions|array|null $requestOptions = null,
     ): BaseResponse;
 }

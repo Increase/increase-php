@@ -8,7 +8,6 @@ use Increase\Client;
 use Increase\Core\Exceptions\APIException;
 use Increase\Core\Util;
 use Increase\Entities\Entity;
-use Increase\Entities\EntityCreateBeneficialOwnerParams\BeneficialOwner;
 use Increase\Entities\EntityCreateParams\Corporation;
 use Increase\Entities\EntityCreateParams\GovernmentAuthority;
 use Increase\Entities\EntityCreateParams\Joint;
@@ -43,7 +42,6 @@ use Increase\ServiceContracts\EntitiesContract;
  * @phpstan-import-type TrustShape from \Increase\Entities\EntityUpdateParams\Trust as TrustShape1
  * @phpstan-import-type CreatedAtShape from \Increase\Entities\EntityListParams\CreatedAt
  * @phpstan-import-type StatusShape from \Increase\Entities\EntityListParams\Status
- * @phpstan-import-type BeneficialOwnerShape from \Increase\Entities\EntityCreateBeneficialOwnerParams\BeneficialOwner
  * @phpstan-import-type RequestOpts from \Increase\RequestOptions
  */
 final class EntitiesService implements EntitiesContract
@@ -239,30 +237,6 @@ final class EntitiesService implements EntitiesContract
     ): Entity {
         // @phpstan-ignore-next-line argument.type
         $response = $this->raw->archive($entityID, requestOptions: $requestOptions);
-
-        return $response->parse();
-    }
-
-    /**
-     * @api
-     *
-     * Create a beneficial owner for a corporate Entity
-     *
-     * @param string $entityID the identifier of the Entity to associate with the new Beneficial Owner
-     * @param BeneficialOwner|BeneficialOwnerShape $beneficialOwner the identifying details of anyone controlling or owning 25% or more of the corporation
-     * @param RequestOpts|null $requestOptions
-     *
-     * @throws APIException
-     */
-    public function createBeneficialOwner(
-        string $entityID,
-        BeneficialOwner|array $beneficialOwner,
-        RequestOptions|array|null $requestOptions = null,
-    ): Entity {
-        $params = Util::removeNulls(['beneficialOwner' => $beneficialOwner]);
-
-        // @phpstan-ignore-next-line argument.type
-        $response = $this->raw->createBeneficialOwner($entityID, params: $params, requestOptions: $requestOptions);
 
         return $response->parse();
     }

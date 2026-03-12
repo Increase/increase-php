@@ -36,6 +36,7 @@ use Increase\Core\Contracts\BaseModel;
  *   approval: null|Approval|ApprovalShape,
  *   businessApplicationIdentifier: BusinessApplicationIdentifier|value-of<BusinessApplicationIdentifier>,
  *   cancellation: null|Cancellation|CancellationShape,
+ *   cardTokenID: string,
  *   createdAt: \DateTimeInterface,
  *   createdBy: null|CreatedBy|CreatedByShape,
  *   decline: null|Decline|DeclineShape,
@@ -104,6 +105,12 @@ final class CardPushTransfer implements BaseModel
      */
     #[Required]
     public ?Cancellation $cancellation;
+
+    /**
+     * The ID of the Card Token that was used to validate the card.
+     */
+    #[Required('card_token_id')]
+    public string $cardTokenID;
 
     /**
      * The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which the transfer was created.
@@ -247,6 +254,7 @@ final class CardPushTransfer implements BaseModel
      *   approval: ...,
      *   businessApplicationIdentifier: ...,
      *   cancellation: ...,
+     *   cardTokenID: ...,
      *   createdAt: ...,
      *   createdBy: ...,
      *   decline: ...,
@@ -281,6 +289,7 @@ final class CardPushTransfer implements BaseModel
      *   ->withApproval(...)
      *   ->withBusinessApplicationIdentifier(...)
      *   ->withCancellation(...)
+     *   ->withCardTokenID(...)
      *   ->withCreatedAt(...)
      *   ->withCreatedBy(...)
      *   ->withDecline(...)
@@ -332,6 +341,7 @@ final class CardPushTransfer implements BaseModel
         Approval|array|null $approval,
         BusinessApplicationIdentifier|string $businessApplicationIdentifier,
         Cancellation|array|null $cancellation,
+        string $cardTokenID,
         \DateTimeInterface $createdAt,
         CreatedBy|array|null $createdBy,
         Decline|array|null $decline,
@@ -362,6 +372,7 @@ final class CardPushTransfer implements BaseModel
         $self['approval'] = $approval;
         $self['businessApplicationIdentifier'] = $businessApplicationIdentifier;
         $self['cancellation'] = $cancellation;
+        $self['cardTokenID'] = $cardTokenID;
         $self['createdAt'] = $createdAt;
         $self['createdBy'] = $createdBy;
         $self['decline'] = $decline;
@@ -459,6 +470,17 @@ final class CardPushTransfer implements BaseModel
     ): self {
         $self = clone $this;
         $self['cancellation'] = $cancellation;
+
+        return $self;
+    }
+
+    /**
+     * The ID of the Card Token that was used to validate the card.
+     */
+    public function withCardTokenID(string $cardTokenID): self
+    {
+        $self = clone $this;
+        $self['cardTokenID'] = $cardTokenID;
 
         return $self;
     }

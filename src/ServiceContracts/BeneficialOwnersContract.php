@@ -38,6 +38,7 @@ interface BeneficialOwnersContract
      * @param Address|AddressShape $address The individual's physical address. Mail receiving locations like PO Boxes and PMB's are disallowed.
      * @param bool $confirmedNoUsTaxID the identification method for an individual can only be a passport, driver's license, or other document if you've confirmed the individual does not have a US tax id (either a Social Security Number or Individual Taxpayer Identification Number)
      * @param Identification|IdentificationShape $identification a means of verifying the person's identity
+     * @param string $name the individual's legal name
      * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
@@ -47,6 +48,7 @@ interface BeneficialOwnersContract
         Address|array|null $address = null,
         ?bool $confirmedNoUsTaxID = null,
         Identification|array|null $identification = null,
+        ?string $name = null,
         RequestOptions|array|null $requestOptions = null,
     ): EntityBeneficialOwner;
 

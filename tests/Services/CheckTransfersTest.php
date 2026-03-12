@@ -78,7 +78,9 @@ final class CheckTransfersTest extends TestCase
                     'phone' => 'x',
                 ],
                 'shippingMethod' => 'usps_first_class',
-                'signatureText' => 'Ian Crease',
+                'signature' => [
+                    'imageFileID' => 'image_file_id', 'text' => 'Ian Crease',
+                ],
             ],
             requireApproval: true,
             thirdParty: ['recipientName' => 'x'],

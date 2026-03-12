@@ -72,4 +72,17 @@ interface BeneficialOwnersContract
         ?int $limit = null,
         RequestOptions|array|null $requestOptions = null,
     ): Page;
+
+    /**
+     * @api
+     *
+     * @param string $entityBeneficialOwnerID the identifier of the Beneficial Owner to archive
+     * @param RequestOpts|null $requestOptions
+     *
+     * @throws APIException
+     */
+    public function archive(
+        string $entityBeneficialOwnerID,
+        RequestOptions|array|null $requestOptions = null,
+    ): EntityBeneficialOwner;
 }

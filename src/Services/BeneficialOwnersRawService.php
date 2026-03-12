@@ -129,4 +129,29 @@ final class BeneficialOwnersRawService implements BeneficialOwnersRawContract
             page: Page::class,
         );
     }
+
+    /**
+     * @api
+     *
+     * Archive a Beneficial Owner
+     *
+     * @param string $entityBeneficialOwnerID the identifier of the Beneficial Owner to archive
+     * @param RequestOpts|null $requestOptions
+     *
+     * @return BaseResponse<EntityBeneficialOwner>
+     *
+     * @throws APIException
+     */
+    public function archive(
+        string $entityBeneficialOwnerID,
+        RequestOptions|array|null $requestOptions = null,
+    ): BaseResponse {
+        // @phpstan-ignore-next-line return.type
+        return $this->client->request(
+            method: 'post',
+            path: ['entity_beneficial_owners/%1$s/archive', $entityBeneficialOwnerID],
+            options: $requestOptions,
+            convert: EntityBeneficialOwner::class,
+        );
+    }
 }

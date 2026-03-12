@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace Increase\Services;
 
+use Increase\BeneficialOwners\BeneficialOwnerCreateParams;
+use Increase\BeneficialOwners\BeneficialOwnerCreateParams\Individual;
+use Increase\BeneficialOwners\BeneficialOwnerCreateParams\Prong;
 use Increase\BeneficialOwners\BeneficialOwnerListParams;
 use Increase\BeneficialOwners\BeneficialOwnerUpdateParams;
 use Increase\BeneficialOwners\BeneficialOwnerUpdateParams\Address;
@@ -18,6 +21,7 @@ use Increase\RequestOptions;
 use Increase\ServiceContracts\BeneficialOwnersRawContract;
 
 /**
+ * @phpstan-import-type IndividualShape from \Increase\BeneficialOwners\BeneficialOwnerCreateParams\Individual
  * @phpstan-import-type AddressShape from \Increase\BeneficialOwners\BeneficialOwnerUpdateParams\Address
  * @phpstan-import-type IdentificationShape from \Increase\BeneficialOwners\BeneficialOwnerUpdateParams\Identification
  * @phpstan-import-type RequestOpts from \Increase\RequestOptions
@@ -29,6 +33,42 @@ final class BeneficialOwnersRawService implements BeneficialOwnersRawContract
      * @internal
      */
     public function __construct(private Client $client) {}
+
+    /**
+     * @api
+     *
+     * Create a beneficial owner
+     *
+     * @param array{
+     *   entityID: string,
+     *   individual: Individual|IndividualShape,
+     *   prongs: list<Prong|value-of<Prong>>,
+     *   companyTitle?: string,
+     * }|BeneficialOwnerCreateParams $params
+     * @param RequestOpts|null $requestOptions
+     *
+     * @return BaseResponse<EntityBeneficialOwner>
+     *
+     * @throws APIException
+     */
+    public function create(
+        array|BeneficialOwnerCreateParams $params,
+        RequestOptions|array|null $requestOptions = null,
+    ): BaseResponse {
+        [$parsed, $options] = BeneficialOwnerCreateParams::parseRequest(
+            $params,
+            $requestOptions,
+        );
+
+        // @phpstan-ignore-next-line return.type
+        return $this->client->request(
+            method: 'post',
+            path: 'entity_beneficial_owners',
+            body: (object) $parsed,
+            options: $options,
+            convert: EntityBeneficialOwner::class,
+        );
+    }
 
     /**
      * @api

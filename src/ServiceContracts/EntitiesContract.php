@@ -19,7 +19,6 @@ use Increase\Entities\EntityCreateParams\ThirdPartyVerification;
 use Increase\Entities\EntityCreateParams\Trust;
 use Increase\Entities\EntityListParams\CreatedAt;
 use Increase\Entities\EntityListParams\Status;
-use Increase\Entities\EntityUpdateBeneficialOwnerAddressParams\Address;
 use Increase\Page;
 use Increase\RequestOptions;
 
@@ -42,7 +41,6 @@ use Increase\RequestOptions;
  * @phpstan-import-type CreatedAtShape from \Increase\Entities\EntityListParams\CreatedAt
  * @phpstan-import-type StatusShape from \Increase\Entities\EntityListParams\Status
  * @phpstan-import-type BeneficialOwnerShape from \Increase\Entities\EntityCreateBeneficialOwnerParams\BeneficialOwner
- * @phpstan-import-type AddressShape from \Increase\Entities\EntityUpdateBeneficialOwnerAddressParams\Address
  * @phpstan-import-type RequestOpts from \Increase\RequestOptions
  */
 interface EntitiesContract
@@ -159,21 +157,6 @@ interface EntitiesContract
     /**
      * @api
      *
-     * @param string $entityID the identifier of the Entity associated with the Beneficial Owner that is being archived
-     * @param string $beneficialOwnerID the identifying details of anyone controlling or owning 25% or more of the corporation
-     * @param RequestOpts|null $requestOptions
-     *
-     * @throws APIException
-     */
-    public function archiveBeneficialOwner(
-        string $entityID,
-        string $beneficialOwnerID,
-        RequestOptions|array|null $requestOptions = null,
-    ): Entity;
-
-    /**
-     * @api
-     *
      * @param string $entityID the identifier of the Entity to associate with the new Beneficial Owner
      * @param BeneficialOwner|BeneficialOwnerShape $beneficialOwner the identifying details of anyone controlling or owning 25% or more of the corporation
      * @param RequestOpts|null $requestOptions
@@ -183,23 +166,6 @@ interface EntitiesContract
     public function createBeneficialOwner(
         string $entityID,
         BeneficialOwner|array $beneficialOwner,
-        RequestOptions|array|null $requestOptions = null,
-    ): Entity;
-
-    /**
-     * @api
-     *
-     * @param string $entityID the identifier of the Entity associated with the Beneficial Owner whose address is being updated
-     * @param Address|AddressShape $address The individual's physical address. Mail receiving locations like PO Boxes and PMB's are disallowed.
-     * @param string $beneficialOwnerID the identifying details of anyone controlling or owning 25% or more of the corporation
-     * @param RequestOpts|null $requestOptions
-     *
-     * @throws APIException
-     */
-    public function updateBeneficialOwnerAddress(
-        string $entityID,
-        Address|array $address,
-        string $beneficialOwnerID,
         RequestOptions|array|null $requestOptions = null,
     ): Entity;
 }

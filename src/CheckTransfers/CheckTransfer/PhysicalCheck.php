@@ -8,6 +8,7 @@ use Increase\CheckTransfers\CheckTransfer\PhysicalCheck\MailingAddress;
 use Increase\CheckTransfers\CheckTransfer\PhysicalCheck\Payer;
 use Increase\CheckTransfers\CheckTransfer\PhysicalCheck\ReturnAddress;
 use Increase\CheckTransfers\CheckTransfer\PhysicalCheck\ShippingMethod;
+use Increase\CheckTransfers\CheckTransfer\PhysicalCheck\Signature;
 use Increase\CheckTransfers\CheckTransfer\PhysicalCheck\TrackingUpdate;
 use Increase\Core\Attributes\Required;
 use Increase\Core\Concerns\SdkModel;
@@ -19,6 +20,7 @@ use Increase\Core\Contracts\BaseModel;
  * @phpstan-import-type MailingAddressShape from \Increase\CheckTransfers\CheckTransfer\PhysicalCheck\MailingAddress
  * @phpstan-import-type PayerShape from \Increase\CheckTransfers\CheckTransfer\PhysicalCheck\Payer
  * @phpstan-import-type ReturnAddressShape from \Increase\CheckTransfers\CheckTransfer\PhysicalCheck\ReturnAddress
+ * @phpstan-import-type SignatureShape from \Increase\CheckTransfers\CheckTransfer\PhysicalCheck\Signature
  * @phpstan-import-type TrackingUpdateShape from \Increase\CheckTransfers\CheckTransfer\PhysicalCheck\TrackingUpdate
  *
  * @phpstan-type PhysicalCheckShape = array{
@@ -31,7 +33,7 @@ use Increase\Core\Contracts\BaseModel;
  *   recipientName: string,
  *   returnAddress: null|ReturnAddress|ReturnAddressShape,
  *   shippingMethod: null|ShippingMethod|value-of<ShippingMethod>,
- *   signatureText: string|null,
+ *   signature: Signature|SignatureShape,
  *   trackingUpdates: list<TrackingUpdate|TrackingUpdateShape>,
  * }
  */
@@ -99,10 +101,10 @@ final class PhysicalCheck implements BaseModel
     public ?string $shippingMethod;
 
     /**
-     * The text that will appear as the signature on the check in cursive font. If blank, the check will be printed with 'No signature required'.
+     * The signature that will appear on the check.
      */
-    #[Required('signature_text')]
-    public ?string $signatureText;
+    #[Required]
+    public Signature $signature;
 
     /**
      * Tracking updates relating to the physical check's delivery.
@@ -127,7 +129,7 @@ final class PhysicalCheck implements BaseModel
      *   recipientName: ...,
      *   returnAddress: ...,
      *   shippingMethod: ...,
-     *   signatureText: ...,
+     *   signature: ...,
      *   trackingUpdates: ...,
      * )
      * ```
@@ -145,7 +147,7 @@ final class PhysicalCheck implements BaseModel
      *   ->withRecipientName(...)
      *   ->withReturnAddress(...)
      *   ->withShippingMethod(...)
-     *   ->withSignatureText(...)
+     *   ->withSignature(...)
      *   ->withTrackingUpdates(...)
      * ```
      */
@@ -163,6 +165,7 @@ final class PhysicalCheck implements BaseModel
      * @param list<Payer|PayerShape> $payer
      * @param ReturnAddress|ReturnAddressShape|null $returnAddress
      * @param ShippingMethod|value-of<ShippingMethod>|null $shippingMethod
+     * @param Signature|SignatureShape $signature
      * @param list<TrackingUpdate|TrackingUpdateShape> $trackingUpdates
      */
     public static function with(
@@ -175,7 +178,7 @@ final class PhysicalCheck implements BaseModel
         string $recipientName,
         ReturnAddress|array|null $returnAddress,
         ShippingMethod|string|null $shippingMethod,
-        ?string $signatureText,
+        Signature|array $signature,
         array $trackingUpdates,
     ): self {
         $self = new self;
@@ -189,7 +192,7 @@ final class PhysicalCheck implements BaseModel
         $self['recipientName'] = $recipientName;
         $self['returnAddress'] = $returnAddress;
         $self['shippingMethod'] = $shippingMethod;
-        $self['signatureText'] = $signatureText;
+        $self['signature'] = $signature;
         $self['trackingUpdates'] = $trackingUpdates;
 
         return $self;
@@ -307,12 +310,14 @@ final class PhysicalCheck implements BaseModel
     }
 
     /**
-     * The text that will appear as the signature on the check in cursive font. If blank, the check will be printed with 'No signature required'.
+     * The signature that will appear on the check.
+     *
+     * @param Signature|SignatureShape $signature
      */
-    public function withSignatureText(?string $signatureText): self
+    public function withSignature(Signature|array $signature): self
     {
         $self = clone $this;
-        $self['signatureText'] = $signatureText;
+        $self['signature'] = $signature;
 
         return $self;
     }

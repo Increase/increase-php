@@ -9,8 +9,6 @@ use Increase\Core\Contracts\BaseResponse;
 use Increase\Core\Exceptions\APIException;
 use Increase\Core\Util;
 use Increase\Entities\Entity;
-use Increase\Entities\EntityCreateBeneficialOwnerParams;
-use Increase\Entities\EntityCreateBeneficialOwnerParams\BeneficialOwner;
 use Increase\Entities\EntityCreateParams;
 use Increase\Entities\EntityCreateParams\Corporation;
 use Increase\Entities\EntityCreateParams\GovernmentAuthority;
@@ -48,7 +46,6 @@ use Increase\ServiceContracts\EntitiesRawContract;
  * @phpstan-import-type TrustShape from \Increase\Entities\EntityUpdateParams\Trust as TrustShape1
  * @phpstan-import-type CreatedAtShape from \Increase\Entities\EntityListParams\CreatedAt
  * @phpstan-import-type StatusShape from \Increase\Entities\EntityListParams\Status
- * @phpstan-import-type BeneficialOwnerShape from \Increase\Entities\EntityCreateBeneficialOwnerParams\BeneficialOwner
  * @phpstan-import-type RequestOpts from \Increase\RequestOptions
  */
 final class EntitiesRawService implements EntitiesRawContract
@@ -230,41 +227,6 @@ final class EntitiesRawService implements EntitiesRawContract
             method: 'post',
             path: ['entities/%1$s/archive', $entityID],
             options: $requestOptions,
-            convert: Entity::class,
-        );
-    }
-
-    /**
-     * @api
-     *
-     * Create a beneficial owner for a corporate Entity
-     *
-     * @param string $entityID the identifier of the Entity to associate with the new Beneficial Owner
-     * @param array{
-     *   beneficialOwner: BeneficialOwner|BeneficialOwnerShape
-     * }|EntityCreateBeneficialOwnerParams $params
-     * @param RequestOpts|null $requestOptions
-     *
-     * @return BaseResponse<Entity>
-     *
-     * @throws APIException
-     */
-    public function createBeneficialOwner(
-        string $entityID,
-        array|EntityCreateBeneficialOwnerParams $params,
-        RequestOptions|array|null $requestOptions = null,
-    ): BaseResponse {
-        [$parsed, $options] = EntityCreateBeneficialOwnerParams::parseRequest(
-            $params,
-            $requestOptions,
-        );
-
-        // @phpstan-ignore-next-line return.type
-        return $this->client->request(
-            method: 'post',
-            path: ['entities/%1$s/create_beneficial_owner', $entityID],
-            body: (object) $parsed,
-            options: $options,
             convert: Entity::class,
         );
     }

@@ -13,7 +13,6 @@ use Increase\IntrafiBalances\IntrafiBalance\Balance\BankLocation;
  * @phpstan-import-type BankLocationShape from \Increase\IntrafiBalances\IntrafiBalance\Balance\BankLocation
  *
  * @phpstan-type BalanceShape = array{
- *   id: string,
  *   balance: int,
  *   bank: string,
  *   bankLocation: null|BankLocation|BankLocationShape,
@@ -24,12 +23,6 @@ final class Balance implements BaseModel
 {
     /** @use SdkModel<BalanceShape> */
     use SdkModel;
-
-    /**
-     * The identifier of this balance.
-     */
-    #[Required]
-    public string $id;
 
     /**
      * The balance, in minor units of `currency`, held with this bank.
@@ -61,11 +54,7 @@ final class Balance implements BaseModel
      * To enforce required parameters use
      * ```
      * Balance::with(
-     *   id: ...,
-     *   balance: ...,
-     *   bank: ...,
-     *   bankLocation: ...,
-     *   fdicCertificateNumber: ...,
+     *   balance: ..., bank: ..., bankLocation: ..., fdicCertificateNumber: ...
      * )
      * ```
      *
@@ -73,7 +62,6 @@ final class Balance implements BaseModel
      *
      * ```
      * (new Balance)
-     *   ->withID(...)
      *   ->withBalance(...)
      *   ->withBank(...)
      *   ->withBankLocation(...)
@@ -93,7 +81,6 @@ final class Balance implements BaseModel
      * @param BankLocation|BankLocationShape|null $bankLocation
      */
     public static function with(
-        string $id,
         int $balance,
         string $bank,
         BankLocation|array|null $bankLocation,
@@ -101,22 +88,10 @@ final class Balance implements BaseModel
     ): self {
         $self = new self;
 
-        $self['id'] = $id;
         $self['balance'] = $balance;
         $self['bank'] = $bank;
         $self['bankLocation'] = $bankLocation;
         $self['fdicCertificateNumber'] = $fdicCertificateNumber;
-
-        return $self;
-    }
-
-    /**
-     * The identifier of this balance.
-     */
-    public function withID(string $id): self
-    {
-        $self = clone $this;
-        $self['id'] = $id;
 
         return $self;
     }

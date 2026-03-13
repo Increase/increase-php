@@ -17,7 +17,6 @@ use Increase\IntrafiBalances\IntrafiBalance\Type;
  * @phpstan-import-type BalanceShape from \Increase\IntrafiBalances\IntrafiBalance\Balance
  *
  * @phpstan-type IntrafiBalanceShape = array{
- *   id: string,
  *   balances: list<Balance|BalanceShape>,
  *   currency: Currency|value-of<Currency>,
  *   effectiveDate: string,
@@ -29,12 +28,6 @@ final class IntrafiBalance implements BaseModel
 {
     /** @use SdkModel<IntrafiBalanceShape> */
     use SdkModel;
-
-    /**
-     * The identifier of this balance.
-     */
-    #[Required]
-    public string $id;
 
     /**
      * Each entry represents a balance held at a different bank. IntraFi separates the total balance across many participating banks in the network.
@@ -78,12 +71,7 @@ final class IntrafiBalance implements BaseModel
      * To enforce required parameters use
      * ```
      * IntrafiBalance::with(
-     *   id: ...,
-     *   balances: ...,
-     *   currency: ...,
-     *   effectiveDate: ...,
-     *   totalBalance: ...,
-     *   type: ...,
+     *   balances: ..., currency: ..., effectiveDate: ..., totalBalance: ..., type: ...
      * )
      * ```
      *
@@ -91,7 +79,6 @@ final class IntrafiBalance implements BaseModel
      *
      * ```
      * (new IntrafiBalance)
-     *   ->withID(...)
      *   ->withBalances(...)
      *   ->withCurrency(...)
      *   ->withEffectiveDate(...)
@@ -114,7 +101,6 @@ final class IntrafiBalance implements BaseModel
      * @param Type|value-of<Type> $type
      */
     public static function with(
-        string $id,
         array $balances,
         Currency|string $currency,
         string $effectiveDate,
@@ -123,23 +109,11 @@ final class IntrafiBalance implements BaseModel
     ): self {
         $self = new self;
 
-        $self['id'] = $id;
         $self['balances'] = $balances;
         $self['currency'] = $currency;
         $self['effectiveDate'] = $effectiveDate;
         $self['totalBalance'] = $totalBalance;
         $self['type'] = $type;
-
-        return $self;
-    }
-
-    /**
-     * The identifier of this balance.
-     */
-    public function withID(string $id): self
-    {
-        $self = clone $this;
-        $self['id'] = $id;
 
         return $self;
     }

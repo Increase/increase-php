@@ -1,5 +1,22 @@
 # Changelog
 
+## 0.73.0 (2026-03-13)
+
+Full Changelog: [v0.72.0...v0.73.0](https://github.com/Increase/increase-php/compare/v0.72.0...v0.73.0)
+
+### Features
+
+* **api:** api update ([cb17c65](https://github.com/Increase/increase-php/commit/cb17c65c034b0a6c9ca6b7a2cc611a5f8453a8ae))
+* **api:** api update ([754c043](https://github.com/Increase/increase-php/commit/754c0436ae7ba275a96b983f95205ec7dc860ddb))
+* **api:** api update ([06e4e5e](https://github.com/Increase/increase-php/commit/06e4e5eb17924467b2ddb7cec0d83bdd72532e1c))
+* **api:** api update ([7ce0250](https://github.com/Increase/increase-php/commit/7ce0250766c12e3e92b7eeea5b9af5ce7ceba97c))
+* **api:** api update ([e7b2c07](https://github.com/Increase/increase-php/commit/e7b2c0775666ca11dac451b6c02b64ed1d8ea894))
+* **api:** api update ([1ac39b1](https://github.com/Increase/increase-php/commit/1ac39b13cd569663bb6b5080e28e6909feb7b25e))
+* **api:** api update ([8df94df](https://github.com/Increase/increase-php/commit/8df94df1ca21433ee89025adf87dfe7141fd8a27))
+* **api:** api update ([8018be4](https://github.com/Increase/increase-php/commit/8018be459f52590b74252cb2a87966f8e46f15a2))
+* **api:** api update ([73b4b69](https://github.com/Increase/increase-php/commit/73b4b69f45058454687a962d3c46f61691c1bd07))
+* **api:** api update ([ba1708a](https://github.com/Increase/increase-php/commit/ba1708a908d7e0e74f5f702d89e49f7e5070f7d1))
+
 ## 0.72.0 (2026-03-12)
 
 Full Changelog: [v0.71.0...v0.72.0](https://github.com/Increase/increase-php/compare/v0.71.0...v0.72.0)

@@ -18,10 +18,11 @@ use Increase\Entities\Entity\TermsAgreement;
 use Increase\Entities\Entity\ThirdPartyVerification;
 use Increase\Entities\Entity\Trust;
 use Increase\Entities\Entity\Type;
+use Increase\Entities\Entity\Validation;
 use Increase\SupplementalDocuments\EntitySupplementalDocument;
 
 /**
- * Entities are the legal entities that own accounts. They can be people, corporations, partnerships, government authorities, or trusts.
+ * Entities are the legal entities that own accounts. They can be people, corporations, partnerships, government authorities, or trusts. To learn more, see [Entities](/documentation/entities).
  *
  * @phpstan-import-type CorporationShape from \Increase\Entities\Entity\Corporation
  * @phpstan-import-type GovernmentAuthorityShape from \Increase\Entities\Entity\GovernmentAuthority
@@ -32,6 +33,7 @@ use Increase\SupplementalDocuments\EntitySupplementalDocument;
  * @phpstan-import-type TermsAgreementShape from \Increase\Entities\Entity\TermsAgreement
  * @phpstan-import-type ThirdPartyVerificationShape from \Increase\Entities\Entity\ThirdPartyVerification
  * @phpstan-import-type TrustShape from \Increase\Entities\Entity\Trust
+ * @phpstan-import-type ValidationShape from \Increase\Entities\Entity\Validation
  *
  * @phpstan-type EntityShape = array{
  *   id: string,
@@ -51,6 +53,7 @@ use Increase\SupplementalDocuments\EntitySupplementalDocument;
  *   thirdPartyVerification: null|ThirdPartyVerification|ThirdPartyVerificationShape,
  *   trust: null|Trust|TrustShape,
  *   type: Type|value-of<Type>,
+ *   validation: null|Validation|ValidationShape,
  * }
  */
 final class Entity implements BaseModel
@@ -171,6 +174,12 @@ final class Entity implements BaseModel
     public string $type;
 
     /**
+     * The validation results for the entity.
+     */
+    #[Required]
+    public ?Validation $validation;
+
+    /**
      * `new Entity()` is missing required properties by the API.
      *
      * To enforce required parameters use
@@ -193,6 +202,7 @@ final class Entity implements BaseModel
      *   thirdPartyVerification: ...,
      *   trust: ...,
      *   type: ...,
+     *   validation: ...,
      * )
      * ```
      *
@@ -217,6 +227,7 @@ final class Entity implements BaseModel
      *   ->withThirdPartyVerification(...)
      *   ->withTrust(...)
      *   ->withType(...)
+     *   ->withValidation(...)
      * ```
      */
     public function __construct()
@@ -241,6 +252,7 @@ final class Entity implements BaseModel
      * @param ThirdPartyVerification|ThirdPartyVerificationShape|null $thirdPartyVerification
      * @param Trust|TrustShape|null $trust
      * @param Type|value-of<Type> $type
+     * @param Validation|ValidationShape|null $validation
      */
     public static function with(
         string $id,
@@ -260,6 +272,7 @@ final class Entity implements BaseModel
         ThirdPartyVerification|array|null $thirdPartyVerification,
         Trust|array|null $trust,
         Type|string $type,
+        Validation|array|null $validation,
     ): self {
         $self = new self;
 
@@ -280,6 +293,7 @@ final class Entity implements BaseModel
         $self['thirdPartyVerification'] = $thirdPartyVerification;
         $self['trust'] = $trust;
         $self['type'] = $type;
+        $self['validation'] = $validation;
 
         return $self;
     }
@@ -496,6 +510,19 @@ final class Entity implements BaseModel
     {
         $self = clone $this;
         $self['type'] = $type;
+
+        return $self;
+    }
+
+    /**
+     * The validation results for the entity.
+     *
+     * @param Validation|ValidationShape|null $validation
+     */
+    public function withValidation(Validation|array|null $validation): self
+    {
+        $self = clone $this;
+        $self['validation'] = $validation;
 
         return $self;
     }

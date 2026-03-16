@@ -55,6 +55,8 @@ enum Reason: string
 
     case TRANSACTION_NOT_ALLOWED_AT_TERMINAL = 'transaction_not_allowed_at_terminal';
 
+    case TRANSACTION_NOT_SUPPORTED_OR_BLOCKED_BY_ISSUER = 'transaction_not_supported_or_blocked_by_issuer';
+
     case SUSPECTED_FRAUD = 'suspected_fraud';
 
     case ACTIVITY_AMOUNT_LIMIT_EXCEEDED = 'activity_amount_limit_exceeded';

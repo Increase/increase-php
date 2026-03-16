@@ -7,6 +7,7 @@ namespace Increase\CardValidations;
 use Increase\CardValidations\CardValidation\Acceptance;
 use Increase\CardValidations\CardValidation\CreatedBy;
 use Increase\CardValidations\CardValidation\Decline;
+use Increase\CardValidations\CardValidation\Route;
 use Increase\CardValidations\CardValidation\Status;
 use Increase\CardValidations\CardValidation\Submission;
 use Increase\CardValidations\CardValidation\Type;
@@ -41,6 +42,7 @@ use Increase\Core\Contracts\BaseModel;
  *   merchantName: string,
  *   merchantPostalCode: string,
  *   merchantState: string,
+ *   route: Route|value-of<Route>,
  *   status: Status|value-of<Status>,
  *   submission: null|Submission|SubmissionShape,
  *   type: Type|value-of<Type>,
@@ -160,6 +162,14 @@ final class CardValidation implements BaseModel
     public string $merchantState;
 
     /**
+     * The card network route used for the validation.
+     *
+     * @var value-of<Route> $route
+     */
+    #[Required(enum: Route::class)]
+    public string $route;
+
+    /**
      * The lifecycle status of the validation.
      *
      * @var value-of<Status> $status
@@ -205,6 +215,7 @@ final class CardValidation implements BaseModel
      *   merchantName: ...,
      *   merchantPostalCode: ...,
      *   merchantState: ...,
+     *   route: ...,
      *   status: ...,
      *   submission: ...,
      *   type: ...,
@@ -233,6 +244,7 @@ final class CardValidation implements BaseModel
      *   ->withMerchantName(...)
      *   ->withMerchantPostalCode(...)
      *   ->withMerchantState(...)
+     *   ->withRoute(...)
      *   ->withStatus(...)
      *   ->withSubmission(...)
      *   ->withType(...)
@@ -251,6 +263,7 @@ final class CardValidation implements BaseModel
      * @param Acceptance|AcceptanceShape|null $acceptance
      * @param CreatedBy|CreatedByShape|null $createdBy
      * @param Decline|DeclineShape|null $decline
+     * @param Route|value-of<Route> $route
      * @param Status|value-of<Status> $status
      * @param Submission|SubmissionShape|null $submission
      * @param Type|value-of<Type> $type
@@ -274,6 +287,7 @@ final class CardValidation implements BaseModel
         string $merchantName,
         string $merchantPostalCode,
         string $merchantState,
+        Route|string $route,
         Status|string $status,
         Submission|array|null $submission,
         Type|string $type,
@@ -298,6 +312,7 @@ final class CardValidation implements BaseModel
         $self['merchantName'] = $merchantName;
         $self['merchantPostalCode'] = $merchantPostalCode;
         $self['merchantState'] = $merchantState;
+        $self['route'] = $route;
         $self['status'] = $status;
         $self['submission'] = $submission;
         $self['type'] = $type;
@@ -508,6 +523,19 @@ final class CardValidation implements BaseModel
     {
         $self = clone $this;
         $self['merchantState'] = $merchantState;
+
+        return $self;
+    }
+
+    /**
+     * The card network route used for the validation.
+     *
+     * @param Route|value-of<Route> $route
+     */
+    public function withRoute(Route|string $route): self
+    {
+        $self = clone $this;
+        $self['route'] = $route;
 
         return $self;
     }

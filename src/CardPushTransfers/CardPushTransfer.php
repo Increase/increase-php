@@ -11,6 +11,7 @@ use Increase\CardPushTransfers\CardPushTransfer\Cancellation;
 use Increase\CardPushTransfers\CardPushTransfer\CreatedBy;
 use Increase\CardPushTransfers\CardPushTransfer\Decline;
 use Increase\CardPushTransfers\CardPushTransfer\PresentmentAmount;
+use Increase\CardPushTransfers\CardPushTransfer\Route;
 use Increase\CardPushTransfers\CardPushTransfer\Status;
 use Increase\CardPushTransfers\CardPushTransfer\Submission;
 use Increase\CardPushTransfers\CardPushTransfer\Type;
@@ -49,6 +50,7 @@ use Increase\Core\Contracts\BaseModel;
  *   merchantState: string,
  *   presentmentAmount: PresentmentAmount|PresentmentAmountShape,
  *   recipientName: string,
+ *   route: Route|value-of<Route>,
  *   senderAddressCity: string,
  *   senderAddressLine1: string,
  *   senderAddressPostalCode: string,
@@ -185,6 +187,14 @@ final class CardPushTransfer implements BaseModel
     public string $recipientName;
 
     /**
+     * The card network route used for the transfer.
+     *
+     * @var value-of<Route> $route
+     */
+    #[Required(enum: Route::class)]
+    public string $route;
+
+    /**
      * The city of the sender.
      */
     #[Required('sender_address_city')]
@@ -267,6 +277,7 @@ final class CardPushTransfer implements BaseModel
      *   merchantState: ...,
      *   presentmentAmount: ...,
      *   recipientName: ...,
+     *   route: ...,
      *   senderAddressCity: ...,
      *   senderAddressLine1: ...,
      *   senderAddressPostalCode: ...,
@@ -302,6 +313,7 @@ final class CardPushTransfer implements BaseModel
      *   ->withMerchantState(...)
      *   ->withPresentmentAmount(...)
      *   ->withRecipientName(...)
+     *   ->withRoute(...)
      *   ->withSenderAddressCity(...)
      *   ->withSenderAddressLine1(...)
      *   ->withSenderAddressPostalCode(...)
@@ -330,6 +342,7 @@ final class CardPushTransfer implements BaseModel
      * @param CreatedBy|CreatedByShape|null $createdBy
      * @param Decline|DeclineShape|null $decline
      * @param PresentmentAmount|PresentmentAmountShape $presentmentAmount
+     * @param Route|value-of<Route> $route
      * @param Status|value-of<Status> $status
      * @param Submission|SubmissionShape|null $submission
      * @param Type|value-of<Type> $type
@@ -354,6 +367,7 @@ final class CardPushTransfer implements BaseModel
         string $merchantState,
         PresentmentAmount|array $presentmentAmount,
         string $recipientName,
+        Route|string $route,
         string $senderAddressCity,
         string $senderAddressLine1,
         string $senderAddressPostalCode,
@@ -385,6 +399,7 @@ final class CardPushTransfer implements BaseModel
         $self['merchantState'] = $merchantState;
         $self['presentmentAmount'] = $presentmentAmount;
         $self['recipientName'] = $recipientName;
+        $self['route'] = $route;
         $self['senderAddressCity'] = $senderAddressCity;
         $self['senderAddressLine1'] = $senderAddressLine1;
         $self['senderAddressPostalCode'] = $senderAddressPostalCode;
@@ -620,6 +635,19 @@ final class CardPushTransfer implements BaseModel
     {
         $self = clone $this;
         $self['recipientName'] = $recipientName;
+
+        return $self;
+    }
+
+    /**
+     * The card network route used for the transfer.
+     *
+     * @param Route|value-of<Route> $route
+     */
+    public function withRoute(Route|string $route): self
+    {
+        $self = clone $this;
+        $self['route'] = $route;
 
         return $self;
     }

@@ -11,7 +11,7 @@ use Increase\Entities\Entity\Validation\Issue;
 use Increase\Entities\Entity\Validation\Status;
 
 /**
- * The validation results for the entity.
+ * The validation results for the entity. Learn more about [validations](/documentation/entity-validation).
  *
  * @phpstan-import-type IssueShape from \Increase\Entities\Entity\Validation\Issue
  *

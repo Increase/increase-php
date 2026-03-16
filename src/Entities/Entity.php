@@ -174,7 +174,7 @@ final class Entity implements BaseModel
     public string $type;
 
     /**
-     * The validation results for the entity.
+     * The validation results for the entity. Learn more about [validations](/documentation/entity-validation).
      */
     #[Required]
     public ?Validation $validation;
@@ -515,7 +515,7 @@ final class Entity implements BaseModel
     }
 
     /**
-     * The validation results for the entity.
+     * The validation results for the entity. Learn more about [validations](/documentation/entity-validation).
      *
      * @param Validation|ValidationShape|null $validation
      */

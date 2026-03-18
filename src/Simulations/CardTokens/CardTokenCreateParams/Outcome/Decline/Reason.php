@@ -96,4 +96,50 @@ enum Reason: string
     case REVOCATION_OF_AUTHORIZATION_ORDER = 'revocation_of_authorization_order';
 
     case REVOCATION_OF_ALL_AUTHORIZATIONS_ORDER = 'revocation_of_all_authorizations_order';
+
+    case UNABLE_TO_LOCATE_RECORD = 'unable_to_locate_record';
+
+    case FILE_IS_TEMPORARILY_UNAVAILABLE = 'file_is_temporarily_unavailable';
+
+    case INCORRECT_PIN = 'incorrect_pin';
+
+    case ALLOWABLE_NUMBER_OF_PIN_ENTRY_TRIES_EXCEEDED = 'allowable_number_of_pin_entry_tries_exceeded';
+
+    case UNABLE_TO_LOCATE_PREVIOUS_MESSAGE = 'unable_to_locate_previous_message';
+
+    case DATA_INCONSISTENT_WITH_ORIGINAL_MESSAGE = 'data_inconsistent_with_original_message';
+
+    case PIN_ERROR_FOUND = 'pin_error_found';
+
+    case CANNOT_VERIFY_PIN = 'cannot_verify_pin';
+
+    case VERIFICATION_DATA_FAILED = 'verification_data_failed';
+
+    case SURCHARGE_AMOUNT_NOT_SUPPORTED_BY_DEBIT_NETWORK_ISSUER = 'surcharge_amount_not_supported_by_debit_network_issuer';
+
+    case CASH_SERVICE_NOT_AVAILABLE = 'cash_service_not_available';
+
+    case CASHBACK_REQUEST_EXCEEDS_ISSUER_LIMIT = 'cashback_request_exceeds_issuer_limit';
+
+    case TRANSACTION_AMOUNT_EXCEEDS_PRE_AUTHORIZED_APPROVAL_AMOUNT = 'transaction_amount_exceeds_pre_authorized_approval_amount';
+
+    case INVALID_BILLER_INFORMATION = 'invalid_biller_information';
+
+    case PIN_CHANGE_REQUEST_DECLINED = 'pin_change_request_declined';
+
+    case UNSAFE_PIN = 'unsafe_pin';
+
+    case TRANSACTION_DOES_NOT_QUALIFY_FOR_VISA_PIN = 'transaction_does_not_qualify_for_visa_pin';
+
+    case OFFLINE_DECLINED = 'offline_declined';
+
+    case UNABLE_TO_GO_ONLINE = 'unable_to_go_online';
+
+    case VALID_ACCOUNT_BUT_AMOUNT_NOT_SUPPORTED = 'valid_account_but_amount_not_supported';
+
+    case INVALID_USE_OF_MERCHANT_CATEGORY_CODE_CORRECT_AND_REATTEMPT = 'invalid_use_of_merchant_category_code_correct_and_reattempt';
+
+    case FORWARD_TO_ISSUER = 'forward_to_issuer';
+
+    case CARD_AUTHENTICATION_FAILED = 'card_authentication_failed';
 }

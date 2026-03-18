@@ -67,6 +67,8 @@ enum Reason: string
 
     case TRANSACTION_DOES_NOT_FULFILL_ANTI_MONEY_LAUNDERING_REQUIREMENT = 'transaction_does_not_fulfill_anti_money_laundering_requirement';
 
+    case BLOCKED_BY_CARDHOLDER = 'blocked_by_cardholder';
+
     case BLOCKED_FIRST_USE = 'blocked_first_use';
 
     case CREDIT_ISSUER_UNAVAILABLE = 'credit_issuer_unavailable';

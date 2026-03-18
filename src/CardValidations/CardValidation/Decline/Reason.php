@@ -107,8 +107,6 @@ enum Reason: string
 
     case UNABLE_TO_LOCATE_PREVIOUS_MESSAGE = 'unable_to_locate_previous_message';
 
-    case DATA_INCONSISTENT_WITH_ORIGINAL_MESSAGE = 'data_inconsistent_with_original_message';
-
     case PIN_ERROR_FOUND = 'pin_error_found';
 
     case CANNOT_VERIFY_PIN = 'cannot_verify_pin';
@@ -123,12 +121,6 @@ enum Reason: string
 
     case TRANSACTION_AMOUNT_EXCEEDS_PRE_AUTHORIZED_APPROVAL_AMOUNT = 'transaction_amount_exceeds_pre_authorized_approval_amount';
 
-    case INVALID_BILLER_INFORMATION = 'invalid_biller_information';
-
-    case PIN_CHANGE_REQUEST_DECLINED = 'pin_change_request_declined';
-
-    case UNSAFE_PIN = 'unsafe_pin';
-
     case TRANSACTION_DOES_NOT_QUALIFY_FOR_VISA_PIN = 'transaction_does_not_qualify_for_visa_pin';
 
     case OFFLINE_DECLINED = 'offline_declined';
@@ -138,8 +130,6 @@ enum Reason: string
     case VALID_ACCOUNT_BUT_AMOUNT_NOT_SUPPORTED = 'valid_account_but_amount_not_supported';
 
     case INVALID_USE_OF_MERCHANT_CATEGORY_CODE_CORRECT_AND_REATTEMPT = 'invalid_use_of_merchant_category_code_correct_and_reattempt';
-
-    case FORWARD_TO_ISSUER = 'forward_to_issuer';
 
     case CARD_AUTHENTICATION_FAILED = 'card_authentication_failed';
 }

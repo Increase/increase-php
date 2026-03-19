@@ -32,7 +32,6 @@ final class FednowTransfersTest extends TestCase
     public function testCreate(): void
     {
         $result = $this->client->fednowTransfers->create(
-            accountID: 'account_in71c4amph0vgo2qllky',
             amount: 100,
             creditorName: 'Ian Crease',
             debtorName: 'National Phonograph Company',
@@ -48,7 +47,6 @@ final class FednowTransfersTest extends TestCase
     public function testCreateWithOptionalParams(): void
     {
         $result = $this->client->fednowTransfers->create(
-            accountID: 'account_in71c4amph0vgo2qllky',
             amount: 100,
             creditorName: 'Ian Crease',
             debtorName: 'National Phonograph Company',

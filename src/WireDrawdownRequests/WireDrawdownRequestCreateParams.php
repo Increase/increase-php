@@ -9,6 +9,7 @@ use Increase\Core\Attributes\Required;
 use Increase\Core\Concerns\SdkModel;
 use Increase\Core\Concerns\SdkParams;
 use Increase\Core\Contracts\BaseModel;
+use Increase\WireDrawdownRequests\WireDrawdownRequestCreateParams\ChargeBearer;
 use Increase\WireDrawdownRequests\WireDrawdownRequestCreateParams\CreditorAddress;
 use Increase\WireDrawdownRequests\WireDrawdownRequestCreateParams\DebtorAddress;
 
@@ -28,6 +29,7 @@ use Increase\WireDrawdownRequests\WireDrawdownRequestCreateParams\DebtorAddress;
  *   debtorAddress: DebtorAddress|DebtorAddressShape,
  *   debtorName: string,
  *   unstructuredRemittanceInformation: string,
+ *   chargeBearer?: null|ChargeBearer|value-of<ChargeBearer>,
  *   debtorAccountNumber?: string|null,
  *   debtorExternalAccountID?: string|null,
  *   debtorRoutingNumber?: string|null,
@@ -81,6 +83,14 @@ final class WireDrawdownRequestCreateParams implements BaseModel
      */
     #[Required('unstructured_remittance_information')]
     public string $unstructuredRemittanceInformation;
+
+    /**
+     * Determines who bears the cost of the drawdown request. Defaults to `shared` if not specified.
+     *
+     * @var value-of<ChargeBearer>|null $chargeBearer
+     */
+    #[Optional('charge_bearer', enum: ChargeBearer::class)]
+    public ?string $chargeBearer;
 
     /**
      * The debtor's account number.
@@ -147,6 +157,7 @@ final class WireDrawdownRequestCreateParams implements BaseModel
      *
      * @param CreditorAddress|CreditorAddressShape $creditorAddress
      * @param DebtorAddress|DebtorAddressShape $debtorAddress
+     * @param ChargeBearer|value-of<ChargeBearer>|null $chargeBearer
      */
     public static function with(
         string $accountNumberID,
@@ -156,6 +167,7 @@ final class WireDrawdownRequestCreateParams implements BaseModel
         DebtorAddress|array $debtorAddress,
         string $debtorName,
         string $unstructuredRemittanceInformation,
+        ChargeBearer|string|null $chargeBearer = null,
         ?string $debtorAccountNumber = null,
         ?string $debtorExternalAccountID = null,
         ?string $debtorRoutingNumber = null,
@@ -171,6 +183,7 @@ final class WireDrawdownRequestCreateParams implements BaseModel
         $self['debtorName'] = $debtorName;
         $self['unstructuredRemittanceInformation'] = $unstructuredRemittanceInformation;
 
+        null !== $chargeBearer && $self['chargeBearer'] = $chargeBearer;
         null !== $debtorAccountNumber && $self['debtorAccountNumber'] = $debtorAccountNumber;
         null !== $debtorExternalAccountID && $self['debtorExternalAccountID'] = $debtorExternalAccountID;
         null !== $debtorRoutingNumber && $self['debtorRoutingNumber'] = $debtorRoutingNumber;
@@ -258,6 +271,19 @@ final class WireDrawdownRequestCreateParams implements BaseModel
     ): self {
         $self = clone $this;
         $self['unstructuredRemittanceInformation'] = $unstructuredRemittanceInformation;
+
+        return $self;
+    }
+
+    /**
+     * Determines who bears the cost of the drawdown request. Defaults to `shared` if not specified.
+     *
+     * @param ChargeBearer|value-of<ChargeBearer> $chargeBearer
+     */
+    public function withChargeBearer(ChargeBearer|string $chargeBearer): self
+    {
+        $self = clone $this;
+        $self['chargeBearer'] = $chargeBearer;
 
         return $self;
     }

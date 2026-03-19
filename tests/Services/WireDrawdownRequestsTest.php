@@ -74,6 +74,7 @@ final class WireDrawdownRequestsTest extends TestCase
             ],
             debtorName: 'Ian Crease',
             unstructuredRemittanceInformation: 'Invoice 29582',
+            chargeBearer: 'shared',
             debtorAccountNumber: '987654321',
             debtorExternalAccountID: 'debtor_external_account_id',
             debtorRoutingNumber: '101050001',

@@ -13,6 +13,7 @@ use Increase\RequestOptions;
 use Increase\ServiceContracts\WireDrawdownRequestsRawContract;
 use Increase\WireDrawdownRequests\WireDrawdownRequest;
 use Increase\WireDrawdownRequests\WireDrawdownRequestCreateParams;
+use Increase\WireDrawdownRequests\WireDrawdownRequestCreateParams\ChargeBearer;
 use Increase\WireDrawdownRequests\WireDrawdownRequestCreateParams\CreditorAddress;
 use Increase\WireDrawdownRequests\WireDrawdownRequestCreateParams\DebtorAddress;
 use Increase\WireDrawdownRequests\WireDrawdownRequestListParams;
@@ -45,6 +46,7 @@ final class WireDrawdownRequestsRawService implements WireDrawdownRequestsRawCon
      *   debtorAddress: DebtorAddress|DebtorAddressShape,
      *   debtorName: string,
      *   unstructuredRemittanceInformation: string,
+     *   chargeBearer?: ChargeBearer|value-of<ChargeBearer>,
      *   debtorAccountNumber?: string,
      *   debtorExternalAccountID?: string,
      *   debtorRoutingNumber?: string,

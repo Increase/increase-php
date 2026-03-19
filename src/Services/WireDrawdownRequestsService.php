@@ -11,6 +11,7 @@ use Increase\Page;
 use Increase\RequestOptions;
 use Increase\ServiceContracts\WireDrawdownRequestsContract;
 use Increase\WireDrawdownRequests\WireDrawdownRequest;
+use Increase\WireDrawdownRequests\WireDrawdownRequestCreateParams\ChargeBearer;
 use Increase\WireDrawdownRequests\WireDrawdownRequestCreateParams\CreditorAddress;
 use Increase\WireDrawdownRequests\WireDrawdownRequestCreateParams\DebtorAddress;
 use Increase\WireDrawdownRequests\WireDrawdownRequestListParams\Status;
@@ -48,6 +49,7 @@ final class WireDrawdownRequestsService implements WireDrawdownRequestsContract
      * @param DebtorAddress|DebtorAddressShape $debtorAddress the debtor's address
      * @param string $debtorName the debtor's name
      * @param string $unstructuredRemittanceInformation remittance information the debtor will see as part of the request
+     * @param ChargeBearer|value-of<ChargeBearer> $chargeBearer Determines who bears the cost of the drawdown request. Defaults to `shared` if not specified.
      * @param string $debtorAccountNumber the debtor's account number
      * @param string $debtorExternalAccountID The ID of an External Account to initiate a transfer to. If this parameter is provided, `debtor_account_number` and `debtor_routing_number` must be absent.
      * @param string $debtorRoutingNumber the debtor's routing number
@@ -64,6 +66,7 @@ final class WireDrawdownRequestsService implements WireDrawdownRequestsContract
         DebtorAddress|array $debtorAddress,
         string $debtorName,
         string $unstructuredRemittanceInformation,
+        ChargeBearer|string|null $chargeBearer = null,
         ?string $debtorAccountNumber = null,
         ?string $debtorExternalAccountID = null,
         ?string $debtorRoutingNumber = null,
@@ -79,6 +82,7 @@ final class WireDrawdownRequestsService implements WireDrawdownRequestsContract
                 'debtorAddress' => $debtorAddress,
                 'debtorName' => $debtorName,
                 'unstructuredRemittanceInformation' => $unstructuredRemittanceInformation,
+                'chargeBearer' => $chargeBearer,
                 'debtorAccountNumber' => $debtorAccountNumber,
                 'debtorExternalAccountID' => $debtorExternalAccountID,
                 'debtorRoutingNumber' => $debtorRoutingNumber,

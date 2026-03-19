@@ -43,7 +43,6 @@ final class FednowTransfersService implements FednowTransfersContract
      *
      * Create a FedNow Transfer
      *
-     * @param string $accountID the identifier for the account that will send the transfer
      * @param int $amount the amount, in minor units, to send to the creditor
      * @param string $creditorName the creditor's name
      * @param string $debtorName the debtor's name
@@ -60,7 +59,6 @@ final class FednowTransfersService implements FednowTransfersContract
      * @throws APIException
      */
     public function create(
-        string $accountID,
         int $amount,
         string $creditorName,
         string $debtorName,
@@ -76,7 +74,6 @@ final class FednowTransfersService implements FednowTransfersContract
     ): FednowTransfer {
         $params = Util::removeNulls(
             [
-                'accountID' => $accountID,
                 'amount' => $amount,
                 'creditorName' => $creditorName,
                 'debtorName' => $debtorName,

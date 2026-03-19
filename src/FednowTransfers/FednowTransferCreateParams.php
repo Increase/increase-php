@@ -21,7 +21,6 @@ use Increase\FednowTransfers\FednowTransferCreateParams\DebtorAddress;
  * @phpstan-import-type DebtorAddressShape from \Increase\FednowTransfers\FednowTransferCreateParams\DebtorAddress
  *
  * @phpstan-type FednowTransferCreateParamsShape = array{
- *   accountID: string,
  *   amount: int,
  *   creditorName: string,
  *   debtorName: string,
@@ -40,12 +39,6 @@ final class FednowTransferCreateParams implements BaseModel
     /** @use SdkModel<FednowTransferCreateParamsShape> */
     use SdkModel;
     use SdkParams;
-
-    /**
-     * The identifier for the account that will send the transfer.
-     */
-    #[Required('account_id')]
-    public string $accountID;
 
     /**
      * The amount, in minor units, to send to the creditor.
@@ -119,7 +112,6 @@ final class FednowTransferCreateParams implements BaseModel
      * To enforce required parameters use
      * ```
      * FednowTransferCreateParams::with(
-     *   accountID: ...,
      *   amount: ...,
      *   creditorName: ...,
      *   debtorName: ...,
@@ -132,7 +124,6 @@ final class FednowTransferCreateParams implements BaseModel
      *
      * ```
      * (new FednowTransferCreateParams)
-     *   ->withAccountID(...)
      *   ->withAmount(...)
      *   ->withCreditorName(...)
      *   ->withDebtorName(...)
@@ -154,7 +145,6 @@ final class FednowTransferCreateParams implements BaseModel
      * @param DebtorAddress|DebtorAddressShape|null $debtorAddress
      */
     public static function with(
-        string $accountID,
         int $amount,
         string $creditorName,
         string $debtorName,
@@ -169,7 +159,6 @@ final class FednowTransferCreateParams implements BaseModel
     ): self {
         $self = new self;
 
-        $self['accountID'] = $accountID;
         $self['amount'] = $amount;
         $self['creditorName'] = $creditorName;
         $self['debtorName'] = $debtorName;
@@ -182,17 +171,6 @@ final class FednowTransferCreateParams implements BaseModel
         null !== $externalAccountID && $self['externalAccountID'] = $externalAccountID;
         null !== $requireApproval && $self['requireApproval'] = $requireApproval;
         null !== $routingNumber && $self['routingNumber'] = $routingNumber;
-
-        return $self;
-    }
-
-    /**
-     * The identifier for the account that will send the transfer.
-     */
-    public function withAccountID(string $accountID): self
-    {
-        $self = clone $this;
-        $self['accountID'] = $accountID;
 
         return $self;
     }

@@ -40,7 +40,6 @@ final class FednowTransfersRawService implements FednowTransfersRawContract
      * Create a FedNow Transfer
      *
      * @param array{
-     *   accountID: string,
      *   amount: int,
      *   creditorName: string,
      *   debtorName: string,

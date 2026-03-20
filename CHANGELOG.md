@@ -1,5 +1,23 @@
 # Changelog
 
+## 0.83.0 (2026-03-20)
+
+Full Changelog: [v0.82.0...v0.83.0](https://github.com/Increase/increase-php/compare/v0.82.0...v0.83.0)
+
+### Features
+
+* **api:** api update ([df4876a](https://github.com/Increase/increase-php/commit/df4876a3a094ae065425fd02af887406b71ec604))
+
+
+### Chores
+
+* **tests:** bump steady to v0.19.4 ([7c10904](https://github.com/Increase/increase-php/commit/7c10904f334ee55270d9ccbadc86f6bbf7288257))
+
+
+### Refactors
+
+* **tests:** switch from prism to steady ([2b9bb1f](https://github.com/Increase/increase-php/commit/2b9bb1f39639b950dd9d88e42f9b2f130ed5e8e6))
+
 ## 0.82.0 (2026-03-19)
 
 Full Changelog: [v0.81.0...v0.82.0](https://github.com/Increase/increase-php/compare/v0.81.0...v0.82.0)

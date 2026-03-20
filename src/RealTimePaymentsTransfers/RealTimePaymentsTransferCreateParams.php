@@ -18,13 +18,15 @@ use Increase\Core\Contracts\BaseModel;
  * @phpstan-type RealTimePaymentsTransferCreateParamsShape = array{
  *   amount: int,
  *   creditorName: string,
- *   remittanceInformation: string,
  *   sourceAccountNumberID: string,
+ *   unstructuredRemittanceInformation: string,
+ *   accountNumber?: string|null,
  *   debtorName?: string|null,
  *   destinationAccountNumber?: string|null,
  *   destinationRoutingNumber?: string|null,
  *   externalAccountID?: string|null,
  *   requireApproval?: bool|null,
+ *   routingNumber?: string|null,
  *   ultimateCreditorName?: string|null,
  *   ultimateDebtorName?: string|null,
  * }
@@ -48,16 +50,22 @@ final class RealTimePaymentsTransferCreateParams implements BaseModel
     public string $creditorName;
 
     /**
-     * Unstructured information that will show on the recipient's bank statement.
-     */
-    #[Required('remittance_information')]
-    public string $remittanceInformation;
-
-    /**
      * The identifier of the Account Number from which to send the transfer.
      */
     #[Required('source_account_number_id')]
     public string $sourceAccountNumberID;
+
+    /**
+     * Unstructured information that will show on the recipient's bank statement.
+     */
+    #[Required('unstructured_remittance_information')]
+    public string $unstructuredRemittanceInformation;
+
+    /**
+     * The destination account number.
+     */
+    #[Optional('account_number')]
+    public ?string $accountNumber;
 
     /**
      * The name of the transfer's sender. If not provided, defaults to the name of the account's entity.
@@ -65,20 +73,14 @@ final class RealTimePaymentsTransferCreateParams implements BaseModel
     #[Optional('debtor_name')]
     public ?string $debtorName;
 
-    /**
-     * The destination account number.
-     */
     #[Optional('destination_account_number')]
     public ?string $destinationAccountNumber;
 
-    /**
-     * The destination American Bankers' Association (ABA) Routing Transit Number (RTN).
-     */
     #[Optional('destination_routing_number')]
     public ?string $destinationRoutingNumber;
 
     /**
-     * The ID of an External Account to initiate a transfer to. If this parameter is provided, `destination_account_number` and `destination_routing_number` must be absent.
+     * The ID of an External Account to initiate a transfer to. If this parameter is provided, `account_number` and `routing_number` must be absent.
      */
     #[Optional('external_account_id')]
     public ?string $externalAccountID;
@@ -88,6 +90,12 @@ final class RealTimePaymentsTransferCreateParams implements BaseModel
      */
     #[Optional('require_approval')]
     public ?bool $requireApproval;
+
+    /**
+     * The destination American Bankers' Association (ABA) Routing Transit Number (RTN).
+     */
+    #[Optional('routing_number')]
+    public ?string $routingNumber;
 
     /**
      * The name of the ultimate recipient of the transfer. Set this if the creditor is an intermediary receiving the payment for someone else.
@@ -109,8 +117,8 @@ final class RealTimePaymentsTransferCreateParams implements BaseModel
      * RealTimePaymentsTransferCreateParams::with(
      *   amount: ...,
      *   creditorName: ...,
-     *   remittanceInformation: ...,
      *   sourceAccountNumberID: ...,
+     *   unstructuredRemittanceInformation: ...,
      * )
      * ```
      *
@@ -120,8 +128,8 @@ final class RealTimePaymentsTransferCreateParams implements BaseModel
      * (new RealTimePaymentsTransferCreateParams)
      *   ->withAmount(...)
      *   ->withCreditorName(...)
-     *   ->withRemittanceInformation(...)
      *   ->withSourceAccountNumberID(...)
+     *   ->withUnstructuredRemittanceInformation(...)
      * ```
      */
     public function __construct()
@@ -137,13 +145,15 @@ final class RealTimePaymentsTransferCreateParams implements BaseModel
     public static function with(
         int $amount,
         string $creditorName,
-        string $remittanceInformation,
         string $sourceAccountNumberID,
+        string $unstructuredRemittanceInformation,
+        ?string $accountNumber = null,
         ?string $debtorName = null,
         ?string $destinationAccountNumber = null,
         ?string $destinationRoutingNumber = null,
         ?string $externalAccountID = null,
         ?bool $requireApproval = null,
+        ?string $routingNumber = null,
         ?string $ultimateCreditorName = null,
         ?string $ultimateDebtorName = null,
     ): self {
@@ -151,14 +161,16 @@ final class RealTimePaymentsTransferCreateParams implements BaseModel
 
         $self['amount'] = $amount;
         $self['creditorName'] = $creditorName;
-        $self['remittanceInformation'] = $remittanceInformation;
         $self['sourceAccountNumberID'] = $sourceAccountNumberID;
+        $self['unstructuredRemittanceInformation'] = $unstructuredRemittanceInformation;
 
+        null !== $accountNumber && $self['accountNumber'] = $accountNumber;
         null !== $debtorName && $self['debtorName'] = $debtorName;
         null !== $destinationAccountNumber && $self['destinationAccountNumber'] = $destinationAccountNumber;
         null !== $destinationRoutingNumber && $self['destinationRoutingNumber'] = $destinationRoutingNumber;
         null !== $externalAccountID && $self['externalAccountID'] = $externalAccountID;
         null !== $requireApproval && $self['requireApproval'] = $requireApproval;
+        null !== $routingNumber && $self['routingNumber'] = $routingNumber;
         null !== $ultimateCreditorName && $self['ultimateCreditorName'] = $ultimateCreditorName;
         null !== $ultimateDebtorName && $self['ultimateDebtorName'] = $ultimateDebtorName;
 
@@ -188,18 +200,6 @@ final class RealTimePaymentsTransferCreateParams implements BaseModel
     }
 
     /**
-     * Unstructured information that will show on the recipient's bank statement.
-     */
-    public function withRemittanceInformation(
-        string $remittanceInformation
-    ): self {
-        $self = clone $this;
-        $self['remittanceInformation'] = $remittanceInformation;
-
-        return $self;
-    }
-
-    /**
      * The identifier of the Account Number from which to send the transfer.
      */
     public function withSourceAccountNumberID(
@@ -207,6 +207,29 @@ final class RealTimePaymentsTransferCreateParams implements BaseModel
     ): self {
         $self = clone $this;
         $self['sourceAccountNumberID'] = $sourceAccountNumberID;
+
+        return $self;
+    }
+
+    /**
+     * Unstructured information that will show on the recipient's bank statement.
+     */
+    public function withUnstructuredRemittanceInformation(
+        string $unstructuredRemittanceInformation
+    ): self {
+        $self = clone $this;
+        $self['unstructuredRemittanceInformation'] = $unstructuredRemittanceInformation;
+
+        return $self;
+    }
+
+    /**
+     * The destination account number.
+     */
+    public function withAccountNumber(string $accountNumber): self
+    {
+        $self = clone $this;
+        $self['accountNumber'] = $accountNumber;
 
         return $self;
     }
@@ -222,9 +245,6 @@ final class RealTimePaymentsTransferCreateParams implements BaseModel
         return $self;
     }
 
-    /**
-     * The destination account number.
-     */
     public function withDestinationAccountNumber(
         string $destinationAccountNumber
     ): self {
@@ -234,9 +254,6 @@ final class RealTimePaymentsTransferCreateParams implements BaseModel
         return $self;
     }
 
-    /**
-     * The destination American Bankers' Association (ABA) Routing Transit Number (RTN).
-     */
     public function withDestinationRoutingNumber(
         string $destinationRoutingNumber
     ): self {
@@ -247,7 +264,7 @@ final class RealTimePaymentsTransferCreateParams implements BaseModel
     }
 
     /**
-     * The ID of an External Account to initiate a transfer to. If this parameter is provided, `destination_account_number` and `destination_routing_number` must be absent.
+     * The ID of an External Account to initiate a transfer to. If this parameter is provided, `account_number` and `routing_number` must be absent.
      */
     public function withExternalAccountID(string $externalAccountID): self
     {
@@ -264,6 +281,17 @@ final class RealTimePaymentsTransferCreateParams implements BaseModel
     {
         $self = clone $this;
         $self['requireApproval'] = $requireApproval;
+
+        return $self;
+    }
+
+    /**
+     * The destination American Bankers' Association (ABA) Routing Transit Number (RTN).
+     */
+    public function withRoutingNumber(string $routingNumber): self
+    {
+        $self = clone $this;
+        $self['routingNumber'] = $routingNumber;
 
         return $self;
     }

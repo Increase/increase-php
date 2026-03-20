@@ -32,10 +32,10 @@ use Increase\InboundRealTimePaymentsTransfers\InboundRealTimePaymentsTransfer\Ty
  *   debtorName: string,
  *   debtorRoutingNumber: string,
  *   decline: null|Decline|DeclineShape,
- *   remittanceInformation: string|null,
  *   status: Status|value-of<Status>,
  *   transactionIdentification: string,
  *   type: Type|value-of<Type>,
+ *   unstructuredRemittanceInformation: string|null,
  * }
  */
 final class InboundRealTimePaymentsTransfer implements BaseModel
@@ -118,12 +118,6 @@ final class InboundRealTimePaymentsTransfer implements BaseModel
     public ?Decline $decline;
 
     /**
-     * Additional information included with the transfer.
-     */
-    #[Required('remittance_information')]
-    public ?string $remittanceInformation;
-
-    /**
      * The lifecycle status of the transfer.
      *
      * @var value-of<Status> $status
@@ -146,6 +140,12 @@ final class InboundRealTimePaymentsTransfer implements BaseModel
     public string $type;
 
     /**
+     * Additional information included with the transfer.
+     */
+    #[Required('unstructured_remittance_information')]
+    public ?string $unstructuredRemittanceInformation;
+
+    /**
      * `new InboundRealTimePaymentsTransfer()` is missing required properties by the API.
      *
      * To enforce required parameters use
@@ -163,10 +163,10 @@ final class InboundRealTimePaymentsTransfer implements BaseModel
      *   debtorName: ...,
      *   debtorRoutingNumber: ...,
      *   decline: ...,
-     *   remittanceInformation: ...,
      *   status: ...,
      *   transactionIdentification: ...,
      *   type: ...,
+     *   unstructuredRemittanceInformation: ...,
      * )
      * ```
      *
@@ -186,10 +186,10 @@ final class InboundRealTimePaymentsTransfer implements BaseModel
      *   ->withDebtorName(...)
      *   ->withDebtorRoutingNumber(...)
      *   ->withDecline(...)
-     *   ->withRemittanceInformation(...)
      *   ->withStatus(...)
      *   ->withTransactionIdentification(...)
      *   ->withType(...)
+     *   ->withUnstructuredRemittanceInformation(...)
      * ```
      */
     public function __construct()
@@ -221,10 +221,10 @@ final class InboundRealTimePaymentsTransfer implements BaseModel
         string $debtorName,
         string $debtorRoutingNumber,
         Decline|array|null $decline,
-        ?string $remittanceInformation,
         Status|string $status,
         string $transactionIdentification,
         Type|string $type,
+        ?string $unstructuredRemittanceInformation,
     ): self {
         $self = new self;
 
@@ -240,10 +240,10 @@ final class InboundRealTimePaymentsTransfer implements BaseModel
         $self['debtorName'] = $debtorName;
         $self['debtorRoutingNumber'] = $debtorRoutingNumber;
         $self['decline'] = $decline;
-        $self['remittanceInformation'] = $remittanceInformation;
         $self['status'] = $status;
         $self['transactionIdentification'] = $transactionIdentification;
         $self['type'] = $type;
+        $self['unstructuredRemittanceInformation'] = $unstructuredRemittanceInformation;
 
         return $self;
     }
@@ -388,18 +388,6 @@ final class InboundRealTimePaymentsTransfer implements BaseModel
     }
 
     /**
-     * Additional information included with the transfer.
-     */
-    public function withRemittanceInformation(
-        ?string $remittanceInformation
-    ): self {
-        $self = clone $this;
-        $self['remittanceInformation'] = $remittanceInformation;
-
-        return $self;
-    }
-
-    /**
      * The lifecycle status of the transfer.
      *
      * @param Status|value-of<Status> $status
@@ -433,6 +421,18 @@ final class InboundRealTimePaymentsTransfer implements BaseModel
     {
         $self = clone $this;
         $self['type'] = $type;
+
+        return $self;
+    }
+
+    /**
+     * Additional information included with the transfer.
+     */
+    public function withUnstructuredRemittanceInformation(
+        ?string $unstructuredRemittanceInformation
+    ): self {
+        $self = clone $this;
+        $self['unstructuredRemittanceInformation'] = $unstructuredRemittanceInformation;
 
         return $self;
     }

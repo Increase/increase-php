@@ -38,13 +38,15 @@ final class RealTimePaymentsTransfersRawService implements RealTimePaymentsTrans
      * @param array{
      *   amount: int,
      *   creditorName: string,
-     *   remittanceInformation: string,
      *   sourceAccountNumberID: string,
+     *   unstructuredRemittanceInformation: string,
+     *   accountNumber?: string,
      *   debtorName?: string,
      *   destinationAccountNumber?: string,
      *   destinationRoutingNumber?: string,
      *   externalAccountID?: string,
      *   requireApproval?: bool,
+     *   routingNumber?: string,
      *   ultimateCreditorName?: string,
      *   ultimateDebtorName?: string,
      * }|RealTimePaymentsTransferCreateParams $params

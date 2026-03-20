@@ -39,8 +39,8 @@ final class InboundRealTimePaymentsTransfersService implements InboundRealTimePa
      * @param string $debtorAccountNumber the account number of the account that sent the transfer
      * @param string $debtorName the name provided by the sender of the transfer
      * @param string $debtorRoutingNumber the routing number of the account that sent the transfer
-     * @param string $remittanceInformation additional information included with the transfer
      * @param string $requestForPaymentID the identifier of a pending Request for Payment that this transfer will fulfill
+     * @param string $unstructuredRemittanceInformation additional information included with the transfer
      * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
@@ -51,8 +51,8 @@ final class InboundRealTimePaymentsTransfersService implements InboundRealTimePa
         ?string $debtorAccountNumber = null,
         ?string $debtorName = null,
         ?string $debtorRoutingNumber = null,
-        ?string $remittanceInformation = null,
         ?string $requestForPaymentID = null,
+        ?string $unstructuredRemittanceInformation = null,
         RequestOptions|array|null $requestOptions = null,
     ): InboundRealTimePaymentsTransfer {
         $params = Util::removeNulls(
@@ -62,8 +62,8 @@ final class InboundRealTimePaymentsTransfersService implements InboundRealTimePa
                 'debtorAccountNumber' => $debtorAccountNumber,
                 'debtorName' => $debtorName,
                 'debtorRoutingNumber' => $debtorRoutingNumber,
-                'remittanceInformation' => $remittanceInformation,
                 'requestForPaymentID' => $requestForPaymentID,
+                'unstructuredRemittanceInformation' => $unstructuredRemittanceInformation,
             ],
         );
 

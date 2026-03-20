@@ -21,8 +21,8 @@ use Increase\Core\Contracts\BaseModel;
  *   debtorAccountNumber?: string|null,
  *   debtorName?: string|null,
  *   debtorRoutingNumber?: string|null,
- *   remittanceInformation?: string|null,
  *   requestForPaymentID?: string|null,
+ *   unstructuredRemittanceInformation?: string|null,
  * }
  */
 final class InboundRealTimePaymentsTransferCreateParams implements BaseModel
@@ -62,16 +62,16 @@ final class InboundRealTimePaymentsTransferCreateParams implements BaseModel
     public ?string $debtorRoutingNumber;
 
     /**
-     * Additional information included with the transfer.
-     */
-    #[Optional('remittance_information')]
-    public ?string $remittanceInformation;
-
-    /**
      * The identifier of a pending Request for Payment that this transfer will fulfill.
      */
     #[Optional('request_for_payment_id')]
     public ?string $requestForPaymentID;
+
+    /**
+     * Additional information included with the transfer.
+     */
+    #[Optional('unstructured_remittance_information')]
+    public ?string $unstructuredRemittanceInformation;
 
     /**
      * `new InboundRealTimePaymentsTransferCreateParams()` is missing required properties by the API.
@@ -107,8 +107,8 @@ final class InboundRealTimePaymentsTransferCreateParams implements BaseModel
         ?string $debtorAccountNumber = null,
         ?string $debtorName = null,
         ?string $debtorRoutingNumber = null,
-        ?string $remittanceInformation = null,
         ?string $requestForPaymentID = null,
+        ?string $unstructuredRemittanceInformation = null,
     ): self {
         $self = new self;
 
@@ -118,8 +118,8 @@ final class InboundRealTimePaymentsTransferCreateParams implements BaseModel
         null !== $debtorAccountNumber && $self['debtorAccountNumber'] = $debtorAccountNumber;
         null !== $debtorName && $self['debtorName'] = $debtorName;
         null !== $debtorRoutingNumber && $self['debtorRoutingNumber'] = $debtorRoutingNumber;
-        null !== $remittanceInformation && $self['remittanceInformation'] = $remittanceInformation;
         null !== $requestForPaymentID && $self['requestForPaymentID'] = $requestForPaymentID;
+        null !== $unstructuredRemittanceInformation && $self['unstructuredRemittanceInformation'] = $unstructuredRemittanceInformation;
 
         return $self;
     }
@@ -180,24 +180,24 @@ final class InboundRealTimePaymentsTransferCreateParams implements BaseModel
     }
 
     /**
-     * Additional information included with the transfer.
-     */
-    public function withRemittanceInformation(
-        string $remittanceInformation
-    ): self {
-        $self = clone $this;
-        $self['remittanceInformation'] = $remittanceInformation;
-
-        return $self;
-    }
-
-    /**
      * The identifier of a pending Request for Payment that this transfer will fulfill.
      */
     public function withRequestForPaymentID(string $requestForPaymentID): self
     {
         $self = clone $this;
         $self['requestForPaymentID'] = $requestForPaymentID;
+
+        return $self;
+    }
+
+    /**
+     * Additional information included with the transfer.
+     */
+    public function withUnstructuredRemittanceInformation(
+        string $unstructuredRemittanceInformation
+    ): self {
+        $self = clone $this;
+        $self['unstructuredRemittanceInformation'] = $unstructuredRemittanceInformation;
 
         return $self;
     }

@@ -12,11 +12,11 @@ use Increase\Core\Contracts\BaseModel;
  * A Real-Time Payments Transfer Acknowledgement object. This field will be present in the JSON response if and only if `category` is equal to `real_time_payments_transfer_acknowledgement`. A Real-Time Payments Transfer Acknowledgement is created when a Real-Time Payments Transfer sent from Increase is acknowledged by the receiving bank.
  *
  * @phpstan-type RealTimePaymentsTransferAcknowledgementShape = array{
+ *   accountNumber: string,
  *   amount: int,
- *   destinationAccountNumber: string,
- *   destinationRoutingNumber: string,
- *   remittanceInformation: string,
+ *   routingNumber: string,
  *   transferID: string,
+ *   unstructuredRemittanceInformation: string,
  * }
  */
 final class RealTimePaymentsTransferAcknowledgement implements BaseModel
@@ -25,28 +25,22 @@ final class RealTimePaymentsTransferAcknowledgement implements BaseModel
     use SdkModel;
 
     /**
+     * The destination account number.
+     */
+    #[Required('account_number')]
+    public string $accountNumber;
+
+    /**
      * The transfer amount in USD cents.
      */
     #[Required]
     public int $amount;
 
     /**
-     * The destination account number.
-     */
-    #[Required('destination_account_number')]
-    public string $destinationAccountNumber;
-
-    /**
      * The American Bankers' Association (ABA) Routing Transit Number (RTN).
      */
-    #[Required('destination_routing_number')]
-    public string $destinationRoutingNumber;
-
-    /**
-     * Unstructured information that will show on the recipient's bank statement.
-     */
-    #[Required('remittance_information')]
-    public string $remittanceInformation;
+    #[Required('routing_number')]
+    public string $routingNumber;
 
     /**
      * The identifier of the Real-Time Payments Transfer that led to this Transaction.
@@ -55,16 +49,22 @@ final class RealTimePaymentsTransferAcknowledgement implements BaseModel
     public string $transferID;
 
     /**
+     * Unstructured information that will show on the recipient's bank statement.
+     */
+    #[Required('unstructured_remittance_information')]
+    public string $unstructuredRemittanceInformation;
+
+    /**
      * `new RealTimePaymentsTransferAcknowledgement()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
      * RealTimePaymentsTransferAcknowledgement::with(
+     *   accountNumber: ...,
      *   amount: ...,
-     *   destinationAccountNumber: ...,
-     *   destinationRoutingNumber: ...,
-     *   remittanceInformation: ...,
+     *   routingNumber: ...,
      *   transferID: ...,
+     *   unstructuredRemittanceInformation: ...,
      * )
      * ```
      *
@@ -72,11 +72,11 @@ final class RealTimePaymentsTransferAcknowledgement implements BaseModel
      *
      * ```
      * (new RealTimePaymentsTransferAcknowledgement)
+     *   ->withAccountNumber(...)
      *   ->withAmount(...)
-     *   ->withDestinationAccountNumber(...)
-     *   ->withDestinationRoutingNumber(...)
-     *   ->withRemittanceInformation(...)
+     *   ->withRoutingNumber(...)
      *   ->withTransferID(...)
+     *   ->withUnstructuredRemittanceInformation(...)
      * ```
      */
     public function __construct()
@@ -90,19 +90,30 @@ final class RealTimePaymentsTransferAcknowledgement implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      */
     public static function with(
+        string $accountNumber,
         int $amount,
-        string $destinationAccountNumber,
-        string $destinationRoutingNumber,
-        string $remittanceInformation,
+        string $routingNumber,
         string $transferID,
+        string $unstructuredRemittanceInformation,
     ): self {
         $self = new self;
 
+        $self['accountNumber'] = $accountNumber;
         $self['amount'] = $amount;
-        $self['destinationAccountNumber'] = $destinationAccountNumber;
-        $self['destinationRoutingNumber'] = $destinationRoutingNumber;
-        $self['remittanceInformation'] = $remittanceInformation;
+        $self['routingNumber'] = $routingNumber;
         $self['transferID'] = $transferID;
+        $self['unstructuredRemittanceInformation'] = $unstructuredRemittanceInformation;
+
+        return $self;
+    }
+
+    /**
+     * The destination account number.
+     */
+    public function withAccountNumber(string $accountNumber): self
+    {
+        $self = clone $this;
+        $self['accountNumber'] = $accountNumber;
 
         return $self;
     }
@@ -119,37 +130,12 @@ final class RealTimePaymentsTransferAcknowledgement implements BaseModel
     }
 
     /**
-     * The destination account number.
-     */
-    public function withDestinationAccountNumber(
-        string $destinationAccountNumber
-    ): self {
-        $self = clone $this;
-        $self['destinationAccountNumber'] = $destinationAccountNumber;
-
-        return $self;
-    }
-
-    /**
      * The American Bankers' Association (ABA) Routing Transit Number (RTN).
      */
-    public function withDestinationRoutingNumber(
-        string $destinationRoutingNumber
-    ): self {
+    public function withRoutingNumber(string $routingNumber): self
+    {
         $self = clone $this;
-        $self['destinationRoutingNumber'] = $destinationRoutingNumber;
-
-        return $self;
-    }
-
-    /**
-     * Unstructured information that will show on the recipient's bank statement.
-     */
-    public function withRemittanceInformation(
-        string $remittanceInformation
-    ): self {
-        $self = clone $this;
-        $self['remittanceInformation'] = $remittanceInformation;
+        $self['routingNumber'] = $routingNumber;
 
         return $self;
     }
@@ -161,6 +147,18 @@ final class RealTimePaymentsTransferAcknowledgement implements BaseModel
     {
         $self = clone $this;
         $self['transferID'] = $transferID;
+
+        return $self;
+    }
+
+    /**
+     * Unstructured information that will show on the recipient's bank statement.
+     */
+    public function withUnstructuredRemittanceInformation(
+        string $unstructuredRemittanceInformation
+    ): self {
+        $self = clone $this;
+        $self['unstructuredRemittanceInformation'] = $unstructuredRemittanceInformation;
 
         return $self;
     }

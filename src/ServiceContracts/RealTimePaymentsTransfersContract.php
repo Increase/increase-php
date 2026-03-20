@@ -23,13 +23,13 @@ interface RealTimePaymentsTransfersContract
      *
      * @param int $amount The transfer amount in USD cents. For Real-Time Payments transfers, must be positive.
      * @param string $creditorName the name of the transfer's recipient
-     * @param string $remittanceInformation unstructured information that will show on the recipient's bank statement
      * @param string $sourceAccountNumberID the identifier of the Account Number from which to send the transfer
+     * @param string $unstructuredRemittanceInformation unstructured information that will show on the recipient's bank statement
+     * @param string $accountNumber the destination account number
      * @param string $debtorName The name of the transfer's sender. If not provided, defaults to the name of the account's entity.
-     * @param string $destinationAccountNumber the destination account number
-     * @param string $destinationRoutingNumber the destination American Bankers' Association (ABA) Routing Transit Number (RTN)
-     * @param string $externalAccountID The ID of an External Account to initiate a transfer to. If this parameter is provided, `destination_account_number` and `destination_routing_number` must be absent.
+     * @param string $externalAccountID The ID of an External Account to initiate a transfer to. If this parameter is provided, `account_number` and `routing_number` must be absent.
      * @param bool $requireApproval whether the transfer requires explicit approval via the dashboard or API
+     * @param string $routingNumber the destination American Bankers' Association (ABA) Routing Transit Number (RTN)
      * @param string $ultimateCreditorName The name of the ultimate recipient of the transfer. Set this if the creditor is an intermediary receiving the payment for someone else.
      * @param string $ultimateDebtorName The name of the ultimate sender of the transfer. Set this if the funds are being sent on behalf of someone who is not the account holder at Increase.
      * @param RequestOpts|null $requestOptions
@@ -39,13 +39,15 @@ interface RealTimePaymentsTransfersContract
     public function create(
         int $amount,
         string $creditorName,
-        string $remittanceInformation,
         string $sourceAccountNumberID,
+        string $unstructuredRemittanceInformation,
+        ?string $accountNumber = null,
         ?string $debtorName = null,
         ?string $destinationAccountNumber = null,
         ?string $destinationRoutingNumber = null,
         ?string $externalAccountID = null,
         ?bool $requireApproval = null,
+        ?string $routingNumber = null,
         ?string $ultimateCreditorName = null,
         ?string $ultimateDebtorName = null,
         RequestOptions|array|null $requestOptions = null,

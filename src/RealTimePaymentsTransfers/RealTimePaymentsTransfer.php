@@ -30,6 +30,7 @@ use Increase\RealTimePaymentsTransfers\RealTimePaymentsTransfer\Type;
  * @phpstan-type RealTimePaymentsTransferShape = array{
  *   id: string,
  *   accountID: string,
+ *   accountNumber: string,
  *   acknowledgement: null|Acknowledgement|AcknowledgementShape,
  *   amount: int,
  *   approval: null|Approval|ApprovalShape,
@@ -39,13 +40,11 @@ use Increase\RealTimePaymentsTransfers\RealTimePaymentsTransfer\Type;
  *   creditorName: string,
  *   currency: Currency|value-of<Currency>,
  *   debtorName: string|null,
- *   destinationAccountNumber: string,
- *   destinationRoutingNumber: string,
  *   externalAccountID: string|null,
  *   idempotencyKey: string|null,
  *   pendingTransactionID: string|null,
  *   rejection: null|Rejection|RejectionShape,
- *   remittanceInformation: string,
+ *   routingNumber: string,
  *   sourceAccountNumberID: string,
  *   status: Status|value-of<Status>,
  *   submission: null|Submission|SubmissionShape,
@@ -53,6 +52,7 @@ use Increase\RealTimePaymentsTransfers\RealTimePaymentsTransfer\Type;
  *   type: Type|value-of<Type>,
  *   ultimateCreditorName: string|null,
  *   ultimateDebtorName: string|null,
+ *   unstructuredRemittanceInformation: string,
  * }
  */
 final class RealTimePaymentsTransfer implements BaseModel
@@ -71,6 +71,12 @@ final class RealTimePaymentsTransfer implements BaseModel
      */
     #[Required('account_id')]
     public string $accountID;
+
+    /**
+     * The destination account number.
+     */
+    #[Required('account_number')]
+    public string $accountNumber;
 
     /**
      * If the transfer is acknowledged by the recipient bank, this will contain supplemental details.
@@ -129,18 +135,6 @@ final class RealTimePaymentsTransfer implements BaseModel
     public ?string $debtorName;
 
     /**
-     * The destination account number.
-     */
-    #[Required('destination_account_number')]
-    public string $destinationAccountNumber;
-
-    /**
-     * The destination American Bankers' Association (ABA) Routing Transit Number (RTN).
-     */
-    #[Required('destination_routing_number')]
-    public string $destinationRoutingNumber;
-
-    /**
      * The identifier of the External Account the transfer was made to, if any.
      */
     #[Required('external_account_id')]
@@ -165,10 +159,10 @@ final class RealTimePaymentsTransfer implements BaseModel
     public ?Rejection $rejection;
 
     /**
-     * Unstructured information that will show on the recipient's bank statement.
+     * The destination American Bankers' Association (ABA) Routing Transit Number (RTN).
      */
-    #[Required('remittance_information')]
-    public string $remittanceInformation;
+    #[Required('routing_number')]
+    public string $routingNumber;
 
     /**
      * The Account Number the recipient will see as having sent the transfer.
@@ -217,6 +211,12 @@ final class RealTimePaymentsTransfer implements BaseModel
     public ?string $ultimateDebtorName;
 
     /**
+     * Unstructured information that will show on the recipient's bank statement.
+     */
+    #[Required('unstructured_remittance_information')]
+    public string $unstructuredRemittanceInformation;
+
+    /**
      * `new RealTimePaymentsTransfer()` is missing required properties by the API.
      *
      * To enforce required parameters use
@@ -224,6 +224,7 @@ final class RealTimePaymentsTransfer implements BaseModel
      * RealTimePaymentsTransfer::with(
      *   id: ...,
      *   accountID: ...,
+     *   accountNumber: ...,
      *   acknowledgement: ...,
      *   amount: ...,
      *   approval: ...,
@@ -233,13 +234,11 @@ final class RealTimePaymentsTransfer implements BaseModel
      *   creditorName: ...,
      *   currency: ...,
      *   debtorName: ...,
-     *   destinationAccountNumber: ...,
-     *   destinationRoutingNumber: ...,
      *   externalAccountID: ...,
      *   idempotencyKey: ...,
      *   pendingTransactionID: ...,
      *   rejection: ...,
-     *   remittanceInformation: ...,
+     *   routingNumber: ...,
      *   sourceAccountNumberID: ...,
      *   status: ...,
      *   submission: ...,
@@ -247,6 +246,7 @@ final class RealTimePaymentsTransfer implements BaseModel
      *   type: ...,
      *   ultimateCreditorName: ...,
      *   ultimateDebtorName: ...,
+     *   unstructuredRemittanceInformation: ...,
      * )
      * ```
      *
@@ -256,6 +256,7 @@ final class RealTimePaymentsTransfer implements BaseModel
      * (new RealTimePaymentsTransfer)
      *   ->withID(...)
      *   ->withAccountID(...)
+     *   ->withAccountNumber(...)
      *   ->withAcknowledgement(...)
      *   ->withAmount(...)
      *   ->withApproval(...)
@@ -265,13 +266,11 @@ final class RealTimePaymentsTransfer implements BaseModel
      *   ->withCreditorName(...)
      *   ->withCurrency(...)
      *   ->withDebtorName(...)
-     *   ->withDestinationAccountNumber(...)
-     *   ->withDestinationRoutingNumber(...)
      *   ->withExternalAccountID(...)
      *   ->withIdempotencyKey(...)
      *   ->withPendingTransactionID(...)
      *   ->withRejection(...)
-     *   ->withRemittanceInformation(...)
+     *   ->withRoutingNumber(...)
      *   ->withSourceAccountNumberID(...)
      *   ->withStatus(...)
      *   ->withSubmission(...)
@@ -279,6 +278,7 @@ final class RealTimePaymentsTransfer implements BaseModel
      *   ->withType(...)
      *   ->withUltimateCreditorName(...)
      *   ->withUltimateDebtorName(...)
+     *   ->withUnstructuredRemittanceInformation(...)
      * ```
      */
     public function __construct()
@@ -304,6 +304,7 @@ final class RealTimePaymentsTransfer implements BaseModel
     public static function with(
         string $id,
         string $accountID,
+        string $accountNumber,
         Acknowledgement|array|null $acknowledgement,
         int $amount,
         Approval|array|null $approval,
@@ -313,13 +314,11 @@ final class RealTimePaymentsTransfer implements BaseModel
         string $creditorName,
         Currency|string $currency,
         ?string $debtorName,
-        string $destinationAccountNumber,
-        string $destinationRoutingNumber,
         ?string $externalAccountID,
         ?string $idempotencyKey,
         ?string $pendingTransactionID,
         Rejection|array|null $rejection,
-        string $remittanceInformation,
+        string $routingNumber,
         string $sourceAccountNumberID,
         Status|string $status,
         Submission|array|null $submission,
@@ -327,11 +326,13 @@ final class RealTimePaymentsTransfer implements BaseModel
         Type|string $type,
         ?string $ultimateCreditorName,
         ?string $ultimateDebtorName,
+        string $unstructuredRemittanceInformation,
     ): self {
         $self = new self;
 
         $self['id'] = $id;
         $self['accountID'] = $accountID;
+        $self['accountNumber'] = $accountNumber;
         $self['acknowledgement'] = $acknowledgement;
         $self['amount'] = $amount;
         $self['approval'] = $approval;
@@ -341,13 +342,11 @@ final class RealTimePaymentsTransfer implements BaseModel
         $self['creditorName'] = $creditorName;
         $self['currency'] = $currency;
         $self['debtorName'] = $debtorName;
-        $self['destinationAccountNumber'] = $destinationAccountNumber;
-        $self['destinationRoutingNumber'] = $destinationRoutingNumber;
         $self['externalAccountID'] = $externalAccountID;
         $self['idempotencyKey'] = $idempotencyKey;
         $self['pendingTransactionID'] = $pendingTransactionID;
         $self['rejection'] = $rejection;
-        $self['remittanceInformation'] = $remittanceInformation;
+        $self['routingNumber'] = $routingNumber;
         $self['sourceAccountNumberID'] = $sourceAccountNumberID;
         $self['status'] = $status;
         $self['submission'] = $submission;
@@ -355,6 +354,7 @@ final class RealTimePaymentsTransfer implements BaseModel
         $self['type'] = $type;
         $self['ultimateCreditorName'] = $ultimateCreditorName;
         $self['ultimateDebtorName'] = $ultimateDebtorName;
+        $self['unstructuredRemittanceInformation'] = $unstructuredRemittanceInformation;
 
         return $self;
     }
@@ -377,6 +377,17 @@ final class RealTimePaymentsTransfer implements BaseModel
     {
         $self = clone $this;
         $self['accountID'] = $accountID;
+
+        return $self;
+    }
+
+    /**
+     * The destination account number.
+     */
+    public function withAccountNumber(string $accountNumber): self
+    {
+        $self = clone $this;
+        $self['accountNumber'] = $accountNumber;
 
         return $self;
     }
@@ -493,30 +504,6 @@ final class RealTimePaymentsTransfer implements BaseModel
     }
 
     /**
-     * The destination account number.
-     */
-    public function withDestinationAccountNumber(
-        string $destinationAccountNumber
-    ): self {
-        $self = clone $this;
-        $self['destinationAccountNumber'] = $destinationAccountNumber;
-
-        return $self;
-    }
-
-    /**
-     * The destination American Bankers' Association (ABA) Routing Transit Number (RTN).
-     */
-    public function withDestinationRoutingNumber(
-        string $destinationRoutingNumber
-    ): self {
-        $self = clone $this;
-        $self['destinationRoutingNumber'] = $destinationRoutingNumber;
-
-        return $self;
-    }
-
-    /**
      * The identifier of the External Account the transfer was made to, if any.
      */
     public function withExternalAccountID(?string $externalAccountID): self
@@ -564,13 +551,12 @@ final class RealTimePaymentsTransfer implements BaseModel
     }
 
     /**
-     * Unstructured information that will show on the recipient's bank statement.
+     * The destination American Bankers' Association (ABA) Routing Transit Number (RTN).
      */
-    public function withRemittanceInformation(
-        string $remittanceInformation
-    ): self {
+    public function withRoutingNumber(string $routingNumber): self
+    {
         $self = clone $this;
-        $self['remittanceInformation'] = $remittanceInformation;
+        $self['routingNumber'] = $routingNumber;
 
         return $self;
     }
@@ -656,6 +642,18 @@ final class RealTimePaymentsTransfer implements BaseModel
     {
         $self = clone $this;
         $self['ultimateDebtorName'] = $ultimateDebtorName;
+
+        return $self;
+    }
+
+    /**
+     * Unstructured information that will show on the recipient's bank statement.
+     */
+    public function withUnstructuredRemittanceInformation(
+        string $unstructuredRemittanceInformation
+    ): self {
+        $self = clone $this;
+        $self['unstructuredRemittanceInformation'] = $unstructuredRemittanceInformation;
 
         return $self;
     }

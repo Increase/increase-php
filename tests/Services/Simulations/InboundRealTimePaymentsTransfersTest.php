@@ -57,8 +57,8 @@ final class InboundRealTimePaymentsTransfersTest extends TestCase
                 debtorAccountNumber: 'x',
                 debtorName: 'x',
                 debtorRoutingNumber: 'xxxxxxxxx',
-                remittanceInformation: 'x',
                 requestForPaymentID: 'real_time_payments_request_for_payment_28kcliz1oevcnqyn9qp7',
+                unstructuredRemittanceInformation: 'x',
             )
         ;
 

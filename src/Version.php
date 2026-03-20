@@ -5,5 +5,5 @@ declare(strict_types=1);
 namespace Increase;
 
 // x-release-please-start-version
-const VERSION = '0.82.0';
+const VERSION = '0.83.0';
 // x-release-please-end

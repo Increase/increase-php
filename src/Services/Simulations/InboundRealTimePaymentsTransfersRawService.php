@@ -34,8 +34,8 @@ final class InboundRealTimePaymentsTransfersRawService implements InboundRealTim
      *   debtorAccountNumber?: string,
      *   debtorName?: string,
      *   debtorRoutingNumber?: string,
-     *   remittanceInformation?: string,
      *   requestForPaymentID?: string,
+     *   unstructuredRemittanceInformation?: string,
      * }|InboundRealTimePaymentsTransferCreateParams $params
      * @param RequestOpts|null $requestOptions
      *

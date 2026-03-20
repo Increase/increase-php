@@ -34,8 +34,8 @@ final class RealTimePaymentsTransfersTest extends TestCase
         $result = $this->client->realTimePaymentsTransfers->create(
             amount: 100,
             creditorName: 'Ian Crease',
-            remittanceInformation: 'Invoice 29582',
             sourceAccountNumberID: 'account_number_v18nkfqm6afpsrvy82b2',
+            unstructuredRemittanceInformation: 'Invoice 29582',
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -48,13 +48,15 @@ final class RealTimePaymentsTransfersTest extends TestCase
         $result = $this->client->realTimePaymentsTransfers->create(
             amount: 100,
             creditorName: 'Ian Crease',
-            remittanceInformation: 'Invoice 29582',
             sourceAccountNumberID: 'account_number_v18nkfqm6afpsrvy82b2',
+            unstructuredRemittanceInformation: 'Invoice 29582',
+            accountNumber: '987654321',
             debtorName: 'x',
-            destinationAccountNumber: '987654321',
-            destinationRoutingNumber: '101050001',
+            destinationAccountNumber: 'x',
+            destinationRoutingNumber: 'xxxxxxxxx',
             externalAccountID: 'external_account_id',
             requireApproval: true,
+            routingNumber: '101050001',
             ultimateCreditorName: 'x',
             ultimateDebtorName: 'x',
         );

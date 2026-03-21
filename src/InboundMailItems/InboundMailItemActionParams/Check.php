@@ -12,7 +12,7 @@ use Increase\InboundMailItems\InboundMailItemActionParams\Check\Action;
 
 /**
  * @phpstan-type CheckShape = array{
- *   action: Action|value-of<Action>, account?: string|null
+ *   action: Action|value-of<Action>, accountID?: string|null
  * }
  */
 final class Check implements BaseModel
@@ -31,8 +31,8 @@ final class Check implements BaseModel
     /**
      * The identifier of the Account to deposit the check into. If not provided, the check will be deposited into the Account associated with the Lockbox.
      */
-    #[Optional]
-    public ?string $account;
+    #[Optional('account_id')]
+    public ?string $accountID;
 
     /**
      * `new Check()` is missing required properties by the API.
@@ -62,13 +62,13 @@ final class Check implements BaseModel
      */
     public static function with(
         Action|string $action,
-        ?string $account = null
+        ?string $accountID = null
     ): self {
         $self = new self;
 
         $self['action'] = $action;
 
-        null !== $account && $self['account'] = $account;
+        null !== $accountID && $self['accountID'] = $accountID;
 
         return $self;
     }
@@ -89,10 +89,10 @@ final class Check implements BaseModel
     /**
      * The identifier of the Account to deposit the check into. If not provided, the check will be deposited into the Account associated with the Lockbox.
      */
-    public function withAccount(string $account): self
+    public function withAccountID(string $accountID): self
     {
         $self = clone $this;
-        $self['account'] = $account;
+        $self['accountID'] = $accountID;
 
         return $self;
     }

@@ -15,6 +15,7 @@ use Increase\Core\Contracts\BaseModel;
  * @phpstan-type Route1Shape = array{
  *   crossBorderPushTransfers: CrossBorderPushTransfers|value-of<CrossBorderPushTransfers>,
  *   domesticPushTransfers: DomesticPushTransfers|value-of<DomesticPushTransfers>,
+ *   issuerCountry: string,
  *   route: Route|value-of<Route>,
  * }
  */
@@ -43,6 +44,12 @@ final class Route1 implements BaseModel
     public string $domesticPushTransfers;
 
     /**
+     * The ISO-3166-1 alpha-2 country code of the card's issuing bank.
+     */
+    #[Required('issuer_country')]
+    public string $issuerCountry;
+
+    /**
      * The card network route the capabilities apply to.
      *
      * @var value-of<Route> $route
@@ -56,7 +63,10 @@ final class Route1 implements BaseModel
      * To enforce required parameters use
      * ```
      * Route1::with(
-     *   crossBorderPushTransfers: ..., domesticPushTransfers: ..., route: ...
+     *   crossBorderPushTransfers: ...,
+     *   domesticPushTransfers: ...,
+     *   issuerCountry: ...,
+     *   route: ...,
      * )
      * ```
      *
@@ -66,6 +76,7 @@ final class Route1 implements BaseModel
      * (new Route1)
      *   ->withCrossBorderPushTransfers(...)
      *   ->withDomesticPushTransfers(...)
+     *   ->withIssuerCountry(...)
      *   ->withRoute(...)
      * ```
      */
@@ -86,12 +97,14 @@ final class Route1 implements BaseModel
     public static function with(
         CrossBorderPushTransfers|string $crossBorderPushTransfers,
         DomesticPushTransfers|string $domesticPushTransfers,
+        string $issuerCountry,
         Route|string $route,
     ): self {
         $self = new self;
 
         $self['crossBorderPushTransfers'] = $crossBorderPushTransfers;
         $self['domesticPushTransfers'] = $domesticPushTransfers;
+        $self['issuerCountry'] = $issuerCountry;
         $self['route'] = $route;
 
         return $self;
@@ -121,6 +134,17 @@ final class Route1 implements BaseModel
     ): self {
         $self = clone $this;
         $self['domesticPushTransfers'] = $domesticPushTransfers;
+
+        return $self;
+    }
+
+    /**
+     * The ISO-3166-1 alpha-2 country code of the card's issuing bank.
+     */
+    public function withIssuerCountry(string $issuerCountry): self
+    {
+        $self = clone $this;
+        $self['issuerCountry'] = $issuerCountry;
 
         return $self;
     }

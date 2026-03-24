@@ -52,8 +52,6 @@ final class RealTimePaymentsTransfersTest extends TestCase
             unstructuredRemittanceInformation: 'Invoice 29582',
             accountNumber: '987654321',
             debtorName: 'x',
-            destinationAccountNumber: 'x',
-            destinationRoutingNumber: 'xxxxxxxxx',
             externalAccountID: 'external_account_id',
             requireApproval: true,
             routingNumber: '101050001',

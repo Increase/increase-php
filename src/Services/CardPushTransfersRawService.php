@@ -55,6 +55,12 @@ final class CardPushTransfersRawService implements CardPushTransfersRawContract
      *   senderAddressState: string,
      *   senderName: string,
      *   sourceAccountNumberID: string,
+     *   merchantLegalBusinessName?: string,
+     *   merchantStreetAddress?: string,
+     *   recipientAddressCity?: string,
+     *   recipientAddressLine1?: string,
+     *   recipientAddressPostalCode?: string,
+     *   recipientAddressState?: string,
      *   requireApproval?: bool,
      * }|CardPushTransferCreateParams $params
      * @param RequestOpts|null $requestOptions

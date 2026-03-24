@@ -74,6 +74,12 @@ final class CardPushTransfersTest extends TestCase
             senderAddressState: 'NY',
             senderName: 'Ian Crease',
             sourceAccountNumberID: 'account_number_v18nkfqm6afpsrvy82b2',
+            merchantLegalBusinessName: 'x',
+            merchantStreetAddress: 'x',
+            recipientAddressCity: 'x',
+            recipientAddressLine1: 'x',
+            recipientAddressPostalCode: 'x',
+            recipientAddressState: 'x',
             requireApproval: true,
         );
 

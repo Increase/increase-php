@@ -36,6 +36,12 @@ use Increase\Core\Contracts\BaseModel;
  *   senderAddressState: string,
  *   senderName: string,
  *   sourceAccountNumberID: string,
+ *   merchantLegalBusinessName?: string|null,
+ *   merchantStreetAddress?: string|null,
+ *   recipientAddressCity?: string|null,
+ *   recipientAddressLine1?: string|null,
+ *   recipientAddressPostalCode?: string|null,
+ *   recipientAddressState?: string|null,
  *   requireApproval?: bool|null,
  * }
  */
@@ -147,6 +153,42 @@ final class CardPushTransferCreateParams implements BaseModel
     public string $sourceAccountNumberID;
 
     /**
+     * The legal business name of the merchant (generally your business) sending the transfer. Required if the card is issued in Canada.
+     */
+    #[Optional('merchant_legal_business_name')]
+    public ?string $merchantLegalBusinessName;
+
+    /**
+     * The street address of the merchant (generally your business) sending the transfer. Required if the card is issued in Canada.
+     */
+    #[Optional('merchant_street_address')]
+    public ?string $merchantStreetAddress;
+
+    /**
+     * The city of the recipient. Required if the card is issued in Canada.
+     */
+    #[Optional('recipient_address_city')]
+    public ?string $recipientAddressCity;
+
+    /**
+     * The first line of the recipient's address. Required if the card is issued in Canada.
+     */
+    #[Optional('recipient_address_line1')]
+    public ?string $recipientAddressLine1;
+
+    /**
+     * The postal code of the recipient. Required if the card is issued in Canada.
+     */
+    #[Optional('recipient_address_postal_code')]
+    public ?string $recipientAddressPostalCode;
+
+    /**
+     * The state or province of the recipient. Required if the card is issued in Canada.
+     */
+    #[Optional('recipient_address_state')]
+    public ?string $recipientAddressState;
+
+    /**
      * Whether the transfer requires explicit approval via the dashboard or API.
      */
     #[Optional('require_approval')]
@@ -229,6 +271,12 @@ final class CardPushTransferCreateParams implements BaseModel
         string $senderAddressState,
         string $senderName,
         string $sourceAccountNumberID,
+        ?string $merchantLegalBusinessName = null,
+        ?string $merchantStreetAddress = null,
+        ?string $recipientAddressCity = null,
+        ?string $recipientAddressLine1 = null,
+        ?string $recipientAddressPostalCode = null,
+        ?string $recipientAddressState = null,
         ?bool $requireApproval = null,
     ): self {
         $self = new self;
@@ -250,6 +298,12 @@ final class CardPushTransferCreateParams implements BaseModel
         $self['senderName'] = $senderName;
         $self['sourceAccountNumberID'] = $sourceAccountNumberID;
 
+        null !== $merchantLegalBusinessName && $self['merchantLegalBusinessName'] = $merchantLegalBusinessName;
+        null !== $merchantStreetAddress && $self['merchantStreetAddress'] = $merchantStreetAddress;
+        null !== $recipientAddressCity && $self['recipientAddressCity'] = $recipientAddressCity;
+        null !== $recipientAddressLine1 && $self['recipientAddressLine1'] = $recipientAddressLine1;
+        null !== $recipientAddressPostalCode && $self['recipientAddressPostalCode'] = $recipientAddressPostalCode;
+        null !== $recipientAddressState && $self['recipientAddressState'] = $recipientAddressState;
         null !== $requireApproval && $self['requireApproval'] = $requireApproval;
 
         return $self;
@@ -435,6 +489,77 @@ final class CardPushTransferCreateParams implements BaseModel
     ): self {
         $self = clone $this;
         $self['sourceAccountNumberID'] = $sourceAccountNumberID;
+
+        return $self;
+    }
+
+    /**
+     * The legal business name of the merchant (generally your business) sending the transfer. Required if the card is issued in Canada.
+     */
+    public function withMerchantLegalBusinessName(
+        string $merchantLegalBusinessName
+    ): self {
+        $self = clone $this;
+        $self['merchantLegalBusinessName'] = $merchantLegalBusinessName;
+
+        return $self;
+    }
+
+    /**
+     * The street address of the merchant (generally your business) sending the transfer. Required if the card is issued in Canada.
+     */
+    public function withMerchantStreetAddress(
+        string $merchantStreetAddress
+    ): self {
+        $self = clone $this;
+        $self['merchantStreetAddress'] = $merchantStreetAddress;
+
+        return $self;
+    }
+
+    /**
+     * The city of the recipient. Required if the card is issued in Canada.
+     */
+    public function withRecipientAddressCity(string $recipientAddressCity): self
+    {
+        $self = clone $this;
+        $self['recipientAddressCity'] = $recipientAddressCity;
+
+        return $self;
+    }
+
+    /**
+     * The first line of the recipient's address. Required if the card is issued in Canada.
+     */
+    public function withRecipientAddressLine1(
+        string $recipientAddressLine1
+    ): self {
+        $self = clone $this;
+        $self['recipientAddressLine1'] = $recipientAddressLine1;
+
+        return $self;
+    }
+
+    /**
+     * The postal code of the recipient. Required if the card is issued in Canada.
+     */
+    public function withRecipientAddressPostalCode(
+        string $recipientAddressPostalCode
+    ): self {
+        $self = clone $this;
+        $self['recipientAddressPostalCode'] = $recipientAddressPostalCode;
+
+        return $self;
+    }
+
+    /**
+     * The state or province of the recipient. Required if the card is issued in Canada.
+     */
+    public function withRecipientAddressState(
+        string $recipientAddressState
+    ): self {
+        $self = clone $this;
+        $self['recipientAddressState'] = $recipientAddressState;
 
         return $self;
     }

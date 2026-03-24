@@ -22,8 +22,6 @@ use Increase\Core\Contracts\BaseModel;
  *   unstructuredRemittanceInformation: string,
  *   accountNumber?: string|null,
  *   debtorName?: string|null,
- *   destinationAccountNumber?: string|null,
- *   destinationRoutingNumber?: string|null,
  *   externalAccountID?: string|null,
  *   requireApproval?: bool|null,
  *   routingNumber?: string|null,
@@ -72,12 +70,6 @@ final class RealTimePaymentsTransferCreateParams implements BaseModel
      */
     #[Optional('debtor_name')]
     public ?string $debtorName;
-
-    #[Optional('destination_account_number')]
-    public ?string $destinationAccountNumber;
-
-    #[Optional('destination_routing_number')]
-    public ?string $destinationRoutingNumber;
 
     /**
      * The ID of an External Account to initiate a transfer to. If this parameter is provided, `account_number` and `routing_number` must be absent.
@@ -149,8 +141,6 @@ final class RealTimePaymentsTransferCreateParams implements BaseModel
         string $unstructuredRemittanceInformation,
         ?string $accountNumber = null,
         ?string $debtorName = null,
-        ?string $destinationAccountNumber = null,
-        ?string $destinationRoutingNumber = null,
         ?string $externalAccountID = null,
         ?bool $requireApproval = null,
         ?string $routingNumber = null,
@@ -166,8 +156,6 @@ final class RealTimePaymentsTransferCreateParams implements BaseModel
 
         null !== $accountNumber && $self['accountNumber'] = $accountNumber;
         null !== $debtorName && $self['debtorName'] = $debtorName;
-        null !== $destinationAccountNumber && $self['destinationAccountNumber'] = $destinationAccountNumber;
-        null !== $destinationRoutingNumber && $self['destinationRoutingNumber'] = $destinationRoutingNumber;
         null !== $externalAccountID && $self['externalAccountID'] = $externalAccountID;
         null !== $requireApproval && $self['requireApproval'] = $requireApproval;
         null !== $routingNumber && $self['routingNumber'] = $routingNumber;
@@ -241,24 +229,6 @@ final class RealTimePaymentsTransferCreateParams implements BaseModel
     {
         $self = clone $this;
         $self['debtorName'] = $debtorName;
-
-        return $self;
-    }
-
-    public function withDestinationAccountNumber(
-        string $destinationAccountNumber
-    ): self {
-        $self = clone $this;
-        $self['destinationAccountNumber'] = $destinationAccountNumber;
-
-        return $self;
-    }
-
-    public function withDestinationRoutingNumber(
-        string $destinationRoutingNumber
-    ): self {
-        $self = clone $this;
-        $self['destinationRoutingNumber'] = $destinationRoutingNumber;
 
         return $self;
     }

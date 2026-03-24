@@ -43,8 +43,6 @@ interface RealTimePaymentsTransfersContract
         string $unstructuredRemittanceInformation,
         ?string $accountNumber = null,
         ?string $debtorName = null,
-        ?string $destinationAccountNumber = null,
-        ?string $destinationRoutingNumber = null,
         ?string $externalAccountID = null,
         ?bool $requireApproval = null,
         ?string $routingNumber = null,

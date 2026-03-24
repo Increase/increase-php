@@ -21,7 +21,7 @@ final class Passport implements BaseModel
     use SdkModel;
 
     /**
-     * The two-character ISO 3166-1 code representing the country that issued the passport (e.g., `US`).
+     * The two-character ISO 3166-1 code representing the country that issued the document (e.g., `US`).
      */
     #[Required]
     public string $country;
@@ -77,7 +77,7 @@ final class Passport implements BaseModel
     }
 
     /**
-     * The two-character ISO 3166-1 code representing the country that issued the passport (e.g., `US`).
+     * The two-character ISO 3166-1 code representing the country that issued the document (e.g., `US`).
      */
     public function withCountry(string $country): self
     {

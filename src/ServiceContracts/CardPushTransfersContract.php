@@ -40,6 +40,12 @@ interface CardPushTransfersContract
      * @param string $senderAddressState the state of the sender
      * @param string $senderName the name of the funds originator
      * @param string $sourceAccountNumberID the identifier of the Account Number from which to send the transfer
+     * @param string $merchantLegalBusinessName The legal business name of the merchant (generally your business) sending the transfer. Required if the card is issued in Canada.
+     * @param string $merchantStreetAddress The street address of the merchant (generally your business) sending the transfer. Required if the card is issued in Canada.
+     * @param string $recipientAddressCity The city of the recipient. Required if the card is issued in Canada.
+     * @param string $recipientAddressLine1 The first line of the recipient's address. Required if the card is issued in Canada.
+     * @param string $recipientAddressPostalCode The postal code of the recipient. Required if the card is issued in Canada.
+     * @param string $recipientAddressState The state or province of the recipient. Required if the card is issued in Canada.
      * @param bool $requireApproval whether the transfer requires explicit approval via the dashboard or API
      * @param RequestOpts|null $requestOptions
      *
@@ -62,6 +68,12 @@ interface CardPushTransfersContract
         string $senderAddressState,
         string $senderName,
         string $sourceAccountNumberID,
+        ?string $merchantLegalBusinessName = null,
+        ?string $merchantStreetAddress = null,
+        ?string $recipientAddressCity = null,
+        ?string $recipientAddressLine1 = null,
+        ?string $recipientAddressPostalCode = null,
+        ?string $recipientAddressState = null,
         ?bool $requireApproval = null,
         RequestOptions|array|null $requestOptions = null,
     ): CardPushTransfer;

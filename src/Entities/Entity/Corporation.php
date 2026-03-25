@@ -9,12 +9,14 @@ use Increase\Core\Concerns\SdkModel;
 use Increase\Core\Contracts\BaseModel;
 use Increase\Entities\Entity\Corporation\Address;
 use Increase\Entities\Entity\Corporation\BeneficialOwner;
+use Increase\Entities\Entity\Corporation\LegalIdentifier;
 
 /**
  * Details of the corporation entity. Will be present if `structure` is equal to `corporation`.
  *
  * @phpstan-import-type AddressShape from \Increase\Entities\Entity\Corporation\Address
  * @phpstan-import-type BeneficialOwnerShape from \Increase\Entities\Entity\Corporation\BeneficialOwner
+ * @phpstan-import-type LegalIdentifierShape from \Increase\Entities\Entity\Corporation\LegalIdentifier
  *
  * @phpstan-type CorporationShape = array{
  *   address: Address|AddressShape,
@@ -22,8 +24,8 @@ use Increase\Entities\Entity\Corporation\BeneficialOwner;
  *   email: string|null,
  *   incorporationState: string|null,
  *   industryCode: string|null,
+ *   legalIdentifier: null|LegalIdentifier|LegalIdentifierShape,
  *   name: string,
- *   taxIdentifier: string|null,
  *   website: string|null,
  * }
  */
@@ -65,16 +67,16 @@ final class Corporation implements BaseModel
     public ?string $industryCode;
 
     /**
+     * The legal identifier of the corporation.
+     */
+    #[Required('legal_identifier')]
+    public ?LegalIdentifier $legalIdentifier;
+
+    /**
      * The legal name of the corporation.
      */
     #[Required]
     public string $name;
-
-    /**
-     * The Employer Identification Number (EIN) for the corporation.
-     */
-    #[Required('tax_identifier')]
-    public ?string $taxIdentifier;
 
     /**
      * The website of the corporation.
@@ -93,8 +95,8 @@ final class Corporation implements BaseModel
      *   email: ...,
      *   incorporationState: ...,
      *   industryCode: ...,
+     *   legalIdentifier: ...,
      *   name: ...,
-     *   taxIdentifier: ...,
      *   website: ...,
      * )
      * ```
@@ -108,8 +110,8 @@ final class Corporation implements BaseModel
      *   ->withEmail(...)
      *   ->withIncorporationState(...)
      *   ->withIndustryCode(...)
+     *   ->withLegalIdentifier(...)
      *   ->withName(...)
-     *   ->withTaxIdentifier(...)
      *   ->withWebsite(...)
      * ```
      */
@@ -125,6 +127,7 @@ final class Corporation implements BaseModel
      *
      * @param Address|AddressShape $address
      * @param list<BeneficialOwner|BeneficialOwnerShape> $beneficialOwners
+     * @param LegalIdentifier|LegalIdentifierShape|null $legalIdentifier
      */
     public static function with(
         Address|array $address,
@@ -132,8 +135,8 @@ final class Corporation implements BaseModel
         ?string $email,
         ?string $incorporationState,
         ?string $industryCode,
+        LegalIdentifier|array|null $legalIdentifier,
         string $name,
-        ?string $taxIdentifier,
         ?string $website,
     ): self {
         $self = new self;
@@ -143,8 +146,8 @@ final class Corporation implements BaseModel
         $self['email'] = $email;
         $self['incorporationState'] = $incorporationState;
         $self['industryCode'] = $industryCode;
+        $self['legalIdentifier'] = $legalIdentifier;
         $self['name'] = $name;
-        $self['taxIdentifier'] = $taxIdentifier;
         $self['website'] = $website;
 
         return $self;
@@ -210,23 +213,26 @@ final class Corporation implements BaseModel
     }
 
     /**
+     * The legal identifier of the corporation.
+     *
+     * @param LegalIdentifier|LegalIdentifierShape|null $legalIdentifier
+     */
+    public function withLegalIdentifier(
+        LegalIdentifier|array|null $legalIdentifier
+    ): self {
+        $self = clone $this;
+        $self['legalIdentifier'] = $legalIdentifier;
+
+        return $self;
+    }
+
+    /**
      * The legal name of the corporation.
      */
     public function withName(string $name): self
     {
         $self = clone $this;
         $self['name'] = $name;
-
-        return $self;
-    }
-
-    /**
-     * The Employer Identification Number (EIN) for the corporation.
-     */
-    public function withTaxIdentifier(?string $taxIdentifier): self
-    {
-        $self = clone $this;
-        $self['taxIdentifier'] = $taxIdentifier;
 
         return $self;
     }

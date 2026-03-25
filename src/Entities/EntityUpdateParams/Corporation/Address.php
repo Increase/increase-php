@@ -13,7 +13,12 @@ use Increase\Core\Contracts\BaseModel;
  * The entity's physical address. Mail receiving locations like PO Boxes and PMB's are disallowed.
  *
  * @phpstan-type AddressShape = array{
- *   city: string, line1: string, state: string, zip: string, line2?: string|null
+ *   city: string,
+ *   country: string,
+ *   line1: string,
+ *   line2?: string|null,
+ *   state?: string|null,
+ *   zip?: string|null,
  * }
  */
 final class Address implements BaseModel
@@ -22,10 +27,16 @@ final class Address implements BaseModel
     use SdkModel;
 
     /**
-     * The city of the address.
+     * The city, district, town, or village of the address.
      */
     #[Required]
     public string $city;
+
+    /**
+     * The two-letter ISO 3166-1 alpha-2 code for the country of the address.
+     */
+    #[Required]
+    public string $country;
 
     /**
      * The first line of the address. This is usually the street number and street.
@@ -34,35 +45,35 @@ final class Address implements BaseModel
     public string $line1;
 
     /**
-     * The two-letter United States Postal Service (USPS) abbreviation for the state of the address.
-     */
-    #[Required]
-    public string $state;
-
-    /**
-     * The ZIP code of the address.
-     */
-    #[Required]
-    public string $zip;
-
-    /**
      * The second line of the address. This might be the floor or room number.
      */
     #[Optional]
     public ?string $line2;
 
     /**
+     * The two-letter United States Postal Service (USPS) abbreviation for the US state, province, or region of the address. Required in certain countries.
+     */
+    #[Optional]
+    public ?string $state;
+
+    /**
+     * The ZIP or postal code of the address. Required in certain countries.
+     */
+    #[Optional]
+    public ?string $zip;
+
+    /**
      * `new Address()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
-     * Address::with(city: ..., line1: ..., state: ..., zip: ...)
+     * Address::with(city: ..., country: ..., line1: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new Address)->withCity(...)->withLine1(...)->withState(...)->withZip(...)
+     * (new Address)->withCity(...)->withCountry(...)->withLine1(...)
      * ```
      */
     public function __construct()
@@ -77,30 +88,43 @@ final class Address implements BaseModel
      */
     public static function with(
         string $city,
+        string $country,
         string $line1,
-        string $state,
-        string $zip,
         ?string $line2 = null,
+        ?string $state = null,
+        ?string $zip = null,
     ): self {
         $self = new self;
 
         $self['city'] = $city;
+        $self['country'] = $country;
         $self['line1'] = $line1;
-        $self['state'] = $state;
-        $self['zip'] = $zip;
 
         null !== $line2 && $self['line2'] = $line2;
+        null !== $state && $self['state'] = $state;
+        null !== $zip && $self['zip'] = $zip;
 
         return $self;
     }
 
     /**
-     * The city of the address.
+     * The city, district, town, or village of the address.
      */
     public function withCity(string $city): self
     {
         $self = clone $this;
         $self['city'] = $city;
+
+        return $self;
+    }
+
+    /**
+     * The two-letter ISO 3166-1 alpha-2 code for the country of the address.
+     */
+    public function withCountry(string $country): self
+    {
+        $self = clone $this;
+        $self['country'] = $country;
 
         return $self;
     }
@@ -117,7 +141,18 @@ final class Address implements BaseModel
     }
 
     /**
-     * The two-letter United States Postal Service (USPS) abbreviation for the state of the address.
+     * The second line of the address. This might be the floor or room number.
+     */
+    public function withLine2(string $line2): self
+    {
+        $self = clone $this;
+        $self['line2'] = $line2;
+
+        return $self;
+    }
+
+    /**
+     * The two-letter United States Postal Service (USPS) abbreviation for the US state, province, or region of the address. Required in certain countries.
      */
     public function withState(string $state): self
     {
@@ -128,23 +163,12 @@ final class Address implements BaseModel
     }
 
     /**
-     * The ZIP code of the address.
+     * The ZIP or postal code of the address. Required in certain countries.
      */
     public function withZip(string $zip): self
     {
         $self = clone $this;
         $self['zip'] = $zip;
-
-        return $self;
-    }
-
-    /**
-     * The second line of the address. This might be the floor or room number.
-     */
-    public function withLine2(string $line2): self
-    {
-        $self = clone $this;
-        $self['line2'] = $line2;
 
         return $self;
     }

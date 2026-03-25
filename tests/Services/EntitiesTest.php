@@ -45,10 +45,11 @@ final class EntitiesTest extends TestCase
             corporation: [
                 'address' => [
                     'city' => 'New York',
+                    'country' => 'x',
                     'line1' => '33 Liberty Street',
+                    'line2' => 'x',
                     'state' => 'NY',
                     'zip' => '10045',
-                    'line2' => 'x',
                 ],
                 'beneficialOwners' => [
                     [
@@ -122,10 +123,11 @@ final class EntitiesTest extends TestCase
                     [
                         'address' => [
                             'city' => 'x',
+                            'country' => 'x',
                             'line1' => 'x',
+                            'line2' => 'x',
                             'state' => 'x',
                             'zip' => 'x',
-                            'line2' => 'x',
                         ],
                         'dateOfBirth' => '2019-12-27',
                         'identification' => [
@@ -158,10 +160,11 @@ final class EntitiesTest extends TestCase
             naturalPerson: [
                 'address' => [
                     'city' => 'x',
+                    'country' => 'x',
                     'line1' => 'x',
+                    'line2' => 'x',
                     'state' => 'x',
                     'zip' => 'x',
-                    'line2' => 'x',
                 ],
                 'dateOfBirth' => '2019-12-27',
                 'identification' => [
@@ -218,10 +221,11 @@ final class EntitiesTest extends TestCase
                         'individual' => [
                             'address' => [
                                 'city' => 'x',
+                                'country' => 'x',
                                 'line1' => 'x',
+                                'line2' => 'x',
                                 'state' => 'x',
                                 'zip' => 'x',
-                                'line2' => 'x',
                             ],
                             'dateOfBirth' => '2019-12-27',
                             'identification' => [
@@ -256,10 +260,11 @@ final class EntitiesTest extends TestCase
                 'grantor' => [
                     'address' => [
                         'city' => 'x',
+                        'country' => 'x',
                         'line1' => 'x',
+                        'line2' => 'x',
                         'state' => 'x',
                         'zip' => 'x',
-                        'line2' => 'x',
                     ],
                     'dateOfBirth' => '2019-12-27',
                     'identification' => [

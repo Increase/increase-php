@@ -11,18 +11,20 @@ use Increase\Core\Contracts\BaseModel;
 use Increase\Entities\EntityCreateParams\Corporation\Address;
 use Increase\Entities\EntityCreateParams\Corporation\BeneficialOwner;
 use Increase\Entities\EntityCreateParams\Corporation\BeneficialOwnershipExemptionReason;
+use Increase\Entities\EntityCreateParams\Corporation\LegalIdentifier;
 
 /**
  * Details of the corporation entity to create. Required if `structure` is equal to `corporation`.
  *
  * @phpstan-import-type AddressShape from \Increase\Entities\EntityCreateParams\Corporation\Address
  * @phpstan-import-type BeneficialOwnerShape from \Increase\Entities\EntityCreateParams\Corporation\BeneficialOwner
+ * @phpstan-import-type LegalIdentifierShape from \Increase\Entities\EntityCreateParams\Corporation\LegalIdentifier
  *
  * @phpstan-type CorporationShape = array{
  *   address: Address|AddressShape,
  *   beneficialOwners: list<BeneficialOwner|BeneficialOwnerShape>,
+ *   legalIdentifier: LegalIdentifier|LegalIdentifierShape,
  *   name: string,
- *   taxIdentifier: string,
  *   beneficialOwnershipExemptionReason?: null|BeneficialOwnershipExemptionReason|value-of<BeneficialOwnershipExemptionReason>,
  *   email?: string|null,
  *   incorporationState?: string|null,
@@ -50,16 +52,16 @@ final class Corporation implements BaseModel
     public array $beneficialOwners;
 
     /**
+     * The legal identifier of the corporation. This is usually the Employer Identification Number (EIN).
+     */
+    #[Required('legal_identifier')]
+    public LegalIdentifier $legalIdentifier;
+
+    /**
      * The legal name of the corporation.
      */
     #[Required]
     public string $name;
-
-    /**
-     * The Employer Identification Number (EIN) for the corporation.
-     */
-    #[Required('tax_identifier')]
-    public string $taxIdentifier;
 
     /**
      * If the entity is exempt from the requirement to submit beneficial owners, provide the justification. If a reason is provided, you do not need to submit a list of beneficial owners.
@@ -102,7 +104,7 @@ final class Corporation implements BaseModel
      * To enforce required parameters use
      * ```
      * Corporation::with(
-     *   address: ..., beneficialOwners: ..., name: ..., taxIdentifier: ...
+     *   address: ..., beneficialOwners: ..., legalIdentifier: ..., name: ...
      * )
      * ```
      *
@@ -112,8 +114,8 @@ final class Corporation implements BaseModel
      * (new Corporation)
      *   ->withAddress(...)
      *   ->withBeneficialOwners(...)
+     *   ->withLegalIdentifier(...)
      *   ->withName(...)
-     *   ->withTaxIdentifier(...)
      * ```
      */
     public function __construct()
@@ -128,13 +130,14 @@ final class Corporation implements BaseModel
      *
      * @param Address|AddressShape $address
      * @param list<BeneficialOwner|BeneficialOwnerShape> $beneficialOwners
+     * @param LegalIdentifier|LegalIdentifierShape $legalIdentifier
      * @param BeneficialOwnershipExemptionReason|value-of<BeneficialOwnershipExemptionReason>|null $beneficialOwnershipExemptionReason
      */
     public static function with(
         Address|array $address,
         array $beneficialOwners,
+        LegalIdentifier|array $legalIdentifier,
         string $name,
-        string $taxIdentifier,
         BeneficialOwnershipExemptionReason|string|null $beneficialOwnershipExemptionReason = null,
         ?string $email = null,
         ?string $incorporationState = null,
@@ -145,8 +148,8 @@ final class Corporation implements BaseModel
 
         $self['address'] = $address;
         $self['beneficialOwners'] = $beneficialOwners;
+        $self['legalIdentifier'] = $legalIdentifier;
         $self['name'] = $name;
-        $self['taxIdentifier'] = $taxIdentifier;
 
         null !== $beneficialOwnershipExemptionReason && $self['beneficialOwnershipExemptionReason'] = $beneficialOwnershipExemptionReason;
         null !== $email && $self['email'] = $email;
@@ -184,23 +187,26 @@ final class Corporation implements BaseModel
     }
 
     /**
+     * The legal identifier of the corporation. This is usually the Employer Identification Number (EIN).
+     *
+     * @param LegalIdentifier|LegalIdentifierShape $legalIdentifier
+     */
+    public function withLegalIdentifier(
+        LegalIdentifier|array $legalIdentifier
+    ): self {
+        $self = clone $this;
+        $self['legalIdentifier'] = $legalIdentifier;
+
+        return $self;
+    }
+
+    /**
      * The legal name of the corporation.
      */
     public function withName(string $name): self
     {
         $self = clone $this;
         $self['name'] = $name;
-
-        return $self;
-    }
-
-    /**
-     * The Employer Identification Number (EIN) for the corporation.
-     */
-    public function withTaxIdentifier(string $taxIdentifier): self
-    {
-        $self = clone $this;
-        $self['taxIdentifier'] = $taxIdentifier;
 
         return $self;
     }

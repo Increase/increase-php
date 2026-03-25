@@ -91,8 +91,11 @@ final class EntitiesTest extends TestCase
                         'companyTitle' => 'CEO',
                     ],
                 ],
+                'legalIdentifier' => [
+                    'value' => '602214076',
+                    'category' => 'us_employer_identification_number',
+                ],
                 'name' => 'National Phonograph Company',
-                'taxIdentifier' => '602214076',
                 'beneficialOwnershipExemptionReason' => 'regulated_financial_institution',
                 'email' => 'dev@stainless.com',
                 'incorporationState' => 'NY',

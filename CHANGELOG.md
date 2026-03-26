@@ -1,5 +1,20 @@
 # Changelog
 
+## 0.89.0 (2026-03-26)
+
+Full Changelog: [v0.88.0...v0.89.0](https://github.com/Increase/increase-php/compare/v0.88.0...v0.89.0)
+
+### Features
+
+* **api:** api update ([cf7ac04](https://github.com/Increase/increase-php/commit/cf7ac04ef289eec609ca495323fc5eb2a3be246e))
+* **api:** api update ([532670a](https://github.com/Increase/increase-php/commit/532670a12564264a18058857e75e23e2b0da6fdd))
+* **api:** api update ([7d6f2a8](https://github.com/Increase/increase-php/commit/7d6f2a88036f0990dd4307f4e061980d3a9cb536))
+
+
+### Chores
+
+* **internal:** update multipart form array serialization ([65c3e42](https://github.com/Increase/increase-php/commit/65c3e426a61ce4a419a8e8007976372e21e77d66))
+
 ## 0.88.0 (2026-03-24)
 
 Full Changelog: [v0.87.0...v0.88.0](https://github.com/Increase/increase-php/compare/v0.87.0...v0.88.0)

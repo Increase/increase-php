@@ -8,19 +8,21 @@ use Increase\Core\Attributes\Optional;
 use Increase\Core\Concerns\SdkModel;
 use Increase\Core\Contracts\BaseModel;
 use Increase\Entities\EntityUpdateParams\Corporation\Address;
+use Increase\Entities\EntityUpdateParams\Corporation\LegalIdentifier;
 
 /**
  * Details of the corporation entity to update. If you specify this parameter and the entity is not a corporation, the request will fail.
  *
  * @phpstan-import-type AddressShape from \Increase\Entities\EntityUpdateParams\Corporation\Address
+ * @phpstan-import-type LegalIdentifierShape from \Increase\Entities\EntityUpdateParams\Corporation\LegalIdentifier
  *
  * @phpstan-type CorporationShape = array{
  *   address?: null|Address|AddressShape,
  *   email?: string|null,
  *   incorporationState?: string|null,
  *   industryCode?: string|null,
+ *   legalIdentifier?: null|LegalIdentifier|LegalIdentifierShape,
  *   name?: string|null,
- *   taxIdentifier?: string|null,
  * }
  */
 final class Corporation implements BaseModel
@@ -53,16 +55,16 @@ final class Corporation implements BaseModel
     public ?string $industryCode;
 
     /**
+     * The legal identifier of the corporation. This is usually the Employer Identification Number (EIN).
+     */
+    #[Optional('legal_identifier')]
+    public ?LegalIdentifier $legalIdentifier;
+
+    /**
      * The legal name of the corporation.
      */
     #[Optional]
     public ?string $name;
-
-    /**
-     * The Employer Identification Number (EIN) for the corporation.
-     */
-    #[Optional('tax_identifier')]
-    public ?string $taxIdentifier;
 
     public function __construct()
     {
@@ -75,14 +77,15 @@ final class Corporation implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param Address|AddressShape|null $address
+     * @param LegalIdentifier|LegalIdentifierShape|null $legalIdentifier
      */
     public static function with(
         Address|array|null $address = null,
         ?string $email = null,
         ?string $incorporationState = null,
         ?string $industryCode = null,
+        LegalIdentifier|array|null $legalIdentifier = null,
         ?string $name = null,
-        ?string $taxIdentifier = null,
     ): self {
         $self = new self;
 
@@ -90,8 +93,8 @@ final class Corporation implements BaseModel
         null !== $email && $self['email'] = $email;
         null !== $incorporationState && $self['incorporationState'] = $incorporationState;
         null !== $industryCode && $self['industryCode'] = $industryCode;
+        null !== $legalIdentifier && $self['legalIdentifier'] = $legalIdentifier;
         null !== $name && $self['name'] = $name;
-        null !== $taxIdentifier && $self['taxIdentifier'] = $taxIdentifier;
 
         return $self;
     }
@@ -143,23 +146,26 @@ final class Corporation implements BaseModel
     }
 
     /**
+     * The legal identifier of the corporation. This is usually the Employer Identification Number (EIN).
+     *
+     * @param LegalIdentifier|LegalIdentifierShape $legalIdentifier
+     */
+    public function withLegalIdentifier(
+        LegalIdentifier|array $legalIdentifier
+    ): self {
+        $self = clone $this;
+        $self['legalIdentifier'] = $legalIdentifier;
+
+        return $self;
+    }
+
+    /**
      * The legal name of the corporation.
      */
     public function withName(string $name): self
     {
         $self = clone $this;
         $self['name'] = $name;
-
-        return $self;
-    }
-
-    /**
-     * The Employer Identification Number (EIN) for the corporation.
-     */
-    public function withTaxIdentifier(string $taxIdentifier): self
-    {
-        $self = clone $this;
-        $self['taxIdentifier'] = $taxIdentifier;
 
         return $self;
     }

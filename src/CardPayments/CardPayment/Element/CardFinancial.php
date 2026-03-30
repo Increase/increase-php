@@ -11,6 +11,7 @@ use Increase\CardPayments\CardPayment\Element\CardFinancial\Direction;
 use Increase\CardPayments\CardPayment\Element\CardFinancial\NetworkDetails;
 use Increase\CardPayments\CardPayment\Element\CardFinancial\NetworkIdentifiers;
 use Increase\CardPayments\CardPayment\Element\CardFinancial\ProcessingCategory;
+use Increase\CardPayments\CardPayment\Element\CardFinancial\SchemeFee;
 use Increase\CardPayments\CardPayment\Element\CardFinancial\Type;
 use Increase\CardPayments\CardPayment\Element\CardFinancial\Verification;
 use Increase\Core\Attributes\Required;
@@ -23,6 +24,7 @@ use Increase\Core\Contracts\BaseModel;
  * @phpstan-import-type AdditionalAmountsShape from \Increase\CardPayments\CardPayment\Element\CardFinancial\AdditionalAmounts
  * @phpstan-import-type NetworkDetailsShape from \Increase\CardPayments\CardPayment\Element\CardFinancial\NetworkDetails
  * @phpstan-import-type NetworkIdentifiersShape from \Increase\CardPayments\CardPayment\Element\CardFinancial\NetworkIdentifiers
+ * @phpstan-import-type SchemeFeeShape from \Increase\CardPayments\CardPayment\Element\CardFinancial\SchemeFee
  * @phpstan-import-type VerificationShape from \Increase\CardPayments\CardPayment\Element\CardFinancial\Verification
  *
  * @phpstan-type CardFinancialShape = array{
@@ -49,6 +51,7 @@ use Increase\Core\Contracts\BaseModel;
  *   presentmentCurrency: string,
  *   processingCategory: ProcessingCategory|value-of<ProcessingCategory>,
  *   realTimeDecisionID: string|null,
+ *   schemeFees: list<SchemeFee|SchemeFeeShape>,
  *   terminalID: string|null,
  *   transactionID: string,
  *   type: Type|value-of<Type>,
@@ -207,6 +210,14 @@ final class CardFinancial implements BaseModel
     public ?string $realTimeDecisionID;
 
     /**
+     * The scheme fees associated with this card financial.
+     *
+     * @var list<SchemeFee> $schemeFees
+     */
+    #[Required('scheme_fees', list: SchemeFee::class)]
+    public array $schemeFees;
+
+    /**
      * The terminal identifier (commonly abbreviated as TID) of the terminal the card is transacting with.
      */
     #[Required('terminal_id')]
@@ -261,6 +272,7 @@ final class CardFinancial implements BaseModel
      *   presentmentCurrency: ...,
      *   processingCategory: ...,
      *   realTimeDecisionID: ...,
+     *   schemeFees: ...,
      *   terminalID: ...,
      *   transactionID: ...,
      *   type: ...,
@@ -295,6 +307,7 @@ final class CardFinancial implements BaseModel
      *   ->withPresentmentCurrency(...)
      *   ->withProcessingCategory(...)
      *   ->withRealTimeDecisionID(...)
+     *   ->withSchemeFees(...)
      *   ->withTerminalID(...)
      *   ->withTransactionID(...)
      *   ->withType(...)
@@ -318,6 +331,7 @@ final class CardFinancial implements BaseModel
      * @param NetworkDetails|NetworkDetailsShape $networkDetails
      * @param NetworkIdentifiers|NetworkIdentifiersShape $networkIdentifiers
      * @param ProcessingCategory|value-of<ProcessingCategory> $processingCategory
+     * @param list<SchemeFee|SchemeFeeShape> $schemeFees
      * @param Type|value-of<Type> $type
      * @param Verification|VerificationShape $verification
      */
@@ -345,6 +359,7 @@ final class CardFinancial implements BaseModel
         string $presentmentCurrency,
         ProcessingCategory|string $processingCategory,
         ?string $realTimeDecisionID,
+        array $schemeFees,
         ?string $terminalID,
         string $transactionID,
         Type|string $type,
@@ -375,6 +390,7 @@ final class CardFinancial implements BaseModel
         $self['presentmentCurrency'] = $presentmentCurrency;
         $self['processingCategory'] = $processingCategory;
         $self['realTimeDecisionID'] = $realTimeDecisionID;
+        $self['schemeFees'] = $schemeFees;
         $self['terminalID'] = $terminalID;
         $self['transactionID'] = $transactionID;
         $self['type'] = $type;
@@ -651,6 +667,19 @@ final class CardFinancial implements BaseModel
     {
         $self = clone $this;
         $self['realTimeDecisionID'] = $realTimeDecisionID;
+
+        return $self;
+    }
+
+    /**
+     * The scheme fees associated with this card financial.
+     *
+     * @param list<SchemeFee|SchemeFeeShape> $schemeFees
+     */
+    public function withSchemeFees(array $schemeFees): self
+    {
+        $self = clone $this;
+        $self['schemeFees'] = $schemeFees;
 
         return $self;
     }

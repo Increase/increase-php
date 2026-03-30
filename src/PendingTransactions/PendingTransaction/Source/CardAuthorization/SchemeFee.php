@@ -2,19 +2,19 @@
 
 declare(strict_types=1);
 
-namespace Increase\CardPayments\CardPayment;
+namespace Increase\PendingTransactions\PendingTransaction\Source\CardAuthorization;
 
-use Increase\CardPayments\CardPayment\SchemeFee\Currency;
-use Increase\CardPayments\CardPayment\SchemeFee\FeeType;
 use Increase\Core\Attributes\Required;
 use Increase\Core\Concerns\SdkModel;
 use Increase\Core\Contracts\BaseModel;
+use Increase\PendingTransactions\PendingTransaction\Source\CardAuthorization\SchemeFee\Currency;
+use Increase\PendingTransactions\PendingTransaction\Source\CardAuthorization\SchemeFee\FeeType;
 
 /**
  * @phpstan-type SchemeFeeShape = array{
  *   amount: string,
  *   createdAt: \DateTimeInterface,
- *   currency: Currency|value-of<Currency>,
+ *   currency: \Increase\PendingTransactions\PendingTransaction\Source\CardAuthorization\SchemeFee\Currency|value-of<\Increase\PendingTransactions\PendingTransaction\Source\CardAuthorization\SchemeFee\Currency>,
  *   feeType: FeeType|value-of<FeeType>,
  *   fixedComponent: string|null,
  *   variableRate: string|null,
@@ -42,7 +42,9 @@ final class SchemeFee implements BaseModel
      *
      * @var value-of<Currency> $currency
      */
-    #[Required(enum: Currency::class)]
+    #[Required(
+        enum: Currency::class,
+    )]
     public string $currency;
 
     /**
@@ -152,8 +154,9 @@ final class SchemeFee implements BaseModel
      *
      * @param Currency|value-of<Currency> $currency
      */
-    public function withCurrency(Currency|string $currency): self
-    {
+    public function withCurrency(
+        Currency|string $currency,
+    ): self {
         $self = clone $this;
         $self['currency'] = $currency;
 

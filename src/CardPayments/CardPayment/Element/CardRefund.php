@@ -9,6 +9,7 @@ use Increase\CardPayments\CardPayment\Element\CardRefund\Currency;
 use Increase\CardPayments\CardPayment\Element\CardRefund\Interchange;
 use Increase\CardPayments\CardPayment\Element\CardRefund\NetworkIdentifiers;
 use Increase\CardPayments\CardPayment\Element\CardRefund\PurchaseDetails;
+use Increase\CardPayments\CardPayment\Element\CardRefund\SchemeFee;
 use Increase\CardPayments\CardPayment\Element\CardRefund\Type;
 use Increase\Core\Attributes\Required;
 use Increase\Core\Concerns\SdkModel;
@@ -21,6 +22,7 @@ use Increase\Core\Contracts\BaseModel;
  * @phpstan-import-type InterchangeShape from \Increase\CardPayments\CardPayment\Element\CardRefund\Interchange
  * @phpstan-import-type NetworkIdentifiersShape from \Increase\CardPayments\CardPayment\Element\CardRefund\NetworkIdentifiers
  * @phpstan-import-type PurchaseDetailsShape from \Increase\CardPayments\CardPayment\Element\CardRefund\PurchaseDetails
+ * @phpstan-import-type SchemeFeeShape from \Increase\CardPayments\CardPayment\Element\CardRefund\SchemeFee
  *
  * @phpstan-type CardRefundShape = array{
  *   id: string,
@@ -40,6 +42,7 @@ use Increase\Core\Contracts\BaseModel;
  *   presentmentAmount: int,
  *   presentmentCurrency: string,
  *   purchaseDetails: null|PurchaseDetails|PurchaseDetailsShape,
+ *   schemeFees: list<SchemeFee|SchemeFeeShape>,
  *   transactionID: string,
  *   type: Type|value-of<Type>,
  * }
@@ -154,6 +157,14 @@ final class CardRefund implements BaseModel
     public ?PurchaseDetails $purchaseDetails;
 
     /**
+     * The scheme fees associated with this card refund.
+     *
+     * @var list<SchemeFee> $schemeFees
+     */
+    #[Required('scheme_fees', list: SchemeFee::class)]
+    public array $schemeFees;
+
+    /**
      * The identifier of the Transaction associated with this Transaction.
      */
     #[Required('transaction_id')]
@@ -190,6 +201,7 @@ final class CardRefund implements BaseModel
      *   presentmentAmount: ...,
      *   presentmentCurrency: ...,
      *   purchaseDetails: ...,
+     *   schemeFees: ...,
      *   transactionID: ...,
      *   type: ...,
      * )
@@ -216,6 +228,7 @@ final class CardRefund implements BaseModel
      *   ->withPresentmentAmount(...)
      *   ->withPresentmentCurrency(...)
      *   ->withPurchaseDetails(...)
+     *   ->withSchemeFees(...)
      *   ->withTransactionID(...)
      *   ->withType(...)
      * ```
@@ -235,6 +248,7 @@ final class CardRefund implements BaseModel
      * @param Interchange|InterchangeShape|null $interchange
      * @param NetworkIdentifiers|NetworkIdentifiersShape $networkIdentifiers
      * @param PurchaseDetails|PurchaseDetailsShape|null $purchaseDetails
+     * @param list<SchemeFee|SchemeFeeShape> $schemeFees
      * @param Type|value-of<Type> $type
      */
     public static function with(
@@ -255,6 +269,7 @@ final class CardRefund implements BaseModel
         int $presentmentAmount,
         string $presentmentCurrency,
         PurchaseDetails|array|null $purchaseDetails,
+        array $schemeFees,
         string $transactionID,
         Type|string $type,
     ): self {
@@ -277,6 +292,7 @@ final class CardRefund implements BaseModel
         $self['presentmentAmount'] = $presentmentAmount;
         $self['presentmentCurrency'] = $presentmentCurrency;
         $self['purchaseDetails'] = $purchaseDetails;
+        $self['schemeFees'] = $schemeFees;
         $self['transactionID'] = $transactionID;
         $self['type'] = $type;
 
@@ -478,6 +494,19 @@ final class CardRefund implements BaseModel
     ): self {
         $self = clone $this;
         $self['purchaseDetails'] = $purchaseDetails;
+
+        return $self;
+    }
+
+    /**
+     * The scheme fees associated with this card refund.
+     *
+     * @param list<SchemeFee|SchemeFeeShape> $schemeFees
+     */
+    public function withSchemeFees(array $schemeFees): self
+    {
+        $self = clone $this;
+        $self['schemeFees'] = $schemeFees;
 
         return $self;
     }

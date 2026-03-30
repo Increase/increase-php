@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Increase\CardPayments;
 
 use Increase\CardPayments\CardPayment\Element;
-use Increase\CardPayments\CardPayment\SchemeFee;
 use Increase\CardPayments\CardPayment\State;
 use Increase\CardPayments\CardPayment\Type;
 use Increase\Core\Attributes\Required;
@@ -16,7 +15,6 @@ use Increase\Core\Contracts\BaseModel;
  * Card Payments group together interactions related to a single card payment, such as an authorization and its corresponding settlement.
  *
  * @phpstan-import-type ElementShape from \Increase\CardPayments\CardPayment\Element
- * @phpstan-import-type SchemeFeeShape from \Increase\CardPayments\CardPayment\SchemeFee
  * @phpstan-import-type StateShape from \Increase\CardPayments\CardPayment\State
  *
  * @phpstan-type CardPaymentShape = array{
@@ -27,7 +25,6 @@ use Increase\Core\Contracts\BaseModel;
  *   digitalWalletTokenID: string|null,
  *   elements: list<Element|ElementShape>,
  *   physicalCardID: string|null,
- *   schemeFees: list<SchemeFee|SchemeFeeShape>,
  *   state: State|StateShape,
  *   type: Type|value-of<Type>,
  * }
@@ -82,14 +79,6 @@ final class CardPayment implements BaseModel
     public ?string $physicalCardID;
 
     /**
-     * The scheme fees associated with this card payment.
-     *
-     * @var list<SchemeFee> $schemeFees
-     */
-    #[Required('scheme_fees', list: SchemeFee::class)]
-    public array $schemeFees;
-
-    /**
      * The summarized state of this card payment.
      */
     #[Required]
@@ -116,7 +105,6 @@ final class CardPayment implements BaseModel
      *   digitalWalletTokenID: ...,
      *   elements: ...,
      *   physicalCardID: ...,
-     *   schemeFees: ...,
      *   state: ...,
      *   type: ...,
      * )
@@ -133,7 +121,6 @@ final class CardPayment implements BaseModel
      *   ->withDigitalWalletTokenID(...)
      *   ->withElements(...)
      *   ->withPhysicalCardID(...)
-     *   ->withSchemeFees(...)
      *   ->withState(...)
      *   ->withType(...)
      * ```
@@ -149,7 +136,6 @@ final class CardPayment implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param list<Element|ElementShape> $elements
-     * @param list<SchemeFee|SchemeFeeShape> $schemeFees
      * @param State|StateShape $state
      * @param Type|value-of<Type> $type
      */
@@ -161,7 +147,6 @@ final class CardPayment implements BaseModel
         ?string $digitalWalletTokenID,
         array $elements,
         ?string $physicalCardID,
-        array $schemeFees,
         State|array $state,
         Type|string $type,
     ): self {
@@ -174,7 +159,6 @@ final class CardPayment implements BaseModel
         $self['digitalWalletTokenID'] = $digitalWalletTokenID;
         $self['elements'] = $elements;
         $self['physicalCardID'] = $physicalCardID;
-        $self['schemeFees'] = $schemeFees;
         $self['state'] = $state;
         $self['type'] = $type;
 
@@ -257,19 +241,6 @@ final class CardPayment implements BaseModel
     {
         $self = clone $this;
         $self['physicalCardID'] = $physicalCardID;
-
-        return $self;
-    }
-
-    /**
-     * The scheme fees associated with this card payment.
-     *
-     * @param list<SchemeFee|SchemeFeeShape> $schemeFees
-     */
-    public function withSchemeFees(array $schemeFees): self
-    {
-        $self = clone $this;
-        $self['schemeFees'] = $schemeFees;
 
         return $self;
     }

@@ -9,6 +9,7 @@ use Increase\CardPayments\CardPayment\Element\CardIncrement\AdditionalAmounts;
 use Increase\CardPayments\CardPayment\Element\CardIncrement\Currency;
 use Increase\CardPayments\CardPayment\Element\CardIncrement\Network;
 use Increase\CardPayments\CardPayment\Element\CardIncrement\NetworkIdentifiers;
+use Increase\CardPayments\CardPayment\Element\CardIncrement\SchemeFee;
 use Increase\CardPayments\CardPayment\Element\CardIncrement\Type;
 use Increase\Core\Attributes\Required;
 use Increase\Core\Concerns\SdkModel;
@@ -19,6 +20,7 @@ use Increase\Core\Contracts\BaseModel;
  *
  * @phpstan-import-type AdditionalAmountsShape from \Increase\CardPayments\CardPayment\Element\CardIncrement\AdditionalAmounts
  * @phpstan-import-type NetworkIdentifiersShape from \Increase\CardPayments\CardPayment\Element\CardIncrement\NetworkIdentifiers
+ * @phpstan-import-type SchemeFeeShape from \Increase\CardPayments\CardPayment\Element\CardIncrement\SchemeFee
  *
  * @phpstan-type CardIncrementShape = array{
  *   id: string,
@@ -34,6 +36,7 @@ use Increase\Core\Contracts\BaseModel;
  *   presentmentAmount: int,
  *   presentmentCurrency: string,
  *   realTimeDecisionID: string|null,
+ *   schemeFees: list<SchemeFee|SchemeFeeShape>,
  *   type: Type|value-of<Type>,
  *   updatedAuthorizationAmount: int,
  * }
@@ -128,6 +131,14 @@ final class CardIncrement implements BaseModel
     public ?string $realTimeDecisionID;
 
     /**
+     * The scheme fees associated with this card increment.
+     *
+     * @var list<SchemeFee> $schemeFees
+     */
+    #[Required('scheme_fees', list: SchemeFee::class)]
+    public array $schemeFees;
+
+    /**
      * A constant representing the object's type. For this resource it will always be `card_increment`.
      *
      * @var value-of<Type> $type
@@ -160,6 +171,7 @@ final class CardIncrement implements BaseModel
      *   presentmentAmount: ...,
      *   presentmentCurrency: ...,
      *   realTimeDecisionID: ...,
+     *   schemeFees: ...,
      *   type: ...,
      *   updatedAuthorizationAmount: ...,
      * )
@@ -182,6 +194,7 @@ final class CardIncrement implements BaseModel
      *   ->withPresentmentAmount(...)
      *   ->withPresentmentCurrency(...)
      *   ->withRealTimeDecisionID(...)
+     *   ->withSchemeFees(...)
      *   ->withType(...)
      *   ->withUpdatedAuthorizationAmount(...)
      * ```
@@ -201,6 +214,7 @@ final class CardIncrement implements BaseModel
      * @param Currency|value-of<Currency> $currency
      * @param Network|value-of<Network> $network
      * @param NetworkIdentifiers|NetworkIdentifiersShape $networkIdentifiers
+     * @param list<SchemeFee|SchemeFeeShape> $schemeFees
      * @param Type|value-of<Type> $type
      */
     public static function with(
@@ -217,6 +231,7 @@ final class CardIncrement implements BaseModel
         int $presentmentAmount,
         string $presentmentCurrency,
         ?string $realTimeDecisionID,
+        array $schemeFees,
         Type|string $type,
         int $updatedAuthorizationAmount,
     ): self {
@@ -235,6 +250,7 @@ final class CardIncrement implements BaseModel
         $self['presentmentAmount'] = $presentmentAmount;
         $self['presentmentCurrency'] = $presentmentCurrency;
         $self['realTimeDecisionID'] = $realTimeDecisionID;
+        $self['schemeFees'] = $schemeFees;
         $self['type'] = $type;
         $self['updatedAuthorizationAmount'] = $updatedAuthorizationAmount;
 
@@ -393,6 +409,19 @@ final class CardIncrement implements BaseModel
     {
         $self = clone $this;
         $self['realTimeDecisionID'] = $realTimeDecisionID;
+
+        return $self;
+    }
+
+    /**
+     * The scheme fees associated with this card increment.
+     *
+     * @param list<SchemeFee|SchemeFeeShape> $schemeFees
+     */
+    public function withSchemeFees(array $schemeFees): self
+    {
+        $self = clone $this;
+        $self['schemeFees'] = $schemeFees;
 
         return $self;
     }

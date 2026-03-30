@@ -8,6 +8,7 @@ use Increase\CardPayments\CardPayment\Element\CardReversal\Currency;
 use Increase\CardPayments\CardPayment\Element\CardReversal\Network;
 use Increase\CardPayments\CardPayment\Element\CardReversal\NetworkIdentifiers;
 use Increase\CardPayments\CardPayment\Element\CardReversal\ReversalReason;
+use Increase\CardPayments\CardPayment\Element\CardReversal\SchemeFee;
 use Increase\CardPayments\CardPayment\Element\CardReversal\Type;
 use Increase\Core\Attributes\Required;
 use Increase\Core\Concerns\SdkModel;
@@ -17,6 +18,7 @@ use Increase\Core\Contracts\BaseModel;
  * A Card Reversal object. This field will be present in the JSON response if and only if `category` is equal to `card_reversal`. Card Reversals cancel parts of or the entirety of an existing Card Authorization.
  *
  * @phpstan-import-type NetworkIdentifiersShape from \Increase\CardPayments\CardPayment\Element\CardReversal\NetworkIdentifiers
+ * @phpstan-import-type SchemeFeeShape from \Increase\CardPayments\CardPayment\Element\CardReversal\SchemeFee
  *
  * @phpstan-type CardReversalShape = array{
  *   id: string,
@@ -36,6 +38,7 @@ use Increase\Core\Contracts\BaseModel;
  *   reversalAmount: int,
  *   reversalPresentmentAmount: int,
  *   reversalReason: null|ReversalReason|value-of<ReversalReason>,
+ *   schemeFees: list<SchemeFee|SchemeFeeShape>,
  *   terminalID: string|null,
  *   type: Type|value-of<Type>,
  *   updatedAuthorizationAmount: int,
@@ -156,6 +159,14 @@ final class CardReversal implements BaseModel
     public ?string $reversalReason;
 
     /**
+     * The scheme fees associated with this card reversal.
+     *
+     * @var list<SchemeFee> $schemeFees
+     */
+    #[Required('scheme_fees', list: SchemeFee::class)]
+    public array $schemeFees;
+
+    /**
      * The terminal identifier (commonly abbreviated as TID) of the terminal the card is transacting with.
      */
     #[Required('terminal_id')]
@@ -204,6 +215,7 @@ final class CardReversal implements BaseModel
      *   reversalAmount: ...,
      *   reversalPresentmentAmount: ...,
      *   reversalReason: ...,
+     *   schemeFees: ...,
      *   terminalID: ...,
      *   type: ...,
      *   updatedAuthorizationAmount: ...,
@@ -232,6 +244,7 @@ final class CardReversal implements BaseModel
      *   ->withReversalAmount(...)
      *   ->withReversalPresentmentAmount(...)
      *   ->withReversalReason(...)
+     *   ->withSchemeFees(...)
      *   ->withTerminalID(...)
      *   ->withType(...)
      *   ->withUpdatedAuthorizationAmount(...)
@@ -252,6 +265,7 @@ final class CardReversal implements BaseModel
      * @param Network|value-of<Network> $network
      * @param NetworkIdentifiers|NetworkIdentifiersShape $networkIdentifiers
      * @param ReversalReason|value-of<ReversalReason>|null $reversalReason
+     * @param list<SchemeFee|SchemeFeeShape> $schemeFees
      * @param Type|value-of<Type> $type
      */
     public static function with(
@@ -272,6 +286,7 @@ final class CardReversal implements BaseModel
         int $reversalAmount,
         int $reversalPresentmentAmount,
         ReversalReason|string|null $reversalReason,
+        array $schemeFees,
         ?string $terminalID,
         Type|string $type,
         int $updatedAuthorizationAmount,
@@ -296,6 +311,7 @@ final class CardReversal implements BaseModel
         $self['reversalAmount'] = $reversalAmount;
         $self['reversalPresentmentAmount'] = $reversalPresentmentAmount;
         $self['reversalReason'] = $reversalReason;
+        $self['schemeFees'] = $schemeFees;
         $self['terminalID'] = $terminalID;
         $self['type'] = $type;
         $self['updatedAuthorizationAmount'] = $updatedAuthorizationAmount;
@@ -499,6 +515,19 @@ final class CardReversal implements BaseModel
     ): self {
         $self = clone $this;
         $self['reversalReason'] = $reversalReason;
+
+        return $self;
+    }
+
+    /**
+     * The scheme fees associated with this card reversal.
+     *
+     * @param list<SchemeFee|SchemeFeeShape> $schemeFees
+     */
+    public function withSchemeFees(array $schemeFees): self
+    {
+        $self = clone $this;
+        $self['schemeFees'] = $schemeFees;
 
         return $self;
     }

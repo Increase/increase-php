@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Increase\CardPayments\CardPayment\SchemeFee;
+namespace Increase\CardPayments\CardPayment\Element\CardSettlement\SchemeFee;
 
 /**
  * The type of fee being assessed.

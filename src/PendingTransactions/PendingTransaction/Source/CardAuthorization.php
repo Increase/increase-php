@@ -14,6 +14,7 @@ use Increase\PendingTransactions\PendingTransaction\Source\CardAuthorization\Dir
 use Increase\PendingTransactions\PendingTransaction\Source\CardAuthorization\NetworkDetails;
 use Increase\PendingTransactions\PendingTransaction\Source\CardAuthorization\NetworkIdentifiers;
 use Increase\PendingTransactions\PendingTransaction\Source\CardAuthorization\ProcessingCategory;
+use Increase\PendingTransactions\PendingTransaction\Source\CardAuthorization\SchemeFee;
 use Increase\PendingTransactions\PendingTransaction\Source\CardAuthorization\Type;
 use Increase\PendingTransactions\PendingTransaction\Source\CardAuthorization\Verification;
 
@@ -23,6 +24,7 @@ use Increase\PendingTransactions\PendingTransaction\Source\CardAuthorization\Ver
  * @phpstan-import-type AdditionalAmountsShape from \Increase\PendingTransactions\PendingTransaction\Source\CardAuthorization\AdditionalAmounts
  * @phpstan-import-type NetworkDetailsShape from \Increase\PendingTransactions\PendingTransaction\Source\CardAuthorization\NetworkDetails
  * @phpstan-import-type NetworkIdentifiersShape from \Increase\PendingTransactions\PendingTransaction\Source\CardAuthorization\NetworkIdentifiers
+ * @phpstan-import-type SchemeFeeShape from \Increase\PendingTransactions\PendingTransaction\Source\CardAuthorization\SchemeFee
  * @phpstan-import-type VerificationShape from \Increase\PendingTransactions\PendingTransaction\Source\CardAuthorization\Verification
  *
  * @phpstan-type CardAuthorizationShape = array{
@@ -51,6 +53,7 @@ use Increase\PendingTransactions\PendingTransaction\Source\CardAuthorization\Ver
  *   presentmentCurrency: string,
  *   processingCategory: ProcessingCategory|value-of<ProcessingCategory>,
  *   realTimeDecisionID: string|null,
+ *   schemeFees: list<SchemeFee|SchemeFeeShape>,
  *   terminalID: string|null,
  *   type: Type|value-of<Type>,
  *   verification: Verification|VerificationShape,
@@ -220,6 +223,14 @@ final class CardAuthorization implements BaseModel
     public ?string $realTimeDecisionID;
 
     /**
+     * The scheme fees associated with this card authorization.
+     *
+     * @var list<SchemeFee> $schemeFees
+     */
+    #[Required('scheme_fees', list: SchemeFee::class)]
+    public array $schemeFees;
+
+    /**
      * The terminal identifier (commonly abbreviated as TID) of the terminal the card is transacting with.
      */
     #[Required('terminal_id')]
@@ -270,6 +281,7 @@ final class CardAuthorization implements BaseModel
      *   presentmentCurrency: ...,
      *   processingCategory: ...,
      *   realTimeDecisionID: ...,
+     *   schemeFees: ...,
      *   terminalID: ...,
      *   type: ...,
      *   verification: ...,
@@ -305,6 +317,7 @@ final class CardAuthorization implements BaseModel
      *   ->withPresentmentCurrency(...)
      *   ->withProcessingCategory(...)
      *   ->withRealTimeDecisionID(...)
+     *   ->withSchemeFees(...)
      *   ->withTerminalID(...)
      *   ->withType(...)
      *   ->withVerification(...)
@@ -327,6 +340,7 @@ final class CardAuthorization implements BaseModel
      * @param NetworkDetails|NetworkDetailsShape $networkDetails
      * @param NetworkIdentifiers|NetworkIdentifiersShape $networkIdentifiers
      * @param ProcessingCategory|value-of<ProcessingCategory> $processingCategory
+     * @param list<SchemeFee|SchemeFeeShape> $schemeFees
      * @param Type|value-of<Type> $type
      * @param Verification|VerificationShape $verification
      */
@@ -356,6 +370,7 @@ final class CardAuthorization implements BaseModel
         string $presentmentCurrency,
         ProcessingCategory|string $processingCategory,
         ?string $realTimeDecisionID,
+        array $schemeFees,
         ?string $terminalID,
         Type|string $type,
         Verification|array $verification,
@@ -387,6 +402,7 @@ final class CardAuthorization implements BaseModel
         $self['presentmentCurrency'] = $presentmentCurrency;
         $self['processingCategory'] = $processingCategory;
         $self['realTimeDecisionID'] = $realTimeDecisionID;
+        $self['schemeFees'] = $schemeFees;
         $self['terminalID'] = $terminalID;
         $self['type'] = $type;
         $self['verification'] = $verification;
@@ -685,6 +701,19 @@ final class CardAuthorization implements BaseModel
     {
         $self = clone $this;
         $self['realTimeDecisionID'] = $realTimeDecisionID;
+
+        return $self;
+    }
+
+    /**
+     * The scheme fees associated with this card authorization.
+     *
+     * @param list<SchemeFee|SchemeFeeShape> $schemeFees
+     */
+    public function withSchemeFees(array $schemeFees): self
+    {
+        $self = clone $this;
+        $self['schemeFees'] = $schemeFees;
 
         return $self;
     }

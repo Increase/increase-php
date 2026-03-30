@@ -13,6 +13,7 @@ use Increase\Transactions\Transaction\Source\CardSettlement\Interchange;
 use Increase\Transactions\Transaction\Source\CardSettlement\Network;
 use Increase\Transactions\Transaction\Source\CardSettlement\NetworkIdentifiers;
 use Increase\Transactions\Transaction\Source\CardSettlement\PurchaseDetails;
+use Increase\Transactions\Transaction\Source\CardSettlement\SchemeFee;
 use Increase\Transactions\Transaction\Source\CardSettlement\Surcharge;
 use Increase\Transactions\Transaction\Source\CardSettlement\Type;
 
@@ -23,6 +24,7 @@ use Increase\Transactions\Transaction\Source\CardSettlement\Type;
  * @phpstan-import-type InterchangeShape from \Increase\Transactions\Transaction\Source\CardSettlement\Interchange
  * @phpstan-import-type NetworkIdentifiersShape from \Increase\Transactions\Transaction\Source\CardSettlement\NetworkIdentifiers
  * @phpstan-import-type PurchaseDetailsShape from \Increase\Transactions\Transaction\Source\CardSettlement\PurchaseDetails
+ * @phpstan-import-type SchemeFeeShape from \Increase\Transactions\Transaction\Source\CardSettlement\SchemeFee
  * @phpstan-import-type SurchargeShape from \Increase\Transactions\Transaction\Source\CardSettlement\Surcharge
  *
  * @phpstan-type CardSettlementShape = array{
@@ -46,6 +48,7 @@ use Increase\Transactions\Transaction\Source\CardSettlement\Type;
  *   presentmentAmount: int,
  *   presentmentCurrency: string,
  *   purchaseDetails: null|PurchaseDetails|PurchaseDetailsShape,
+ *   schemeFees: list<SchemeFee|SchemeFeeShape>,
  *   surcharge: null|Surcharge|SurchargeShape,
  *   transactionID: string,
  *   type: Type|value-of<Type>,
@@ -181,6 +184,14 @@ final class CardSettlement implements BaseModel
     public ?PurchaseDetails $purchaseDetails;
 
     /**
+     * The scheme fees associated with this card settlement.
+     *
+     * @var list<SchemeFee> $schemeFees
+     */
+    #[Required('scheme_fees', list: SchemeFee::class)]
+    public array $schemeFees;
+
+    /**
      * Surcharge amount details, if applicable. The amount is positive if the surcharge is added to the overall transaction amount (surcharge), and negative if the surcharge is deducted from the overall transaction amount (discount).
      */
     #[Required]
@@ -226,6 +237,7 @@ final class CardSettlement implements BaseModel
      *   presentmentAmount: ...,
      *   presentmentCurrency: ...,
      *   purchaseDetails: ...,
+     *   schemeFees: ...,
      *   surcharge: ...,
      *   transactionID: ...,
      *   type: ...,
@@ -256,6 +268,7 @@ final class CardSettlement implements BaseModel
      *   ->withPresentmentAmount(...)
      *   ->withPresentmentCurrency(...)
      *   ->withPurchaseDetails(...)
+     *   ->withSchemeFees(...)
      *   ->withSurcharge(...)
      *   ->withTransactionID(...)
      *   ->withType(...)
@@ -277,6 +290,7 @@ final class CardSettlement implements BaseModel
      * @param Network|value-of<Network> $network
      * @param NetworkIdentifiers|NetworkIdentifiersShape $networkIdentifiers
      * @param PurchaseDetails|PurchaseDetailsShape|null $purchaseDetails
+     * @param list<SchemeFee|SchemeFeeShape> $schemeFees
      * @param Surcharge|SurchargeShape|null $surcharge
      * @param Type|value-of<Type> $type
      */
@@ -301,6 +315,7 @@ final class CardSettlement implements BaseModel
         int $presentmentAmount,
         string $presentmentCurrency,
         PurchaseDetails|array|null $purchaseDetails,
+        array $schemeFees,
         Surcharge|array|null $surcharge,
         string $transactionID,
         Type|string $type,
@@ -327,6 +342,7 @@ final class CardSettlement implements BaseModel
         $self['presentmentAmount'] = $presentmentAmount;
         $self['presentmentCurrency'] = $presentmentCurrency;
         $self['purchaseDetails'] = $purchaseDetails;
+        $self['schemeFees'] = $schemeFees;
         $self['surcharge'] = $surcharge;
         $self['transactionID'] = $transactionID;
         $self['type'] = $type;
@@ -565,6 +581,19 @@ final class CardSettlement implements BaseModel
     ): self {
         $self = clone $this;
         $self['purchaseDetails'] = $purchaseDetails;
+
+        return $self;
+    }
+
+    /**
+     * The scheme fees associated with this card settlement.
+     *
+     * @param list<SchemeFee|SchemeFeeShape> $schemeFees
+     */
+    public function withSchemeFees(array $schemeFees): self
+    {
+        $self = clone $this;
+        $self['schemeFees'] = $schemeFees;
 
         return $self;
     }

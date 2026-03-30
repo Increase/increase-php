@@ -7,6 +7,7 @@ namespace Increase\CardPayments\CardPayment\Element;
 use Increase\CardPayments\CardPayment\Element\CardFuelConfirmation\Currency;
 use Increase\CardPayments\CardPayment\Element\CardFuelConfirmation\Network;
 use Increase\CardPayments\CardPayment\Element\CardFuelConfirmation\NetworkIdentifiers;
+use Increase\CardPayments\CardPayment\Element\CardFuelConfirmation\SchemeFee;
 use Increase\CardPayments\CardPayment\Element\CardFuelConfirmation\Type;
 use Increase\Core\Attributes\Required;
 use Increase\Core\Concerns\SdkModel;
@@ -16,6 +17,7 @@ use Increase\Core\Contracts\BaseModel;
  * A Card Fuel Confirmation object. This field will be present in the JSON response if and only if `category` is equal to `card_fuel_confirmation`. Card Fuel Confirmations update the amount of a Card Authorization after a fuel pump transaction is completed.
  *
  * @phpstan-import-type NetworkIdentifiersShape from \Increase\CardPayments\CardPayment\Element\CardFuelConfirmation\NetworkIdentifiers
+ * @phpstan-import-type SchemeFeeShape from \Increase\CardPayments\CardPayment\Element\CardFuelConfirmation\SchemeFee
  *
  * @phpstan-type CardFuelConfirmationShape = array{
  *   id: string,
@@ -24,6 +26,7 @@ use Increase\Core\Contracts\BaseModel;
  *   network: Network|value-of<Network>,
  *   networkIdentifiers: NetworkIdentifiers|NetworkIdentifiersShape,
  *   pendingTransactionID: string|null,
+ *   schemeFees: list<SchemeFee|SchemeFeeShape>,
  *   type: Type|value-of<Type>,
  *   updatedAuthorizationAmount: int,
  * }
@@ -74,6 +77,14 @@ final class CardFuelConfirmation implements BaseModel
     public ?string $pendingTransactionID;
 
     /**
+     * The scheme fees associated with this card fuel confirmation.
+     *
+     * @var list<SchemeFee> $schemeFees
+     */
+    #[Required('scheme_fees', list: SchemeFee::class)]
+    public array $schemeFees;
+
+    /**
      * A constant representing the object's type. For this resource it will always be `card_fuel_confirmation`.
      *
      * @var value-of<Type> $type
@@ -99,6 +110,7 @@ final class CardFuelConfirmation implements BaseModel
      *   network: ...,
      *   networkIdentifiers: ...,
      *   pendingTransactionID: ...,
+     *   schemeFees: ...,
      *   type: ...,
      *   updatedAuthorizationAmount: ...,
      * )
@@ -114,6 +126,7 @@ final class CardFuelConfirmation implements BaseModel
      *   ->withNetwork(...)
      *   ->withNetworkIdentifiers(...)
      *   ->withPendingTransactionID(...)
+     *   ->withSchemeFees(...)
      *   ->withType(...)
      *   ->withUpdatedAuthorizationAmount(...)
      * ```
@@ -131,6 +144,7 @@ final class CardFuelConfirmation implements BaseModel
      * @param Currency|value-of<Currency> $currency
      * @param Network|value-of<Network> $network
      * @param NetworkIdentifiers|NetworkIdentifiersShape $networkIdentifiers
+     * @param list<SchemeFee|SchemeFeeShape> $schemeFees
      * @param Type|value-of<Type> $type
      */
     public static function with(
@@ -140,6 +154,7 @@ final class CardFuelConfirmation implements BaseModel
         Network|string $network,
         NetworkIdentifiers|array $networkIdentifiers,
         ?string $pendingTransactionID,
+        array $schemeFees,
         Type|string $type,
         int $updatedAuthorizationAmount,
     ): self {
@@ -151,6 +166,7 @@ final class CardFuelConfirmation implements BaseModel
         $self['network'] = $network;
         $self['networkIdentifiers'] = $networkIdentifiers;
         $self['pendingTransactionID'] = $pendingTransactionID;
+        $self['schemeFees'] = $schemeFees;
         $self['type'] = $type;
         $self['updatedAuthorizationAmount'] = $updatedAuthorizationAmount;
 
@@ -227,6 +243,19 @@ final class CardFuelConfirmation implements BaseModel
     ): self {
         $self = clone $this;
         $self['pendingTransactionID'] = $pendingTransactionID;
+
+        return $self;
+    }
+
+    /**
+     * The scheme fees associated with this card fuel confirmation.
+     *
+     * @param list<SchemeFee|SchemeFeeShape> $schemeFees
+     */
+    public function withSchemeFees(array $schemeFees): self
+    {
+        $self = clone $this;
+        $self['schemeFees'] = $schemeFees;
 
         return $self;
     }

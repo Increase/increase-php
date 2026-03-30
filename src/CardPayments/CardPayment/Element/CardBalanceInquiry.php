@@ -8,6 +8,7 @@ use Increase\CardPayments\CardPayment\Element\CardBalanceInquiry\AdditionalAmoun
 use Increase\CardPayments\CardPayment\Element\CardBalanceInquiry\Currency;
 use Increase\CardPayments\CardPayment\Element\CardBalanceInquiry\NetworkDetails;
 use Increase\CardPayments\CardPayment\Element\CardBalanceInquiry\NetworkIdentifiers;
+use Increase\CardPayments\CardPayment\Element\CardBalanceInquiry\SchemeFee;
 use Increase\CardPayments\CardPayment\Element\CardBalanceInquiry\Type;
 use Increase\CardPayments\CardPayment\Element\CardBalanceInquiry\Verification;
 use Increase\Core\Attributes\Required;
@@ -20,6 +21,7 @@ use Increase\Core\Contracts\BaseModel;
  * @phpstan-import-type AdditionalAmountsShape from \Increase\CardPayments\CardPayment\Element\CardBalanceInquiry\AdditionalAmounts
  * @phpstan-import-type NetworkDetailsShape from \Increase\CardPayments\CardPayment\Element\CardBalanceInquiry\NetworkDetails
  * @phpstan-import-type NetworkIdentifiersShape from \Increase\CardPayments\CardPayment\Element\CardBalanceInquiry\NetworkIdentifiers
+ * @phpstan-import-type SchemeFeeShape from \Increase\CardPayments\CardPayment\Element\CardBalanceInquiry\SchemeFee
  * @phpstan-import-type VerificationShape from \Increase\CardPayments\CardPayment\Element\CardBalanceInquiry\Verification
  *
  * @phpstan-type CardBalanceInquiryShape = array{
@@ -41,6 +43,7 @@ use Increase\Core\Contracts\BaseModel;
  *   networkRiskScore: int|null,
  *   physicalCardID: string|null,
  *   realTimeDecisionID: string|null,
+ *   schemeFees: list<SchemeFee|SchemeFeeShape>,
  *   terminalID: string|null,
  *   type: Type|value-of<Type>,
  *   verification: Verification|VerificationShape,
@@ -162,6 +165,14 @@ final class CardBalanceInquiry implements BaseModel
     public ?string $realTimeDecisionID;
 
     /**
+     * The scheme fees associated with this card balance inquiry.
+     *
+     * @var list<SchemeFee> $schemeFees
+     */
+    #[Required('scheme_fees', list: SchemeFee::class)]
+    public array $schemeFees;
+
+    /**
      * The terminal identifier (commonly abbreviated as TID) of the terminal the card is transacting with.
      */
     #[Required('terminal_id')]
@@ -205,6 +216,7 @@ final class CardBalanceInquiry implements BaseModel
      *   networkRiskScore: ...,
      *   physicalCardID: ...,
      *   realTimeDecisionID: ...,
+     *   schemeFees: ...,
      *   terminalID: ...,
      *   type: ...,
      *   verification: ...,
@@ -233,6 +245,7 @@ final class CardBalanceInquiry implements BaseModel
      *   ->withNetworkRiskScore(...)
      *   ->withPhysicalCardID(...)
      *   ->withRealTimeDecisionID(...)
+     *   ->withSchemeFees(...)
      *   ->withTerminalID(...)
      *   ->withType(...)
      *   ->withVerification(...)
@@ -252,6 +265,7 @@ final class CardBalanceInquiry implements BaseModel
      * @param Currency|value-of<Currency> $currency
      * @param NetworkDetails|NetworkDetailsShape $networkDetails
      * @param NetworkIdentifiers|NetworkIdentifiersShape $networkIdentifiers
+     * @param list<SchemeFee|SchemeFeeShape> $schemeFees
      * @param Type|value-of<Type> $type
      * @param Verification|VerificationShape $verification
      */
@@ -274,6 +288,7 @@ final class CardBalanceInquiry implements BaseModel
         ?int $networkRiskScore,
         ?string $physicalCardID,
         ?string $realTimeDecisionID,
+        array $schemeFees,
         ?string $terminalID,
         Type|string $type,
         Verification|array $verification,
@@ -298,6 +313,7 @@ final class CardBalanceInquiry implements BaseModel
         $self['networkRiskScore'] = $networkRiskScore;
         $self['physicalCardID'] = $physicalCardID;
         $self['realTimeDecisionID'] = $realTimeDecisionID;
+        $self['schemeFees'] = $schemeFees;
         $self['terminalID'] = $terminalID;
         $self['type'] = $type;
         $self['verification'] = $verification;
@@ -511,6 +527,19 @@ final class CardBalanceInquiry implements BaseModel
     {
         $self = clone $this;
         $self['realTimeDecisionID'] = $realTimeDecisionID;
+
+        return $self;
+    }
+
+    /**
+     * The scheme fees associated with this card balance inquiry.
+     *
+     * @param list<SchemeFee|SchemeFeeShape> $schemeFees
+     */
+    public function withSchemeFees(array $schemeFees): self
+    {
+        $self = clone $this;
+        $self['schemeFees'] = $schemeFees;
 
         return $self;
     }

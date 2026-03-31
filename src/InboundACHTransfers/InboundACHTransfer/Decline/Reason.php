@@ -21,11 +21,11 @@ enum Reason: string
 
     case TRANSACTION_NOT_ALLOWED = 'transaction_not_allowed';
 
+    case RETURNED_PER_ODFI_REQUEST = 'returned_per_odfi_request';
+
     case USER_INITIATED = 'user_initiated';
 
     case INSUFFICIENT_FUNDS = 'insufficient_funds';
-
-    case RETURNED_PER_ODFI_REQUEST = 'returned_per_odfi_request';
 
     case AUTHORIZATION_REVOKED_BY_CUSTOMER = 'authorization_revoked_by_customer';
 

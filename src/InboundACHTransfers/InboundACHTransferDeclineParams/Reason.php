@@ -11,8 +11,6 @@ enum Reason: string
 {
     case INSUFFICIENT_FUNDS = 'insufficient_funds';
 
-    case RETURNED_PER_ODFI_REQUEST = 'returned_per_odfi_request';
-
     case AUTHORIZATION_REVOKED_BY_CUSTOMER = 'authorization_revoked_by_customer';
 
     case PAYMENT_STOPPED = 'payment_stopped';

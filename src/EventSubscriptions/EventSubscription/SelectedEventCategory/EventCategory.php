@@ -153,10 +153,6 @@ enum EventCategory: string
 
     case LEGACY_CARD_DISPUTE_UPDATED = 'legacy_card_dispute.updated';
 
-    case LOCKBOX_ADDRESS_CREATED = 'lockbox_address.created';
-
-    case LOCKBOX_ADDRESS_UPDATED = 'lockbox_address.updated';
-
     case LOCKBOX_CREATED = 'lockbox.created';
 
     case LOCKBOX_UPDATED = 'lockbox.updated';

@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.95.0 (2026-04-02)
+
+Full Changelog: [v0.94.0...v0.95.0](https://github.com/Increase/increase-php/compare/v0.94.0...v0.95.0)
+
+### Features
+
+* **api:** api update ([f0b1b6a](https://github.com/Increase/increase-php/commit/f0b1b6a80d479da0c0fe6a0d6958ea7d9366bd21))
+
+
+### Chores
+
+* **tests:** bump steady to v0.20.2 ([61c261e](https://github.com/Increase/increase-php/commit/61c261ee065b6281a24a0cef1d8668ea29d99a36))
+
 ## 0.94.0 (2026-03-31)
 
 Full Changelog: [v0.93.0...v0.94.0](https://github.com/Increase/increase-php/compare/v0.93.0...v0.94.0)

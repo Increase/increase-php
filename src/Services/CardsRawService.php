@@ -7,6 +7,7 @@ namespace Increase\Services;
 use Increase\Cards\Card;
 use Increase\Cards\CardCreateDetailsIframeParams;
 use Increase\Cards\CardCreateParams;
+use Increase\Cards\CardCreateParams\AuthorizationControls;
 use Increase\Cards\CardCreateParams\BillingAddress;
 use Increase\Cards\CardCreateParams\DigitalWallet;
 use Increase\Cards\CardDetails;
@@ -25,8 +26,10 @@ use Increase\RequestOptions;
 use Increase\ServiceContracts\CardsRawContract;
 
 /**
+ * @phpstan-import-type AuthorizationControlsShape from \Increase\Cards\CardCreateParams\AuthorizationControls
  * @phpstan-import-type BillingAddressShape from \Increase\Cards\CardCreateParams\BillingAddress
  * @phpstan-import-type DigitalWalletShape from \Increase\Cards\CardCreateParams\DigitalWallet
+ * @phpstan-import-type AuthorizationControlsShape from \Increase\Cards\CardUpdateParams\AuthorizationControls as AuthorizationControlsShape1
  * @phpstan-import-type BillingAddressShape from \Increase\Cards\CardUpdateParams\BillingAddress as BillingAddressShape1
  * @phpstan-import-type DigitalWalletShape from \Increase\Cards\CardUpdateParams\DigitalWallet as DigitalWalletShape1
  * @phpstan-import-type CreatedAtShape from \Increase\Cards\CardListParams\CreatedAt
@@ -48,6 +51,7 @@ final class CardsRawService implements CardsRawContract
      *
      * @param array{
      *   accountID: string,
+     *   authorizationControls?: AuthorizationControls|AuthorizationControlsShape,
      *   billingAddress?: BillingAddress|BillingAddressShape,
      *   description?: string,
      *   digitalWallet?: DigitalWallet|DigitalWalletShape,
@@ -110,6 +114,7 @@ final class CardsRawService implements CardsRawContract
      *
      * @param string $cardID the card identifier
      * @param array{
+     *   authorizationControls?: CardUpdateParams\AuthorizationControls|AuthorizationControlsShape1,
      *   billingAddress?: CardUpdateParams\BillingAddress|BillingAddressShape1,
      *   description?: string,
      *   digitalWallet?: CardUpdateParams\DigitalWallet|DigitalWalletShape1,

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Increase\ServiceContracts;
 
 use Increase\Cards\Card;
+use Increase\Cards\CardCreateParams\AuthorizationControls;
 use Increase\Cards\CardCreateParams\BillingAddress;
 use Increase\Cards\CardCreateParams\DigitalWallet;
 use Increase\Cards\CardDetails;
@@ -16,8 +17,10 @@ use Increase\Page;
 use Increase\RequestOptions;
 
 /**
+ * @phpstan-import-type AuthorizationControlsShape from \Increase\Cards\CardCreateParams\AuthorizationControls
  * @phpstan-import-type BillingAddressShape from \Increase\Cards\CardCreateParams\BillingAddress
  * @phpstan-import-type DigitalWalletShape from \Increase\Cards\CardCreateParams\DigitalWallet
+ * @phpstan-import-type AuthorizationControlsShape from \Increase\Cards\CardUpdateParams\AuthorizationControls as AuthorizationControlsShape1
  * @phpstan-import-type BillingAddressShape from \Increase\Cards\CardUpdateParams\BillingAddress as BillingAddressShape1
  * @phpstan-import-type DigitalWalletShape from \Increase\Cards\CardUpdateParams\DigitalWallet as DigitalWalletShape1
  * @phpstan-import-type CreatedAtShape from \Increase\Cards\CardListParams\CreatedAt
@@ -30,6 +33,7 @@ interface CardsContract
      * @api
      *
      * @param string $accountID the Account the card should belong to
+     * @param AuthorizationControls|AuthorizationControlsShape $authorizationControls controls that restrict how this card can be used
      * @param BillingAddress|BillingAddressShape $billingAddress the card's billing address
      * @param string $description the description you choose to give the card
      * @param DigitalWallet|DigitalWalletShape $digitalWallet The contact information used in the two-factor steps for digital wallet card creation. To add the card to a digital wallet, you may supply an email or phone number with this request. Otherwise, subscribe and then action a Real Time Decision with the category `digital_wallet_token_requested` or `digital_wallet_authentication_requested`.
@@ -40,6 +44,7 @@ interface CardsContract
      */
     public function create(
         string $accountID,
+        AuthorizationControls|array|null $authorizationControls = null,
         BillingAddress|array|null $billingAddress = null,
         ?string $description = null,
         DigitalWallet|array|null $digitalWallet = null,
@@ -64,6 +69,7 @@ interface CardsContract
      * @api
      *
      * @param string $cardID the card identifier
+     * @param \Increase\Cards\CardUpdateParams\AuthorizationControls|AuthorizationControlsShape1 $authorizationControls controls that restrict how this card can be used
      * @param \Increase\Cards\CardUpdateParams\BillingAddress|BillingAddressShape1 $billingAddress the card's updated billing address
      * @param string $description the description you choose to give the card
      * @param \Increase\Cards\CardUpdateParams\DigitalWallet|DigitalWalletShape1 $digitalWallet The contact information used in the two-factor steps for digital wallet card creation. At least one field must be present to complete the digital wallet steps.
@@ -75,6 +81,7 @@ interface CardsContract
      */
     public function update(
         string $cardID,
+        \Increase\Cards\CardUpdateParams\AuthorizationControls|array|null $authorizationControls = null,
         \Increase\Cards\CardUpdateParams\BillingAddress|array|null $billingAddress = null,
         ?string $description = null,
         \Increase\Cards\CardUpdateParams\DigitalWallet|array|null $digitalWallet = null,

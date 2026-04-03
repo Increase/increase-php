@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Increase\Cards;
 
+use Increase\Cards\CardUpdateParams\AuthorizationControls;
 use Increase\Cards\CardUpdateParams\BillingAddress;
 use Increase\Cards\CardUpdateParams\DigitalWallet;
 use Increase\Cards\CardUpdateParams\Status;
@@ -17,10 +18,12 @@ use Increase\Core\Contracts\BaseModel;
  *
  * @see Increase\Services\CardsService::update()
  *
+ * @phpstan-import-type AuthorizationControlsShape from \Increase\Cards\CardUpdateParams\AuthorizationControls
  * @phpstan-import-type BillingAddressShape from \Increase\Cards\CardUpdateParams\BillingAddress
  * @phpstan-import-type DigitalWalletShape from \Increase\Cards\CardUpdateParams\DigitalWallet
  *
  * @phpstan-type CardUpdateParamsShape = array{
+ *   authorizationControls?: null|AuthorizationControls|AuthorizationControlsShape,
  *   billingAddress?: null|BillingAddress|BillingAddressShape,
  *   description?: string|null,
  *   digitalWallet?: null|DigitalWallet|DigitalWalletShape,
@@ -33,6 +36,12 @@ final class CardUpdateParams implements BaseModel
     /** @use SdkModel<CardUpdateParamsShape> */
     use SdkModel;
     use SdkParams;
+
+    /**
+     * Controls that restrict how this card can be used.
+     */
+    #[Optional('authorization_controls')]
+    public ?AuthorizationControls $authorizationControls;
 
     /**
      * The card's updated billing address.
@@ -76,11 +85,13 @@ final class CardUpdateParams implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
+     * @param AuthorizationControls|AuthorizationControlsShape|null $authorizationControls
      * @param BillingAddress|BillingAddressShape|null $billingAddress
      * @param DigitalWallet|DigitalWalletShape|null $digitalWallet
      * @param Status|value-of<Status>|null $status
      */
     public static function with(
+        AuthorizationControls|array|null $authorizationControls = null,
         BillingAddress|array|null $billingAddress = null,
         ?string $description = null,
         DigitalWallet|array|null $digitalWallet = null,
@@ -89,11 +100,26 @@ final class CardUpdateParams implements BaseModel
     ): self {
         $self = new self;
 
+        null !== $authorizationControls && $self['authorizationControls'] = $authorizationControls;
         null !== $billingAddress && $self['billingAddress'] = $billingAddress;
         null !== $description && $self['description'] = $description;
         null !== $digitalWallet && $self['digitalWallet'] = $digitalWallet;
         null !== $entityID && $self['entityID'] = $entityID;
         null !== $status && $self['status'] = $status;
+
+        return $self;
+    }
+
+    /**
+     * Controls that restrict how this card can be used.
+     *
+     * @param AuthorizationControls|AuthorizationControlsShape $authorizationControls
+     */
+    public function withAuthorizationControls(
+        AuthorizationControls|array $authorizationControls
+    ): self {
+        $self = clone $this;
+        $self['authorizationControls'] = $authorizationControls;
 
         return $self;
     }

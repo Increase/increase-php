@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Increase\Cards;
 
+use Increase\Cards\Card\AuthorizationControls;
 use Increase\Cards\Card\BillingAddress;
 use Increase\Cards\Card\DigitalWallet;
 use Increase\Cards\Card\Status;
@@ -15,12 +16,14 @@ use Increase\Core\Contracts\BaseModel;
 /**
  * Cards are commercial credit cards. They'll immediately work for online purchases after you create them. All cards maintain a credit limit of 100% of the Account’s available balance at the time of transaction. Funds are deducted from the Account upon transaction settlement.
  *
+ * @phpstan-import-type AuthorizationControlsShape from \Increase\Cards\Card\AuthorizationControls
  * @phpstan-import-type BillingAddressShape from \Increase\Cards\Card\BillingAddress
  * @phpstan-import-type DigitalWalletShape from \Increase\Cards\Card\DigitalWallet
  *
  * @phpstan-type CardShape = array{
  *   id: string,
  *   accountID: string,
+ *   authorizationControls: null|AuthorizationControls|AuthorizationControlsShape,
  *   billingAddress: BillingAddress|BillingAddressShape,
  *   createdAt: \DateTimeInterface,
  *   description: string|null,
@@ -50,6 +53,12 @@ final class Card implements BaseModel
      */
     #[Required('account_id')]
     public string $accountID;
+
+    /**
+     * Controls that restrict how this card can be used.
+     */
+    #[Required('authorization_controls')]
+    public ?AuthorizationControls $authorizationControls;
 
     /**
      * The Card's billing address.
@@ -129,6 +138,7 @@ final class Card implements BaseModel
      * Card::with(
      *   id: ...,
      *   accountID: ...,
+     *   authorizationControls: ...,
      *   billingAddress: ...,
      *   createdAt: ...,
      *   description: ...,
@@ -149,6 +159,7 @@ final class Card implements BaseModel
      * (new Card)
      *   ->withID(...)
      *   ->withAccountID(...)
+     *   ->withAuthorizationControls(...)
      *   ->withBillingAddress(...)
      *   ->withCreatedAt(...)
      *   ->withDescription(...)
@@ -172,6 +183,7 @@ final class Card implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
+     * @param AuthorizationControls|AuthorizationControlsShape|null $authorizationControls
      * @param BillingAddress|BillingAddressShape $billingAddress
      * @param DigitalWallet|DigitalWalletShape|null $digitalWallet
      * @param Status|value-of<Status> $status
@@ -180,6 +192,7 @@ final class Card implements BaseModel
     public static function with(
         string $id,
         string $accountID,
+        AuthorizationControls|array|null $authorizationControls,
         BillingAddress|array $billingAddress,
         \DateTimeInterface $createdAt,
         ?string $description,
@@ -196,6 +209,7 @@ final class Card implements BaseModel
 
         $self['id'] = $id;
         $self['accountID'] = $accountID;
+        $self['authorizationControls'] = $authorizationControls;
         $self['billingAddress'] = $billingAddress;
         $self['createdAt'] = $createdAt;
         $self['description'] = $description;
@@ -229,6 +243,20 @@ final class Card implements BaseModel
     {
         $self = clone $this;
         $self['accountID'] = $accountID;
+
+        return $self;
+    }
+
+    /**
+     * Controls that restrict how this card can be used.
+     *
+     * @param AuthorizationControls|AuthorizationControlsShape|null $authorizationControls
+     */
+    public function withAuthorizationControls(
+        AuthorizationControls|array|null $authorizationControls
+    ): self {
+        $self = clone $this;
+        $self['authorizationControls'] = $authorizationControls;
 
         return $self;
     }

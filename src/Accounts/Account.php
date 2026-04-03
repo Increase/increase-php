@@ -30,8 +30,6 @@ use Increase\Core\Contracts\BaseModel;
  *   funding: Funding|value-of<Funding>,
  *   idempotencyKey: string|null,
  *   informationalEntityID: string|null,
- *   interestAccrued: string,
- *   interestAccruedAt: string|null,
  *   interestRate: string,
  *   loan: null|Loan|LoanShape,
  *   name: string,
@@ -112,18 +110,6 @@ final class Account implements BaseModel
     public ?string $informationalEntityID;
 
     /**
-     * The interest accrued but not yet paid, expressed as a string containing a floating-point value.
-     */
-    #[Required('interest_accrued')]
-    public string $interestAccrued;
-
-    /**
-     * The latest [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date on which interest was accrued.
-     */
-    #[Required('interest_accrued_at')]
-    public ?string $interestAccruedAt;
-
-    /**
      * The interest rate currently being earned on the account, as a string containing a decimal number. For example, a 1% interest rate would be represented as "0.01".
      */
     #[Required('interest_rate')]
@@ -179,8 +165,6 @@ final class Account implements BaseModel
      *   funding: ...,
      *   idempotencyKey: ...,
      *   informationalEntityID: ...,
-     *   interestAccrued: ...,
-     *   interestAccruedAt: ...,
      *   interestRate: ...,
      *   loan: ...,
      *   name: ...,
@@ -204,8 +188,6 @@ final class Account implements BaseModel
      *   ->withFunding(...)
      *   ->withIdempotencyKey(...)
      *   ->withInformationalEntityID(...)
-     *   ->withInterestAccrued(...)
-     *   ->withInterestAccruedAt(...)
      *   ->withInterestRate(...)
      *   ->withLoan(...)
      *   ->withName(...)
@@ -242,8 +224,6 @@ final class Account implements BaseModel
         Funding|string $funding,
         ?string $idempotencyKey,
         ?string $informationalEntityID,
-        string $interestAccrued,
-        ?string $interestAccruedAt,
         string $interestRate,
         Loan|array|null $loan,
         string $name,
@@ -263,8 +243,6 @@ final class Account implements BaseModel
         $self['funding'] = $funding;
         $self['idempotencyKey'] = $idempotencyKey;
         $self['informationalEntityID'] = $informationalEntityID;
-        $self['interestAccrued'] = $interestAccrued;
-        $self['interestAccruedAt'] = $interestAccruedAt;
         $self['interestRate'] = $interestRate;
         $self['loan'] = $loan;
         $self['name'] = $name;
@@ -388,28 +366,6 @@ final class Account implements BaseModel
     ): self {
         $self = clone $this;
         $self['informationalEntityID'] = $informationalEntityID;
-
-        return $self;
-    }
-
-    /**
-     * The interest accrued but not yet paid, expressed as a string containing a floating-point value.
-     */
-    public function withInterestAccrued(string $interestAccrued): self
-    {
-        $self = clone $this;
-        $self['interestAccrued'] = $interestAccrued;
-
-        return $self;
-    }
-
-    /**
-     * The latest [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date on which interest was accrued.
-     */
-    public function withInterestAccruedAt(?string $interestAccruedAt): self
-    {
-        $self = clone $this;
-        $self['interestAccruedAt'] = $interestAccruedAt;
 
         return $self;
     }

@@ -46,6 +46,26 @@ final class CardsTest extends TestCase
     {
         $result = $this->client->cards->create(
             accountID: 'account_in71c4amph0vgo2qllky',
+            authorizationControls: [
+                'maximumAuthorizationCount' => ['allTime' => 0],
+                'merchantAcceptorIdentifier' => [
+                    'allowed' => [['identifier' => 'x']],
+                    'blocked' => [['identifier' => 'x']],
+                ],
+                'merchantCategoryCode' => [
+                    'allowed' => [['code' => 'xxxx']], 'blocked' => [['code' => 'xxxx']],
+                ],
+                'merchantCountry' => [
+                    'allowed' => [['country' => 'xx']], 'blocked' => [['country' => 'xx']],
+                ],
+                'spendingLimits' => [
+                    [
+                        'interval' => 'all_time',
+                        'settlementAmount' => 0,
+                        'merchantCategoryCodes' => [['code' => 'x']],
+                    ],
+                ],
+            ],
             billingAddress: [
                 'city' => 'x',
                 'line1' => 'x',

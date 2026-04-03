@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Increase\Cards;
 
+use Increase\Cards\CardCreateParams\AuthorizationControls;
 use Increase\Cards\CardCreateParams\BillingAddress;
 use Increase\Cards\CardCreateParams\DigitalWallet;
 use Increase\Core\Attributes\Optional;
@@ -17,11 +18,13 @@ use Increase\Core\Contracts\BaseModel;
  *
  * @see Increase\Services\CardsService::create()
  *
+ * @phpstan-import-type AuthorizationControlsShape from \Increase\Cards\CardCreateParams\AuthorizationControls
  * @phpstan-import-type BillingAddressShape from \Increase\Cards\CardCreateParams\BillingAddress
  * @phpstan-import-type DigitalWalletShape from \Increase\Cards\CardCreateParams\DigitalWallet
  *
  * @phpstan-type CardCreateParamsShape = array{
  *   accountID: string,
+ *   authorizationControls?: null|AuthorizationControls|AuthorizationControlsShape,
  *   billingAddress?: null|BillingAddress|BillingAddressShape,
  *   description?: string|null,
  *   digitalWallet?: null|DigitalWallet|DigitalWalletShape,
@@ -39,6 +42,12 @@ final class CardCreateParams implements BaseModel
      */
     #[Required('account_id')]
     public string $accountID;
+
+    /**
+     * Controls that restrict how this card can be used.
+     */
+    #[Optional('authorization_controls')]
+    public ?AuthorizationControls $authorizationControls;
 
     /**
      * The card's billing address.
@@ -88,11 +97,13 @@ final class CardCreateParams implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
+     * @param AuthorizationControls|AuthorizationControlsShape|null $authorizationControls
      * @param BillingAddress|BillingAddressShape|null $billingAddress
      * @param DigitalWallet|DigitalWalletShape|null $digitalWallet
      */
     public static function with(
         string $accountID,
+        AuthorizationControls|array|null $authorizationControls = null,
         BillingAddress|array|null $billingAddress = null,
         ?string $description = null,
         DigitalWallet|array|null $digitalWallet = null,
@@ -102,6 +113,7 @@ final class CardCreateParams implements BaseModel
 
         $self['accountID'] = $accountID;
 
+        null !== $authorizationControls && $self['authorizationControls'] = $authorizationControls;
         null !== $billingAddress && $self['billingAddress'] = $billingAddress;
         null !== $description && $self['description'] = $description;
         null !== $digitalWallet && $self['digitalWallet'] = $digitalWallet;
@@ -117,6 +129,20 @@ final class CardCreateParams implements BaseModel
     {
         $self = clone $this;
         $self['accountID'] = $accountID;
+
+        return $self;
+    }
+
+    /**
+     * Controls that restrict how this card can be used.
+     *
+     * @param AuthorizationControls|AuthorizationControlsShape $authorizationControls
+     */
+    public function withAuthorizationControls(
+        AuthorizationControls|array $authorizationControls
+    ): self {
+        $self = clone $this;
+        $self['authorizationControls'] = $authorizationControls;
 
         return $self;
     }

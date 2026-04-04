@@ -60,7 +60,7 @@ final class AuthorizationControls implements BaseModel
     public ?MerchantCountry $merchantCountry;
 
     /**
-     * Spending limits for this card. The most restrictive limit is applied if multiple limits match.
+     * Spending limits for this card. The most restrictive limit applies if multiple limits match.
      *
      * @var list<SpendingLimit>|null $spendingLimits
      */
@@ -183,7 +183,7 @@ final class AuthorizationControls implements BaseModel
     }
 
     /**
-     * Spending limits for this card. The most restrictive limit is applied if multiple limits match.
+     * Spending limits for this card. The most restrictive limit applies if multiple limits match.
      *
      * @param list<SpendingLimit|SpendingLimitShape>|null $spendingLimits
      */

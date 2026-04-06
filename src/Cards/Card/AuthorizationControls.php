@@ -4,11 +4,10 @@ declare(strict_types=1);
 
 namespace Increase\Cards\Card;
 
-use Increase\Cards\Card\AuthorizationControls\MaximumAuthorizationCount;
 use Increase\Cards\Card\AuthorizationControls\MerchantAcceptorIdentifier;
 use Increase\Cards\Card\AuthorizationControls\MerchantCategoryCode;
 use Increase\Cards\Card\AuthorizationControls\MerchantCountry;
-use Increase\Cards\Card\AuthorizationControls\SpendingLimit;
+use Increase\Cards\Card\AuthorizationControls\Usage;
 use Increase\Core\Attributes\Required;
 use Increase\Core\Concerns\SdkModel;
 use Increase\Core\Contracts\BaseModel;
@@ -16,30 +15,22 @@ use Increase\Core\Contracts\BaseModel;
 /**
  * Controls that restrict how this card can be used.
  *
- * @phpstan-import-type MaximumAuthorizationCountShape from \Increase\Cards\Card\AuthorizationControls\MaximumAuthorizationCount
  * @phpstan-import-type MerchantAcceptorIdentifierShape from \Increase\Cards\Card\AuthorizationControls\MerchantAcceptorIdentifier
  * @phpstan-import-type MerchantCategoryCodeShape from \Increase\Cards\Card\AuthorizationControls\MerchantCategoryCode
  * @phpstan-import-type MerchantCountryShape from \Increase\Cards\Card\AuthorizationControls\MerchantCountry
- * @phpstan-import-type SpendingLimitShape from \Increase\Cards\Card\AuthorizationControls\SpendingLimit
+ * @phpstan-import-type UsageShape from \Increase\Cards\Card\AuthorizationControls\Usage
  *
  * @phpstan-type AuthorizationControlsShape = array{
- *   maximumAuthorizationCount: null|MaximumAuthorizationCount|MaximumAuthorizationCountShape,
  *   merchantAcceptorIdentifier: null|MerchantAcceptorIdentifier|MerchantAcceptorIdentifierShape,
  *   merchantCategoryCode: null|MerchantCategoryCode|MerchantCategoryCodeShape,
  *   merchantCountry: null|MerchantCountry|MerchantCountryShape,
- *   spendingLimits: list<SpendingLimit|SpendingLimitShape>|null,
+ *   usage: null|Usage|UsageShape,
  * }
  */
 final class AuthorizationControls implements BaseModel
 {
     /** @use SdkModel<AuthorizationControlsShape> */
     use SdkModel;
-
-    /**
-     * Limits the number of authorizations that can be approved on this card.
-     */
-    #[Required('maximum_authorization_count')]
-    public ?MaximumAuthorizationCount $maximumAuthorizationCount;
 
     /**
      * Restricts which Merchant Acceptor IDs are allowed or blocked for authorizations on this card.
@@ -60,12 +51,10 @@ final class AuthorizationControls implements BaseModel
     public ?MerchantCountry $merchantCountry;
 
     /**
-     * Spending limits for this card. The most restrictive limit applies if multiple limits match.
-     *
-     * @var list<SpendingLimit>|null $spendingLimits
+     * Controls how many times this card can be used.
      */
-    #[Required('spending_limits', list: SpendingLimit::class)]
-    public ?array $spendingLimits;
+    #[Required]
+    public ?Usage $usage;
 
     /**
      * `new AuthorizationControls()` is missing required properties by the API.
@@ -73,11 +62,10 @@ final class AuthorizationControls implements BaseModel
      * To enforce required parameters use
      * ```
      * AuthorizationControls::with(
-     *   maximumAuthorizationCount: ...,
      *   merchantAcceptorIdentifier: ...,
      *   merchantCategoryCode: ...,
      *   merchantCountry: ...,
-     *   spendingLimits: ...,
+     *   usage: ...,
      * )
      * ```
      *
@@ -85,11 +73,10 @@ final class AuthorizationControls implements BaseModel
      *
      * ```
      * (new AuthorizationControls)
-     *   ->withMaximumAuthorizationCount(...)
      *   ->withMerchantAcceptorIdentifier(...)
      *   ->withMerchantCategoryCode(...)
      *   ->withMerchantCountry(...)
-     *   ->withSpendingLimits(...)
+     *   ->withUsage(...)
      * ```
      */
     public function __construct()
@@ -102,40 +89,23 @@ final class AuthorizationControls implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param MaximumAuthorizationCount|MaximumAuthorizationCountShape|null $maximumAuthorizationCount
      * @param MerchantAcceptorIdentifier|MerchantAcceptorIdentifierShape|null $merchantAcceptorIdentifier
      * @param MerchantCategoryCode|MerchantCategoryCodeShape|null $merchantCategoryCode
      * @param MerchantCountry|MerchantCountryShape|null $merchantCountry
-     * @param list<SpendingLimit|SpendingLimitShape>|null $spendingLimits
+     * @param Usage|UsageShape|null $usage
      */
     public static function with(
-        MaximumAuthorizationCount|array|null $maximumAuthorizationCount,
         MerchantAcceptorIdentifier|array|null $merchantAcceptorIdentifier,
         MerchantCategoryCode|array|null $merchantCategoryCode,
         MerchantCountry|array|null $merchantCountry,
-        ?array $spendingLimits,
+        Usage|array|null $usage,
     ): self {
         $self = new self;
 
-        $self['maximumAuthorizationCount'] = $maximumAuthorizationCount;
         $self['merchantAcceptorIdentifier'] = $merchantAcceptorIdentifier;
         $self['merchantCategoryCode'] = $merchantCategoryCode;
         $self['merchantCountry'] = $merchantCountry;
-        $self['spendingLimits'] = $spendingLimits;
-
-        return $self;
-    }
-
-    /**
-     * Limits the number of authorizations that can be approved on this card.
-     *
-     * @param MaximumAuthorizationCount|MaximumAuthorizationCountShape|null $maximumAuthorizationCount
-     */
-    public function withMaximumAuthorizationCount(
-        MaximumAuthorizationCount|array|null $maximumAuthorizationCount
-    ): self {
-        $self = clone $this;
-        $self['maximumAuthorizationCount'] = $maximumAuthorizationCount;
+        $self['usage'] = $usage;
 
         return $self;
     }
@@ -183,14 +153,14 @@ final class AuthorizationControls implements BaseModel
     }
 
     /**
-     * Spending limits for this card. The most restrictive limit applies if multiple limits match.
+     * Controls how many times this card can be used.
      *
-     * @param list<SpendingLimit|SpendingLimitShape>|null $spendingLimits
+     * @param Usage|UsageShape|null $usage
      */
-    public function withSpendingLimits(?array $spendingLimits): self
+    public function withUsage(Usage|array|null $usage): self
     {
         $self = clone $this;
-        $self['spendingLimits'] = $spendingLimits;
+        $self['usage'] = $usage;
 
         return $self;
     }

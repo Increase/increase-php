@@ -2,20 +2,20 @@
 
 declare(strict_types=1);
 
-namespace Increase\Cards\Card\AuthorizationControls;
+namespace Increase\Cards\Card\AuthorizationControls\Usage\MultiUse;
 
-use Increase\Cards\Card\AuthorizationControls\SpendingLimit\Interval;
-use Increase\Cards\Card\AuthorizationControls\SpendingLimit\MerchantCategoryCode;
+use Increase\Cards\Card\AuthorizationControls\Usage\MultiUse\SpendingLimit\Interval;
+use Increase\Cards\Card\AuthorizationControls\Usage\MultiUse\SpendingLimit\MerchantCategoryCode;
 use Increase\Core\Attributes\Required;
 use Increase\Core\Concerns\SdkModel;
 use Increase\Core\Contracts\BaseModel;
 
 /**
- * @phpstan-import-type MerchantCategoryCodeShape from \Increase\Cards\Card\AuthorizationControls\SpendingLimit\MerchantCategoryCode
+ * @phpstan-import-type MerchantCategoryCodeShape from \Increase\Cards\Card\AuthorizationControls\Usage\MultiUse\SpendingLimit\MerchantCategoryCode
  *
  * @phpstan-type SpendingLimitShape = array{
  *   interval: Interval|value-of<Interval>,
- *   merchantCategoryCodes: list<\Increase\Cards\Card\AuthorizationControls\SpendingLimit\MerchantCategoryCode|MerchantCategoryCodeShape>|null,
+ *   merchantCategoryCodes: list<MerchantCategoryCode|MerchantCategoryCodeShape>|null,
  *   settlementAmount: int,
  * }
  */
@@ -37,10 +37,7 @@ final class SpendingLimit implements BaseModel
      *
      * @var list<MerchantCategoryCode>|null $merchantCategoryCodes
      */
-    #[Required(
-        'merchant_category_codes',
-        list: MerchantCategoryCode::class,
-    )]
+    #[Required('merchant_category_codes', list: MerchantCategoryCode::class)]
     public ?array $merchantCategoryCodes;
 
     /**

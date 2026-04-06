@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Increase\Cards\CardUpdateParams\AuthorizationControls\SpendingLimit;
+namespace Increase\Cards\CardUpdateParams\AuthorizationControls\Usage\MultiUse\SpendingLimit;
 
 /**
  * The interval at which the spending limit is enforced.

@@ -2,22 +2,22 @@
 
 declare(strict_types=1);
 
-namespace Increase\Cards\CardUpdateParams\AuthorizationControls;
+namespace Increase\Cards\CardCreateParams\AuthorizationControls\Usage\MultiUse;
 
-use Increase\Cards\CardUpdateParams\AuthorizationControls\SpendingLimit\Interval;
-use Increase\Cards\CardUpdateParams\AuthorizationControls\SpendingLimit\MerchantCategoryCode;
+use Increase\Cards\CardCreateParams\AuthorizationControls\Usage\MultiUse\SpendingLimit\Interval;
+use Increase\Cards\CardCreateParams\AuthorizationControls\Usage\MultiUse\SpendingLimit\MerchantCategoryCode;
 use Increase\Core\Attributes\Optional;
 use Increase\Core\Attributes\Required;
 use Increase\Core\Concerns\SdkModel;
 use Increase\Core\Contracts\BaseModel;
 
 /**
- * @phpstan-import-type MerchantCategoryCodeShape from \Increase\Cards\CardUpdateParams\AuthorizationControls\SpendingLimit\MerchantCategoryCode
+ * @phpstan-import-type MerchantCategoryCodeShape from \Increase\Cards\CardCreateParams\AuthorizationControls\Usage\MultiUse\SpendingLimit\MerchantCategoryCode
  *
  * @phpstan-type SpendingLimitShape = array{
  *   interval: Interval|value-of<Interval>,
  *   settlementAmount: int,
- *   merchantCategoryCodes?: list<\Increase\Cards\CardUpdateParams\AuthorizationControls\SpendingLimit\MerchantCategoryCode|MerchantCategoryCodeShape>|null,
+ *   merchantCategoryCodes?: list<MerchantCategoryCode|MerchantCategoryCodeShape>|null,
  * }
  */
 final class SpendingLimit implements BaseModel
@@ -44,10 +44,7 @@ final class SpendingLimit implements BaseModel
      *
      * @var list<MerchantCategoryCode>|null $merchantCategoryCodes
      */
-    #[Optional(
-        'merchant_category_codes',
-        list: MerchantCategoryCode::class,
-    )]
+    #[Optional('merchant_category_codes', list: MerchantCategoryCode::class)]
     public ?array $merchantCategoryCodes;
 
     /**

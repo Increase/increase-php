@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Increase\Cards\Card\AuthorizationControls\SpendingLimit;
+namespace Increase\Cards\Card\AuthorizationControls\Usage\MultiUse\SpendingLimit;
 
 use Increase\Core\Attributes\Required;
 use Increase\Core\Concerns\SdkModel;

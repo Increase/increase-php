@@ -31,6 +31,7 @@ use Increase\Services\DeclinedTransactionsService;
 use Increase\Services\DigitalCardProfilesService;
 use Increase\Services\DigitalWalletTokensService;
 use Increase\Services\EntitiesService;
+use Increase\Services\EntityOnboardingSessionsService;
 use Increase\Services\EventsService;
 use Increase\Services\EventSubscriptionsService;
 use Increase\Services\ExportsService;
@@ -260,6 +261,11 @@ class Client extends BaseClient
     /**
      * @api
      */
+    public EntityOnboardingSessionsService $entityOnboardingSessions;
+
+    /**
+     * @api
+     */
     public ProgramsService $programs;
 
     /**
@@ -448,6 +454,7 @@ class Client extends BaseClient
         $this->entities = new EntitiesService($this);
         $this->beneficialOwners = new BeneficialOwnersService($this);
         $this->supplementalDocuments = new SupplementalDocumentsService($this);
+        $this->entityOnboardingSessions = new EntityOnboardingSessionsService($this);
         $this->programs = new ProgramsService($this);
         $this->accountStatements = new AccountStatementsService($this);
         $this->files = new FilesService($this);

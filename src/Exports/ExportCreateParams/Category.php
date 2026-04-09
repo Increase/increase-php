@@ -28,4 +28,6 @@ enum Category: string
     case FUNDING_INSTRUCTIONS = 'funding_instructions';
 
     case VOIDED_CHECK = 'voided_check';
+
+    case DAILY_ACCOUNT_BALANCE_CSV = 'daily_account_balance_csv';
 }

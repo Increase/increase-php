@@ -36,4 +36,6 @@ enum Category: string
     case FEE_CSV = 'fee_csv';
 
     case VOIDED_CHECK = 'voided_check';
+
+    case DAILY_ACCOUNT_BALANCE_CSV = 'daily_account_balance_csv';
 }

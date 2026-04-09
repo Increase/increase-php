@@ -13,6 +13,7 @@ use Increase\Exports\Export\AccountVerificationLetter;
 use Increase\Exports\Export\BalanceCsv;
 use Increase\Exports\Export\BookkeepingAccountBalanceCsv;
 use Increase\Exports\Export\Category;
+use Increase\Exports\Export\DailyAccountBalanceCsv;
 use Increase\Exports\Export\DashboardTableCsv;
 use Increase\Exports\Export\EntityCsv;
 use Increase\Exports\Export\FeeCsv;
@@ -34,6 +35,7 @@ use Increase\Exports\Export\VoidedCheck;
  * @phpstan-import-type AccountVerificationLetterShape from \Increase\Exports\Export\AccountVerificationLetter
  * @phpstan-import-type BalanceCsvShape from \Increase\Exports\Export\BalanceCsv
  * @phpstan-import-type BookkeepingAccountBalanceCsvShape from \Increase\Exports\Export\BookkeepingAccountBalanceCsv
+ * @phpstan-import-type DailyAccountBalanceCsvShape from \Increase\Exports\Export\DailyAccountBalanceCsv
  * @phpstan-import-type DashboardTableCsvShape from \Increase\Exports\Export\DashboardTableCsv
  * @phpstan-import-type EntityCsvShape from \Increase\Exports\Export\EntityCsv
  * @phpstan-import-type FeeCsvShape from \Increase\Exports\Export\FeeCsv
@@ -54,6 +56,7 @@ use Increase\Exports\Export\VoidedCheck;
  *   bookkeepingAccountBalanceCsv: null|BookkeepingAccountBalanceCsv|BookkeepingAccountBalanceCsvShape,
  *   category: Category|value-of<Category>,
  *   createdAt: \DateTimeInterface,
+ *   dailyAccountBalanceCsv: null|DailyAccountBalanceCsv|DailyAccountBalanceCsvShape,
  *   dashboardTableCsv: null|DashboardTableCsv|DashboardTableCsvShape,
  *   entityCsv: null|EntityCsv|EntityCsvShape,
  *   feeCsv: null|FeeCsv|FeeCsvShape,
@@ -123,6 +126,12 @@ final class Export implements BaseModel
      */
     #[Required('created_at')]
     public \DateTimeInterface $createdAt;
+
+    /**
+     * Details of the daily account balance CSV export. This field will be present when the `category` is equal to `daily_account_balance_csv`.
+     */
+    #[Required('daily_account_balance_csv')]
+    public ?DailyAccountBalanceCsv $dailyAccountBalanceCsv;
 
     /**
      * Details of the dashboard table CSV export. This field will be present when the `category` is equal to `dashboard_table_csv`.
@@ -220,6 +229,7 @@ final class Export implements BaseModel
      *   bookkeepingAccountBalanceCsv: ...,
      *   category: ...,
      *   createdAt: ...,
+     *   dailyAccountBalanceCsv: ...,
      *   dashboardTableCsv: ...,
      *   entityCsv: ...,
      *   feeCsv: ...,
@@ -248,6 +258,7 @@ final class Export implements BaseModel
      *   ->withBookkeepingAccountBalanceCsv(...)
      *   ->withCategory(...)
      *   ->withCreatedAt(...)
+     *   ->withDailyAccountBalanceCsv(...)
      *   ->withDashboardTableCsv(...)
      *   ->withEntityCsv(...)
      *   ->withFeeCsv(...)
@@ -279,6 +290,7 @@ final class Export implements BaseModel
      * @param BalanceCsv|BalanceCsvShape|null $balanceCsv
      * @param BookkeepingAccountBalanceCsv|BookkeepingAccountBalanceCsvShape|null $bookkeepingAccountBalanceCsv
      * @param Category|value-of<Category> $category
+     * @param DailyAccountBalanceCsv|DailyAccountBalanceCsvShape|null $dailyAccountBalanceCsv
      * @param DashboardTableCsv|DashboardTableCsvShape|null $dashboardTableCsv
      * @param EntityCsv|EntityCsvShape|null $entityCsv
      * @param FeeCsv|FeeCsvShape|null $feeCsv
@@ -301,6 +313,7 @@ final class Export implements BaseModel
         BookkeepingAccountBalanceCsv|array|null $bookkeepingAccountBalanceCsv,
         Category|string $category,
         \DateTimeInterface $createdAt,
+        DailyAccountBalanceCsv|array|null $dailyAccountBalanceCsv,
         DashboardTableCsv|array|null $dashboardTableCsv,
         EntityCsv|array|null $entityCsv,
         FeeCsv|array|null $feeCsv,
@@ -325,6 +338,7 @@ final class Export implements BaseModel
         $self['bookkeepingAccountBalanceCsv'] = $bookkeepingAccountBalanceCsv;
         $self['category'] = $category;
         $self['createdAt'] = $createdAt;
+        $self['dailyAccountBalanceCsv'] = $dailyAccountBalanceCsv;
         $self['dashboardTableCsv'] = $dashboardTableCsv;
         $self['entityCsv'] = $entityCsv;
         $self['feeCsv'] = $feeCsv;
@@ -442,6 +456,20 @@ final class Export implements BaseModel
     {
         $self = clone $this;
         $self['createdAt'] = $createdAt;
+
+        return $self;
+    }
+
+    /**
+     * Details of the daily account balance CSV export. This field will be present when the `category` is equal to `daily_account_balance_csv`.
+     *
+     * @param DailyAccountBalanceCsv|DailyAccountBalanceCsvShape|null $dailyAccountBalanceCsv
+     */
+    public function withDailyAccountBalanceCsv(
+        DailyAccountBalanceCsv|array|null $dailyAccountBalanceCsv
+    ): self {
+        $self = clone $this;
+        $self['dailyAccountBalanceCsv'] = $dailyAccountBalanceCsv;
 
         return $self;
     }

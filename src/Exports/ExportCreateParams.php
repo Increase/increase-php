@@ -15,6 +15,7 @@ use Increase\Exports\ExportCreateParams\AccountVerificationLetter;
 use Increase\Exports\ExportCreateParams\BalanceCsv;
 use Increase\Exports\ExportCreateParams\BookkeepingAccountBalanceCsv;
 use Increase\Exports\ExportCreateParams\Category;
+use Increase\Exports\ExportCreateParams\DailyAccountBalanceCsv;
 use Increase\Exports\ExportCreateParams\EntityCsv;
 use Increase\Exports\ExportCreateParams\FundingInstructions;
 use Increase\Exports\ExportCreateParams\TransactionCsv;
@@ -31,6 +32,7 @@ use Increase\Exports\ExportCreateParams\VoidedCheck;
  * @phpstan-import-type AccountVerificationLetterShape from \Increase\Exports\ExportCreateParams\AccountVerificationLetter
  * @phpstan-import-type BalanceCsvShape from \Increase\Exports\ExportCreateParams\BalanceCsv
  * @phpstan-import-type BookkeepingAccountBalanceCsvShape from \Increase\Exports\ExportCreateParams\BookkeepingAccountBalanceCsv
+ * @phpstan-import-type DailyAccountBalanceCsvShape from \Increase\Exports\ExportCreateParams\DailyAccountBalanceCsv
  * @phpstan-import-type EntityCsvShape from \Increase\Exports\ExportCreateParams\EntityCsv
  * @phpstan-import-type FundingInstructionsShape from \Increase\Exports\ExportCreateParams\FundingInstructions
  * @phpstan-import-type TransactionCsvShape from \Increase\Exports\ExportCreateParams\TransactionCsv
@@ -44,6 +46,7 @@ use Increase\Exports\ExportCreateParams\VoidedCheck;
  *   accountVerificationLetter?: null|AccountVerificationLetter|AccountVerificationLetterShape,
  *   balanceCsv?: null|BalanceCsv|BalanceCsvShape,
  *   bookkeepingAccountBalanceCsv?: null|BookkeepingAccountBalanceCsv|BookkeepingAccountBalanceCsvShape,
+ *   dailyAccountBalanceCsv?: null|DailyAccountBalanceCsv|DailyAccountBalanceCsvShape,
  *   entityCsv?: null|EntityCsv|EntityCsvShape,
  *   fundingInstructions?: null|FundingInstructions|FundingInstructionsShape,
  *   transactionCsv?: null|TransactionCsv|TransactionCsvShape,
@@ -94,6 +97,12 @@ final class ExportCreateParams implements BaseModel
      */
     #[Optional('bookkeeping_account_balance_csv')]
     public ?BookkeepingAccountBalanceCsv $bookkeepingAccountBalanceCsv;
+
+    /**
+     * Options for the created export. Required if `category` is equal to `daily_account_balance_csv`.
+     */
+    #[Optional('daily_account_balance_csv')]
+    public ?DailyAccountBalanceCsv $dailyAccountBalanceCsv;
 
     /**
      * Options for the created export. Required if `category` is equal to `entity_csv`.
@@ -155,6 +164,7 @@ final class ExportCreateParams implements BaseModel
      * @param AccountVerificationLetter|AccountVerificationLetterShape|null $accountVerificationLetter
      * @param BalanceCsv|BalanceCsvShape|null $balanceCsv
      * @param BookkeepingAccountBalanceCsv|BookkeepingAccountBalanceCsvShape|null $bookkeepingAccountBalanceCsv
+     * @param DailyAccountBalanceCsv|DailyAccountBalanceCsvShape|null $dailyAccountBalanceCsv
      * @param EntityCsv|EntityCsvShape|null $entityCsv
      * @param FundingInstructions|FundingInstructionsShape|null $fundingInstructions
      * @param TransactionCsv|TransactionCsvShape|null $transactionCsv
@@ -168,6 +178,7 @@ final class ExportCreateParams implements BaseModel
         AccountVerificationLetter|array|null $accountVerificationLetter = null,
         BalanceCsv|array|null $balanceCsv = null,
         BookkeepingAccountBalanceCsv|array|null $bookkeepingAccountBalanceCsv = null,
+        DailyAccountBalanceCsv|array|null $dailyAccountBalanceCsv = null,
         EntityCsv|array|null $entityCsv = null,
         FundingInstructions|array|null $fundingInstructions = null,
         TransactionCsv|array|null $transactionCsv = null,
@@ -183,6 +194,7 @@ final class ExportCreateParams implements BaseModel
         null !== $accountVerificationLetter && $self['accountVerificationLetter'] = $accountVerificationLetter;
         null !== $balanceCsv && $self['balanceCsv'] = $balanceCsv;
         null !== $bookkeepingAccountBalanceCsv && $self['bookkeepingAccountBalanceCsv'] = $bookkeepingAccountBalanceCsv;
+        null !== $dailyAccountBalanceCsv && $self['dailyAccountBalanceCsv'] = $dailyAccountBalanceCsv;
         null !== $entityCsv && $self['entityCsv'] = $entityCsv;
         null !== $fundingInstructions && $self['fundingInstructions'] = $fundingInstructions;
         null !== $transactionCsv && $self['transactionCsv'] = $transactionCsv;
@@ -270,6 +282,20 @@ final class ExportCreateParams implements BaseModel
     ): self {
         $self = clone $this;
         $self['bookkeepingAccountBalanceCsv'] = $bookkeepingAccountBalanceCsv;
+
+        return $self;
+    }
+
+    /**
+     * Options for the created export. Required if `category` is equal to `daily_account_balance_csv`.
+     *
+     * @param DailyAccountBalanceCsv|DailyAccountBalanceCsvShape $dailyAccountBalanceCsv
+     */
+    public function withDailyAccountBalanceCsv(
+        DailyAccountBalanceCsv|array $dailyAccountBalanceCsv
+    ): self {
+        $self = clone $this;
+        $self['dailyAccountBalanceCsv'] = $dailyAccountBalanceCsv;
 
         return $self;
     }

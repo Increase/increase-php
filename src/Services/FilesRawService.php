@@ -7,6 +7,7 @@ namespace Increase\Services;
 use Increase\Client;
 use Increase\Core\Contracts\BaseResponse;
 use Increase\Core\Exceptions\APIException;
+use Increase\Core\FileParam;
 use Increase\Core\Util;
 use Increase\Files\File;
 use Increase\Files\FileCreateParams;
@@ -36,7 +37,7 @@ final class FilesRawService implements FilesRawContract
      * To upload a file to Increase, you'll need to send a request of Content-Type `multipart/form-data`. The request should contain the file you would like to upload, as well as the parameters for creating a file.
      *
      * @param array{
-     *   file: string, purpose: value-of<Purpose>, description?: string
+     *   file: string|FileParam, purpose: value-of<Purpose>, description?: string
      * }|FileCreateParams $params
      * @param RequestOpts|null $requestOptions
      *

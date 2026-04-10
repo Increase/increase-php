@@ -7,15 +7,14 @@ namespace Increase\Exports\Export;
 use Increase\Core\Attributes\Required;
 use Increase\Core\Concerns\SdkModel;
 use Increase\Core\Contracts\BaseModel;
-use Increase\Exports\Export\BookkeepingAccountBalanceCsv\CreatedAt;
 
 /**
  * Details of the bookkeeping account balance CSV export. This field will be present when the `category` is equal to `bookkeeping_account_balance_csv`.
  *
- * @phpstan-import-type CreatedAtShape from \Increase\Exports\Export\BookkeepingAccountBalanceCsv\CreatedAt
- *
  * @phpstan-type BookkeepingAccountBalanceCsvShape = array{
- *   bookkeepingAccountID: string|null, createdAt: null|CreatedAt|CreatedAtShape
+ *   bookkeepingAccountID: string|null,
+ *   onOrAfterDate: string|null,
+ *   onOrBeforeDate: string|null,
  * }
  */
 final class BookkeepingAccountBalanceCsv implements BaseModel
@@ -30,17 +29,25 @@ final class BookkeepingAccountBalanceCsv implements BaseModel
     public ?string $bookkeepingAccountID;
 
     /**
-     * Filter balances by their created date.
+     * Filter balances to those on or after this date.
      */
-    #[Required('created_at')]
-    public ?CreatedAt $createdAt;
+    #[Required('on_or_after_date')]
+    public ?string $onOrAfterDate;
+
+    /**
+     * Filter balances to those on or before this date.
+     */
+    #[Required('on_or_before_date')]
+    public ?string $onOrBeforeDate;
 
     /**
      * `new BookkeepingAccountBalanceCsv()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
-     * BookkeepingAccountBalanceCsv::with(bookkeepingAccountID: ..., createdAt: ...)
+     * BookkeepingAccountBalanceCsv::with(
+     *   bookkeepingAccountID: ..., onOrAfterDate: ..., onOrBeforeDate: ...
+     * )
      * ```
      *
      * Otherwise ensure the following setters are called
@@ -48,7 +55,8 @@ final class BookkeepingAccountBalanceCsv implements BaseModel
      * ```
      * (new BookkeepingAccountBalanceCsv)
      *   ->withBookkeepingAccountID(...)
-     *   ->withCreatedAt(...)
+     *   ->withOnOrAfterDate(...)
+     *   ->withOnOrBeforeDate(...)
      * ```
      */
     public function __construct()
@@ -60,17 +68,17 @@ final class BookkeepingAccountBalanceCsv implements BaseModel
      * Construct an instance from the required parameters.
      *
      * You must use named parameters to construct any parameters with a default value.
-     *
-     * @param CreatedAt|CreatedAtShape|null $createdAt
      */
     public static function with(
         ?string $bookkeepingAccountID,
-        CreatedAt|array|null $createdAt
+        ?string $onOrAfterDate,
+        ?string $onOrBeforeDate,
     ): self {
         $self = new self;
 
         $self['bookkeepingAccountID'] = $bookkeepingAccountID;
-        $self['createdAt'] = $createdAt;
+        $self['onOrAfterDate'] = $onOrAfterDate;
+        $self['onOrBeforeDate'] = $onOrBeforeDate;
 
         return $self;
     }
@@ -88,14 +96,23 @@ final class BookkeepingAccountBalanceCsv implements BaseModel
     }
 
     /**
-     * Filter balances by their created date.
-     *
-     * @param CreatedAt|CreatedAtShape|null $createdAt
+     * Filter balances to those on or after this date.
      */
-    public function withCreatedAt(CreatedAt|array|null $createdAt): self
+    public function withOnOrAfterDate(?string $onOrAfterDate): self
     {
         $self = clone $this;
-        $self['createdAt'] = $createdAt;
+        $self['onOrAfterDate'] = $onOrAfterDate;
+
+        return $self;
+    }
+
+    /**
+     * Filter balances to those on or before this date.
+     */
+    public function withOnOrBeforeDate(?string $onOrBeforeDate): self
+    {
+        $self = clone $this;
+        $self['onOrBeforeDate'] = $onOrBeforeDate;
 
         return $self;
     }

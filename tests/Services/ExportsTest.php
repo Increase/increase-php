@@ -68,12 +68,8 @@ final class ExportsTest extends TestCase
             ],
             bookkeepingAccountBalanceCsv: [
                 'bookkeepingAccountID' => 'bookkeeping_account_id',
-                'createdAt' => [
-                    'after' => new \DateTimeImmutable('2019-12-27T18:11:19.117Z'),
-                    'before' => new \DateTimeImmutable('2019-12-27T18:11:19.117Z'),
-                    'onOrAfter' => new \DateTimeImmutable('2019-12-27T18:11:19.117Z'),
-                    'onOrBefore' => new \DateTimeImmutable('2019-12-27T18:11:19.117Z'),
-                ],
+                'onOrAfterDate' => '2019-12-27',
+                'onOrBeforeDate' => '2019-12-27',
             ],
             dailyAccountBalanceCsv: [
                 'accountID' => 'account_id',

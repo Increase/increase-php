@@ -50,10 +50,8 @@ final class ExportsTest extends TestCase
             accountStatementOfx: [
                 'accountID' => 'account_id',
                 'createdAt' => [
-                    'after' => new \DateTimeImmutable('2019-12-27T18:11:19.117Z'),
                     'before' => new \DateTimeImmutable('2019-12-27T18:11:19.117Z'),
                     'onOrAfter' => new \DateTimeImmutable('2019-12-27T18:11:19.117Z'),
-                    'onOrBefore' => new \DateTimeImmutable('2019-12-27T18:11:19.117Z'),
                 ],
             ],
             accountVerificationLetter: [

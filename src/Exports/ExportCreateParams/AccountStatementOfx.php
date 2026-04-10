@@ -31,7 +31,7 @@ final class AccountStatementOfx implements BaseModel
     public string $accountID;
 
     /**
-     * Filter results by time range on the `created_at` attribute.
+     * Filter transactions by their created date.
      */
     #[Optional('created_at')]
     public ?CreatedAt $createdAt;
@@ -87,7 +87,7 @@ final class AccountStatementOfx implements BaseModel
     }
 
     /**
-     * Filter results by time range on the `created_at` attribute.
+     * Filter transactions by their created date.
      *
      * @param CreatedAt|CreatedAtShape $createdAt
      */

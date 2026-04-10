@@ -12,7 +12,7 @@ use Increase\Core\Contracts\BaseModel;
  * Filter transactions by their created date.
  *
  * @phpstan-type CreatedAtShape = array{
- *   after: \DateTimeInterface|null, before: \DateTimeInterface|null
+ *   before: \DateTimeInterface|null, onOrAfter: \DateTimeInterface|null
  * }
  */
 final class CreatedAt implements BaseModel
@@ -21,29 +21,29 @@ final class CreatedAt implements BaseModel
     use SdkModel;
 
     /**
-     * Filter results to transactions created after this time.
-     */
-    #[Required]
-    public ?\DateTimeInterface $after;
-
-    /**
      * Filter results to transactions created before this time.
      */
     #[Required]
     public ?\DateTimeInterface $before;
 
     /**
+     * Filter results to transactions created on or after this time.
+     */
+    #[Required('on_or_after')]
+    public ?\DateTimeInterface $onOrAfter;
+
+    /**
      * `new CreatedAt()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
-     * CreatedAt::with(after: ..., before: ...)
+     * CreatedAt::with(before: ..., onOrAfter: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new CreatedAt)->withAfter(...)->withBefore(...)
+     * (new CreatedAt)->withBefore(...)->withOnOrAfter(...)
      * ```
      */
     public function __construct()
@@ -57,24 +57,13 @@ final class CreatedAt implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      */
     public static function with(
-        ?\DateTimeInterface $after,
-        ?\DateTimeInterface $before
+        ?\DateTimeInterface $before,
+        ?\DateTimeInterface $onOrAfter
     ): self {
         $self = new self;
 
-        $self['after'] = $after;
         $self['before'] = $before;
-
-        return $self;
-    }
-
-    /**
-     * Filter results to transactions created after this time.
-     */
-    public function withAfter(?\DateTimeInterface $after): self
-    {
-        $self = clone $this;
-        $self['after'] = $after;
+        $self['onOrAfter'] = $onOrAfter;
 
         return $self;
     }
@@ -86,6 +75,17 @@ final class CreatedAt implements BaseModel
     {
         $self = clone $this;
         $self['before'] = $before;
+
+        return $self;
+    }
+
+    /**
+     * Filter results to transactions created on or after this time.
+     */
+    public function withOnOrAfter(?\DateTimeInterface $onOrAfter): self
+    {
+        $self = clone $this;
+        $self['onOrAfter'] = $onOrAfter;
 
         return $self;
     }

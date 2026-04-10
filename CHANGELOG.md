@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.104.0 (2026-04-10)
+
+Full Changelog: [v0.103.0...v0.104.0](https://github.com/Increase/increase-php/compare/v0.103.0...v0.104.0)
+
+### Features
+
+* **api:** api update ([bdb3392](https://github.com/Increase/increase-php/commit/bdb3392a53f6b2b519b6fe4a582d32f12818edf0))
+
 ## 0.103.0 (2026-04-10)
 
 Full Changelog: [v0.102.1...v0.103.0](https://github.com/Increase/increase-php/compare/v0.102.1...v0.103.0)

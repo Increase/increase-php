@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.102.1 (2026-04-10)
+
+Full Changelog: [v0.102.0...v0.102.1](https://github.com/Increase/increase-php/compare/v0.102.0...v0.102.1)
+
+### Bug Fixes
+
+* **client:** properly generate file params ([8a0e763](https://github.com/Increase/increase-php/commit/8a0e763201ca8b8aa68bc8a14fbeefdbe6433ab5))
+
 ## 0.102.0 (2026-04-09)
 
 Full Changelog: [v0.101.0...v0.102.0](https://github.com/Increase/increase-php/compare/v0.101.0...v0.102.0)

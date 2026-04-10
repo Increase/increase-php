@@ -6,6 +6,7 @@ namespace Increase\Services;
 
 use Increase\Client;
 use Increase\Core\Exceptions\APIException;
+use Increase\Core\FileParam;
 use Increase\Core\Util;
 use Increase\Files\File;
 use Increase\Files\FileCreateParams\Purpose;
@@ -39,7 +40,7 @@ final class FilesService implements FilesContract
      *
      * To upload a file to Increase, you'll need to send a request of Content-Type `multipart/form-data`. The request should contain the file you would like to upload, as well as the parameters for creating a file.
      *
-     * @param string $file The file contents. This should follow the specifications of [RFC 7578](https://datatracker.ietf.org/doc/html/rfc7578) which defines file transfers for the multipart/form-data protocol.
+     * @param string|FileParam $file The file contents. This should follow the specifications of [RFC 7578](https://datatracker.ietf.org/doc/html/rfc7578) which defines file transfers for the multipart/form-data protocol.
      * @param Purpose|value-of<Purpose> $purpose what the File will be used for in Increase's systems
      * @param string $description the description you choose to give the File
      * @param RequestOpts|null $requestOptions
@@ -47,7 +48,7 @@ final class FilesService implements FilesContract
      * @throws APIException
      */
     public function create(
-        string $file,
+        string|FileParam $file,
         Purpose|string $purpose,
         ?string $description = null,
         RequestOptions|array|null $requestOptions = null,

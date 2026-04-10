@@ -139,6 +139,40 @@ $result = $client->accounts->create(
 );
 ```
 
+### File uploads
+
+Request parameters that correspond to file uploads can be passed as a resource returned by `fopen()`, a string of file contents, or a `FileParam` instance.
+
+```php
+<?php
+
+use Increase\Core\FileParam;
+
+// Pass a string with filename and content type:
+$contents = file_get_contents('my/file.txt');
+// Pass a string with filename and content type:
+$file = $client->files->create(
+  file: FileParam::fromString($contents, filename: 'my/file.txt', contentType: '…'),
+  purpose: 'check_image_front',
+);
+
+// Pass in only a string (where applicable)
+$file = $client->files->create(
+  file: 'Example data', purpose: 'check_image_front'
+);
+
+// Pass an open resource:
+$fd = fopen('my/file.txt', 'r');
+try {
+  $file = $client->files->create(
+    file: FileParam::fromResource($fd, filename: 'my/file.txt', contentType: '…'),
+    purpose: 'check_image_front',
+  );
+} finally {
+  fclose($fd);
+}
+```
+
 ## Advanced concepts
 
 ### Making custom or undocumented requests

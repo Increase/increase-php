@@ -3,6 +3,7 @@
 namespace Tests\Services;
 
 use Increase\Client;
+use Increase\Core\FileParam;
 use Increase\Core\Util;
 use Increase\Files\File;
 use Increase\Page;
@@ -32,8 +33,8 @@ final class FilesTest extends TestCase
     public function testCreate(): void
     {
         $result = $this->client->files->create(
-            file: 'file',
-            purpose: 'check_image_front'
+            file: FileParam::fromString('Example data', filename: uniqid('file-upload-', true)),
+            purpose: 'check_image_front',
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -44,9 +45,9 @@ final class FilesTest extends TestCase
     public function testCreateWithOptionalParams(): void
     {
         $result = $this->client->files->create(
-            file: 'file',
+            file: FileParam::fromString('Example data', filename: uniqid('file-upload-', true)),
             purpose: 'check_image_front',
-            description: 'x'
+            description: 'x',
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType

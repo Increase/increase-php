@@ -9,6 +9,7 @@ use Increase\Core\Attributes\Required;
 use Increase\Core\Concerns\SdkModel;
 use Increase\Core\Concerns\SdkParams;
 use Increase\Core\Contracts\BaseModel;
+use Increase\Core\FileParam;
 use Increase\Files\FileCreateParams\Purpose;
 
 /**
@@ -17,7 +18,9 @@ use Increase\Files\FileCreateParams\Purpose;
  * @see Increase\Services\FilesService::create()
  *
  * @phpstan-type FileCreateParamsShape = array{
- *   file: string, purpose: Purpose|value-of<Purpose>, description?: string|null
+ *   file: string|FileParam,
+ *   purpose: Purpose|value-of<Purpose>,
+ *   description?: string|null,
  * }
  */
 final class FileCreateParams implements BaseModel
@@ -73,7 +76,7 @@ final class FileCreateParams implements BaseModel
      * @param Purpose|value-of<Purpose> $purpose
      */
     public static function with(
-        string $file,
+        string|FileParam $file,
         Purpose|string $purpose,
         ?string $description = null
     ): self {
@@ -90,7 +93,7 @@ final class FileCreateParams implements BaseModel
     /**
      * The file contents. This should follow the specifications of [RFC 7578](https://datatracker.ietf.org/doc/html/rfc7578) which defines file transfers for the multipart/form-data protocol.
      */
-    public function withFile(string $file): self
+    public function withFile(string|FileParam $file): self
     {
         $self = clone $this;
         $self['file'] = $file;

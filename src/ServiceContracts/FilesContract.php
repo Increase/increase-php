@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Increase\ServiceContracts;
 
 use Increase\Core\Exceptions\APIException;
+use Increase\Core\FileParam;
 use Increase\Files\File;
 use Increase\Files\FileCreateParams\Purpose;
 use Increase\Files\FileListParams\CreatedAt;
@@ -21,7 +22,7 @@ interface FilesContract
     /**
      * @api
      *
-     * @param string $file The file contents. This should follow the specifications of [RFC 7578](https://datatracker.ietf.org/doc/html/rfc7578) which defines file transfers for the multipart/form-data protocol.
+     * @param string|FileParam $file The file contents. This should follow the specifications of [RFC 7578](https://datatracker.ietf.org/doc/html/rfc7578) which defines file transfers for the multipart/form-data protocol.
      * @param Purpose|value-of<Purpose> $purpose what the File will be used for in Increase's systems
      * @param string $description the description you choose to give the File
      * @param RequestOpts|null $requestOptions
@@ -29,7 +30,7 @@ interface FilesContract
      * @throws APIException
      */
     public function create(
-        string $file,
+        string|FileParam $file,
         Purpose|string $purpose,
         ?string $description = null,
         RequestOptions|array|null $requestOptions = null,

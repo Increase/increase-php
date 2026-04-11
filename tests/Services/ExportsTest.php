@@ -57,15 +57,6 @@ final class ExportsTest extends TestCase
             accountVerificationLetter: [
                 'accountNumberID' => 'account_number_id', 'balanceDate' => '2019-12-27',
             ],
-            balanceCsv: [
-                'accountID' => 'account_id',
-                'createdAt' => [
-                    'after' => new \DateTimeImmutable('2019-12-27T18:11:19.117Z'),
-                    'before' => new \DateTimeImmutable('2019-12-27T18:11:19.117Z'),
-                    'onOrAfter' => new \DateTimeImmutable('2019-12-27T18:11:19.117Z'),
-                    'onOrBefore' => new \DateTimeImmutable('2019-12-27T18:11:19.117Z'),
-                ],
-            ],
             bookkeepingAccountBalanceCsv: [
                 'bookkeepingAccountID' => 'bookkeeping_account_id',
                 'onOrAfterDate' => '2019-12-27',

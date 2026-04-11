@@ -11,7 +11,6 @@ use Increase\Exports\Export;
 use Increase\Exports\ExportCreateParams\AccountStatementBai2;
 use Increase\Exports\ExportCreateParams\AccountStatementOfx;
 use Increase\Exports\ExportCreateParams\AccountVerificationLetter;
-use Increase\Exports\ExportCreateParams\BalanceCsv;
 use Increase\Exports\ExportCreateParams\BookkeepingAccountBalanceCsv;
 use Increase\Exports\ExportCreateParams\Category;
 use Increase\Exports\ExportCreateParams\DailyAccountBalanceCsv;
@@ -32,7 +31,6 @@ use Increase\ServiceContracts\ExportsContract;
  * @phpstan-import-type AccountStatementBai2Shape from \Increase\Exports\ExportCreateParams\AccountStatementBai2
  * @phpstan-import-type AccountStatementOfxShape from \Increase\Exports\ExportCreateParams\AccountStatementOfx
  * @phpstan-import-type AccountVerificationLetterShape from \Increase\Exports\ExportCreateParams\AccountVerificationLetter
- * @phpstan-import-type BalanceCsvShape from \Increase\Exports\ExportCreateParams\BalanceCsv
  * @phpstan-import-type BookkeepingAccountBalanceCsvShape from \Increase\Exports\ExportCreateParams\BookkeepingAccountBalanceCsv
  * @phpstan-import-type DailyAccountBalanceCsvShape from \Increase\Exports\ExportCreateParams\DailyAccountBalanceCsv
  * @phpstan-import-type EntityCsvShape from \Increase\Exports\ExportCreateParams\EntityCsv
@@ -70,7 +68,6 @@ final class ExportsService implements ExportsContract
      * @param AccountStatementBai2|AccountStatementBai2Shape $accountStatementBai2 Options for the created export. Required if `category` is equal to `account_statement_bai2`.
      * @param AccountStatementOfx|AccountStatementOfxShape $accountStatementOfx Options for the created export. Required if `category` is equal to `account_statement_ofx`.
      * @param AccountVerificationLetter|AccountVerificationLetterShape $accountVerificationLetter Options for the created export. Required if `category` is equal to `account_verification_letter`.
-     * @param BalanceCsv|BalanceCsvShape $balanceCsv Options for the created export. Required if `category` is equal to `balance_csv`.
      * @param BookkeepingAccountBalanceCsv|BookkeepingAccountBalanceCsvShape $bookkeepingAccountBalanceCsv Options for the created export. Required if `category` is equal to `bookkeeping_account_balance_csv`.
      * @param DailyAccountBalanceCsv|DailyAccountBalanceCsvShape $dailyAccountBalanceCsv Options for the created export. Required if `category` is equal to `daily_account_balance_csv`.
      * @param EntityCsv|EntityCsvShape $entityCsv Options for the created export. Required if `category` is equal to `entity_csv`.
@@ -87,7 +84,6 @@ final class ExportsService implements ExportsContract
         AccountStatementBai2|array|null $accountStatementBai2 = null,
         AccountStatementOfx|array|null $accountStatementOfx = null,
         AccountVerificationLetter|array|null $accountVerificationLetter = null,
-        BalanceCsv|array|null $balanceCsv = null,
         BookkeepingAccountBalanceCsv|array|null $bookkeepingAccountBalanceCsv = null,
         DailyAccountBalanceCsv|array|null $dailyAccountBalanceCsv = null,
         EntityCsv|array|null $entityCsv = null,
@@ -103,7 +99,6 @@ final class ExportsService implements ExportsContract
                 'accountStatementBai2' => $accountStatementBai2,
                 'accountStatementOfx' => $accountStatementOfx,
                 'accountVerificationLetter' => $accountVerificationLetter,
-                'balanceCsv' => $balanceCsv,
                 'bookkeepingAccountBalanceCsv' => $bookkeepingAccountBalanceCsv,
                 'dailyAccountBalanceCsv' => $dailyAccountBalanceCsv,
                 'entityCsv' => $entityCsv,

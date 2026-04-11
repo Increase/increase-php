@@ -13,7 +13,6 @@ use Increase\Exports\ExportCreateParams;
 use Increase\Exports\ExportCreateParams\AccountStatementBai2;
 use Increase\Exports\ExportCreateParams\AccountStatementOfx;
 use Increase\Exports\ExportCreateParams\AccountVerificationLetter;
-use Increase\Exports\ExportCreateParams\BalanceCsv;
 use Increase\Exports\ExportCreateParams\BookkeepingAccountBalanceCsv;
 use Increase\Exports\ExportCreateParams\Category;
 use Increase\Exports\ExportCreateParams\DailyAccountBalanceCsv;
@@ -35,7 +34,6 @@ use Increase\ServiceContracts\ExportsRawContract;
  * @phpstan-import-type AccountStatementBai2Shape from \Increase\Exports\ExportCreateParams\AccountStatementBai2
  * @phpstan-import-type AccountStatementOfxShape from \Increase\Exports\ExportCreateParams\AccountStatementOfx
  * @phpstan-import-type AccountVerificationLetterShape from \Increase\Exports\ExportCreateParams\AccountVerificationLetter
- * @phpstan-import-type BalanceCsvShape from \Increase\Exports\ExportCreateParams\BalanceCsv
  * @phpstan-import-type BookkeepingAccountBalanceCsvShape from \Increase\Exports\ExportCreateParams\BookkeepingAccountBalanceCsv
  * @phpstan-import-type DailyAccountBalanceCsvShape from \Increase\Exports\ExportCreateParams\DailyAccountBalanceCsv
  * @phpstan-import-type EntityCsvShape from \Increase\Exports\ExportCreateParams\EntityCsv
@@ -67,7 +65,6 @@ final class ExportsRawService implements ExportsRawContract
      *   accountStatementBai2?: AccountStatementBai2|AccountStatementBai2Shape,
      *   accountStatementOfx?: AccountStatementOfx|AccountStatementOfxShape,
      *   accountVerificationLetter?: AccountVerificationLetter|AccountVerificationLetterShape,
-     *   balanceCsv?: BalanceCsv|BalanceCsvShape,
      *   bookkeepingAccountBalanceCsv?: BookkeepingAccountBalanceCsv|BookkeepingAccountBalanceCsvShape,
      *   dailyAccountBalanceCsv?: DailyAccountBalanceCsv|DailyAccountBalanceCsvShape,
      *   entityCsv?: EntityCsv|EntityCsvShape,

@@ -54,6 +54,8 @@ enum In: string
 
     case CARD_PAYMENT_UPDATED = 'card_payment.updated';
 
+    case CARD_PURCHASE_SUPPLEMENT_CREATED = 'card_purchase_supplement.created';
+
     case CARD_PROFILE_CREATED = 'card_profile.created';
 
     case CARD_PROFILE_UPDATED = 'card_profile.updated';

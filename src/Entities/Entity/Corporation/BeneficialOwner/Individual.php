@@ -19,7 +19,7 @@ use Increase\Entities\Entity\Corporation\BeneficialOwner\Individual\Identificati
  * @phpstan-type IndividualShape = array{
  *   address: Address|AddressShape,
  *   dateOfBirth: string,
- *   identification: Identification|IdentificationShape,
+ *   identification: null|Identification|IdentificationShape,
  *   name: string,
  * }
  */
@@ -44,7 +44,7 @@ final class Individual implements BaseModel
      * A means of verifying the person's identity.
      */
     #[Required]
-    public Identification $identification;
+    public ?Identification $identification;
 
     /**
      * The person's legal name.
@@ -81,12 +81,12 @@ final class Individual implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param Address|AddressShape $address
-     * @param Identification|IdentificationShape $identification
+     * @param Identification|IdentificationShape|null $identification
      */
     public static function with(
         Address|array $address,
         string $dateOfBirth,
-        Identification|array $identification,
+        Identification|array|null $identification,
         string $name,
     ): self {
         $self = new self;
@@ -126,10 +126,10 @@ final class Individual implements BaseModel
     /**
      * A means of verifying the person's identity.
      *
-     * @param Identification|IdentificationShape $identification
+     * @param Identification|IdentificationShape|null $identification
      */
     public function withIdentification(
-        Identification|array $identification
+        Identification|array|null $identification
     ): self {
         $self = clone $this;
         $self['identification'] = $identification;

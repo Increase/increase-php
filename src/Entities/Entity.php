@@ -39,6 +39,7 @@ use Increase\SupplementalDocuments\EntitySupplementalDocument;
  *   id: string,
  *   corporation: null|Corporation|CorporationShape,
  *   createdAt: \DateTimeInterface,
+ *   creatingEntityOnboardingSessionID: string|null,
  *   description: string|null,
  *   detailsConfirmedAt: \DateTimeInterface|null,
  *   governmentAuthority: null|GovernmentAuthority|GovernmentAuthorityShape,
@@ -78,6 +79,12 @@ final class Entity implements BaseModel
      */
     #[Required('created_at')]
     public \DateTimeInterface $createdAt;
+
+    /**
+     * The identifier of the Entity Onboarding Session that was used to create this Entity, if any.
+     */
+    #[Required('creating_entity_onboarding_session_id')]
+    public ?string $creatingEntityOnboardingSessionID;
 
     /**
      * The entity's description for display purposes.
@@ -188,6 +195,7 @@ final class Entity implements BaseModel
      *   id: ...,
      *   corporation: ...,
      *   createdAt: ...,
+     *   creatingEntityOnboardingSessionID: ...,
      *   description: ...,
      *   detailsConfirmedAt: ...,
      *   governmentAuthority: ...,
@@ -213,6 +221,7 @@ final class Entity implements BaseModel
      *   ->withID(...)
      *   ->withCorporation(...)
      *   ->withCreatedAt(...)
+     *   ->withCreatingEntityOnboardingSessionID(...)
      *   ->withDescription(...)
      *   ->withDetailsConfirmedAt(...)
      *   ->withGovernmentAuthority(...)
@@ -258,6 +267,7 @@ final class Entity implements BaseModel
         string $id,
         Corporation|array|null $corporation,
         \DateTimeInterface $createdAt,
+        ?string $creatingEntityOnboardingSessionID,
         ?string $description,
         ?\DateTimeInterface $detailsConfirmedAt,
         GovernmentAuthority|array|null $governmentAuthority,
@@ -279,6 +289,7 @@ final class Entity implements BaseModel
         $self['id'] = $id;
         $self['corporation'] = $corporation;
         $self['createdAt'] = $createdAt;
+        $self['creatingEntityOnboardingSessionID'] = $creatingEntityOnboardingSessionID;
         $self['description'] = $description;
         $self['detailsConfirmedAt'] = $detailsConfirmedAt;
         $self['governmentAuthority'] = $governmentAuthority;
@@ -329,6 +340,18 @@ final class Entity implements BaseModel
     {
         $self = clone $this;
         $self['createdAt'] = $createdAt;
+
+        return $self;
+    }
+
+    /**
+     * The identifier of the Entity Onboarding Session that was used to create this Entity, if any.
+     */
+    public function withCreatingEntityOnboardingSessionID(
+        ?string $creatingEntityOnboardingSessionID
+    ): self {
+        $self = clone $this;
+        $self['creatingEntityOnboardingSessionID'] = $creatingEntityOnboardingSessionID;
 
         return $self;
     }

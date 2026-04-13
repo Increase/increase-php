@@ -15,6 +15,7 @@ use Increase\Services\Simulations\CardBalanceInquiriesService;
 use Increase\Services\Simulations\CardDisputesService;
 use Increase\Services\Simulations\CardFuelConfirmationsService;
 use Increase\Services\Simulations\CardIncrementsService;
+use Increase\Services\Simulations\CardPurchaseSupplementsService;
 use Increase\Services\Simulations\CardRefundsService;
 use Increase\Services\Simulations\CardReversalsService;
 use Increase\Services\Simulations\CardSettlementsService;
@@ -95,6 +96,11 @@ final class SimulationsService implements SimulationsContract
      * @api
      */
     public CardAuthenticationsService $cardAuthentications;
+
+    /**
+     * @api
+     */
+    public CardPurchaseSupplementsService $cardPurchaseSupplements;
 
     /**
      * @api
@@ -222,6 +228,7 @@ final class SimulationsService implements SimulationsContract
         $this->cardFuelConfirmations = new CardFuelConfirmationsService($client);
         $this->cardRefunds = new CardRefundsService($client);
         $this->cardAuthentications = new CardAuthenticationsService($client);
+        $this->cardPurchaseSupplements = new CardPurchaseSupplementsService($client);
         $this->cardDisputes = new CardDisputesService($client);
         $this->physicalCards = new PhysicalCardsService($client);
         $this->digitalWalletTokenRequests = new DigitalWalletTokenRequestsService($client);

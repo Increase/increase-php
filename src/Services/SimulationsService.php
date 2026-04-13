@@ -7,7 +7,6 @@ namespace Increase\Services;
 use Increase\Client;
 use Increase\ServiceContracts\SimulationsContract;
 use Increase\Services\Simulations\AccountStatementsService;
-use Increase\Services\Simulations\AccountTransfersService;
 use Increase\Services\Simulations\ACHTransfersService;
 use Increase\Services\Simulations\CardAuthenticationsService;
 use Increase\Services\Simulations\CardAuthorizationExpirationsService;
@@ -51,11 +50,6 @@ final class SimulationsService implements SimulationsContract
      * @api
      */
     public InterestPaymentsService $interestPayments;
-
-    /**
-     * @api
-     */
-    public AccountTransfersService $accountTransfers;
 
     /**
      * @api
@@ -219,7 +213,6 @@ final class SimulationsService implements SimulationsContract
     {
         $this->raw = new SimulationsRawService($client);
         $this->interestPayments = new InterestPaymentsService($client);
-        $this->accountTransfers = new AccountTransfersService($client);
         $this->cardAuthorizations = new CardAuthorizationsService($client);
         $this->cardBalanceInquiries = new CardBalanceInquiriesService($client);
         $this->cardAuthorizationExpirations = new CardAuthorizationExpirationsService($client);

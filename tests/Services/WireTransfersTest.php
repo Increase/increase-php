@@ -62,16 +62,18 @@ final class WireTransfersTest extends TestCase
                 'category' => 'unstructured',
                 'tax' => [
                     'date' => '2019-12-27',
-                    'identificationNumber' => 'xxxxxxxxx',
-                    'typeCode' => 'xxxxx',
+                    'identificationNumber' => '483310694',
+                    'typeCode' => '1I5r3',
                 ],
                 'unstructured' => ['message' => 'New account transfer'],
             ],
             accountNumber: '987654321',
             debtor: [
-                'name' => 'x',
+                'name' => 'name',
                 'address' => [
-                    'unstructured' => ['line1' => 'x', 'line2' => 'x', 'line3' => 'x'],
+                    'unstructured' => [
+                        'line1' => 'line1', 'line2' => 'line2', 'line3' => 'line3',
+                    ],
                 ],
             ],
             externalAccountID: 'external_account_id',

@@ -80,7 +80,8 @@ final class ExportsTest extends TestCase
             ],
             vendorCsv: [],
             voidedCheck: [
-                'accountNumberID' => 'account_number_id', 'payer' => [['line' => 'x']],
+                'accountNumberID' => 'account_number_id',
+                'payer' => [['line' => 'line']],
             ],
         );
 

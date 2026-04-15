@@ -60,7 +60,10 @@ final class FednowTransfersTest extends TestCase
                 'line1' => '33 Liberty Street',
             ],
             debtorAddress: [
-                'city' => 'x', 'postalCode' => 'x', 'state' => 'x', 'line1' => 'x',
+                'city' => 'x',
+                'postalCode' => '21029-9469',
+                'state' => 'x',
+                'line1' => 'x',
             ],
             externalAccountID: 'external_account_id',
             requireApproval: true,

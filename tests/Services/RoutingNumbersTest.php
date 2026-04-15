@@ -31,7 +31,7 @@ final class RoutingNumbersTest extends TestCase
     #[Test]
     public function testList(): void
     {
-        $page = $this->client->routingNumbers->list(routingNumber: 'xxxxxxxxx');
+        $page = $this->client->routingNumbers->list(routingNumber: '483310694');
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertInstanceOf(Page::class, $page);
@@ -46,7 +46,7 @@ final class RoutingNumbersTest extends TestCase
     public function testListWithOptionalParams(): void
     {
         $page = $this->client->routingNumbers->list(
-            routingNumber: 'xxxxxxxxx',
+            routingNumber: '483310694',
             cursor: 'cursor',
             limit: 1
         );

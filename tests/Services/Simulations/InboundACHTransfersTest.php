@@ -47,13 +47,17 @@ final class InboundACHTransfersTest extends TestCase
             amount: 1000,
             addenda: [
                 'category' => 'freeform',
-                'freeform' => ['entries' => [['paymentRelatedInformation' => 'x']]],
+                'freeform' => [
+                    'entries' => [
+                        ['paymentRelatedInformation' => 'payment_related_information'],
+                    ],
+                ],
             ],
-            companyDescriptiveDate: 'x',
-            companyDiscretionaryData: 'x',
-            companyEntryDescription: 'x',
-            companyID: 'x',
-            companyName: 'x',
+            companyDescriptiveDate: 'J!',
+            companyDiscretionaryData: 'J!',
+            companyEntryDescription: 'J!',
+            companyID: 'company_id',
+            companyName: 'company_name',
             receiverIDNumber: 'x',
             receiverName: 'x',
             resolveAt: new \DateTimeImmutable('2019-12-27T18:11:19.117Z'),

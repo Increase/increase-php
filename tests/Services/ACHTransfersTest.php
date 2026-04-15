@@ -51,20 +51,24 @@ final class ACHTransfersTest extends TestCase
             accountNumber: '987654321',
             addenda: [
                 'category' => 'freeform',
-                'freeform' => ['entries' => [['paymentRelatedInformation' => 'x']]],
+                'freeform' => [
+                    'entries' => [
+                        ['paymentRelatedInformation' => 'payment_related_information'],
+                    ],
+                ],
                 'paymentOrderRemittanceAdvice' => [
-                    'invoices' => [['invoiceNumber' => 'x', 'paidAmount' => 0]],
+                    'invoices' => [['invoiceNumber' => 'sq', 'paidAmount' => 0]],
                 ],
             ],
-            companyDescriptiveDate: 'x',
-            companyDiscretionaryData: 'x',
-            companyEntryDescription: 'x',
-            companyName: 'x',
+            companyDescriptiveDate: 'J!',
+            companyDiscretionaryData: 'J!',
+            companyEntryDescription: 'J!',
+            companyName: 'company_name',
             destinationAccountHolder: 'business',
             externalAccountID: 'external_account_id',
             funding: 'checking',
-            individualID: 'x',
-            individualName: 'x',
+            individualID: 'individual_id',
+            individualName: 'individual_name',
             preferredEffectiveDate: [
                 'date' => '2019-12-27', 'settlementSchedule' => 'same_day',
             ],

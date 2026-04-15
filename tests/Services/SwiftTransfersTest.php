@@ -66,7 +66,7 @@ final class SwiftTransfersTest extends TestCase
                 'city' => 'Frankfurt',
                 'country' => 'DE',
                 'line1' => 'Sonnemannstrasse 20',
-                'line2' => 'x',
+                'line2' => 'line2',
                 'postalCode' => '60314',
                 'state' => 'x',
             ],
@@ -75,7 +75,7 @@ final class SwiftTransfersTest extends TestCase
                 'city' => 'New York',
                 'country' => 'US',
                 'line1' => '33 Liberty Street',
-                'line2' => 'x',
+                'line2' => 'line2',
                 'postalCode' => '10045',
                 'state' => 'NY',
             ],
@@ -85,7 +85,7 @@ final class SwiftTransfersTest extends TestCase
             sourceAccountNumberID: 'account_number_v18nkfqm6afpsrvy82b2',
             unstructuredRemittanceInformation: 'New Swift transfer',
             requireApproval: true,
-            routingNumber: 'x',
+            routingNumber: 'sq',
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType

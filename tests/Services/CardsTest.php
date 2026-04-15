@@ -52,7 +52,7 @@ final class CardsTest extends TestCase
                     'blocked' => [['identifier' => 'x']],
                 ],
                 'merchantCategoryCode' => [
-                    'allowed' => [['code' => 'xxxx']], 'blocked' => [['code' => 'xxxx']],
+                    'allowed' => [['code' => '0253']], 'blocked' => [['code' => '0253']],
                 ],
                 'merchantCountry' => [
                     'allowed' => [['country' => 'xx']], 'blocked' => [['country' => 'xx']],

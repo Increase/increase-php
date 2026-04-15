@@ -51,12 +51,12 @@ final class RealTimePaymentsTransfersTest extends TestCase
             sourceAccountNumberID: 'account_number_v18nkfqm6afpsrvy82b2',
             unstructuredRemittanceInformation: 'Invoice 29582',
             accountNumber: '987654321',
-            debtorName: 'x',
+            debtorName: 'debtor_name',
             externalAccountID: 'external_account_id',
             requireApproval: true,
             routingNumber: '101050001',
-            ultimateCreditorName: 'x',
-            ultimateDebtorName: 'x',
+            ultimateCreditorName: 'ultimate_creditor_name',
+            ultimateDebtorName: 'ultimate_debtor_name',
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType

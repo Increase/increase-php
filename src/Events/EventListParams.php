@@ -10,6 +10,7 @@ use Increase\Core\Concerns\SdkParams;
 use Increase\Core\Contracts\BaseModel;
 use Increase\Events\EventListParams\Category;
 use Increase\Events\EventListParams\CreatedAt;
+use Increase\Events\EventListParams\OrderBy;
 
 /**
  * List Events.
@@ -18,6 +19,7 @@ use Increase\Events\EventListParams\CreatedAt;
  *
  * @phpstan-import-type CategoryShape from \Increase\Events\EventListParams\Category
  * @phpstan-import-type CreatedAtShape from \Increase\Events\EventListParams\CreatedAt
+ * @phpstan-import-type OrderByShape from \Increase\Events\EventListParams\OrderBy
  *
  * @phpstan-type EventListParamsShape = array{
  *   associatedObjectID?: string|null,
@@ -25,6 +27,7 @@ use Increase\Events\EventListParams\CreatedAt;
  *   createdAt?: null|CreatedAt|CreatedAtShape,
  *   cursor?: string|null,
  *   limit?: int|null,
+ *   orderBy?: null|OrderBy|OrderByShape,
  * }
  */
 final class EventListParams implements BaseModel
@@ -57,6 +60,9 @@ final class EventListParams implements BaseModel
     #[Optional]
     public ?int $limit;
 
+    #[Optional]
+    public ?OrderBy $orderBy;
+
     public function __construct()
     {
         $this->initialize();
@@ -69,6 +75,7 @@ final class EventListParams implements BaseModel
      *
      * @param Category|CategoryShape|null $category
      * @param CreatedAt|CreatedAtShape|null $createdAt
+     * @param OrderBy|OrderByShape|null $orderBy
      */
     public static function with(
         ?string $associatedObjectID = null,
@@ -76,6 +83,7 @@ final class EventListParams implements BaseModel
         CreatedAt|array|null $createdAt = null,
         ?string $cursor = null,
         ?int $limit = null,
+        OrderBy|array|null $orderBy = null,
     ): self {
         $self = new self;
 
@@ -84,6 +92,7 @@ final class EventListParams implements BaseModel
         null !== $createdAt && $self['createdAt'] = $createdAt;
         null !== $cursor && $self['cursor'] = $cursor;
         null !== $limit && $self['limit'] = $limit;
+        null !== $orderBy && $self['orderBy'] = $orderBy;
 
         return $self;
     }
@@ -139,6 +148,17 @@ final class EventListParams implements BaseModel
     {
         $self = clone $this;
         $self['limit'] = $limit;
+
+        return $self;
+    }
+
+    /**
+     * @param OrderBy|OrderByShape $orderBy
+     */
+    public function withOrderBy(OrderBy|array $orderBy): self
+    {
+        $self = clone $this;
+        $self['orderBy'] = $orderBy;
 
         return $self;
     }

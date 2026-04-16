@@ -57,6 +57,7 @@ use Increase\WireTransfers\WireTransfer\Type;
  *   submission: null|Submission|SubmissionShape,
  *   transactionID: string|null,
  *   type: Type|value-of<Type>,
+ *   uniqueEndToEndTransactionReference: string|null,
  * }
  */
 final class WireTransfer implements BaseModel
@@ -217,6 +218,12 @@ final class WireTransfer implements BaseModel
     public string $type;
 
     /**
+     * The unique end-to-end transaction reference ([UETR](https://www.swift.com/payments/what-unique-end-end-transaction-reference-uetr)) of the transfer.
+     */
+    #[Required('unique_end_to_end_transaction_reference')]
+    public ?string $uniqueEndToEndTransactionReference;
+
+    /**
      * `new WireTransfer()` is missing required properties by the API.
      *
      * To enforce required parameters use
@@ -246,6 +253,7 @@ final class WireTransfer implements BaseModel
      *   submission: ...,
      *   transactionID: ...,
      *   type: ...,
+     *   uniqueEndToEndTransactionReference: ...,
      * )
      * ```
      *
@@ -277,6 +285,7 @@ final class WireTransfer implements BaseModel
      *   ->withSubmission(...)
      *   ->withTransactionID(...)
      *   ->withType(...)
+     *   ->withUniqueEndToEndTransactionReference(...)
      * ```
      */
     public function __construct()
@@ -327,6 +336,7 @@ final class WireTransfer implements BaseModel
         Submission|array|null $submission,
         ?string $transactionID,
         Type|string $type,
+        ?string $uniqueEndToEndTransactionReference,
     ): self {
         $self = new self;
 
@@ -354,6 +364,7 @@ final class WireTransfer implements BaseModel
         $self['submission'] = $submission;
         $self['transactionID'] = $transactionID;
         $self['type'] = $type;
+        $self['uniqueEndToEndTransactionReference'] = $uniqueEndToEndTransactionReference;
 
         return $self;
     }
@@ -646,6 +657,18 @@ final class WireTransfer implements BaseModel
     {
         $self = clone $this;
         $self['type'] = $type;
+
+        return $self;
+    }
+
+    /**
+     * The unique end-to-end transaction reference ([UETR](https://www.swift.com/payments/what-unique-end-end-transaction-reference-uetr)) of the transfer.
+     */
+    public function withUniqueEndToEndTransactionReference(
+        ?string $uniqueEndToEndTransactionReference
+    ): self {
+        $self = clone $this;
+        $self['uniqueEndToEndTransactionReference'] = $uniqueEndToEndTransactionReference;
 
         return $self;
     }

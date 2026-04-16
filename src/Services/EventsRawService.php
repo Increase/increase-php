@@ -12,6 +12,7 @@ use Increase\Events\Event;
 use Increase\Events\EventListParams;
 use Increase\Events\EventListParams\Category;
 use Increase\Events\EventListParams\CreatedAt;
+use Increase\Events\EventListParams\OrderBy;
 use Increase\Page;
 use Increase\RequestOptions;
 use Increase\ServiceContracts\EventsRawContract;
@@ -19,6 +20,7 @@ use Increase\ServiceContracts\EventsRawContract;
 /**
  * @phpstan-import-type CategoryShape from \Increase\Events\EventListParams\Category
  * @phpstan-import-type CreatedAtShape from \Increase\Events\EventListParams\CreatedAt
+ * @phpstan-import-type OrderByShape from \Increase\Events\EventListParams\OrderBy
  * @phpstan-import-type RequestOpts from \Increase\RequestOptions
  */
 final class EventsRawService implements EventsRawContract
@@ -65,6 +67,7 @@ final class EventsRawService implements EventsRawContract
      *   createdAt?: CreatedAt|CreatedAtShape,
      *   cursor?: string,
      *   limit?: int,
+     *   orderBy?: OrderBy|OrderByShape,
      * }|EventListParams $params
      * @param RequestOpts|null $requestOptions
      *
@@ -90,6 +93,7 @@ final class EventsRawService implements EventsRawContract
                 [
                     'associatedObjectID' => 'associated_object_id',
                     'createdAt' => 'created_at',
+                    'orderBy' => 'order_by',
                 ],
             ),
             options: $options,

@@ -9,6 +9,7 @@ use Increase\Core\Exceptions\WebhookException;
 use Increase\Events\Event;
 use Increase\Events\EventListParams\Category;
 use Increase\Events\EventListParams\CreatedAt;
+use Increase\Events\EventListParams\OrderBy;
 use Increase\Events\UnwrapWebhookEvent;
 use Increase\Page;
 use Increase\RequestOptions;
@@ -16,6 +17,7 @@ use Increase\RequestOptions;
 /**
  * @phpstan-import-type CategoryShape from \Increase\Events\EventListParams\Category
  * @phpstan-import-type CreatedAtShape from \Increase\Events\EventListParams\CreatedAt
+ * @phpstan-import-type OrderByShape from \Increase\Events\EventListParams\OrderBy
  * @phpstan-import-type RequestOpts from \Increase\RequestOptions
  */
 interface EventsContract
@@ -41,6 +43,7 @@ interface EventsContract
      * @param CreatedAt|CreatedAtShape $createdAt
      * @param string $cursor return the page of entries after this one
      * @param int $limit Limit the size of the list that is returned. The default (and maximum) is 100 objects.
+     * @param OrderBy|OrderByShape $orderBy
      * @param RequestOpts|null $requestOptions
      *
      * @return Page<Event>
@@ -53,6 +56,7 @@ interface EventsContract
         CreatedAt|array|null $createdAt = null,
         ?string $cursor = null,
         ?int $limit = null,
+        OrderBy|array|null $orderBy = null,
         RequestOptions|array|null $requestOptions = null,
     ): Page;
 

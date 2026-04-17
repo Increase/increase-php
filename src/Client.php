@@ -407,7 +407,7 @@ class Client extends BaseClient
                 'Accept' => 'application/json',
                 'User-Agent' => sprintf('increase/PHP %s', VERSION),
                 'X-Stainless-Lang' => 'php',
-                'X-Stainless-Package-Version' => '0.116.1',
+                'X-Stainless-Package-Version' => '0.117.0',
                 'X-Stainless-Arch' => Util::machtype(),
                 'X-Stainless-OS' => Util::ostype(),
                 'X-Stainless-Runtime' => php_sapi_name(),

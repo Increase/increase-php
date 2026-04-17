@@ -12,6 +12,7 @@ use Increase\Core\Contracts\BaseModel;
 /**
  * @phpstan-type TrackingUpdateShape = array{
  *   category: Category|value-of<Category>,
+ *   country: string,
  *   createdAt: \DateTimeInterface,
  *   postalCode: string,
  * }
@@ -30,6 +31,12 @@ final class TrackingUpdate implements BaseModel
     public string $category;
 
     /**
+     * The ISO 3166-1 alpha-2 country code for the country where the event took place.
+     */
+    #[Required]
+    public string $country;
+
+    /**
      * The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which the tracking event took place.
      */
     #[Required('created_at')]
@@ -46,13 +53,19 @@ final class TrackingUpdate implements BaseModel
      *
      * To enforce required parameters use
      * ```
-     * TrackingUpdate::with(category: ..., createdAt: ..., postalCode: ...)
+     * TrackingUpdate::with(
+     *   category: ..., country: ..., createdAt: ..., postalCode: ...
+     * )
      * ```
      *
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new TrackingUpdate)->withCategory(...)->withCreatedAt(...)->withPostalCode(...)
+     * (new TrackingUpdate)
+     *   ->withCategory(...)
+     *   ->withCountry(...)
+     *   ->withCreatedAt(...)
+     *   ->withPostalCode(...)
      * ```
      */
     public function __construct()
@@ -69,12 +82,14 @@ final class TrackingUpdate implements BaseModel
      */
     public static function with(
         Category|string $category,
+        string $country,
         \DateTimeInterface $createdAt,
-        string $postalCode
+        string $postalCode,
     ): self {
         $self = new self;
 
         $self['category'] = $category;
+        $self['country'] = $country;
         $self['createdAt'] = $createdAt;
         $self['postalCode'] = $postalCode;
 
@@ -90,6 +105,17 @@ final class TrackingUpdate implements BaseModel
     {
         $self = clone $this;
         $self['category'] = $category;
+
+        return $self;
+    }
+
+    /**
+     * The ISO 3166-1 alpha-2 country code for the country where the event took place.
+     */
+    public function withCountry(string $country): self
+    {
+        $self = clone $this;
+        $self['country'] = $country;
 
         return $self;
     }

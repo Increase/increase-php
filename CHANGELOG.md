@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.117.1 (2026-04-17)
+
+Full Changelog: [v0.117.0...v0.117.1](https://github.com/Increase/increase-php/compare/v0.117.0...v0.117.1)
+
+### Bug Fixes
+
+* populate enum-typed properties with enum instances ([2693889](https://github.com/Increase/increase-php/commit/2693889975e563faf9de76184e5aee0245f7e5e2))
+
 ## 0.117.0 (2026-04-17)
 
 Full Changelog: [v0.116.1...v0.117.0](https://github.com/Increase/increase-php/compare/v0.116.1...v0.117.0)

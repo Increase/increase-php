@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.116.1 (2026-04-17)
+
+Full Changelog: [v0.116.0...v0.116.1](https://github.com/Increase/increase-php/compare/v0.116.0...v0.116.1)
+
+### Bug Fixes
+
+* **client:** resolve serialization issue with unions and enums ([500f19c](https://github.com/Increase/increase-php/commit/500f19c5fa672d454ff7779a1c9c79d028951927))
+
 ## 0.116.0 (2026-04-17)
 
 Full Changelog: [v0.115.0...v0.116.0](https://github.com/Increase/increase-php/compare/v0.115.0...v0.116.0)

@@ -72,7 +72,7 @@ final class InboundMailItemsTest extends TestCase
             'inbound_mail_item_q6rrg7mmqpplx80zceev',
             checks: [
                 ['action' => 'deposit', 'accountID' => 'account_in71c4amph0vgo2qllky'],
-                ['action' => 'ignore', 'accountID' => 'account_id'],
+                ['action' => 'ignore', 'accountID' => 'account_in71c4amph0vgo2qllky'],
             ],
         );
 

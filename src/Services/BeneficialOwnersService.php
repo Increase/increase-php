@@ -40,7 +40,7 @@ final class BeneficialOwnersService implements BeneficialOwnersContract
     /**
      * @api
      *
-     * Create a beneficial owner
+     * Create a Beneficial Owner
      *
      * @param string $entityID the identifier of the Entity to associate with the new Beneficial Owner
      * @param Individual|IndividualShape $individual personal details for the beneficial owner

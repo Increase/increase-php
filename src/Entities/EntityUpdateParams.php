@@ -12,6 +12,7 @@ use Increase\Entities\EntityUpdateParams\Corporation;
 use Increase\Entities\EntityUpdateParams\GovernmentAuthority;
 use Increase\Entities\EntityUpdateParams\NaturalPerson;
 use Increase\Entities\EntityUpdateParams\RiskRating;
+use Increase\Entities\EntityUpdateParams\TermsAgreement;
 use Increase\Entities\EntityUpdateParams\ThirdPartyVerification;
 use Increase\Entities\EntityUpdateParams\Trust;
 
@@ -24,6 +25,7 @@ use Increase\Entities\EntityUpdateParams\Trust;
  * @phpstan-import-type GovernmentAuthorityShape from \Increase\Entities\EntityUpdateParams\GovernmentAuthority
  * @phpstan-import-type NaturalPersonShape from \Increase\Entities\EntityUpdateParams\NaturalPerson
  * @phpstan-import-type RiskRatingShape from \Increase\Entities\EntityUpdateParams\RiskRating
+ * @phpstan-import-type TermsAgreementShape from \Increase\Entities\EntityUpdateParams\TermsAgreement
  * @phpstan-import-type ThirdPartyVerificationShape from \Increase\Entities\EntityUpdateParams\ThirdPartyVerification
  * @phpstan-import-type TrustShape from \Increase\Entities\EntityUpdateParams\Trust
  *
@@ -33,6 +35,7 @@ use Increase\Entities\EntityUpdateParams\Trust;
  *   governmentAuthority?: null|GovernmentAuthority|GovernmentAuthorityShape,
  *   naturalPerson?: null|NaturalPerson|NaturalPersonShape,
  *   riskRating?: null|RiskRating|RiskRatingShape,
+ *   termsAgreements?: list<TermsAgreement|TermsAgreementShape>|null,
  *   thirdPartyVerification?: null|ThirdPartyVerification|ThirdPartyVerificationShape,
  *   trust?: null|Trust|TrustShape,
  * }
@@ -74,6 +77,14 @@ final class EntityUpdateParams implements BaseModel
     public ?RiskRating $riskRating;
 
     /**
+     * New terms that the Entity agreed to. Not all programs are required to submit this data. This will not archive previously submitted terms.
+     *
+     * @var list<TermsAgreement>|null $termsAgreements
+     */
+    #[Optional('terms_agreements', list: TermsAgreement::class)]
+    public ?array $termsAgreements;
+
+    /**
      * If you are using a third-party service for identity verification, you can use this field to associate this Entity with the identifier that represents them in that service.
      */
     #[Optional('third_party_verification')]
@@ -99,6 +110,7 @@ final class EntityUpdateParams implements BaseModel
      * @param GovernmentAuthority|GovernmentAuthorityShape|null $governmentAuthority
      * @param NaturalPerson|NaturalPersonShape|null $naturalPerson
      * @param RiskRating|RiskRatingShape|null $riskRating
+     * @param list<TermsAgreement|TermsAgreementShape>|null $termsAgreements
      * @param ThirdPartyVerification|ThirdPartyVerificationShape|null $thirdPartyVerification
      * @param Trust|TrustShape|null $trust
      */
@@ -108,6 +120,7 @@ final class EntityUpdateParams implements BaseModel
         GovernmentAuthority|array|null $governmentAuthority = null,
         NaturalPerson|array|null $naturalPerson = null,
         RiskRating|array|null $riskRating = null,
+        ?array $termsAgreements = null,
         ThirdPartyVerification|array|null $thirdPartyVerification = null,
         Trust|array|null $trust = null,
     ): self {
@@ -118,6 +131,7 @@ final class EntityUpdateParams implements BaseModel
         null !== $governmentAuthority && $self['governmentAuthority'] = $governmentAuthority;
         null !== $naturalPerson && $self['naturalPerson'] = $naturalPerson;
         null !== $riskRating && $self['riskRating'] = $riskRating;
+        null !== $termsAgreements && $self['termsAgreements'] = $termsAgreements;
         null !== $thirdPartyVerification && $self['thirdPartyVerification'] = $thirdPartyVerification;
         null !== $trust && $self['trust'] = $trust;
 
@@ -185,6 +199,19 @@ final class EntityUpdateParams implements BaseModel
     {
         $self = clone $this;
         $self['riskRating'] = $riskRating;
+
+        return $self;
+    }
+
+    /**
+     * New terms that the Entity agreed to. Not all programs are required to submit this data. This will not archive previously submitted terms.
+     *
+     * @param list<TermsAgreement|TermsAgreementShape> $termsAgreements
+     */
+    public function withTermsAgreements(array $termsAgreements): self
+    {
+        $self = clone $this;
+        $self['termsAgreements'] = $termsAgreements;
 
         return $self;
     }

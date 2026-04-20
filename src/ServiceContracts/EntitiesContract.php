@@ -35,6 +35,7 @@ use Increase\RequestOptions;
  * @phpstan-import-type GovernmentAuthorityShape from \Increase\Entities\EntityUpdateParams\GovernmentAuthority as GovernmentAuthorityShape1
  * @phpstan-import-type NaturalPersonShape from \Increase\Entities\EntityUpdateParams\NaturalPerson as NaturalPersonShape1
  * @phpstan-import-type RiskRatingShape from \Increase\Entities\EntityUpdateParams\RiskRating as RiskRatingShape1
+ * @phpstan-import-type TermsAgreementShape from \Increase\Entities\EntityUpdateParams\TermsAgreement as TermsAgreementShape1
  * @phpstan-import-type ThirdPartyVerificationShape from \Increase\Entities\EntityUpdateParams\ThirdPartyVerification as ThirdPartyVerificationShape1
  * @phpstan-import-type TrustShape from \Increase\Entities\EntityUpdateParams\Trust as TrustShape1
  * @phpstan-import-type CreatedAtShape from \Increase\Entities\EntityListParams\CreatedAt
@@ -98,6 +99,7 @@ interface EntitiesContract
      * @param \Increase\Entities\EntityUpdateParams\GovernmentAuthority|GovernmentAuthorityShape1 $governmentAuthority Details of the government authority entity to update. If you specify this parameter and the entity is not a government authority, the request will fail.
      * @param \Increase\Entities\EntityUpdateParams\NaturalPerson|NaturalPersonShape1 $naturalPerson Details of the natural person entity to update. If you specify this parameter and the entity is not a natural person, the request will fail.
      * @param \Increase\Entities\EntityUpdateParams\RiskRating|RiskRatingShape1 $riskRating an assessment of the entity’s potential risk of involvement in financial crimes, such as money laundering
+     * @param list<\Increase\Entities\EntityUpdateParams\TermsAgreement|TermsAgreementShape1> $termsAgreements New terms that the Entity agreed to. Not all programs are required to submit this data. This will not archive previously submitted terms.
      * @param \Increase\Entities\EntityUpdateParams\ThirdPartyVerification|ThirdPartyVerificationShape1 $thirdPartyVerification if you are using a third-party service for identity verification, you can use this field to associate this Entity with the identifier that represents them in that service
      * @param \Increase\Entities\EntityUpdateParams\Trust|TrustShape1 $trust Details of the trust entity to update. If you specify this parameter and the entity is not a trust, the request will fail.
      * @param RequestOpts|null $requestOptions
@@ -111,6 +113,7 @@ interface EntitiesContract
         \Increase\Entities\EntityUpdateParams\GovernmentAuthority|array|null $governmentAuthority = null,
         \Increase\Entities\EntityUpdateParams\NaturalPerson|array|null $naturalPerson = null,
         \Increase\Entities\EntityUpdateParams\RiskRating|array|null $riskRating = null,
+        ?array $termsAgreements = null,
         \Increase\Entities\EntityUpdateParams\ThirdPartyVerification|array|null $thirdPartyVerification = null,
         \Increase\Entities\EntityUpdateParams\Trust|array|null $trust = null,
         RequestOptions|array|null $requestOptions = null,

@@ -13,7 +13,7 @@ use Increase\Core\Concerns\SdkParams;
 use Increase\Core\Contracts\BaseModel;
 
 /**
- * Create a beneficial owner.
+ * Create a Beneficial Owner.
  *
  * @see Increase\Services\BeneficialOwnersService::create()
  *

@@ -37,7 +37,7 @@ final class BeneficialOwnersRawService implements BeneficialOwnersRawContract
     /**
      * @api
      *
-     * Create a beneficial owner
+     * Create a Beneficial Owner
      *
      * @param array{
      *   entityID: string,

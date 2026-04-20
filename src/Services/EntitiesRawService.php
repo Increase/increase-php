@@ -42,6 +42,7 @@ use Increase\ServiceContracts\EntitiesRawContract;
  * @phpstan-import-type GovernmentAuthorityShape from \Increase\Entities\EntityUpdateParams\GovernmentAuthority as GovernmentAuthorityShape1
  * @phpstan-import-type NaturalPersonShape from \Increase\Entities\EntityUpdateParams\NaturalPerson as NaturalPersonShape1
  * @phpstan-import-type RiskRatingShape from \Increase\Entities\EntityUpdateParams\RiskRating as RiskRatingShape1
+ * @phpstan-import-type TermsAgreementShape from \Increase\Entities\EntityUpdateParams\TermsAgreement as TermsAgreementShape1
  * @phpstan-import-type ThirdPartyVerificationShape from \Increase\Entities\EntityUpdateParams\ThirdPartyVerification as ThirdPartyVerificationShape1
  * @phpstan-import-type TrustShape from \Increase\Entities\EntityUpdateParams\Trust as TrustShape1
  * @phpstan-import-type CreatedAtShape from \Increase\Entities\EntityListParams\CreatedAt
@@ -136,6 +137,7 @@ final class EntitiesRawService implements EntitiesRawContract
      *   governmentAuthority?: EntityUpdateParams\GovernmentAuthority|GovernmentAuthorityShape1,
      *   naturalPerson?: EntityUpdateParams\NaturalPerson|NaturalPersonShape1,
      *   riskRating?: EntityUpdateParams\RiskRating|RiskRatingShape1,
+     *   termsAgreements?: list<EntityUpdateParams\TermsAgreement|TermsAgreementShape1>,
      *   thirdPartyVerification?: EntityUpdateParams\ThirdPartyVerification|ThirdPartyVerificationShape1,
      *   trust?: EntityUpdateParams\Trust|TrustShape1,
      * }|EntityUpdateParams $params

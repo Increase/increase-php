@@ -29,7 +29,7 @@ final class Check implements BaseModel
     public string $action;
 
     /**
-     * The identifier of the Account to deposit the check into. If not provided, the check will be deposited into the Account associated with the Lockbox.
+     * The identifier of the Account to deposit the check into.
      */
     #[Optional('account_id')]
     public ?string $accountID;
@@ -87,7 +87,7 @@ final class Check implements BaseModel
     }
 
     /**
-     * The identifier of the Account to deposit the check into. If not provided, the check will be deposited into the Account associated with the Lockbox.
+     * The identifier of the Account to deposit the check into.
      */
     public function withAccountID(string $accountID): self
     {

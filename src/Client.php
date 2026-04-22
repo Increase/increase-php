@@ -15,9 +15,6 @@ use Increase\Services\AccountTransfersService;
 use Increase\Services\ACHPrenotificationsService;
 use Increase\Services\ACHTransfersService;
 use Increase\Services\BeneficialOwnersService;
-use Increase\Services\BookkeepingAccountsService;
-use Increase\Services\BookkeepingEntriesService;
-use Increase\Services\BookkeepingEntrySetsService;
 use Increase\Services\CardDisputesService;
 use Increase\Services\CardPaymentsService;
 use Increase\Services\CardPurchaseSupplementsService;
@@ -306,21 +303,6 @@ class Client extends BaseClient
     /**
      * @api
      */
-    public BookkeepingAccountsService $bookkeepingAccounts;
-
-    /**
-     * @api
-     */
-    public BookkeepingEntrySetsService $bookkeepingEntrySets;
-
-    /**
-     * @api
-     */
-    public BookkeepingEntriesService $bookkeepingEntries;
-
-    /**
-     * @api
-     */
     public GroupsService $groups;
 
     /**
@@ -463,9 +445,6 @@ class Client extends BaseClient
         $this->events = new EventsService($this);
         $this->eventSubscriptions = new EventSubscriptionsService($this);
         $this->realTimeDecisions = new RealTimeDecisionsService($this);
-        $this->bookkeepingAccounts = new BookkeepingAccountsService($this);
-        $this->bookkeepingEntrySets = new BookkeepingEntrySetsService($this);
-        $this->bookkeepingEntries = new BookkeepingEntriesService($this);
         $this->groups = new GroupsService($this);
         $this->oauthApplications = new OAuthApplicationsService($this);
         $this->oauthConnections = new OAuthConnectionsService($this);

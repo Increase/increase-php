@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.121.1 (2026-04-25)
+
+Full Changelog: [v0.121.0...v0.121.1](https://github.com/Increase/increase-php/compare/v0.121.0...v0.121.1)
+
+### Bug Fixes
+
+* revert enum parsing change that lead to unconditional failure ([c7d0ee8](https://github.com/Increase/increase-php/commit/c7d0ee80af07ef8dfcfcda54883400efae1e49ab))
+
 ## 0.121.0 (2026-04-22)
 
 Full Changelog: [v0.120.0...v0.121.0](https://github.com/Increase/increase-php/compare/v0.120.0...v0.121.0)

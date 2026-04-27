@@ -37,7 +37,8 @@ interface InboundMailItemsContract
      * @param CreatedAt|CreatedAtShape $createdAt
      * @param string $cursor return the page of entries after this one
      * @param int $limit Limit the size of the list that is returned. The default (and maximum) is 100 objects.
-     * @param string $lockboxID filter Inbound Mail Items to ones sent to the provided Lockbox
+     * @param string $lockboxAddressID filter Inbound Mail Items to ones sent to the provided Lockbox Address
+     * @param string $lockboxRecipientID filter Inbound Mail Items to ones sent to the provided Lockbox Recipient
      * @param RequestOpts|null $requestOptions
      *
      * @return Page<InboundMailItem>
@@ -48,7 +49,8 @@ interface InboundMailItemsContract
         CreatedAt|array|null $createdAt = null,
         ?string $cursor = null,
         ?int $limit = null,
-        ?string $lockboxID = null,
+        ?string $lockboxAddressID = null,
+        ?string $lockboxRecipientID = null,
         RequestOptions|array|null $requestOptions = null,
     ): Page;
 

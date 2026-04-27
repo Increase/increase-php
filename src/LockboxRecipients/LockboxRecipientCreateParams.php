@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Increase\Lockboxes;
+namespace Increase\LockboxRecipients;
 
 use Increase\Core\Attributes\Optional;
 use Increase\Core\Attributes\Required;
@@ -11,50 +11,61 @@ use Increase\Core\Concerns\SdkParams;
 use Increase\Core\Contracts\BaseModel;
 
 /**
- * Create a Lockbox.
+ * Create a Lockbox Recipient.
  *
- * @see Increase\Services\LockboxesService::create()
+ * @see Increase\Services\LockboxRecipientsService::create()
  *
- * @phpstan-type LockboxCreateParamsShape = array{
- *   accountID: string, description?: string|null, recipientName?: string|null
+ * @phpstan-type LockboxRecipientCreateParamsShape = array{
+ *   accountID: string,
+ *   lockboxAddressID: string,
+ *   description?: string|null,
+ *   recipientName?: string|null,
  * }
  */
-final class LockboxCreateParams implements BaseModel
+final class LockboxRecipientCreateParams implements BaseModel
 {
-    /** @use SdkModel<LockboxCreateParamsShape> */
+    /** @use SdkModel<LockboxRecipientCreateParamsShape> */
     use SdkModel;
     use SdkParams;
 
     /**
-     * The Account checks sent to this Lockbox should be deposited into.
+     * The Account that checks sent to this Lockbox Recipient should be deposited into.
      */
     #[Required('account_id')]
     public string $accountID;
 
     /**
-     * The description you choose for the Lockbox, for display purposes.
+     * The Lockbox Address where this Lockbox Recipient may receive mail.
+     */
+    #[Required('lockbox_address_id')]
+    public string $lockboxAddressID;
+
+    /**
+     * The description you choose for the Lockbox Recipient.
      */
     #[Optional]
     public ?string $description;
 
     /**
-     * The name of the recipient that will receive mail at this location.
+     * The name of the Lockbox Recipient.
      */
     #[Optional('recipient_name')]
     public ?string $recipientName;
 
     /**
-     * `new LockboxCreateParams()` is missing required properties by the API.
+     * `new LockboxRecipientCreateParams()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
-     * LockboxCreateParams::with(accountID: ...)
+     * LockboxRecipientCreateParams::with(accountID: ..., lockboxAddressID: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new LockboxCreateParams)->withAccountID(...)
+     * (new LockboxRecipientCreateParams)
+     *   ->withAccountID(...)
+     *   ->withLockboxAddressID(...)
      * ```
      */
     public function __construct()
@@ -69,12 +80,14 @@ final class LockboxCreateParams implements BaseModel
      */
     public static function with(
         string $accountID,
+        string $lockboxAddressID,
         ?string $description = null,
-        ?string $recipientName = null
+        ?string $recipientName = null,
     ): self {
         $self = new self;
 
         $self['accountID'] = $accountID;
+        $self['lockboxAddressID'] = $lockboxAddressID;
 
         null !== $description && $self['description'] = $description;
         null !== $recipientName && $self['recipientName'] = $recipientName;
@@ -83,7 +96,7 @@ final class LockboxCreateParams implements BaseModel
     }
 
     /**
-     * The Account checks sent to this Lockbox should be deposited into.
+     * The Account that checks sent to this Lockbox Recipient should be deposited into.
      */
     public function withAccountID(string $accountID): self
     {
@@ -94,7 +107,18 @@ final class LockboxCreateParams implements BaseModel
     }
 
     /**
-     * The description you choose for the Lockbox, for display purposes.
+     * The Lockbox Address where this Lockbox Recipient may receive mail.
+     */
+    public function withLockboxAddressID(string $lockboxAddressID): self
+    {
+        $self = clone $this;
+        $self['lockboxAddressID'] = $lockboxAddressID;
+
+        return $self;
+    }
+
+    /**
+     * The description you choose for the Lockbox Recipient.
      */
     public function withDescription(string $description): self
     {
@@ -105,7 +129,7 @@ final class LockboxCreateParams implements BaseModel
     }
 
     /**
-     * The name of the recipient that will receive mail at this location.
+     * The name of the Lockbox Recipient.
      */
     public function withRecipientName(string $recipientName): self
     {

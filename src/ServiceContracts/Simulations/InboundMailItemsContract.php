@@ -17,16 +17,18 @@ interface InboundMailItemsContract
      * @api
      *
      * @param int $amount the amount of the check to be simulated, in cents
-     * @param string $lockboxID the identifier of the Lockbox to simulate inbound mail to
      * @param string $contentsFileID The file containing the PDF contents. If not present, a default check image file will be used.
+     * @param string $lockboxAddressID the identifier of the Lockbox Address to simulate inbound mail to
+     * @param string $lockboxRecipientID the identifier of the Lockbox Recipient to simulate inbound mail to
      * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
      */
     public function create(
         int $amount,
-        string $lockboxID,
         ?string $contentsFileID = null,
+        ?string $lockboxAddressID = null,
+        ?string $lockboxRecipientID = null,
         RequestOptions|array|null $requestOptions = null,
     ): InboundMailItem;
 }

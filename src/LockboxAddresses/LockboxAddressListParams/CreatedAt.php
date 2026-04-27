@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Increase\Lockboxes\LockboxListParams;
+namespace Increase\LockboxAddresses\LockboxAddressListParams;
 
 use Increase\Core\Attributes\Optional;
 use Increase\Core\Concerns\SdkModel;

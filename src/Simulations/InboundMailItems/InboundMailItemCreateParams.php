@@ -16,7 +16,10 @@ use Increase\Core\Contracts\BaseModel;
  * @see Increase\Services\Simulations\InboundMailItemsService::create()
  *
  * @phpstan-type InboundMailItemCreateParamsShape = array{
- *   amount: int, lockboxID: string, contentsFileID?: string|null
+ *   amount: int,
+ *   contentsFileID?: string|null,
+ *   lockboxAddressID?: string|null,
+ *   lockboxRecipientID?: string|null,
  * }
  */
 final class InboundMailItemCreateParams implements BaseModel
@@ -32,29 +35,35 @@ final class InboundMailItemCreateParams implements BaseModel
     public int $amount;
 
     /**
-     * The identifier of the Lockbox to simulate inbound mail to.
-     */
-    #[Required('lockbox_id')]
-    public string $lockboxID;
-
-    /**
      * The file containing the PDF contents. If not present, a default check image file will be used.
      */
     #[Optional('contents_file_id')]
     public ?string $contentsFileID;
 
     /**
+     * The identifier of the Lockbox Address to simulate inbound mail to.
+     */
+    #[Optional('lockbox_address_id')]
+    public ?string $lockboxAddressID;
+
+    /**
+     * The identifier of the Lockbox Recipient to simulate inbound mail to.
+     */
+    #[Optional('lockbox_recipient_id')]
+    public ?string $lockboxRecipientID;
+
+    /**
      * `new InboundMailItemCreateParams()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
-     * InboundMailItemCreateParams::with(amount: ..., lockboxID: ...)
+     * InboundMailItemCreateParams::with(amount: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new InboundMailItemCreateParams)->withAmount(...)->withLockboxID(...)
+     * (new InboundMailItemCreateParams)->withAmount(...)
      * ```
      */
     public function __construct()
@@ -69,15 +78,17 @@ final class InboundMailItemCreateParams implements BaseModel
      */
     public static function with(
         int $amount,
-        string $lockboxID,
-        ?string $contentsFileID = null
+        ?string $contentsFileID = null,
+        ?string $lockboxAddressID = null,
+        ?string $lockboxRecipientID = null,
     ): self {
         $self = new self;
 
         $self['amount'] = $amount;
-        $self['lockboxID'] = $lockboxID;
 
         null !== $contentsFileID && $self['contentsFileID'] = $contentsFileID;
+        null !== $lockboxAddressID && $self['lockboxAddressID'] = $lockboxAddressID;
+        null !== $lockboxRecipientID && $self['lockboxRecipientID'] = $lockboxRecipientID;
 
         return $self;
     }
@@ -94,23 +105,34 @@ final class InboundMailItemCreateParams implements BaseModel
     }
 
     /**
-     * The identifier of the Lockbox to simulate inbound mail to.
-     */
-    public function withLockboxID(string $lockboxID): self
-    {
-        $self = clone $this;
-        $self['lockboxID'] = $lockboxID;
-
-        return $self;
-    }
-
-    /**
      * The file containing the PDF contents. If not present, a default check image file will be used.
      */
     public function withContentsFileID(string $contentsFileID): self
     {
         $self = clone $this;
         $self['contentsFileID'] = $contentsFileID;
+
+        return $self;
+    }
+
+    /**
+     * The identifier of the Lockbox Address to simulate inbound mail to.
+     */
+    public function withLockboxAddressID(string $lockboxAddressID): self
+    {
+        $self = clone $this;
+        $self['lockboxAddressID'] = $lockboxAddressID;
+
+        return $self;
+    }
+
+    /**
+     * The identifier of the Lockbox Recipient to simulate inbound mail to.
+     */
+    public function withLockboxRecipientID(string $lockboxRecipientID): self
+    {
+        $self = clone $this;
+        $self['lockboxRecipientID'] = $lockboxRecipientID;
 
         return $self;
     }

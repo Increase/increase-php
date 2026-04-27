@@ -42,7 +42,7 @@ use Increase\Core\Contracts\BaseModel;
  *   idempotencyKey: string|null,
  *   inboundFundsHold: null|InboundFundsHold|InboundFundsHoldShape,
  *   inboundMailItemID: string|null,
- *   lockboxID: string|null,
+ *   lockboxRecipientID: string|null,
  *   status: Status|value-of<Status>,
  *   transactionID: string|null,
  *   type: Type|value-of<Type>,
@@ -146,10 +146,10 @@ final class CheckDeposit implements BaseModel
     public ?string $inboundMailItemID;
 
     /**
-     * If the Check Deposit was the result of an Inbound Mail Item, this will contain the identifier of the Lockbox that received it.
+     * If the Check Deposit was the result of an Inbound Mail Item routed to a Lockbox Recipient, this will contain the identifier of the Lockbox Recipient that received it.
      */
-    #[Required('lockbox_id')]
-    public ?string $lockboxID;
+    #[Required('lockbox_recipient_id')]
+    public ?string $lockboxRecipientID;
 
     /**
      * The status of the Check Deposit.
@@ -194,7 +194,7 @@ final class CheckDeposit implements BaseModel
      *   idempotencyKey: ...,
      *   inboundFundsHold: ...,
      *   inboundMailItemID: ...,
-     *   lockboxID: ...,
+     *   lockboxRecipientID: ...,
      *   status: ...,
      *   transactionID: ...,
      *   type: ...,
@@ -220,7 +220,7 @@ final class CheckDeposit implements BaseModel
      *   ->withIdempotencyKey(...)
      *   ->withInboundFundsHold(...)
      *   ->withInboundMailItemID(...)
-     *   ->withLockboxID(...)
+     *   ->withLockboxRecipientID(...)
      *   ->withStatus(...)
      *   ->withTransactionID(...)
      *   ->withType(...)
@@ -261,7 +261,7 @@ final class CheckDeposit implements BaseModel
         ?string $idempotencyKey,
         InboundFundsHold|array|null $inboundFundsHold,
         ?string $inboundMailItemID,
-        ?string $lockboxID,
+        ?string $lockboxRecipientID,
         Status|string $status,
         ?string $transactionID,
         Type|string $type,
@@ -283,7 +283,7 @@ final class CheckDeposit implements BaseModel
         $self['idempotencyKey'] = $idempotencyKey;
         $self['inboundFundsHold'] = $inboundFundsHold;
         $self['inboundMailItemID'] = $inboundMailItemID;
-        $self['lockboxID'] = $lockboxID;
+        $self['lockboxRecipientID'] = $lockboxRecipientID;
         $self['status'] = $status;
         $self['transactionID'] = $transactionID;
         $self['type'] = $type;
@@ -474,12 +474,12 @@ final class CheckDeposit implements BaseModel
     }
 
     /**
-     * If the Check Deposit was the result of an Inbound Mail Item, this will contain the identifier of the Lockbox that received it.
+     * If the Check Deposit was the result of an Inbound Mail Item routed to a Lockbox Recipient, this will contain the identifier of the Lockbox Recipient that received it.
      */
-    public function withLockboxID(?string $lockboxID): self
+    public function withLockboxRecipientID(?string $lockboxRecipientID): self
     {
         $self = clone $this;
-        $self['lockboxID'] = $lockboxID;
+        $self['lockboxRecipientID'] = $lockboxRecipientID;
 
         return $self;
     }

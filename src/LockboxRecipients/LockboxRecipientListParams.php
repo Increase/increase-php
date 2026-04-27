@@ -2,37 +2,38 @@
 
 declare(strict_types=1);
 
-namespace Increase\Lockboxes;
+namespace Increase\LockboxRecipients;
 
 use Increase\Core\Attributes\Optional;
 use Increase\Core\Concerns\SdkModel;
 use Increase\Core\Concerns\SdkParams;
 use Increase\Core\Contracts\BaseModel;
-use Increase\Lockboxes\LockboxListParams\CreatedAt;
+use Increase\LockboxRecipients\LockboxRecipientListParams\CreatedAt;
 
 /**
- * List Lockboxes.
+ * List Lockbox Recipients.
  *
- * @see Increase\Services\LockboxesService::list()
+ * @see Increase\Services\LockboxRecipientsService::list()
  *
- * @phpstan-import-type CreatedAtShape from \Increase\Lockboxes\LockboxListParams\CreatedAt
+ * @phpstan-import-type CreatedAtShape from \Increase\LockboxRecipients\LockboxRecipientListParams\CreatedAt
  *
- * @phpstan-type LockboxListParamsShape = array{
+ * @phpstan-type LockboxRecipientListParamsShape = array{
  *   accountID?: string|null,
  *   createdAt?: null|CreatedAt|CreatedAtShape,
  *   cursor?: string|null,
  *   idempotencyKey?: string|null,
  *   limit?: int|null,
+ *   lockboxAddressID?: string|null,
  * }
  */
-final class LockboxListParams implements BaseModel
+final class LockboxRecipientListParams implements BaseModel
 {
-    /** @use SdkModel<LockboxListParamsShape> */
+    /** @use SdkModel<LockboxRecipientListParamsShape> */
     use SdkModel;
     use SdkParams;
 
     /**
-     * Filter Lockboxes to those associated with the provided Account.
+     * Filter Lockbox Recipients to those associated with the provided Account.
      */
     #[Optional]
     public ?string $accountID;
@@ -58,6 +59,12 @@ final class LockboxListParams implements BaseModel
     #[Optional]
     public ?int $limit;
 
+    /**
+     * Filter Lockbox Recipients to those associated with the provided Lockbox Address.
+     */
+    #[Optional]
+    public ?string $lockboxAddressID;
+
     public function __construct()
     {
         $this->initialize();
@@ -76,6 +83,7 @@ final class LockboxListParams implements BaseModel
         ?string $cursor = null,
         ?string $idempotencyKey = null,
         ?int $limit = null,
+        ?string $lockboxAddressID = null,
     ): self {
         $self = new self;
 
@@ -84,12 +92,13 @@ final class LockboxListParams implements BaseModel
         null !== $cursor && $self['cursor'] = $cursor;
         null !== $idempotencyKey && $self['idempotencyKey'] = $idempotencyKey;
         null !== $limit && $self['limit'] = $limit;
+        null !== $lockboxAddressID && $self['lockboxAddressID'] = $lockboxAddressID;
 
         return $self;
     }
 
     /**
-     * Filter Lockboxes to those associated with the provided Account.
+     * Filter Lockbox Recipients to those associated with the provided Account.
      */
     public function withAccountID(string $accountID): self
     {
@@ -139,6 +148,17 @@ final class LockboxListParams implements BaseModel
     {
         $self = clone $this;
         $self['limit'] = $limit;
+
+        return $self;
+    }
+
+    /**
+     * Filter Lockbox Recipients to those associated with the provided Lockbox Address.
+     */
+    public function withLockboxAddressID(string $lockboxAddressID): self
+    {
+        $self = clone $this;
+        $self['lockboxAddressID'] = $lockboxAddressID;
 
         return $self;
     }

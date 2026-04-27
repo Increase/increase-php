@@ -2,32 +2,31 @@
 
 declare(strict_types=1);
 
-namespace Increase\InboundMailItems;
+namespace Increase\LockboxAddresses;
 
 use Increase\Core\Attributes\Optional;
 use Increase\Core\Concerns\SdkModel;
 use Increase\Core\Concerns\SdkParams;
 use Increase\Core\Contracts\BaseModel;
-use Increase\InboundMailItems\InboundMailItemListParams\CreatedAt;
+use Increase\LockboxAddresses\LockboxAddressListParams\CreatedAt;
 
 /**
- * List Inbound Mail Items.
+ * List Lockbox Addresses.
  *
- * @see Increase\Services\InboundMailItemsService::list()
+ * @see Increase\Services\LockboxAddressesService::list()
  *
- * @phpstan-import-type CreatedAtShape from \Increase\InboundMailItems\InboundMailItemListParams\CreatedAt
+ * @phpstan-import-type CreatedAtShape from \Increase\LockboxAddresses\LockboxAddressListParams\CreatedAt
  *
- * @phpstan-type InboundMailItemListParamsShape = array{
+ * @phpstan-type LockboxAddressListParamsShape = array{
  *   createdAt?: null|CreatedAt|CreatedAtShape,
  *   cursor?: string|null,
+ *   idempotencyKey?: string|null,
  *   limit?: int|null,
- *   lockboxAddressID?: string|null,
- *   lockboxRecipientID?: string|null,
  * }
  */
-final class InboundMailItemListParams implements BaseModel
+final class LockboxAddressListParams implements BaseModel
 {
-    /** @use SdkModel<InboundMailItemListParamsShape> */
+    /** @use SdkModel<LockboxAddressListParamsShape> */
     use SdkModel;
     use SdkParams;
 
@@ -41,22 +40,16 @@ final class InboundMailItemListParams implements BaseModel
     public ?string $cursor;
 
     /**
+     * Filter records to the one with the specified `idempotency_key` you chose for that object. This value is unique across Increase and is used to ensure that a request is only processed once. Learn more about [idempotency](https://increase.com/documentation/idempotency-keys).
+     */
+    #[Optional]
+    public ?string $idempotencyKey;
+
+    /**
      * Limit the size of the list that is returned. The default (and maximum) is 100 objects.
      */
     #[Optional]
     public ?int $limit;
-
-    /**
-     * Filter Inbound Mail Items to ones sent to the provided Lockbox Address.
-     */
-    #[Optional]
-    public ?string $lockboxAddressID;
-
-    /**
-     * Filter Inbound Mail Items to ones sent to the provided Lockbox Recipient.
-     */
-    #[Optional]
-    public ?string $lockboxRecipientID;
 
     public function __construct()
     {
@@ -73,17 +66,15 @@ final class InboundMailItemListParams implements BaseModel
     public static function with(
         CreatedAt|array|null $createdAt = null,
         ?string $cursor = null,
+        ?string $idempotencyKey = null,
         ?int $limit = null,
-        ?string $lockboxAddressID = null,
-        ?string $lockboxRecipientID = null,
     ): self {
         $self = new self;
 
         null !== $createdAt && $self['createdAt'] = $createdAt;
         null !== $cursor && $self['cursor'] = $cursor;
+        null !== $idempotencyKey && $self['idempotencyKey'] = $idempotencyKey;
         null !== $limit && $self['limit'] = $limit;
-        null !== $lockboxAddressID && $self['lockboxAddressID'] = $lockboxAddressID;
-        null !== $lockboxRecipientID && $self['lockboxRecipientID'] = $lockboxRecipientID;
 
         return $self;
     }
@@ -111,34 +102,23 @@ final class InboundMailItemListParams implements BaseModel
     }
 
     /**
+     * Filter records to the one with the specified `idempotency_key` you chose for that object. This value is unique across Increase and is used to ensure that a request is only processed once. Learn more about [idempotency](https://increase.com/documentation/idempotency-keys).
+     */
+    public function withIdempotencyKey(string $idempotencyKey): self
+    {
+        $self = clone $this;
+        $self['idempotencyKey'] = $idempotencyKey;
+
+        return $self;
+    }
+
+    /**
      * Limit the size of the list that is returned. The default (and maximum) is 100 objects.
      */
     public function withLimit(int $limit): self
     {
         $self = clone $this;
         $self['limit'] = $limit;
-
-        return $self;
-    }
-
-    /**
-     * Filter Inbound Mail Items to ones sent to the provided Lockbox Address.
-     */
-    public function withLockboxAddressID(string $lockboxAddressID): self
-    {
-        $self = clone $this;
-        $self['lockboxAddressID'] = $lockboxAddressID;
-
-        return $self;
-    }
-
-    /**
-     * Filter Inbound Mail Items to ones sent to the provided Lockbox Recipient.
-     */
-    public function withLockboxRecipientID(string $lockboxRecipientID): self
-    {
-        $self = clone $this;
-        $self['lockboxRecipientID'] = $lockboxRecipientID;
 
         return $self;
     }

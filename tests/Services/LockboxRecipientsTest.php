@@ -4,7 +4,7 @@ namespace Tests\Services;
 
 use Increase\Client;
 use Increase\Core\Util;
-use Increase\Lockboxes\Lockbox;
+use Increase\LockboxRecipients\LockboxRecipient;
 use Increase\Page;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\Test;
@@ -14,7 +14,7 @@ use PHPUnit\Framework\TestCase;
  * @internal
  */
 #[CoversNothing]
-final class LockboxesTest extends TestCase
+final class LockboxRecipientsTest extends TestCase
 {
     protected Client $client;
 
@@ -31,58 +31,62 @@ final class LockboxesTest extends TestCase
     #[Test]
     public function testCreate(): void
     {
-        $result = $this->client->lockboxes->create(
-            accountID: 'account_in71c4amph0vgo2qllky'
+        $result = $this->client->lockboxRecipients->create(
+            accountID: 'account_in71c4amph0vgo2qllky',
+            lockboxAddressID: 'lockbox_address_lw6sbzl9ol5dfd8hdml6',
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
-        $this->assertInstanceOf(Lockbox::class, $result);
+        $this->assertInstanceOf(LockboxRecipient::class, $result);
     }
 
     #[Test]
     public function testCreateWithOptionalParams(): void
     {
-        $result = $this->client->lockboxes->create(
+        $result = $this->client->lockboxRecipients->create(
             accountID: 'account_in71c4amph0vgo2qllky',
-            description: 'Rent payments',
-            recipientName: 'x',
+            lockboxAddressID: 'lockbox_address_lw6sbzl9ol5dfd8hdml6',
+            description: 'x',
+            recipientName: 'Ian Crease',
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
-        $this->assertInstanceOf(Lockbox::class, $result);
+        $this->assertInstanceOf(LockboxRecipient::class, $result);
     }
 
     #[Test]
     public function testRetrieve(): void
     {
-        $result = $this->client->lockboxes->retrieve(
+        $result = $this->client->lockboxRecipients->retrieve(
             'lockbox_3xt21ok13q19advds4t5'
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
-        $this->assertInstanceOf(Lockbox::class, $result);
+        $this->assertInstanceOf(LockboxRecipient::class, $result);
     }
 
     #[Test]
     public function testUpdate(): void
     {
-        $result = $this->client->lockboxes->update('lockbox_3xt21ok13q19advds4t5');
+        $result = $this->client->lockboxRecipients->update(
+            'lockbox_3xt21ok13q19advds4t5'
+        );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
-        $this->assertInstanceOf(Lockbox::class, $result);
+        $this->assertInstanceOf(LockboxRecipient::class, $result);
     }
 
     #[Test]
     public function testList(): void
     {
-        $page = $this->client->lockboxes->list();
+        $page = $this->client->lockboxRecipients->list();
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertInstanceOf(Page::class, $page);
 
         if ($item = $page->getItems()[0] ?? null) {
             // @phpstan-ignore-next-line method.alreadyNarrowedType
-            $this->assertInstanceOf(Lockbox::class, $item);
+            $this->assertInstanceOf(LockboxRecipient::class, $item);
         }
     }
 }

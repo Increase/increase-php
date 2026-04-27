@@ -12,4 +12,6 @@ enum Route: string
     case VISA = 'visa';
 
     case MASTERCARD = 'mastercard';
+
+    case PULSE = 'pulse';
 }

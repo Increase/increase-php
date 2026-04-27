@@ -6,77 +6,77 @@ namespace Increase\ServiceContracts;
 
 use Increase\Core\Contracts\BaseResponse;
 use Increase\Core\Exceptions\APIException;
-use Increase\Lockboxes\Lockbox;
-use Increase\Lockboxes\LockboxCreateParams;
-use Increase\Lockboxes\LockboxListParams;
-use Increase\Lockboxes\LockboxUpdateParams;
+use Increase\LockboxRecipients\LockboxRecipient;
+use Increase\LockboxRecipients\LockboxRecipientCreateParams;
+use Increase\LockboxRecipients\LockboxRecipientListParams;
+use Increase\LockboxRecipients\LockboxRecipientUpdateParams;
 use Increase\Page;
 use Increase\RequestOptions;
 
 /**
  * @phpstan-import-type RequestOpts from \Increase\RequestOptions
  */
-interface LockboxesRawContract
+interface LockboxRecipientsRawContract
 {
     /**
      * @api
      *
-     * @param array<string,mixed>|LockboxCreateParams $params
+     * @param array<string,mixed>|LockboxRecipientCreateParams $params
      * @param RequestOpts|null $requestOptions
      *
-     * @return BaseResponse<Lockbox>
+     * @return BaseResponse<LockboxRecipient>
      *
      * @throws APIException
      */
     public function create(
-        array|LockboxCreateParams $params,
+        array|LockboxRecipientCreateParams $params,
         RequestOptions|array|null $requestOptions = null,
     ): BaseResponse;
 
     /**
      * @api
      *
-     * @param string $lockboxID the identifier of the Lockbox to retrieve
+     * @param string $lockboxRecipientID the identifier of the Lockbox Recipient to retrieve
      * @param RequestOpts|null $requestOptions
      *
-     * @return BaseResponse<Lockbox>
+     * @return BaseResponse<LockboxRecipient>
      *
      * @throws APIException
      */
     public function retrieve(
-        string $lockboxID,
-        RequestOptions|array|null $requestOptions = null
-    ): BaseResponse;
-
-    /**
-     * @api
-     *
-     * @param string $lockboxID the identifier of the Lockbox
-     * @param array<string,mixed>|LockboxUpdateParams $params
-     * @param RequestOpts|null $requestOptions
-     *
-     * @return BaseResponse<Lockbox>
-     *
-     * @throws APIException
-     */
-    public function update(
-        string $lockboxID,
-        array|LockboxUpdateParams $params,
+        string $lockboxRecipientID,
         RequestOptions|array|null $requestOptions = null,
     ): BaseResponse;
 
     /**
      * @api
      *
-     * @param array<string,mixed>|LockboxListParams $params
+     * @param string $lockboxRecipientID the identifier of the Lockbox Recipient
+     * @param array<string,mixed>|LockboxRecipientUpdateParams $params
      * @param RequestOpts|null $requestOptions
      *
-     * @return BaseResponse<Page<Lockbox>>
+     * @return BaseResponse<LockboxRecipient>
+     *
+     * @throws APIException
+     */
+    public function update(
+        string $lockboxRecipientID,
+        array|LockboxRecipientUpdateParams $params,
+        RequestOptions|array|null $requestOptions = null,
+    ): BaseResponse;
+
+    /**
+     * @api
+     *
+     * @param array<string,mixed>|LockboxRecipientListParams $params
+     * @param RequestOpts|null $requestOptions
+     *
+     * @return BaseResponse<Page<LockboxRecipient>>
      *
      * @throws APIException
      */
     public function list(
-        array|LockboxListParams $params,
+        array|LockboxRecipientListParams $params,
         RequestOptions|array|null $requestOptions = null,
     ): BaseResponse;
 }

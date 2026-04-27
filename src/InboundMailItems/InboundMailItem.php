@@ -13,7 +13,7 @@ use Increase\InboundMailItems\InboundMailItem\Status;
 use Increase\InboundMailItems\InboundMailItem\Type;
 
 /**
- * Inbound Mail Items represent pieces of physical mail delivered to a Lockbox.
+ * Inbound Mail Items represent pieces of physical mail delivered to a Lockbox Address.
  *
  * @phpstan-import-type CheckShape from \Increase\InboundMailItems\InboundMailItem\Check
  *
@@ -22,7 +22,8 @@ use Increase\InboundMailItems\InboundMailItem\Type;
  *   checks: list<Check|CheckShape>,
  *   createdAt: \DateTimeInterface,
  *   fileID: string,
- *   lockboxID: string|null,
+ *   lockboxAddressID: string|null,
+ *   lockboxRecipientID: string|null,
  *   recipientName: string|null,
  *   rejectionReason: null|RejectionReason|value-of<RejectionReason>,
  *   status: Status|value-of<Status>,
@@ -61,10 +62,16 @@ final class InboundMailItem implements BaseModel
     public string $fileID;
 
     /**
-     * The identifier for the Lockbox that received this mail item. For mail items that could not be processed due to an invalid address, this will be null.
+     * The identifier for the Lockbox Address that received this mail item.
      */
-    #[Required('lockbox_id')]
-    public ?string $lockboxID;
+    #[Required('lockbox_address_id')]
+    public ?string $lockboxAddressID;
+
+    /**
+     * The identifier for the Lockbox Recipient that received this mail item. For mail items that could not be routed to a Lockbox Recipient, this will be null.
+     */
+    #[Required('lockbox_recipient_id')]
+    public ?string $lockboxRecipientID;
 
     /**
      * The recipient name as written on the mail item.
@@ -106,7 +113,8 @@ final class InboundMailItem implements BaseModel
      *   checks: ...,
      *   createdAt: ...,
      *   fileID: ...,
-     *   lockboxID: ...,
+     *   lockboxAddressID: ...,
+     *   lockboxRecipientID: ...,
      *   recipientName: ...,
      *   rejectionReason: ...,
      *   status: ...,
@@ -122,7 +130,8 @@ final class InboundMailItem implements BaseModel
      *   ->withChecks(...)
      *   ->withCreatedAt(...)
      *   ->withFileID(...)
-     *   ->withLockboxID(...)
+     *   ->withLockboxAddressID(...)
+     *   ->withLockboxRecipientID(...)
      *   ->withRecipientName(...)
      *   ->withRejectionReason(...)
      *   ->withStatus(...)
@@ -149,7 +158,8 @@ final class InboundMailItem implements BaseModel
         array $checks,
         \DateTimeInterface $createdAt,
         string $fileID,
-        ?string $lockboxID,
+        ?string $lockboxAddressID,
+        ?string $lockboxRecipientID,
         ?string $recipientName,
         RejectionReason|string|null $rejectionReason,
         Status|string $status,
@@ -161,7 +171,8 @@ final class InboundMailItem implements BaseModel
         $self['checks'] = $checks;
         $self['createdAt'] = $createdAt;
         $self['fileID'] = $fileID;
-        $self['lockboxID'] = $lockboxID;
+        $self['lockboxAddressID'] = $lockboxAddressID;
+        $self['lockboxRecipientID'] = $lockboxRecipientID;
         $self['recipientName'] = $recipientName;
         $self['rejectionReason'] = $rejectionReason;
         $self['status'] = $status;
@@ -217,12 +228,23 @@ final class InboundMailItem implements BaseModel
     }
 
     /**
-     * The identifier for the Lockbox that received this mail item. For mail items that could not be processed due to an invalid address, this will be null.
+     * The identifier for the Lockbox Address that received this mail item.
      */
-    public function withLockboxID(?string $lockboxID): self
+    public function withLockboxAddressID(?string $lockboxAddressID): self
     {
         $self = clone $this;
-        $self['lockboxID'] = $lockboxID;
+        $self['lockboxAddressID'] = $lockboxAddressID;
+
+        return $self;
+    }
+
+    /**
+     * The identifier for the Lockbox Recipient that received this mail item. For mail items that could not be routed to a Lockbox Recipient, this will be null.
+     */
+    public function withLockboxRecipientID(?string $lockboxRecipientID): self
+    {
+        $self = clone $this;
+        $self['lockboxRecipientID'] = $lockboxRecipientID;
 
         return $self;
     }

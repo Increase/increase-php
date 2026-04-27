@@ -64,7 +64,8 @@ final class InboundMailItemsRawService implements InboundMailItemsRawContract
      *   createdAt?: CreatedAt|CreatedAtShape,
      *   cursor?: string,
      *   limit?: int,
-     *   lockboxID?: string,
+     *   lockboxAddressID?: string,
+     *   lockboxRecipientID?: string,
      * }|InboundMailItemListParams $params
      * @param RequestOpts|null $requestOptions
      *
@@ -87,7 +88,11 @@ final class InboundMailItemsRawService implements InboundMailItemsRawContract
             path: 'inbound_mail_items',
             query: Util::array_transform_keys(
                 $parsed,
-                ['createdAt' => 'created_at', 'lockboxID' => 'lockbox_id']
+                [
+                    'createdAt' => 'created_at',
+                    'lockboxAddressID' => 'lockbox_address_id',
+                    'lockboxRecipientID' => 'lockbox_recipient_id',
+                ],
             ),
             options: $options,
             convert: InboundMailItem::class,

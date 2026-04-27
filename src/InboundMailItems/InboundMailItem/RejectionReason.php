@@ -14,4 +14,8 @@ enum RejectionReason: string
     case NO_CHECK = 'no_check';
 
     case LOCKBOX_NOT_ACTIVE = 'lockbox_not_active';
+
+    case LOCKBOX_ADDRESS_NOT_ACTIVE = 'lockbox_address_not_active';
+
+    case LOCKBOX_RECIPIENT_NOT_ACTIVE = 'lockbox_recipient_not_active';
 }

@@ -29,7 +29,10 @@ final class InboundMailItemsRawService implements InboundMailItemsRawContract
      * Simulates an inbound mail item to your account, as if someone had mailed a physical check to one of your account's Lockboxes.
      *
      * @param array{
-     *   amount: int, lockboxID: string, contentsFileID?: string
+     *   amount: int,
+     *   contentsFileID?: string,
+     *   lockboxAddressID?: string,
+     *   lockboxRecipientID?: string,
      * }|InboundMailItemCreateParams $params
      * @param RequestOpts|null $requestOptions
      *

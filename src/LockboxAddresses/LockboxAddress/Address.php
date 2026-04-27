@@ -2,22 +2,17 @@
 
 declare(strict_types=1);
 
-namespace Increase\Lockboxes\Lockbox;
+namespace Increase\LockboxAddresses\LockboxAddress;
 
 use Increase\Core\Attributes\Required;
 use Increase\Core\Concerns\SdkModel;
 use Increase\Core\Contracts\BaseModel;
 
 /**
- * The mailing address for the Lockbox.
+ * The mailing address for the Lockbox Address. It will be present after Increase generates it.
  *
  * @phpstan-type AddressShape = array{
- *   city: string,
- *   line1: string,
- *   line2: string,
- *   postalCode: string,
- *   recipient: string|null,
- *   state: string,
+ *   city: string, line1: string, line2: string, postalCode: string, state: string
  * }
  */
 final class Address implements BaseModel
@@ -50,12 +45,6 @@ final class Address implements BaseModel
     public string $postalCode;
 
     /**
-     * The recipient line of the address. This will include the recipient name you provide when creating the address, as well as an ATTN suffix to help route the mail to your lockbox. Mail senders must include this ATTN line to receive mail at this Lockbox.
-     */
-    #[Required]
-    public ?string $recipient;
-
-    /**
      * The two-letter United States Postal Service (USPS) abbreviation for the state of the address.
      */
     #[Required]
@@ -66,9 +55,7 @@ final class Address implements BaseModel
      *
      * To enforce required parameters use
      * ```
-     * Address::with(
-     *   city: ..., line1: ..., line2: ..., postalCode: ..., recipient: ..., state: ...
-     * )
+     * Address::with(city: ..., line1: ..., line2: ..., postalCode: ..., state: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
@@ -79,7 +66,6 @@ final class Address implements BaseModel
      *   ->withLine1(...)
      *   ->withLine2(...)
      *   ->withPostalCode(...)
-     *   ->withRecipient(...)
      *   ->withState(...)
      * ```
      */
@@ -98,7 +84,6 @@ final class Address implements BaseModel
         string $line1,
         string $line2,
         string $postalCode,
-        ?string $recipient,
         string $state,
     ): self {
         $self = new self;
@@ -107,7 +92,6 @@ final class Address implements BaseModel
         $self['line1'] = $line1;
         $self['line2'] = $line2;
         $self['postalCode'] = $postalCode;
-        $self['recipient'] = $recipient;
         $self['state'] = $state;
 
         return $self;
@@ -153,17 +137,6 @@ final class Address implements BaseModel
     {
         $self = clone $this;
         $self['postalCode'] = $postalCode;
-
-        return $self;
-    }
-
-    /**
-     * The recipient line of the address. This will include the recipient name you provide when creating the address, as well as an ATTN suffix to help route the mail to your lockbox. Mail senders must include this ATTN line to receive mail at this Lockbox.
-     */
-    public function withRecipient(?string $recipient): self
-    {
-        $self = clone $this;
-        $self['recipient'] = $recipient;
 
         return $self;
     }

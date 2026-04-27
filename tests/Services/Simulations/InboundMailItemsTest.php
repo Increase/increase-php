@@ -31,8 +31,7 @@ final class InboundMailItemsTest extends TestCase
     public function testCreate(): void
     {
         $result = $this->client->simulations->inboundMailItems->create(
-            amount: 1000,
-            lockboxID: 'lockbox_3xt21ok13q19advds4t5'
+            amount: 1000
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -44,8 +43,9 @@ final class InboundMailItemsTest extends TestCase
     {
         $result = $this->client->simulations->inboundMailItems->create(
             amount: 1000,
-            lockboxID: 'lockbox_3xt21ok13q19advds4t5',
             contentsFileID: 'contents_file_id',
+            lockboxAddressID: 'lockbox_address_id',
+            lockboxRecipientID: 'lockbox_3xt21ok13q19advds4t5',
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType

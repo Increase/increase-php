@@ -47,7 +47,8 @@ use Increase\Services\InboundWireTransfersService;
 use Increase\Services\IntrafiAccountEnrollmentsService;
 use Increase\Services\IntrafiBalancesService;
 use Increase\Services\IntrafiExclusionsService;
-use Increase\Services\LockboxesService;
+use Increase\Services\LockboxAddressesService;
+use Increase\Services\LockboxRecipientsService;
 use Increase\Services\OAuthApplicationsService;
 use Increase\Services\OAuthConnectionsService;
 use Increase\Services\OAuthTokensService;
@@ -223,7 +224,12 @@ class Client extends BaseClient
     /**
      * @api
      */
-    public LockboxesService $lockboxes;
+    public LockboxAddressesService $lockboxAddresses;
+
+    /**
+     * @api
+     */
+    public LockboxRecipientsService $lockboxRecipients;
 
     /**
      * @api
@@ -429,7 +435,8 @@ class Client extends BaseClient
         $this->inboundFednowTransfers = new InboundFednowTransfersService($this);
         $this->swiftTransfers = new SwiftTransfersService($this);
         $this->checkDeposits = new CheckDepositsService($this);
-        $this->lockboxes = new LockboxesService($this);
+        $this->lockboxAddresses = new LockboxAddressesService($this);
+        $this->lockboxRecipients = new LockboxRecipientsService($this);
         $this->inboundMailItems = new InboundMailItemsService($this);
         $this->routingNumbers = new RoutingNumbersService($this);
         $this->externalAccounts = new ExternalAccountsService($this);

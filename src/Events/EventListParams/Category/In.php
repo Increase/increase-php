@@ -148,10 +148,6 @@ enum In: string
 
     case INTRAFI_EXCLUSION_UPDATED = 'intrafi_exclusion.updated';
 
-    case LEGACY_CARD_DISPUTE_CREATED = 'legacy_card_dispute.created';
-
-    case LEGACY_CARD_DISPUTE_UPDATED = 'legacy_card_dispute.updated';
-
     case LOCKBOX_CREATED = 'lockbox.created';
 
     case LOCKBOX_UPDATED = 'lockbox.updated';

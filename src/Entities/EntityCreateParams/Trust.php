@@ -83,7 +83,7 @@ final class Trust implements BaseModel
     public ?Grantor $grantor;
 
     /**
-     * The Employer Identification Number (EIN) for the trust. Required if `category` is equal to `irrevocable`.
+     * The Employer Identification Number (EIN) for the trust. Submit nine digits with no dashes or other separators. Required if `category` is equal to `irrevocable`.
      */
     #[Optional('tax_identifier')]
     public ?string $taxIdentifier;
@@ -233,7 +233,7 @@ final class Trust implements BaseModel
     }
 
     /**
-     * The Employer Identification Number (EIN) for the trust. Required if `category` is equal to `irrevocable`.
+     * The Employer Identification Number (EIN) for the trust. Submit nine digits with no dashes or other separators. Required if `category` is equal to `irrevocable`.
      */
     public function withTaxIdentifier(string $taxIdentifier): self
     {

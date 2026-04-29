@@ -61,7 +61,7 @@ final class GovernmentAuthority implements BaseModel
     public string $name;
 
     /**
-     * The Employer Identification Number (EIN) for the government authority.
+     * The Employer Identification Number (EIN) for the government authority. Submit nine digits with no dashes or other separators.
      */
     #[Required('tax_identifier')]
     public string $taxIdentifier;
@@ -183,7 +183,7 @@ final class GovernmentAuthority implements BaseModel
     }
 
     /**
-     * The Employer Identification Number (EIN) for the government authority.
+     * The Employer Identification Number (EIN) for the government authority. Submit nine digits with no dashes or other separators.
      */
     public function withTaxIdentifier(string $taxIdentifier): self
     {

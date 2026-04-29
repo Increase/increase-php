@@ -42,7 +42,7 @@ final class Identification implements BaseModel
     public string $method;
 
     /**
-     * An identification number that can be used to verify the individual's identity, such as a social security number.
+     * An identification number that can be used to verify the individual's identity, such as a social security number. For Social Security Numbers and Individual Taxpayer Identification Numbers, submit nine digits with no dashes or other separators.
      */
     #[Required]
     public string $number;
@@ -127,7 +127,7 @@ final class Identification implements BaseModel
     }
 
     /**
-     * An identification number that can be used to verify the individual's identity, such as a social security number.
+     * An identification number that can be used to verify the individual's identity, such as a social security number. For Social Security Numbers and Individual Taxpayer Identification Numbers, submit nine digits with no dashes or other separators.
      */
     public function withNumber(string $number): self
     {

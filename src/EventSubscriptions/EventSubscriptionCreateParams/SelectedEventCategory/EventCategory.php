@@ -85,8 +85,6 @@ enum EventCategory: string
 
     case DIGITAL_WALLET_TOKEN_UPDATED = 'digital_wallet_token.updated';
 
-    case DOCUMENT_CREATED = 'document.created';
-
     case ENTITY_CREATED = 'entity.created';
 
     case ENTITY_UPDATED = 'entity.updated';

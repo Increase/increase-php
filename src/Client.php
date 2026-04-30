@@ -154,12 +154,12 @@ class Client extends BaseClient
     /**
      * @api
      */
-    public ACHPrenotificationsService $achPrenotifications;
+    public InboundACHTransfersService $inboundACHTransfers;
 
     /**
      * @api
      */
-    public InboundACHTransfersService $inboundACHTransfers;
+    public ACHPrenotificationsService $achPrenotifications;
 
     /**
      * @api
@@ -434,8 +434,8 @@ class Client extends BaseClient
         $this->pendingTransactions = new PendingTransactionsService($this);
         $this->declinedTransactions = new DeclinedTransactionsService($this);
         $this->achTransfers = new ACHTransfersService($this);
-        $this->achPrenotifications = new ACHPrenotificationsService($this);
         $this->inboundACHTransfers = new InboundACHTransfersService($this);
+        $this->achPrenotifications = new ACHPrenotificationsService($this);
         $this->wireTransfers = new WireTransfersService($this);
         $this->inboundWireTransfers = new InboundWireTransfersService($this);
         $this->wireDrawdownRequests = new WireDrawdownRequestsService($this);

@@ -31,7 +31,7 @@ final class EntitiesRawService implements EntitiesRawContract
      *
      * Set the status for an [Entity's validation](/documentation/api/entities#entity-object.validation). In production, Know Your Customer validations [run automatically](/documentation/entity-validation#entity-validation). While developing, it can be helpful to override the behavior in Sandbox.
      *
-     * @param string $entityID the identifier of the Entity to set the validation on
+     * @param string $entityID the identifier of the Entity whose validation status to update
      * @param array{
      *   issues: list<Issue|IssueShape>, status: Status|value-of<Status>
      * }|EntityValidationParams $params

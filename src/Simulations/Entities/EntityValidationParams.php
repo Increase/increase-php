@@ -29,7 +29,7 @@ final class EntityValidationParams implements BaseModel
     use SdkParams;
 
     /**
-     * The issues to attach to the new managed compliance validation.
+     * The validation issues to attach. Only allowed when `status` is `invalid`.
      *
      * @var list<Issue> $issues
      */
@@ -37,7 +37,7 @@ final class EntityValidationParams implements BaseModel
     public array $issues;
 
     /**
-     * The status to set on the new managed compliance validation.
+     * The validation status to set on the Entity.
      *
      * @var value-of<Status> $status
      */
@@ -82,7 +82,7 @@ final class EntityValidationParams implements BaseModel
     }
 
     /**
-     * The issues to attach to the new managed compliance validation.
+     * The validation issues to attach. Only allowed when `status` is `invalid`.
      *
      * @param list<Issue|IssueShape> $issues
      */
@@ -95,7 +95,7 @@ final class EntityValidationParams implements BaseModel
     }
 
     /**
-     * The status to set on the new managed compliance validation.
+     * The validation status to set on the Entity.
      *
      * @param Status|value-of<Status> $status
      */

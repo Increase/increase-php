@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Increase\Simulations\Entities\EntityValidationParams;
 
 /**
- * The status to set on the new managed compliance validation.
+ * The validation status to set on the Entity.
  */
 enum Status: string
 {

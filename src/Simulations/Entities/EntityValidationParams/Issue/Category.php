@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Increase\Simulations\Entities\EntityValidationParams\Issue;
 
 /**
- * The category of the issue.
+ * The type of issue.
  */
 enum Category: string
 {

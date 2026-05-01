@@ -19,9 +19,9 @@ interface EntitiesContract
     /**
      * @api
      *
-     * @param string $entityID the identifier of the Entity to set the validation on
-     * @param list<Issue|IssueShape> $issues the issues to attach to the new managed compliance validation
-     * @param Status|value-of<Status> $status the status to set on the new managed compliance validation
+     * @param string $entityID the identifier of the Entity whose validation status to update
+     * @param list<Issue|IssueShape> $issues The validation issues to attach. Only allowed when `status` is `invalid`.
+     * @param Status|value-of<Status> $status the validation status to set on the Entity
      * @param RequestOpts|null $requestOptions
      *
      * @throws APIException

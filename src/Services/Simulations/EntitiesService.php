@@ -37,9 +37,9 @@ final class EntitiesService implements EntitiesContract
      *
      * Set the status for an [Entity's validation](/documentation/api/entities#entity-object.validation). In production, Know Your Customer validations [run automatically](/documentation/entity-validation#entity-validation). While developing, it can be helpful to override the behavior in Sandbox.
      *
-     * @param string $entityID the identifier of the Entity to set the validation on
-     * @param list<Issue|IssueShape> $issues the issues to attach to the new managed compliance validation
-     * @param Status|value-of<Status> $status the status to set on the new managed compliance validation
+     * @param string $entityID the identifier of the Entity whose validation status to update
+     * @param list<Issue|IssueShape> $issues The validation issues to attach. Only allowed when `status` is `invalid`.
+     * @param Status|value-of<Status> $status the validation status to set on the Entity
      * @param RequestOpts|null $requestOptions
      *
      * @throws APIException

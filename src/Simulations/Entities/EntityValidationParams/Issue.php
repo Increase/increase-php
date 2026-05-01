@@ -18,7 +18,7 @@ final class Issue implements BaseModel
     use SdkModel;
 
     /**
-     * The category of the issue.
+     * The type of issue.
      *
      * @var value-of<Category> $category
      */
@@ -61,7 +61,7 @@ final class Issue implements BaseModel
     }
 
     /**
-     * The category of the issue.
+     * The type of issue.
      *
      * @param Category|value-of<Category> $category
      */

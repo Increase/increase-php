@@ -18,7 +18,7 @@ interface EntitiesRawContract
     /**
      * @api
      *
-     * @param string $entityID the identifier of the Entity to set the validation on
+     * @param string $entityID the identifier of the Entity whose validation status to update
      * @param array<string,mixed>|EntityValidationParams $params
      * @param RequestOpts|null $requestOptions
      *

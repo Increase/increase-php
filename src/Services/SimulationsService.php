@@ -24,6 +24,7 @@ use Increase\Services\Simulations\CardTokensService;
 use Increase\Services\Simulations\CheckDepositsService;
 use Increase\Services\Simulations\CheckTransfersService;
 use Increase\Services\Simulations\DigitalWalletTokenRequestsService;
+use Increase\Services\Simulations\EntitiesService;
 use Increase\Services\Simulations\EntityOnboardingSessionsService;
 use Increase\Services\Simulations\ExportsService;
 use Increase\Services\Simulations\InboundACHTransfersService;
@@ -196,6 +197,11 @@ final class SimulationsService implements SimulationsContract
     /**
      * @api
      */
+    public EntitiesService $entities;
+
+    /**
+     * @api
+     */
     public EntityOnboardingSessionsService $entityOnboardingSessions;
 
     /**
@@ -253,6 +259,7 @@ final class SimulationsService implements SimulationsContract
         $this->inboundFednowTransfers = new InboundFednowTransfersService($client);
         $this->checkDeposits = new CheckDepositsService($client);
         $this->inboundMailItems = new InboundMailItemsService($client);
+        $this->entities = new EntitiesService($client);
         $this->entityOnboardingSessions = new EntityOnboardingSessionsService($client);
         $this->programs = new ProgramsService($client);
         $this->accountStatements = new AccountStatementsService($client);

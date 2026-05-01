@@ -32,7 +32,7 @@ final class InboundMailItemsService implements InboundMailItemsContract
     /**
      * @api
      *
-     * Simulates an inbound mail item to your account, as if someone had mailed a physical check to one of your account's Lockboxes.
+     * Simulates an Inbound Mail Item to one of your Lockbox Addresses or Lockbox Recipients, as if someone had mailed a physical check.
      *
      * @param int $amount the amount of the check to be simulated, in cents
      * @param string $contentsFileID The file containing the PDF contents. If not present, a default check image file will be used.

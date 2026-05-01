@@ -28,12 +28,11 @@ final class EntitiesTest extends TestCase
     }
 
     #[Test]
-    public function testValidation(): void
+    public function testUpdateValidation(): void
     {
-        $result = $this->client->simulations->entities->validation(
+        $result = $this->client->simulations->entities->updateValidation(
             'entity_n8y8tnk2p9339ti393yi',
             issues: [['category' => 'entity_tax_identifier']],
-            status: 'invalid',
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -41,12 +40,11 @@ final class EntitiesTest extends TestCase
     }
 
     #[Test]
-    public function testValidationWithOptionalParams(): void
+    public function testUpdateValidationWithOptionalParams(): void
     {
-        $result = $this->client->simulations->entities->validation(
+        $result = $this->client->simulations->entities->updateValidation(
             'entity_n8y8tnk2p9339ti393yi',
             issues: [['category' => 'entity_tax_identifier']],
-            status: 'invalid',
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType

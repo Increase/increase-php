@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Increase\Simulations\Entities\EntityValidationParams;
+namespace Increase\Simulations\Entities\EntityUpdateValidationParams;
 
 use Increase\Core\Attributes\Required;
 use Increase\Core\Concerns\SdkModel;
 use Increase\Core\Contracts\BaseModel;
-use Increase\Simulations\Entities\EntityValidationParams\Issue\Category;
+use Increase\Simulations\Entities\EntityUpdateValidationParams\Issue\Category;
 
 /**
  * @phpstan-type IssueShape = array{category: Category|value-of<Category>}

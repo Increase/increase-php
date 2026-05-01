@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Increase\Simulations\Entities\EntityValidationParams\Issue;
+namespace Increase\Simulations\Entities\EntityUpdateValidationParams\Issue;
 
 /**
  * The type of issue.

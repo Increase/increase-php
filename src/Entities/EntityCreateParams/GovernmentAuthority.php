@@ -67,7 +67,7 @@ final class GovernmentAuthority implements BaseModel
     public string $taxIdentifier;
 
     /**
-     * The website of the government authority.
+     * A website for the government authority. Not every program requires a website for submitted Entities.
      */
     #[Optional]
     public ?string $website;
@@ -194,7 +194,7 @@ final class GovernmentAuthority implements BaseModel
     }
 
     /**
-     * The website of the government authority.
+     * A website for the government authority. Not every program requires a website for submitted Entities.
      */
     public function withWebsite(string $website): self
     {

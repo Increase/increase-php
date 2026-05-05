@@ -73,7 +73,7 @@ final class BeneficialOwnersTest extends TestCase
                     'driversLicense' => [
                         'expirationDate' => '2019-12-27',
                         'fileID' => 'file_id',
-                        'state' => 'x',
+                        'state' => 'xx',
                         'backFileID' => 'back_file_id',
                     ],
                     'other' => [

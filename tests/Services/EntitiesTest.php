@@ -69,7 +69,7 @@ final class EntitiesTest extends TestCase
                                 'driversLicense' => [
                                     'expirationDate' => '2019-12-27',
                                     'fileID' => 'file_id',
-                                    'state' => 'x',
+                                    'state' => 'xx',
                                     'backFileID' => 'back_file_id',
                                 ],
                                 'other' => [
@@ -108,7 +108,7 @@ final class EntitiesTest extends TestCase
                 'address' => [
                     'city' => 'x',
                     'line1' => 'x',
-                    'state' => 'x',
+                    'state' => 'xx',
                     'zip' => 'x',
                     'line2' => 'x',
                 ],
@@ -136,7 +136,7 @@ final class EntitiesTest extends TestCase
                             'driversLicense' => [
                                 'expirationDate' => '2019-12-27',
                                 'fileID' => 'file_id',
-                                'state' => 'x',
+                                'state' => 'xx',
                                 'backFileID' => 'back_file_id',
                             ],
                             'other' => [
@@ -173,7 +173,7 @@ final class EntitiesTest extends TestCase
                     'driversLicense' => [
                         'expirationDate' => '2019-12-27',
                         'fileID' => 'file_id',
-                        'state' => 'x',
+                        'state' => 'xx',
                         'backFileID' => 'back_file_id',
                     ],
                     'other' => [
@@ -209,7 +209,7 @@ final class EntitiesTest extends TestCase
                 'address' => [
                     'city' => 'x',
                     'line1' => 'x',
-                    'state' => 'x',
+                    'state' => 'xx',
                     'zip' => 'x',
                     'line2' => 'x',
                 ],
@@ -234,7 +234,7 @@ final class EntitiesTest extends TestCase
                                 'driversLicense' => [
                                     'expirationDate' => '2019-12-27',
                                     'fileID' => 'file_id',
-                                    'state' => 'x',
+                                    'state' => 'xx',
                                     'backFileID' => 'back_file_id',
                                 ],
                                 'other' => [
@@ -273,7 +273,7 @@ final class EntitiesTest extends TestCase
                         'driversLicense' => [
                             'expirationDate' => '2019-12-27',
                             'fileID' => 'file_id',
-                            'state' => 'x',
+                            'state' => 'xx',
                             'backFileID' => 'back_file_id',
                         ],
                         'other' => [

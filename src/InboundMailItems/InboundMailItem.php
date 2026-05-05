@@ -22,7 +22,7 @@ use Increase\InboundMailItems\InboundMailItem\Type;
  *   checks: list<Check|CheckShape>,
  *   createdAt: \DateTimeInterface,
  *   fileID: string,
- *   lockboxAddressID: string|null,
+ *   lockboxAddressID: string,
  *   lockboxRecipientID: string|null,
  *   recipientName: string|null,
  *   rejectionReason: null|RejectionReason|value-of<RejectionReason>,
@@ -65,7 +65,7 @@ final class InboundMailItem implements BaseModel
      * The identifier for the Lockbox Address that received this mail item.
      */
     #[Required('lockbox_address_id')]
-    public ?string $lockboxAddressID;
+    public string $lockboxAddressID;
 
     /**
      * The identifier for the Lockbox Recipient that received this mail item. For mail items that could not be routed to a Lockbox Recipient, this will be null.
@@ -158,7 +158,7 @@ final class InboundMailItem implements BaseModel
         array $checks,
         \DateTimeInterface $createdAt,
         string $fileID,
-        ?string $lockboxAddressID,
+        string $lockboxAddressID,
         ?string $lockboxRecipientID,
         ?string $recipientName,
         RejectionReason|string|null $rejectionReason,
@@ -230,7 +230,7 @@ final class InboundMailItem implements BaseModel
     /**
      * The identifier for the Lockbox Address that received this mail item.
      */
-    public function withLockboxAddressID(?string $lockboxAddressID): self
+    public function withLockboxAddressID(string $lockboxAddressID): self
     {
         $self = clone $this;
         $self['lockboxAddressID'] = $lockboxAddressID;

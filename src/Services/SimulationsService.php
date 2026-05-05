@@ -6,6 +6,7 @@ namespace Increase\Services;
 
 use Increase\Client;
 use Increase\ServiceContracts\SimulationsContract;
+use Increase\Services\Simulations\AccountRevenuePaymentsService;
 use Increase\Services\Simulations\AccountStatementsService;
 use Increase\Services\Simulations\ACHTransfersService;
 use Increase\Services\Simulations\CardAuthenticationsService;
@@ -23,6 +24,7 @@ use Increase\Services\Simulations\CardTokensService;
 use Increase\Services\Simulations\CheckDepositsService;
 use Increase\Services\Simulations\CheckTransfersService;
 use Increase\Services\Simulations\DigitalWalletTokenRequestsService;
+use Increase\Services\Simulations\EntitiesService;
 use Increase\Services\Simulations\EntityOnboardingSessionsService;
 use Increase\Services\Simulations\ExportsService;
 use Increase\Services\Simulations\InboundACHTransfersService;
@@ -51,6 +53,11 @@ final class SimulationsService implements SimulationsContract
      * @api
      */
     public InterestPaymentsService $interestPayments;
+
+    /**
+     * @api
+     */
+    public AccountRevenuePaymentsService $accountRevenuePayments;
 
     /**
      * @api
@@ -190,6 +197,11 @@ final class SimulationsService implements SimulationsContract
     /**
      * @api
      */
+    public EntitiesService $entities;
+
+    /**
+     * @api
+     */
     public EntityOnboardingSessionsService $entityOnboardingSessions;
 
     /**
@@ -219,6 +231,7 @@ final class SimulationsService implements SimulationsContract
     {
         $this->raw = new SimulationsRawService($client);
         $this->interestPayments = new InterestPaymentsService($client);
+        $this->accountRevenuePayments = new AccountRevenuePaymentsService($client);
         $this->cardAuthorizations = new CardAuthorizationsService($client);
         $this->cardBalanceInquiries = new CardBalanceInquiriesService($client);
         $this->cardAuthorizationExpirations = new CardAuthorizationExpirationsService($client);
@@ -246,6 +259,7 @@ final class SimulationsService implements SimulationsContract
         $this->inboundFednowTransfers = new InboundFednowTransfersService($client);
         $this->checkDeposits = new CheckDepositsService($client);
         $this->inboundMailItems = new InboundMailItemsService($client);
+        $this->entities = new EntitiesService($client);
         $this->entityOnboardingSessions = new EntityOnboardingSessionsService($client);
         $this->programs = new ProgramsService($client);
         $this->accountStatements = new AccountStatementsService($client);

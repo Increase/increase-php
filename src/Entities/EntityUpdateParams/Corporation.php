@@ -23,6 +23,7 @@ use Increase\Entities\EntityUpdateParams\Corporation\LegalIdentifier;
  *   industryCode?: string|null,
  *   legalIdentifier?: null|LegalIdentifier|LegalIdentifierShape,
  *   name?: string|null,
+ *   website?: string|null,
  * }
  */
 final class Corporation implements BaseModel
@@ -66,6 +67,12 @@ final class Corporation implements BaseModel
     #[Optional]
     public ?string $name;
 
+    /**
+     * A website for the business. Not every program requires a website for submitted Entities.
+     */
+    #[Optional]
+    public ?string $website;
+
     public function __construct()
     {
         $this->initialize();
@@ -86,6 +93,7 @@ final class Corporation implements BaseModel
         ?string $industryCode = null,
         LegalIdentifier|array|null $legalIdentifier = null,
         ?string $name = null,
+        ?string $website = null,
     ): self {
         $self = new self;
 
@@ -95,6 +103,7 @@ final class Corporation implements BaseModel
         null !== $industryCode && $self['industryCode'] = $industryCode;
         null !== $legalIdentifier && $self['legalIdentifier'] = $legalIdentifier;
         null !== $name && $self['name'] = $name;
+        null !== $website && $self['website'] = $website;
 
         return $self;
     }
@@ -166,6 +175,17 @@ final class Corporation implements BaseModel
     {
         $self = clone $this;
         $self['name'] = $name;
+
+        return $self;
+    }
+
+    /**
+     * A website for the business. Not every program requires a website for submitted Entities.
+     */
+    public function withWebsite(string $website): self
+    {
+        $self = clone $this;
+        $self['website'] = $website;
 
         return $self;
     }

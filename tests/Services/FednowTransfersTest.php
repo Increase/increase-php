@@ -62,7 +62,7 @@ final class FednowTransfersTest extends TestCase
             debtorAddress: [
                 'city' => 'x',
                 'postalCode' => '21029-9469',
-                'state' => 'x',
+                'state' => 'xx',
                 'line1' => 'x',
             ],
             externalAccountID: 'external_account_id',

@@ -93,7 +93,7 @@ final class Corporation implements BaseModel
     public ?string $industryCode;
 
     /**
-     * The website of the corporation.
+     * A website for the business. Not every program requires a website for submitted Entities.
      */
     #[Optional]
     public ?string $website;
@@ -259,7 +259,7 @@ final class Corporation implements BaseModel
     }
 
     /**
-     * The website of the corporation.
+     * A website for the business. Not every program requires a website for submitted Entities.
      */
     public function withWebsite(string $website): self
     {

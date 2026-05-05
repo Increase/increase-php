@@ -7,15 +7,15 @@ namespace Increase\Services\Simulations;
 use Increase\Client;
 use Increase\Core\Contracts\BaseResponse;
 use Increase\Core\Exceptions\APIException;
-use Increase\InboundMailItems\InboundMailItem;
 use Increase\RequestOptions;
-use Increase\ServiceContracts\Simulations\InboundMailItemsRawContract;
-use Increase\Simulations\InboundMailItems\InboundMailItemCreateParams;
+use Increase\ServiceContracts\Simulations\AccountRevenuePaymentsRawContract;
+use Increase\Simulations\AccountRevenuePayments\AccountRevenuePaymentCreateParams;
+use Increase\Transactions\Transaction;
 
 /**
  * @phpstan-import-type RequestOpts from \Increase\RequestOptions
  */
-final class InboundMailItemsRawService implements InboundMailItemsRawContract
+final class AccountRevenuePaymentsRawService implements AccountRevenuePaymentsRawContract
 {
     // @phpstan-ignore-next-line
     /**
@@ -26,25 +26,26 @@ final class InboundMailItemsRawService implements InboundMailItemsRawContract
     /**
      * @api
      *
-     * Simulates an Inbound Mail Item to one of your Lockbox Addresses or Lockbox Recipients, as if someone had mailed a physical check.
+     * Simulates an account revenue payment to your account. In production, this happens automatically on the first of each month.
      *
      * @param array{
+     *   accountID: string,
      *   amount: int,
-     *   contentsFileID?: string,
-     *   lockboxAddressID?: string,
-     *   lockboxRecipientID?: string,
-     * }|InboundMailItemCreateParams $params
+     *   accruedOnAccountID?: string,
+     *   periodEnd?: \DateTimeInterface,
+     *   periodStart?: \DateTimeInterface,
+     * }|AccountRevenuePaymentCreateParams $params
      * @param RequestOpts|null $requestOptions
      *
-     * @return BaseResponse<InboundMailItem>
+     * @return BaseResponse<Transaction>
      *
      * @throws APIException
      */
     public function create(
-        array|InboundMailItemCreateParams $params,
+        array|AccountRevenuePaymentCreateParams $params,
         RequestOptions|array|null $requestOptions = null,
     ): BaseResponse {
-        [$parsed, $options] = InboundMailItemCreateParams::parseRequest(
+        [$parsed, $options] = AccountRevenuePaymentCreateParams::parseRequest(
             $params,
             $requestOptions,
         );
@@ -52,10 +53,10 @@ final class InboundMailItemsRawService implements InboundMailItemsRawContract
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'post',
-            path: 'simulations/inbound_mail_items',
+            path: 'simulations/account_revenue_payments',
             body: (object) $parsed,
             options: $options,
-            convert: InboundMailItem::class,
+            convert: Transaction::class,
         );
     }
 }

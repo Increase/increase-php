@@ -82,8 +82,6 @@ enum In: string
 
     case DIGITAL_WALLET_TOKEN_UPDATED = 'digital_wallet_token.updated';
 
-    case DOCUMENT_CREATED = 'document.created';
-
     case ENTITY_CREATED = 'entity.created';
 
     case ENTITY_UPDATED = 'entity.updated';
@@ -147,10 +145,6 @@ enum In: string
     case INTRAFI_EXCLUSION_CREATED = 'intrafi_exclusion.created';
 
     case INTRAFI_EXCLUSION_UPDATED = 'intrafi_exclusion.updated';
-
-    case LEGACY_CARD_DISPUTE_CREATED = 'legacy_card_dispute.created';
-
-    case LEGACY_CARD_DISPUTE_UPDATED = 'legacy_card_dispute.updated';
 
     case LOCKBOX_CREATED = 'lockbox.created';
 

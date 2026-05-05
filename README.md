@@ -87,7 +87,7 @@ use Increase\Core\Exceptions\RateLimitException;
 use Increase\Core\Exceptions\APIStatusException;
 
 try {
-  $account = $client->accounts->create(name: 'New Account!');
+  $account = $client->accounts->create(name: 'Oops');
 } catch (APIConnectionException $e) {
   echo "The server could not be reached", PHP_EOL;
   var_dump($e->getPrevious());
@@ -157,9 +157,7 @@ $file = $client->files->create(
 );
 
 // Pass in only a string (where applicable)
-$file = $client->files->create(
-  file: 'Example data', purpose: 'check_image_front'
-);
+$file = $client->files->create(file: 'check.png', purpose: 'check_image_front');
 
 // Pass an open resource:
 $fd = fopen('my/file.txt', 'r');

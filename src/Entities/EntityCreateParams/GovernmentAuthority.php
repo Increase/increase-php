@@ -61,13 +61,13 @@ final class GovernmentAuthority implements BaseModel
     public string $name;
 
     /**
-     * The Employer Identification Number (EIN) for the government authority.
+     * The Employer Identification Number (EIN) for the government authority. Submit nine digits with no dashes or other separators.
      */
     #[Required('tax_identifier')]
     public string $taxIdentifier;
 
     /**
-     * The website of the government authority.
+     * A website for the government authority. Not every program requires a website for submitted Entities.
      */
     #[Optional]
     public ?string $website;
@@ -183,7 +183,7 @@ final class GovernmentAuthority implements BaseModel
     }
 
     /**
-     * The Employer Identification Number (EIN) for the government authority.
+     * The Employer Identification Number (EIN) for the government authority. Submit nine digits with no dashes or other separators.
      */
     public function withTaxIdentifier(string $taxIdentifier): self
     {
@@ -194,7 +194,7 @@ final class GovernmentAuthority implements BaseModel
     }
 
     /**
-     * The website of the government authority.
+     * A website for the government authority. Not every program requires a website for submitted Entities.
      */
     public function withWebsite(string $website): self
     {

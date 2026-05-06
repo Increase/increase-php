@@ -34,7 +34,7 @@ final class CardPushTransfersTest extends TestCase
         $result = $this->client->cardPushTransfers->create(
             businessApplicationIdentifier: 'funds_disbursement',
             cardTokenID: 'outbound_card_token_zlt0ml6youq3q7vcdlg0',
-            merchantCategoryCode: '1234',
+            merchantCategoryCode: '5734',
             merchantCityName: 'New York',
             merchantName: 'Acme Corp',
             merchantNamePrefix: 'Acme',
@@ -60,7 +60,7 @@ final class CardPushTransfersTest extends TestCase
         $result = $this->client->cardPushTransfers->create(
             businessApplicationIdentifier: 'funds_disbursement',
             cardTokenID: 'outbound_card_token_zlt0ml6youq3q7vcdlg0',
-            merchantCategoryCode: '1234',
+            merchantCategoryCode: '5734',
             merchantCityName: 'New York',
             merchantName: 'Acme Corp',
             merchantNamePrefix: 'Acme',

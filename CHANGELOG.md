@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.123.0 (2026-05-06)
+
+Full Changelog: [v0.122.0...v0.123.0](https://github.com/Increase/increase-php/compare/v0.122.0...v0.123.0)
+
+### Features
+
+* **api:** api update ([6c75d27](https://github.com/Increase/increase-php/commit/6c75d2796e11f6267a39264be808a4e0edfb7d64))
+
+
+### Chores
+
+* remove custom code ([2279e9b](https://github.com/Increase/increase-php/commit/2279e9b43ad6569e7ab92365d69289bfbeaef1dc))
+
 ## 0.122.0 (2026-04-27)
 
 Full Changelog: [v0.121.1...v0.122.0](https://github.com/Increase/increase-php/compare/v0.121.1...v0.122.0)

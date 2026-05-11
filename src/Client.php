@@ -7,6 +7,7 @@ namespace Increase;
 use Http\Discovery\Psr17FactoryDiscovery;
 use Http\Discovery\Psr18ClientDiscovery;
 use Increase\Core\BaseClient;
+use Increase\Core\Implementation\StreamingHttpClient;
 use Increase\Core\Util;
 use Increase\Services\AccountNumbersService;
 use Increase\Services\AccountsService;
@@ -388,6 +389,11 @@ class Client extends BaseClient
             ),
             $requestOptions,
         );
+
+        if (is_null($options->streamingTransporter)) {
+            assert(!is_null($options->transporter));
+            $options->streamingTransporter = new StreamingHttpClient($options->transporter);
+        }
 
         /** @var array<string, string|null> $headers */
         $headers = [

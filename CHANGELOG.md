@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.123.1 (2026-05-11)
+
+Full Changelog: [v0.123.0...v0.123.1](https://github.com/Increase/increase-php/compare/v0.123.0...v0.123.1)
+
+### Bug Fixes
+
+* guzzle requires special handling to enable streaming ([4a30035](https://github.com/Increase/increase-php/commit/4a30035a508e90d7b16906d5e9f12bee45be6a68))
+
 ## 0.123.0 (2026-05-06)
 
 Full Changelog: [v0.122.0...v0.123.0](https://github.com/Increase/increase-php/compare/v0.122.0...v0.123.0)

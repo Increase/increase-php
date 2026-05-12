@@ -10,7 +10,7 @@ use Increase\Core\Concerns\SdkModel;
 use Increase\Core\Contracts\BaseModel;
 use Increase\PendingTransactions\PendingTransaction\Source\AccountTransferInstruction;
 use Increase\PendingTransactions\PendingTransaction\Source\ACHTransferInstruction;
-use Increase\PendingTransactions\PendingTransaction\Source\BlockchainOfframpTransferInstruction;
+use Increase\PendingTransactions\PendingTransaction\Source\BlockchainOfframpTransfer;
 use Increase\PendingTransactions\PendingTransaction\Source\BlockchainOnrampTransferInstruction;
 use Increase\PendingTransactions\PendingTransaction\Source\CardAuthorization;
 use Increase\PendingTransactions\PendingTransaction\Source\CardPushTransferInstruction;
@@ -30,7 +30,7 @@ use Increase\PendingTransactions\PendingTransaction\Source\WireTransferInstructi
  *
  * @phpstan-import-type AccountTransferInstructionShape from \Increase\PendingTransactions\PendingTransaction\Source\AccountTransferInstruction
  * @phpstan-import-type ACHTransferInstructionShape from \Increase\PendingTransactions\PendingTransaction\Source\ACHTransferInstruction
- * @phpstan-import-type BlockchainOfframpTransferInstructionShape from \Increase\PendingTransactions\PendingTransaction\Source\BlockchainOfframpTransferInstruction
+ * @phpstan-import-type BlockchainOfframpTransferShape from \Increase\PendingTransactions\PendingTransaction\Source\BlockchainOfframpTransfer
  * @phpstan-import-type BlockchainOnrampTransferInstructionShape from \Increase\PendingTransactions\PendingTransaction\Source\BlockchainOnrampTransferInstruction
  * @phpstan-import-type CardAuthorizationShape from \Increase\PendingTransactions\PendingTransaction\Source\CardAuthorization
  * @phpstan-import-type CardPushTransferInstructionShape from \Increase\PendingTransactions\PendingTransaction\Source\CardPushTransferInstruction
@@ -48,7 +48,7 @@ use Increase\PendingTransactions\PendingTransaction\Source\WireTransferInstructi
  *   category: Category|value-of<Category>,
  *   accountTransferInstruction?: null|AccountTransferInstruction|AccountTransferInstructionShape,
  *   achTransferInstruction?: null|ACHTransferInstruction|ACHTransferInstructionShape,
- *   blockchainOfframpTransferInstruction?: null|BlockchainOfframpTransferInstruction|BlockchainOfframpTransferInstructionShape,
+ *   blockchainOfframpTransfer?: null|BlockchainOfframpTransfer|BlockchainOfframpTransferShape,
  *   blockchainOnrampTransferInstruction?: null|BlockchainOnrampTransferInstruction|BlockchainOnrampTransferInstructionShape,
  *   cardAuthorization?: null|CardAuthorization|CardAuthorizationShape,
  *   cardPushTransferInstruction?: null|CardPushTransferInstruction|CardPushTransferInstructionShape,
@@ -90,10 +90,10 @@ final class Source implements BaseModel
     public ?ACHTransferInstruction $achTransferInstruction;
 
     /**
-     * A Blockchain Off-Ramp Transfer Instruction object. This field will be present in the JSON response if and only if `category` is equal to `blockchain_offramp_transfer_instruction`.
+     * A Blockchain Off-Ramp Transfer object. This field will be present in the JSON response if and only if `category` is equal to `blockchain_offramp_transfer`. Blockchain Off-Ramp Transfers move funds from a Blockchain Address to an Account. They're automatically created when funds land in a Blockchain Address.
      */
-    #[Optional('blockchain_offramp_transfer_instruction', nullable: true)]
-    public ?BlockchainOfframpTransferInstruction $blockchainOfframpTransferInstruction;
+    #[Optional('blockchain_offramp_transfer', nullable: true)]
+    public ?BlockchainOfframpTransfer $blockchainOfframpTransfer;
 
     /**
      * A Blockchain On-Ramp Transfer Instruction object. This field will be present in the JSON response if and only if `category` is equal to `blockchain_onramp_transfer_instruction`.
@@ -202,7 +202,7 @@ final class Source implements BaseModel
      * @param Category|value-of<Category> $category
      * @param AccountTransferInstruction|AccountTransferInstructionShape|null $accountTransferInstruction
      * @param ACHTransferInstruction|ACHTransferInstructionShape|null $achTransferInstruction
-     * @param BlockchainOfframpTransferInstruction|BlockchainOfframpTransferInstructionShape|null $blockchainOfframpTransferInstruction
+     * @param BlockchainOfframpTransfer|BlockchainOfframpTransferShape|null $blockchainOfframpTransfer
      * @param BlockchainOnrampTransferInstruction|BlockchainOnrampTransferInstructionShape|null $blockchainOnrampTransferInstruction
      * @param CardAuthorization|CardAuthorizationShape|null $cardAuthorization
      * @param CardPushTransferInstruction|CardPushTransferInstructionShape|null $cardPushTransferInstruction
@@ -221,7 +221,7 @@ final class Source implements BaseModel
         Category|string $category,
         AccountTransferInstruction|array|null $accountTransferInstruction = null,
         ACHTransferInstruction|array|null $achTransferInstruction = null,
-        BlockchainOfframpTransferInstruction|array|null $blockchainOfframpTransferInstruction = null,
+        BlockchainOfframpTransfer|array|null $blockchainOfframpTransfer = null,
         BlockchainOnrampTransferInstruction|array|null $blockchainOnrampTransferInstruction = null,
         CardAuthorization|array|null $cardAuthorization = null,
         CardPushTransferInstruction|array|null $cardPushTransferInstruction = null,
@@ -242,7 +242,7 @@ final class Source implements BaseModel
 
         null !== $accountTransferInstruction && $self['accountTransferInstruction'] = $accountTransferInstruction;
         null !== $achTransferInstruction && $self['achTransferInstruction'] = $achTransferInstruction;
-        null !== $blockchainOfframpTransferInstruction && $self['blockchainOfframpTransferInstruction'] = $blockchainOfframpTransferInstruction;
+        null !== $blockchainOfframpTransfer && $self['blockchainOfframpTransfer'] = $blockchainOfframpTransfer;
         null !== $blockchainOnrampTransferInstruction && $self['blockchainOnrampTransferInstruction'] = $blockchainOnrampTransferInstruction;
         null !== $cardAuthorization && $self['cardAuthorization'] = $cardAuthorization;
         null !== $cardPushTransferInstruction && $self['cardPushTransferInstruction'] = $cardPushTransferInstruction;
@@ -302,15 +302,15 @@ final class Source implements BaseModel
     }
 
     /**
-     * A Blockchain Off-Ramp Transfer Instruction object. This field will be present in the JSON response if and only if `category` is equal to `blockchain_offramp_transfer_instruction`.
+     * A Blockchain Off-Ramp Transfer object. This field will be present in the JSON response if and only if `category` is equal to `blockchain_offramp_transfer`. Blockchain Off-Ramp Transfers move funds from a Blockchain Address to an Account. They're automatically created when funds land in a Blockchain Address.
      *
-     * @param BlockchainOfframpTransferInstruction|BlockchainOfframpTransferInstructionShape|null $blockchainOfframpTransferInstruction
+     * @param BlockchainOfframpTransfer|BlockchainOfframpTransferShape|null $blockchainOfframpTransfer
      */
-    public function withBlockchainOfframpTransferInstruction(
-        BlockchainOfframpTransferInstruction|array|null $blockchainOfframpTransferInstruction,
+    public function withBlockchainOfframpTransfer(
+        BlockchainOfframpTransfer|array|null $blockchainOfframpTransfer
     ): self {
         $self = clone $this;
-        $self['blockchainOfframpTransferInstruction'] = $blockchainOfframpTransferInstruction;
+        $self['blockchainOfframpTransfer'] = $blockchainOfframpTransfer;
 
         return $self;
     }

@@ -9,6 +9,7 @@ use Increase\Core\Concerns\SdkModel;
 use Increase\Core\Contracts\BaseModel;
 use Increase\Entities\Entity\Corporation\Address;
 use Increase\Entities\Entity\Corporation\BeneficialOwner;
+use Increase\Entities\Entity\Corporation\BeneficialOwnershipExemptionReason;
 use Increase\Entities\Entity\Corporation\LegalIdentifier;
 
 /**
@@ -21,6 +22,7 @@ use Increase\Entities\Entity\Corporation\LegalIdentifier;
  * @phpstan-type CorporationShape = array{
  *   address: Address|AddressShape,
  *   beneficialOwners: list<BeneficialOwner|BeneficialOwnerShape>,
+ *   beneficialOwnershipExemptionReason: null|BeneficialOwnershipExemptionReason|value-of<BeneficialOwnershipExemptionReason>,
  *   email: string|null,
  *   incorporationState: string|null,
  *   industryCode: string|null,
@@ -47,6 +49,17 @@ final class Corporation implements BaseModel
      */
     #[Required('beneficial_owners', list: BeneficialOwner::class)]
     public array $beneficialOwners;
+
+    /**
+     * If the entity is exempt from the requirement to submit beneficial owners, the justification for the exemption.
+     *
+     * @var value-of<BeneficialOwnershipExemptionReason>|null $beneficialOwnershipExemptionReason
+     */
+    #[Required(
+        'beneficial_ownership_exemption_reason',
+        enum: BeneficialOwnershipExemptionReason::class,
+    )]
+    public ?string $beneficialOwnershipExemptionReason;
 
     /**
      * An email address for the business.
@@ -92,6 +105,7 @@ final class Corporation implements BaseModel
      * Corporation::with(
      *   address: ...,
      *   beneficialOwners: ...,
+     *   beneficialOwnershipExemptionReason: ...,
      *   email: ...,
      *   incorporationState: ...,
      *   industryCode: ...,
@@ -107,6 +121,7 @@ final class Corporation implements BaseModel
      * (new Corporation)
      *   ->withAddress(...)
      *   ->withBeneficialOwners(...)
+     *   ->withBeneficialOwnershipExemptionReason(...)
      *   ->withEmail(...)
      *   ->withIncorporationState(...)
      *   ->withIndustryCode(...)
@@ -127,11 +142,13 @@ final class Corporation implements BaseModel
      *
      * @param Address|AddressShape $address
      * @param list<BeneficialOwner|BeneficialOwnerShape> $beneficialOwners
+     * @param BeneficialOwnershipExemptionReason|value-of<BeneficialOwnershipExemptionReason>|null $beneficialOwnershipExemptionReason
      * @param LegalIdentifier|LegalIdentifierShape|null $legalIdentifier
      */
     public static function with(
         Address|array $address,
         array $beneficialOwners,
+        BeneficialOwnershipExemptionReason|string|null $beneficialOwnershipExemptionReason,
         ?string $email,
         ?string $incorporationState,
         ?string $industryCode,
@@ -143,6 +160,7 @@ final class Corporation implements BaseModel
 
         $self['address'] = $address;
         $self['beneficialOwners'] = $beneficialOwners;
+        $self['beneficialOwnershipExemptionReason'] = $beneficialOwnershipExemptionReason;
         $self['email'] = $email;
         $self['incorporationState'] = $incorporationState;
         $self['industryCode'] = $industryCode;
@@ -175,6 +193,20 @@ final class Corporation implements BaseModel
     {
         $self = clone $this;
         $self['beneficialOwners'] = $beneficialOwners;
+
+        return $self;
+    }
+
+    /**
+     * If the entity is exempt from the requirement to submit beneficial owners, the justification for the exemption.
+     *
+     * @param BeneficialOwnershipExemptionReason|value-of<BeneficialOwnershipExemptionReason>|null $beneficialOwnershipExemptionReason
+     */
+    public function withBeneficialOwnershipExemptionReason(
+        BeneficialOwnershipExemptionReason|string|null $beneficialOwnershipExemptionReason,
+    ): self {
+        $self = clone $this;
+        $self['beneficialOwnershipExemptionReason'] = $beneficialOwnershipExemptionReason;
 
         return $self;
     }

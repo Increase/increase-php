@@ -9,8 +9,6 @@ namespace Increase\PendingTransactions\PendingTransaction\Source\BlockchainOffra
  */
 enum Status: string
 {
-    case CANCELED = 'canceled';
-
     case PENDING_SETTLEMENT = 'pending_settlement';
 
     case SETTLED = 'settled';

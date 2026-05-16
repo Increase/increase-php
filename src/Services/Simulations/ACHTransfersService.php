@@ -10,7 +10,7 @@ use Increase\Core\Exceptions\APIException;
 use Increase\Core\Util;
 use Increase\RequestOptions;
 use Increase\ServiceContracts\Simulations\ACHTransfersContract;
-use Increase\Simulations\ACHTransfers\ACHTransferCreateNotificationOfChangeParams\ChangeCode;
+use Increase\Simulations\ACHTransfers\ACHTransferCreateNotificationOfChangeParams\CorrectedAccountFunding;
 use Increase\Simulations\ACHTransfers\ACHTransferReturnParams\Reason;
 use Increase\Simulations\ACHTransfers\ACHTransferSettleParams\InboundFundsHoldBehavior;
 
@@ -58,20 +58,29 @@ final class ACHTransfersService implements ACHTransfersContract
      * Simulates receiving a Notification of Change for an [ACH Transfer](#ach-transfers).
      *
      * @param string $achTransferID the identifier of the ACH Transfer you wish to create a notification of change for
-     * @param ChangeCode|value-of<ChangeCode> $changeCode the reason for the notification of change
-     * @param string $correctedData The corrected data for the notification of change (e.g., a new routing number).
+     * @param CorrectedAccountFunding|value-of<CorrectedAccountFunding> $correctedAccountFunding the corrected account funding type
+     * @param string $correctedAccountNumber the corrected account number
+     * @param string $correctedIndividualID the corrected individual identifier
+     * @param string $correctedRoutingNumber the corrected routing number
      * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
      */
     public function createNotificationOfChange(
         string $achTransferID,
-        ChangeCode|string $changeCode,
-        string $correctedData,
+        CorrectedAccountFunding|string|null $correctedAccountFunding = null,
+        ?string $correctedAccountNumber = null,
+        ?string $correctedIndividualID = null,
+        ?string $correctedRoutingNumber = null,
         RequestOptions|array|null $requestOptions = null,
     ): ACHTransfer {
         $params = Util::removeNulls(
-            ['changeCode' => $changeCode, 'correctedData' => $correctedData]
+            [
+                'correctedAccountFunding' => $correctedAccountFunding,
+                'correctedAccountNumber' => $correctedAccountNumber,
+                'correctedIndividualID' => $correctedIndividualID,
+                'correctedRoutingNumber' => $correctedRoutingNumber,
+            ],
         );
 
         // @phpstan-ignore-next-line argument.type

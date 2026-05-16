@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace Increase\Simulations\ACHTransfers;
 
-use Increase\Core\Attributes\Required;
+use Increase\Core\Attributes\Optional;
 use Increase\Core\Concerns\SdkModel;
 use Increase\Core\Concerns\SdkParams;
 use Increase\Core\Contracts\BaseModel;
-use Increase\Simulations\ACHTransfers\ACHTransferCreateNotificationOfChangeParams\ChangeCode;
+use Increase\Simulations\ACHTransfers\ACHTransferCreateNotificationOfChangeParams\CorrectedAccountFunding;
 
 /**
  * Simulates receiving a Notification of Change for an [ACH Transfer](#ach-transfers).
@@ -16,7 +16,10 @@ use Increase\Simulations\ACHTransfers\ACHTransferCreateNotificationOfChangeParam
  * @see Increase\Services\Simulations\ACHTransfersService::createNotificationOfChange()
  *
  * @phpstan-type ACHTransferCreateNotificationOfChangeParamsShape = array{
- *   changeCode: ChangeCode|value-of<ChangeCode>, correctedData: string
+ *   correctedAccountFunding?: null|CorrectedAccountFunding|value-of<CorrectedAccountFunding>,
+ *   correctedAccountNumber?: string|null,
+ *   correctedIndividualID?: string|null,
+ *   correctedRoutingNumber?: string|null,
  * }
  */
 final class ACHTransferCreateNotificationOfChangeParams implements BaseModel
@@ -26,37 +29,31 @@ final class ACHTransferCreateNotificationOfChangeParams implements BaseModel
     use SdkParams;
 
     /**
-     * The reason for the notification of change.
+     * The corrected account funding type.
      *
-     * @var value-of<ChangeCode> $changeCode
+     * @var value-of<CorrectedAccountFunding>|null $correctedAccountFunding
      */
-    #[Required('change_code', enum: ChangeCode::class)]
-    public string $changeCode;
+    #[Optional('corrected_account_funding', enum: CorrectedAccountFunding::class)]
+    public ?string $correctedAccountFunding;
 
     /**
-     * The corrected data for the notification of change (e.g., a new routing number).
+     * The corrected account number.
      */
-    #[Required('corrected_data')]
-    public string $correctedData;
+    #[Optional('corrected_account_number')]
+    public ?string $correctedAccountNumber;
 
     /**
-     * `new ACHTransferCreateNotificationOfChangeParams()` is missing required properties by the API.
-     *
-     * To enforce required parameters use
-     * ```
-     * ACHTransferCreateNotificationOfChangeParams::with(
-     *   changeCode: ..., correctedData: ...
-     * )
-     * ```
-     *
-     * Otherwise ensure the following setters are called
-     *
-     * ```
-     * (new ACHTransferCreateNotificationOfChangeParams)
-     *   ->withChangeCode(...)
-     *   ->withCorrectedData(...)
-     * ```
+     * The corrected individual identifier.
      */
+    #[Optional('corrected_individual_id')]
+    public ?string $correctedIndividualID;
+
+    /**
+     * The corrected routing number.
+     */
+    #[Optional('corrected_routing_number')]
+    public ?string $correctedRoutingNumber;
+
     public function __construct()
     {
         $this->initialize();
@@ -67,40 +64,70 @@ final class ACHTransferCreateNotificationOfChangeParams implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param ChangeCode|value-of<ChangeCode> $changeCode
+     * @param CorrectedAccountFunding|value-of<CorrectedAccountFunding>|null $correctedAccountFunding
      */
     public static function with(
-        ChangeCode|string $changeCode,
-        string $correctedData
+        CorrectedAccountFunding|string|null $correctedAccountFunding = null,
+        ?string $correctedAccountNumber = null,
+        ?string $correctedIndividualID = null,
+        ?string $correctedRoutingNumber = null,
     ): self {
         $self = new self;
 
-        $self['changeCode'] = $changeCode;
-        $self['correctedData'] = $correctedData;
+        null !== $correctedAccountFunding && $self['correctedAccountFunding'] = $correctedAccountFunding;
+        null !== $correctedAccountNumber && $self['correctedAccountNumber'] = $correctedAccountNumber;
+        null !== $correctedIndividualID && $self['correctedIndividualID'] = $correctedIndividualID;
+        null !== $correctedRoutingNumber && $self['correctedRoutingNumber'] = $correctedRoutingNumber;
 
         return $self;
     }
 
     /**
-     * The reason for the notification of change.
+     * The corrected account funding type.
      *
-     * @param ChangeCode|value-of<ChangeCode> $changeCode
+     * @param CorrectedAccountFunding|value-of<CorrectedAccountFunding> $correctedAccountFunding
      */
-    public function withChangeCode(ChangeCode|string $changeCode): self
-    {
+    public function withCorrectedAccountFunding(
+        CorrectedAccountFunding|string $correctedAccountFunding
+    ): self {
         $self = clone $this;
-        $self['changeCode'] = $changeCode;
+        $self['correctedAccountFunding'] = $correctedAccountFunding;
 
         return $self;
     }
 
     /**
-     * The corrected data for the notification of change (e.g., a new routing number).
+     * The corrected account number.
      */
-    public function withCorrectedData(string $correctedData): self
-    {
+    public function withCorrectedAccountNumber(
+        string $correctedAccountNumber
+    ): self {
         $self = clone $this;
-        $self['correctedData'] = $correctedData;
+        $self['correctedAccountNumber'] = $correctedAccountNumber;
+
+        return $self;
+    }
+
+    /**
+     * The corrected individual identifier.
+     */
+    public function withCorrectedIndividualID(
+        string $correctedIndividualID
+    ): self {
+        $self = clone $this;
+        $self['correctedIndividualID'] = $correctedIndividualID;
+
+        return $self;
+    }
+
+    /**
+     * The corrected routing number.
+     */
+    public function withCorrectedRoutingNumber(
+        string $correctedRoutingNumber
+    ): self {
+        $self = clone $this;
+        $self['correctedRoutingNumber'] = $correctedRoutingNumber;
 
         return $self;
     }

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Increase\ACHPrenotifications\ACHPrenotification;
 
 use Increase\ACHPrenotifications\ACHPrenotification\NotificationsOfChange\ChangeCode;
+use Increase\ACHPrenotifications\ACHPrenotification\NotificationsOfChange\CorrectedAccountFunding;
 use Increase\Core\Attributes\Required;
 use Increase\Core\Concerns\SdkModel;
 use Increase\Core\Contracts\BaseModel;
@@ -12,7 +13,10 @@ use Increase\Core\Contracts\BaseModel;
 /**
  * @phpstan-type NotificationsOfChangeShape = array{
  *   changeCode: ChangeCode|value-of<ChangeCode>,
- *   correctedData: string,
+ *   correctedAccountFunding: null|CorrectedAccountFunding|value-of<CorrectedAccountFunding>,
+ *   correctedAccountNumber: string|null,
+ *   correctedIndividualID: string|null,
+ *   correctedRoutingNumber: string|null,
  *   createdAt: \DateTimeInterface,
  * }
  */
@@ -30,10 +34,30 @@ final class NotificationsOfChange implements BaseModel
     public string $changeCode;
 
     /**
-     * The corrected data that should be used in future ACHs to this account. This may contain the suggested new account number or routing number. When the `change_code` is `incorrect_transaction_code`, this field contains an integer. Numbers starting with a 2 encourage changing the `funding` parameter to checking; numbers starting with a 3 encourage changing to savings.
+     * The corrected account funding type that should be used in future ACHs to this account. This is derived from the corrected transaction code.
+     *
+     * @var value-of<CorrectedAccountFunding>|null $correctedAccountFunding
      */
-    #[Required('corrected_data')]
-    public string $correctedData;
+    #[Required('corrected_account_funding', enum: CorrectedAccountFunding::class)]
+    public ?string $correctedAccountFunding;
+
+    /**
+     * The corrected account number that should be used in future ACHs to this account.
+     */
+    #[Required('corrected_account_number')]
+    public ?string $correctedAccountNumber;
+
+    /**
+     * The corrected individual identifier that should be used in future ACHs.
+     */
+    #[Required('corrected_individual_id')]
+    public ?string $correctedIndividualID;
+
+    /**
+     * The corrected routing number that should be used in future ACHs to this account.
+     */
+    #[Required('corrected_routing_number')]
+    public ?string $correctedRoutingNumber;
 
     /**
      * The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which the notification occurred.
@@ -46,7 +70,14 @@ final class NotificationsOfChange implements BaseModel
      *
      * To enforce required parameters use
      * ```
-     * NotificationsOfChange::with(changeCode: ..., correctedData: ..., createdAt: ...)
+     * NotificationsOfChange::with(
+     *   changeCode: ...,
+     *   correctedAccountFunding: ...,
+     *   correctedAccountNumber: ...,
+     *   correctedIndividualID: ...,
+     *   correctedRoutingNumber: ...,
+     *   createdAt: ...,
+     * )
      * ```
      *
      * Otherwise ensure the following setters are called
@@ -54,7 +85,10 @@ final class NotificationsOfChange implements BaseModel
      * ```
      * (new NotificationsOfChange)
      *   ->withChangeCode(...)
-     *   ->withCorrectedData(...)
+     *   ->withCorrectedAccountFunding(...)
+     *   ->withCorrectedAccountNumber(...)
+     *   ->withCorrectedIndividualID(...)
+     *   ->withCorrectedRoutingNumber(...)
      *   ->withCreatedAt(...)
      * ```
      */
@@ -69,16 +103,23 @@ final class NotificationsOfChange implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param ChangeCode|value-of<ChangeCode> $changeCode
+     * @param CorrectedAccountFunding|value-of<CorrectedAccountFunding>|null $correctedAccountFunding
      */
     public static function with(
         ChangeCode|string $changeCode,
-        string $correctedData,
+        CorrectedAccountFunding|string|null $correctedAccountFunding,
+        ?string $correctedAccountNumber,
+        ?string $correctedIndividualID,
+        ?string $correctedRoutingNumber,
         \DateTimeInterface $createdAt,
     ): self {
         $self = new self;
 
         $self['changeCode'] = $changeCode;
-        $self['correctedData'] = $correctedData;
+        $self['correctedAccountFunding'] = $correctedAccountFunding;
+        $self['correctedAccountNumber'] = $correctedAccountNumber;
+        $self['correctedIndividualID'] = $correctedIndividualID;
+        $self['correctedRoutingNumber'] = $correctedRoutingNumber;
         $self['createdAt'] = $createdAt;
 
         return $self;
@@ -98,12 +139,51 @@ final class NotificationsOfChange implements BaseModel
     }
 
     /**
-     * The corrected data that should be used in future ACHs to this account. This may contain the suggested new account number or routing number. When the `change_code` is `incorrect_transaction_code`, this field contains an integer. Numbers starting with a 2 encourage changing the `funding` parameter to checking; numbers starting with a 3 encourage changing to savings.
+     * The corrected account funding type that should be used in future ACHs to this account. This is derived from the corrected transaction code.
+     *
+     * @param CorrectedAccountFunding|value-of<CorrectedAccountFunding>|null $correctedAccountFunding
      */
-    public function withCorrectedData(string $correctedData): self
-    {
+    public function withCorrectedAccountFunding(
+        CorrectedAccountFunding|string|null $correctedAccountFunding
+    ): self {
         $self = clone $this;
-        $self['correctedData'] = $correctedData;
+        $self['correctedAccountFunding'] = $correctedAccountFunding;
+
+        return $self;
+    }
+
+    /**
+     * The corrected account number that should be used in future ACHs to this account.
+     */
+    public function withCorrectedAccountNumber(
+        ?string $correctedAccountNumber
+    ): self {
+        $self = clone $this;
+        $self['correctedAccountNumber'] = $correctedAccountNumber;
+
+        return $self;
+    }
+
+    /**
+     * The corrected individual identifier that should be used in future ACHs.
+     */
+    public function withCorrectedIndividualID(
+        ?string $correctedIndividualID
+    ): self {
+        $self = clone $this;
+        $self['correctedIndividualID'] = $correctedIndividualID;
+
+        return $self;
+    }
+
+    /**
+     * The corrected routing number that should be used in future ACHs to this account.
+     */
+    public function withCorrectedRoutingNumber(
+        ?string $correctedRoutingNumber
+    ): self {
+        $self = clone $this;
+        $self['correctedRoutingNumber'] = $correctedRoutingNumber;
 
         return $self;
     }

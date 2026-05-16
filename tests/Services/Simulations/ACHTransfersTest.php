@@ -45,29 +45,7 @@ final class ACHTransfersTest extends TestCase
             ->client
             ->simulations
             ->achTransfers
-            ->createNotificationOfChange(
-                'ach_transfer_uoxatyh3lt5evrsdvo7q',
-                changeCode: 'incorrect_routing_number',
-                correctedData: '123456789',
-            )
-        ;
-
-        // @phpstan-ignore-next-line method.alreadyNarrowedType
-        $this->assertInstanceOf(ACHTransfer::class, $result);
-    }
-
-    #[Test]
-    public function testCreateNotificationOfChangeWithOptionalParams(): void
-    {
-        $result = $this
-            ->client
-            ->simulations
-            ->achTransfers
-            ->createNotificationOfChange(
-                'ach_transfer_uoxatyh3lt5evrsdvo7q',
-                changeCode: 'incorrect_routing_number',
-                correctedData: '123456789',
-            )
+            ->createNotificationOfChange('ach_transfer_uoxatyh3lt5evrsdvo7q')
         ;
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType

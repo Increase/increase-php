@@ -7,7 +7,7 @@ namespace Increase\ServiceContracts\Simulations;
 use Increase\ACHTransfers\ACHTransfer;
 use Increase\Core\Exceptions\APIException;
 use Increase\RequestOptions;
-use Increase\Simulations\ACHTransfers\ACHTransferCreateNotificationOfChangeParams\ChangeCode;
+use Increase\Simulations\ACHTransfers\ACHTransferCreateNotificationOfChangeParams\CorrectedAccountFunding;
 use Increase\Simulations\ACHTransfers\ACHTransferReturnParams\Reason;
 use Increase\Simulations\ACHTransfers\ACHTransferSettleParams\InboundFundsHoldBehavior;
 
@@ -33,16 +33,20 @@ interface ACHTransfersContract
      * @api
      *
      * @param string $achTransferID the identifier of the ACH Transfer you wish to create a notification of change for
-     * @param ChangeCode|value-of<ChangeCode> $changeCode the reason for the notification of change
-     * @param string $correctedData The corrected data for the notification of change (e.g., a new routing number).
+     * @param CorrectedAccountFunding|value-of<CorrectedAccountFunding> $correctedAccountFunding the corrected account funding type
+     * @param string $correctedAccountNumber the corrected account number
+     * @param string $correctedIndividualID the corrected individual identifier
+     * @param string $correctedRoutingNumber the corrected routing number
      * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
      */
     public function createNotificationOfChange(
         string $achTransferID,
-        ChangeCode|string $changeCode,
-        string $correctedData,
+        CorrectedAccountFunding|string|null $correctedAccountFunding = null,
+        ?string $correctedAccountNumber = null,
+        ?string $correctedIndividualID = null,
+        ?string $correctedRoutingNumber = null,
         RequestOptions|array|null $requestOptions = null,
     ): ACHTransfer;
 

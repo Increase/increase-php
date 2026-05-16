@@ -11,7 +11,7 @@ use Increase\Core\Exceptions\APIException;
 use Increase\RequestOptions;
 use Increase\ServiceContracts\Simulations\ACHTransfersRawContract;
 use Increase\Simulations\ACHTransfers\ACHTransferCreateNotificationOfChangeParams;
-use Increase\Simulations\ACHTransfers\ACHTransferCreateNotificationOfChangeParams\ChangeCode;
+use Increase\Simulations\ACHTransfers\ACHTransferCreateNotificationOfChangeParams\CorrectedAccountFunding;
 use Increase\Simulations\ACHTransfers\ACHTransferReturnParams;
 use Increase\Simulations\ACHTransfers\ACHTransferReturnParams\Reason;
 use Increase\Simulations\ACHTransfers\ACHTransferSettleParams;
@@ -60,7 +60,10 @@ final class ACHTransfersRawService implements ACHTransfersRawContract
      *
      * @param string $achTransferID the identifier of the ACH Transfer you wish to create a notification of change for
      * @param array{
-     *   changeCode: value-of<ChangeCode>, correctedData: string
+     *   correctedAccountFunding?: CorrectedAccountFunding|value-of<CorrectedAccountFunding>,
+     *   correctedAccountNumber?: string,
+     *   correctedIndividualID?: string,
+     *   correctedRoutingNumber?: string,
      * }|ACHTransferCreateNotificationOfChangeParams $params
      * @param RequestOpts|null $requestOptions
      *

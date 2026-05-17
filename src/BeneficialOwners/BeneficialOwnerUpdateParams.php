@@ -6,6 +6,7 @@ namespace Increase\BeneficialOwners;
 
 use Increase\BeneficialOwners\BeneficialOwnerUpdateParams\Address;
 use Increase\BeneficialOwners\BeneficialOwnerUpdateParams\Identification;
+use Increase\BeneficialOwners\BeneficialOwnerUpdateParams\Prong;
 use Increase\Core\Attributes\Optional;
 use Increase\Core\Concerns\SdkModel;
 use Increase\Core\Concerns\SdkParams;
@@ -24,6 +25,7 @@ use Increase\Core\Contracts\BaseModel;
  *   confirmedNoUsTaxID?: bool|null,
  *   identification?: null|Identification|IdentificationShape,
  *   name?: string|null,
+ *   prongs?: list<Prong|value-of<Prong>>|null,
  * }
  */
 final class BeneficialOwnerUpdateParams implements BaseModel
@@ -56,6 +58,14 @@ final class BeneficialOwnerUpdateParams implements BaseModel
     #[Optional]
     public ?string $name;
 
+    /**
+     * Why this person is considered a beneficial owner of the entity. At least one option is required, if a person is both a control person and owner, submit an array containing both. Providing this replaces the beneficial owner's current prongs.
+     *
+     * @var list<value-of<Prong>>|null $prongs
+     */
+    #[Optional(list: Prong::class)]
+    public ?array $prongs;
+
     public function __construct()
     {
         $this->initialize();
@@ -68,12 +78,14 @@ final class BeneficialOwnerUpdateParams implements BaseModel
      *
      * @param Address|AddressShape|null $address
      * @param Identification|IdentificationShape|null $identification
+     * @param list<Prong|value-of<Prong>>|null $prongs
      */
     public static function with(
         Address|array|null $address = null,
         ?bool $confirmedNoUsTaxID = null,
         Identification|array|null $identification = null,
         ?string $name = null,
+        ?array $prongs = null,
     ): self {
         $self = new self;
 
@@ -81,6 +93,7 @@ final class BeneficialOwnerUpdateParams implements BaseModel
         null !== $confirmedNoUsTaxID && $self['confirmedNoUsTaxID'] = $confirmedNoUsTaxID;
         null !== $identification && $self['identification'] = $identification;
         null !== $name && $self['name'] = $name;
+        null !== $prongs && $self['prongs'] = $prongs;
 
         return $self;
     }
@@ -130,6 +143,19 @@ final class BeneficialOwnerUpdateParams implements BaseModel
     {
         $self = clone $this;
         $self['name'] = $name;
+
+        return $self;
+    }
+
+    /**
+     * Why this person is considered a beneficial owner of the entity. At least one option is required, if a person is both a control person and owner, submit an array containing both. Providing this replaces the beneficial owner's current prongs.
+     *
+     * @param list<Prong|value-of<Prong>> $prongs
+     */
+    public function withProngs(array $prongs): self
+    {
+        $self = clone $this;
+        $self['prongs'] = $prongs;
 
         return $self;
     }

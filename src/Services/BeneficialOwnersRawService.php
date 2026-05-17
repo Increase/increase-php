@@ -106,6 +106,7 @@ final class BeneficialOwnersRawService implements BeneficialOwnersRawContract
      *   confirmedNoUsTaxID?: bool,
      *   identification?: Identification|IdentificationShape,
      *   name?: string,
+     *   prongs?: list<BeneficialOwnerUpdateParams\Prong|value-of<BeneficialOwnerUpdateParams\Prong>>,
      * }|BeneficialOwnerUpdateParams $params
      * @param RequestOpts|null $requestOptions
      *

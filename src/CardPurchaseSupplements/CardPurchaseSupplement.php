@@ -6,6 +6,7 @@ namespace Increase\CardPurchaseSupplements;
 
 use Increase\CardPurchaseSupplements\CardPurchaseSupplement\Invoice;
 use Increase\CardPurchaseSupplements\CardPurchaseSupplement\LineItem;
+use Increase\CardPurchaseSupplements\CardPurchaseSupplement\Shipping;
 use Increase\CardPurchaseSupplements\CardPurchaseSupplement\Type;
 use Increase\Core\Attributes\Required;
 use Increase\Core\Concerns\SdkModel;
@@ -16,12 +17,14 @@ use Increase\Core\Contracts\BaseModel;
  *
  * @phpstan-import-type InvoiceShape from \Increase\CardPurchaseSupplements\CardPurchaseSupplement\Invoice
  * @phpstan-import-type LineItemShape from \Increase\CardPurchaseSupplements\CardPurchaseSupplement\LineItem
+ * @phpstan-import-type ShippingShape from \Increase\CardPurchaseSupplements\CardPurchaseSupplement\Shipping
  *
  * @phpstan-type CardPurchaseSupplementShape = array{
  *   id: string,
  *   cardPaymentID: string|null,
  *   invoice: null|Invoice|InvoiceShape,
  *   lineItems: list<LineItem|LineItemShape>|null,
+ *   shipping: null|Shipping|ShippingShape,
  *   transactionID: string,
  *   type: Type|value-of<Type>,
  * }
@@ -58,6 +61,12 @@ final class CardPurchaseSupplement implements BaseModel
     public ?array $lineItems;
 
     /**
+     * Shipping information for the purchase.
+     */
+    #[Required]
+    public ?Shipping $shipping;
+
+    /**
      * The ID of the transaction.
      */
     #[Required('transaction_id')]
@@ -81,6 +90,7 @@ final class CardPurchaseSupplement implements BaseModel
      *   cardPaymentID: ...,
      *   invoice: ...,
      *   lineItems: ...,
+     *   shipping: ...,
      *   transactionID: ...,
      *   type: ...,
      * )
@@ -94,6 +104,7 @@ final class CardPurchaseSupplement implements BaseModel
      *   ->withCardPaymentID(...)
      *   ->withInvoice(...)
      *   ->withLineItems(...)
+     *   ->withShipping(...)
      *   ->withTransactionID(...)
      *   ->withType(...)
      * ```
@@ -110,6 +121,7 @@ final class CardPurchaseSupplement implements BaseModel
      *
      * @param Invoice|InvoiceShape|null $invoice
      * @param list<LineItem|LineItemShape>|null $lineItems
+     * @param Shipping|ShippingShape|null $shipping
      * @param Type|value-of<Type> $type
      */
     public static function with(
@@ -117,6 +129,7 @@ final class CardPurchaseSupplement implements BaseModel
         ?string $cardPaymentID,
         Invoice|array|null $invoice,
         ?array $lineItems,
+        Shipping|array|null $shipping,
         string $transactionID,
         Type|string $type,
     ): self {
@@ -126,6 +139,7 @@ final class CardPurchaseSupplement implements BaseModel
         $self['cardPaymentID'] = $cardPaymentID;
         $self['invoice'] = $invoice;
         $self['lineItems'] = $lineItems;
+        $self['shipping'] = $shipping;
         $self['transactionID'] = $transactionID;
         $self['type'] = $type;
 
@@ -176,6 +190,19 @@ final class CardPurchaseSupplement implements BaseModel
     {
         $self = clone $this;
         $self['lineItems'] = $lineItems;
+
+        return $self;
+    }
+
+    /**
+     * Shipping information for the purchase.
+     *
+     * @param Shipping|ShippingShape|null $shipping
+     */
+    public function withShipping(Shipping|array|null $shipping): self
+    {
+        $self = clone $this;
+        $self['shipping'] = $shipping;
 
         return $self;
     }

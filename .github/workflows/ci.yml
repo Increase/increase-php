@@ -5,56 +5,25 @@ on:
   pull_request:
 
 jobs:
-  lint:
+  ci:
     timeout-minutes: 10
-    name: lint
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+      - uses: actions/checkout@v6
 
-      - name: Set up PHP
-        uses: shivammathur/setup-php@accd6127cb78bee3e8082180cb391013d204ef9f # 2.37.0
+      - uses: shivammathur/setup-php@v2
         with:
           php-version: '8.3'
-
-      - name: Run Bootstrap
-        run: ./scripts/bootstrap
-
-      - name: Run lints
-        run: ./scripts/lint
-
-  build:
-    timeout-minutes: 10
-    name: build
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
-
-      - name: Set up PHP
-        uses: shivammathur/setup-php@accd6127cb78bee3e8082180cb391013d204ef9f # 2.37.0
-        with:
-          php-version: '8.3'
+          tools: composer
 
       - name: Validate composer.json
         run: composer validate --strict
 
       - name: Install dependencies
-        run: composer install --no-interaction
+        run: composer install --no-interaction --no-progress
 
-  test:
-    timeout-minutes: 10
-    name: test
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+      - name: Lint
+        run: ./scripts/lint
 
-      - name: Set up PHP
-        uses: shivammathur/setup-php@accd6127cb78bee3e8082180cb391013d204ef9f # 2.37.0
-        with:
-          php-version: '8.3'
-
-      - name: Run bootstrap
-        run: ./scripts/bootstrap
-
-      - name: Run tests
+      - name: Test
         run: ./scripts/test

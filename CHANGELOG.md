@@ -1,5 +1,14 @@
 # Changelog
 
+## [0.132.1](https://github.com/Increase/increase-php/compare/v0.132.0...v0.132.1) (2026-05-20)
+
+
+### Chores
+
+* add release workflow and migrate config to Increase/release-please fork ([#139](https://github.com/Increase/increase-php/issues/139)) ([09c60a8](https://github.com/Increase/increase-php/commit/09c60a8eb6f2ea273bbe845c34e54355609cd225))
+* collapse CI into a single job ([#141](https://github.com/Increase/increase-php/issues/141)) ([045eb50](https://github.com/Increase/increase-php/commit/045eb5017f87d04e9d25c90fef256e60c144d411))
+* cut over to Increase/release-please and prune Stainless CI cruft ([#140](https://github.com/Increase/increase-php/issues/140)) ([9dea956](https://github.com/Increase/increase-php/commit/9dea95668ff7082cc6a800fb770f1b4a8a8ff66e))
+
 ## 0.132.0 (2026-05-20)
 
 Full Changelog: [v0.131.0...v0.132.0](https://github.com/Increase/increase-php/compare/v0.131.0...v0.132.0)

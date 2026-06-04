@@ -6,6 +6,7 @@ namespace Increase\CardDisputes;
 
 use Increase\CardDisputes\CardDispute\Loss;
 use Increase\CardDisputes\CardDispute\Network;
+use Increase\CardDisputes\CardDispute\Rejection;
 use Increase\CardDisputes\CardDispute\Status;
 use Increase\CardDisputes\CardDispute\Type;
 use Increase\CardDisputes\CardDispute\Visa;
@@ -19,6 +20,7 @@ use Increase\Core\Contracts\BaseModel;
  * If unauthorized activity occurs on a card, you can create a Card Dispute and we'll work with the card networks to return the funds if appropriate.
  *
  * @phpstan-import-type LossShape from \Increase\CardDisputes\CardDispute\Loss
+ * @phpstan-import-type RejectionShape from \Increase\CardDisputes\CardDispute\Rejection
  * @phpstan-import-type VisaShape from \Increase\CardDisputes\CardDispute\Visa
  * @phpstan-import-type WinShape from \Increase\CardDisputes\CardDispute\Win
  * @phpstan-import-type WithdrawalShape from \Increase\CardDisputes\CardDispute\Withdrawal
@@ -32,6 +34,7 @@ use Increase\Core\Contracts\BaseModel;
  *   idempotencyKey: string|null,
  *   loss: null|Loss|LossShape,
  *   network: Network|value-of<Network>,
+ *   rejection: null|Rejection|RejectionShape,
  *   status: Status|value-of<Status>,
  *   type: Type|value-of<Type>,
  *   userSubmissionRequiredBy: \DateTimeInterface|null,
@@ -96,6 +99,12 @@ final class CardDispute implements BaseModel
     public string $network;
 
     /**
+     * If the Card Dispute has been rejected, this will contain details of the rejection.
+     */
+    #[Required]
+    public ?Rejection $rejection;
+
+    /**
      * The status of the Card Dispute.
      *
      * @var value-of<Status> $status
@@ -149,6 +158,7 @@ final class CardDispute implements BaseModel
      *   idempotencyKey: ...,
      *   loss: ...,
      *   network: ...,
+     *   rejection: ...,
      *   status: ...,
      *   type: ...,
      *   userSubmissionRequiredBy: ...,
@@ -170,6 +180,7 @@ final class CardDispute implements BaseModel
      *   ->withIdempotencyKey(...)
      *   ->withLoss(...)
      *   ->withNetwork(...)
+     *   ->withRejection(...)
      *   ->withStatus(...)
      *   ->withType(...)
      *   ->withUserSubmissionRequiredBy(...)
@@ -190,6 +201,7 @@ final class CardDispute implements BaseModel
      *
      * @param Loss|LossShape|null $loss
      * @param Network|value-of<Network> $network
+     * @param Rejection|RejectionShape|null $rejection
      * @param Status|value-of<Status> $status
      * @param Type|value-of<Type> $type
      * @param Visa|VisaShape|null $visa
@@ -205,6 +217,7 @@ final class CardDispute implements BaseModel
         ?string $idempotencyKey,
         Loss|array|null $loss,
         Network|string $network,
+        Rejection|array|null $rejection,
         Status|string $status,
         Type|string $type,
         ?\DateTimeInterface $userSubmissionRequiredBy,
@@ -222,6 +235,7 @@ final class CardDispute implements BaseModel
         $self['idempotencyKey'] = $idempotencyKey;
         $self['loss'] = $loss;
         $self['network'] = $network;
+        $self['rejection'] = $rejection;
         $self['status'] = $status;
         $self['type'] = $type;
         $self['userSubmissionRequiredBy'] = $userSubmissionRequiredBy;
@@ -321,6 +335,19 @@ final class CardDispute implements BaseModel
     {
         $self = clone $this;
         $self['network'] = $network;
+
+        return $self;
+    }
+
+    /**
+     * If the Card Dispute has been rejected, this will contain details of the rejection.
+     *
+     * @param Rejection|RejectionShape|null $rejection
+     */
+    public function withRejection(Rejection|array|null $rejection): self
+    {
+        $self = clone $this;
+        $self['rejection'] = $rejection;
 
         return $self;
     }

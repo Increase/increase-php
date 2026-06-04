@@ -196,7 +196,7 @@ final class EntitiesTest extends TestCase
                 'ratedAt' => new \DateTimeImmutable('2019-12-27T18:11:19.117Z'),
                 'rating' => 'low',
             ],
-            supplementalDocuments: [['fileID' => 'file_makxrc67oh9l6sg7w9yc']],
+            supplementalDocuments: [['fileID' => 'file_id']],
             termsAgreements: [
                 [
                     'agreedAt' => new \DateTimeImmutable('2019-12-27T18:11:19.117Z'),

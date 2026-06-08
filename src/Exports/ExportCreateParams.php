@@ -16,6 +16,7 @@ use Increase\Exports\ExportCreateParams\BookkeepingAccountBalanceCsv;
 use Increase\Exports\ExportCreateParams\Category;
 use Increase\Exports\ExportCreateParams\DailyAccountBalanceCsv;
 use Increase\Exports\ExportCreateParams\EntityCsv;
+use Increase\Exports\ExportCreateParams\FeeCsv;
 use Increase\Exports\ExportCreateParams\FundingInstructions;
 use Increase\Exports\ExportCreateParams\TransactionCsv;
 use Increase\Exports\ExportCreateParams\VendorCsv;
@@ -32,6 +33,7 @@ use Increase\Exports\ExportCreateParams\VoidedCheck;
  * @phpstan-import-type BookkeepingAccountBalanceCsvShape from \Increase\Exports\ExportCreateParams\BookkeepingAccountBalanceCsv
  * @phpstan-import-type DailyAccountBalanceCsvShape from \Increase\Exports\ExportCreateParams\DailyAccountBalanceCsv
  * @phpstan-import-type EntityCsvShape from \Increase\Exports\ExportCreateParams\EntityCsv
+ * @phpstan-import-type FeeCsvShape from \Increase\Exports\ExportCreateParams\FeeCsv
  * @phpstan-import-type FundingInstructionsShape from \Increase\Exports\ExportCreateParams\FundingInstructions
  * @phpstan-import-type TransactionCsvShape from \Increase\Exports\ExportCreateParams\TransactionCsv
  * @phpstan-import-type VendorCsvShape from \Increase\Exports\ExportCreateParams\VendorCsv
@@ -45,6 +47,7 @@ use Increase\Exports\ExportCreateParams\VoidedCheck;
  *   bookkeepingAccountBalanceCsv?: null|BookkeepingAccountBalanceCsv|BookkeepingAccountBalanceCsvShape,
  *   dailyAccountBalanceCsv?: null|DailyAccountBalanceCsv|DailyAccountBalanceCsvShape,
  *   entityCsv?: null|EntityCsv|EntityCsvShape,
+ *   feeCsv?: null|FeeCsv|FeeCsvShape,
  *   fundingInstructions?: null|FundingInstructions|FundingInstructionsShape,
  *   transactionCsv?: null|TransactionCsv|TransactionCsvShape,
  *   vendorCsv?: null|VendorCsv|VendorCsvShape,
@@ -102,6 +105,12 @@ final class ExportCreateParams implements BaseModel
     public ?EntityCsv $entityCsv;
 
     /**
+     * Options for the created export. Required if `category` is equal to `fee_csv`.
+     */
+    #[Optional('fee_csv')]
+    public ?FeeCsv $feeCsv;
+
+    /**
      * Options for the created export. Required if `category` is equal to `funding_instructions`.
      */
     #[Optional('funding_instructions')]
@@ -156,6 +165,7 @@ final class ExportCreateParams implements BaseModel
      * @param BookkeepingAccountBalanceCsv|BookkeepingAccountBalanceCsvShape|null $bookkeepingAccountBalanceCsv
      * @param DailyAccountBalanceCsv|DailyAccountBalanceCsvShape|null $dailyAccountBalanceCsv
      * @param EntityCsv|EntityCsvShape|null $entityCsv
+     * @param FeeCsv|FeeCsvShape|null $feeCsv
      * @param FundingInstructions|FundingInstructionsShape|null $fundingInstructions
      * @param TransactionCsv|TransactionCsvShape|null $transactionCsv
      * @param VendorCsv|VendorCsvShape|null $vendorCsv
@@ -169,6 +179,7 @@ final class ExportCreateParams implements BaseModel
         BookkeepingAccountBalanceCsv|array|null $bookkeepingAccountBalanceCsv = null,
         DailyAccountBalanceCsv|array|null $dailyAccountBalanceCsv = null,
         EntityCsv|array|null $entityCsv = null,
+        FeeCsv|array|null $feeCsv = null,
         FundingInstructions|array|null $fundingInstructions = null,
         TransactionCsv|array|null $transactionCsv = null,
         VendorCsv|array|null $vendorCsv = null,
@@ -184,6 +195,7 @@ final class ExportCreateParams implements BaseModel
         null !== $bookkeepingAccountBalanceCsv && $self['bookkeepingAccountBalanceCsv'] = $bookkeepingAccountBalanceCsv;
         null !== $dailyAccountBalanceCsv && $self['dailyAccountBalanceCsv'] = $dailyAccountBalanceCsv;
         null !== $entityCsv && $self['entityCsv'] = $entityCsv;
+        null !== $feeCsv && $self['feeCsv'] = $feeCsv;
         null !== $fundingInstructions && $self['fundingInstructions'] = $fundingInstructions;
         null !== $transactionCsv && $self['transactionCsv'] = $transactionCsv;
         null !== $vendorCsv && $self['vendorCsv'] = $vendorCsv;
@@ -284,6 +296,19 @@ final class ExportCreateParams implements BaseModel
     {
         $self = clone $this;
         $self['entityCsv'] = $entityCsv;
+
+        return $self;
+    }
+
+    /**
+     * Options for the created export. Required if `category` is equal to `fee_csv`.
+     *
+     * @param FeeCsv|FeeCsvShape $feeCsv
+     */
+    public function withFeeCsv(FeeCsv|array $feeCsv): self
+    {
+        $self = clone $this;
+        $self['feeCsv'] = $feeCsv;
 
         return $self;
     }

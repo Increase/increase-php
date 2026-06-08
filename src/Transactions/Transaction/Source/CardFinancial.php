@@ -19,7 +19,7 @@ use Increase\Transactions\Transaction\Source\CardFinancial\Type;
 use Increase\Transactions\Transaction\Source\CardFinancial\Verification;
 
 /**
- * A Card Financial object. This field will be present in the JSON response if and only if `category` is equal to `card_financial`. Card Financials are temporary holds placed on a customer's funds with the intent to later clear a transaction.
+ * A Card Financial object. This field will be present in the JSON response if and only if `category` is equal to `card_financial`. Card Financials are card transactions that have cleared and settled. Unlike a Card Settlement, which clears a previous authorization, a Card Financial is authorized and cleared in a single message.
  *
  * @phpstan-import-type AdditionalAmountsShape from \Increase\Transactions\Transaction\Source\CardFinancial\AdditionalAmounts
  * @phpstan-import-type NetworkDetailsShape from \Increase\Transactions\Transaction\Source\CardFinancial\NetworkDetails

@@ -29,6 +29,7 @@ interface InboundWireTransfersContract
      * @param string $endToEndIdentification The sending bank will set end_to_end_identification in production. You can simulate any value here.
      * @param string $instructingAgentRoutingNumber The sending bank will set instructing_agent_routing_number in production. You can simulate any value here.
      * @param string $instructionIdentification The sending bank will set instruction_identification in production. You can simulate any value here.
+     * @param string $purpose The sending bank will set purpose in production. You can simulate any value here.
      * @param string $uniqueEndToEndTransactionReference The sending bank will set unique_end_to_end_transaction_reference in production. You can simulate any value here.
      * @param string $unstructuredRemittanceInformation The sending bank will set unstructured_remittance_information in production. You can simulate any value here.
      * @param string $wireDrawdownRequestID the identifier of a Wire Drawdown Request the inbound Wire Transfer is fulfilling
@@ -50,6 +51,7 @@ interface InboundWireTransfersContract
         ?string $endToEndIdentification = null,
         ?string $instructingAgentRoutingNumber = null,
         ?string $instructionIdentification = null,
+        ?string $purpose = null,
         ?string $uniqueEndToEndTransactionReference = null,
         ?string $unstructuredRemittanceInformation = null,
         ?string $wireDrawdownRequestID = null,

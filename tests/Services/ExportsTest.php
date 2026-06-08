@@ -68,6 +68,15 @@ final class ExportsTest extends TestCase
                 'onOrBeforeDate' => '2019-12-27',
             ],
             entityCsv: [],
+            feeCsv: [
+                'createdAt' => [
+                    'after' => new \DateTimeImmutable('2019-12-27T18:11:19.117Z'),
+                    'before' => new \DateTimeImmutable('2019-12-27T18:11:19.117Z'),
+                    'onOrAfter' => new \DateTimeImmutable('2019-12-27T18:11:19.117Z'),
+                    'onOrBefore' => new \DateTimeImmutable('2019-12-27T18:11:19.117Z'),
+                ],
+                'programID' => 'program_id',
+            ],
             fundingInstructions: ['accountNumberID' => 'account_number_id'],
             transactionCsv: [
                 'accountID' => 'account_in71c4amph0vgo2qllky',

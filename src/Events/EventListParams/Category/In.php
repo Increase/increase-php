@@ -146,6 +146,14 @@ enum In: string
 
     case INTRAFI_EXCLUSION_UPDATED = 'intrafi_exclusion.updated';
 
+    case LOAN_APPLICATION_CREATED = 'loan_application.created';
+
+    case LOAN_APPLICATION_UPDATED = 'loan_application.updated';
+
+    case LOAN_OFFER_CREATED = 'loan_offer.created';
+
+    case LOAN_OFFER_UPDATED = 'loan_offer.updated';
+
     case LOCKBOX_CREATED = 'lockbox.created';
 
     case LOCKBOX_UPDATED = 'lockbox.updated';

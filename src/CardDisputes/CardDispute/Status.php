@@ -22,4 +22,6 @@ enum Status: string
     case LOST = 'lost';
 
     case WON = 'won';
+
+    case REJECTED = 'rejected';
 }

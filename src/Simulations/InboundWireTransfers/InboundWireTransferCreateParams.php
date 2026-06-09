@@ -29,6 +29,7 @@ use Increase\Core\Contracts\BaseModel;
  *   endToEndIdentification?: string|null,
  *   instructingAgentRoutingNumber?: string|null,
  *   instructionIdentification?: string|null,
+ *   purpose?: string|null,
  *   uniqueEndToEndTransactionReference?: string|null,
  *   unstructuredRemittanceInformation?: string|null,
  *   wireDrawdownRequestID?: string|null,
@@ -119,6 +120,12 @@ final class InboundWireTransferCreateParams implements BaseModel
     public ?string $instructionIdentification;
 
     /**
+     * The sending bank will set purpose in production. You can simulate any value here.
+     */
+    #[Optional]
+    public ?string $purpose;
+
+    /**
      * The sending bank will set unique_end_to_end_transaction_reference in production. You can simulate any value here.
      */
     #[Optional('unique_end_to_end_transaction_reference')]
@@ -174,6 +181,7 @@ final class InboundWireTransferCreateParams implements BaseModel
         ?string $endToEndIdentification = null,
         ?string $instructingAgentRoutingNumber = null,
         ?string $instructionIdentification = null,
+        ?string $purpose = null,
         ?string $uniqueEndToEndTransactionReference = null,
         ?string $unstructuredRemittanceInformation = null,
         ?string $wireDrawdownRequestID = null,
@@ -194,6 +202,7 @@ final class InboundWireTransferCreateParams implements BaseModel
         null !== $endToEndIdentification && $self['endToEndIdentification'] = $endToEndIdentification;
         null !== $instructingAgentRoutingNumber && $self['instructingAgentRoutingNumber'] = $instructingAgentRoutingNumber;
         null !== $instructionIdentification && $self['instructionIdentification'] = $instructionIdentification;
+        null !== $purpose && $self['purpose'] = $purpose;
         null !== $uniqueEndToEndTransactionReference && $self['uniqueEndToEndTransactionReference'] = $uniqueEndToEndTransactionReference;
         null !== $unstructuredRemittanceInformation && $self['unstructuredRemittanceInformation'] = $unstructuredRemittanceInformation;
         null !== $wireDrawdownRequestID && $self['wireDrawdownRequestID'] = $wireDrawdownRequestID;
@@ -343,6 +352,17 @@ final class InboundWireTransferCreateParams implements BaseModel
     ): self {
         $self = clone $this;
         $self['instructionIdentification'] = $instructionIdentification;
+
+        return $self;
+    }
+
+    /**
+     * The sending bank will set purpose in production. You can simulate any value here.
+     */
+    public function withPurpose(string $purpose): self
+    {
+        $self = clone $this;
+        $self['purpose'] = $purpose;
 
         return $self;
     }

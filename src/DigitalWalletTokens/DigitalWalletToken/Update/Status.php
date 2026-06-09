@@ -16,4 +16,6 @@ enum Status: string
     case SUSPENDED = 'suspended';
 
     case DEACTIVATED = 'deactivated';
+
+    case DECLINED = 'declined';
 }

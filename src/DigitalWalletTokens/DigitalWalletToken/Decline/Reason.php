@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Increase\Simulations\DigitalWalletTokenRequests\DigitalWalletTokenRequestNewResponse;
+namespace Increase\DigitalWalletTokens\DigitalWalletToken\Decline;
 
 /**
- * If the simulated tokenization attempt was declined, this field contains details as to why.
+ * The reason the token provisioning was declined.
  */
-enum DeclineReason: string
+enum Reason: string
 {
     case CARD_NOT_ACTIVE = 'card_not_active';
 

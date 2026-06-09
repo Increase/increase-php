@@ -25,6 +25,7 @@ use Increase\Core\Contracts\BaseModel;
  *   accountID: string,
  *   authorizationControls: null|AuthorizationControls|AuthorizationControlsShape,
  *   billingAddress: BillingAddress|BillingAddressShape,
+ *   bin: string,
  *   createdAt: \DateTimeInterface,
  *   description: string|null,
  *   digitalWallet: null|DigitalWallet|DigitalWalletShape,
@@ -65,6 +66,12 @@ final class Card implements BaseModel
      */
     #[Required('billing_address')]
     public BillingAddress $billingAddress;
+
+    /**
+     * The Bank Identification Number (BIN) of the Card.
+     */
+    #[Required]
+    public string $bin;
 
     /**
      * The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which the Card was created.
@@ -140,6 +147,7 @@ final class Card implements BaseModel
      *   accountID: ...,
      *   authorizationControls: ...,
      *   billingAddress: ...,
+     *   bin: ...,
      *   createdAt: ...,
      *   description: ...,
      *   digitalWallet: ...,
@@ -161,6 +169,7 @@ final class Card implements BaseModel
      *   ->withAccountID(...)
      *   ->withAuthorizationControls(...)
      *   ->withBillingAddress(...)
+     *   ->withBin(...)
      *   ->withCreatedAt(...)
      *   ->withDescription(...)
      *   ->withDigitalWallet(...)
@@ -194,6 +203,7 @@ final class Card implements BaseModel
         string $accountID,
         AuthorizationControls|array|null $authorizationControls,
         BillingAddress|array $billingAddress,
+        string $bin,
         \DateTimeInterface $createdAt,
         ?string $description,
         DigitalWallet|array|null $digitalWallet,
@@ -211,6 +221,7 @@ final class Card implements BaseModel
         $self['accountID'] = $accountID;
         $self['authorizationControls'] = $authorizationControls;
         $self['billingAddress'] = $billingAddress;
+        $self['bin'] = $bin;
         $self['createdAt'] = $createdAt;
         $self['description'] = $description;
         $self['digitalWallet'] = $digitalWallet;
@@ -271,6 +282,17 @@ final class Card implements BaseModel
     ): self {
         $self = clone $this;
         $self['billingAddress'] = $billingAddress;
+
+        return $self;
+    }
+
+    /**
+     * The Bank Identification Number (BIN) of the Card.
+     */
+    public function withBin(string $bin): self
+    {
+        $self = clone $this;
+        $self['bin'] = $bin;
 
         return $self;
     }

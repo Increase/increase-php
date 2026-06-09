@@ -12,6 +12,7 @@ use Increase\RealTimeDecisions\RealTimeDecision\CardAuthorization\Approval;
 use Increase\RealTimeDecisions\RealTimeDecision\CardAuthorization\Decision;
 use Increase\RealTimeDecisions\RealTimeDecision\CardAuthorization\Decline;
 use Increase\RealTimeDecisions\RealTimeDecision\CardAuthorization\Direction;
+use Increase\RealTimeDecisions\RealTimeDecision\CardAuthorization\Healthcare;
 use Increase\RealTimeDecisions\RealTimeDecision\CardAuthorization\NetworkDetails;
 use Increase\RealTimeDecisions\RealTimeDecision\CardAuthorization\NetworkIdentifiers;
 use Increase\RealTimeDecisions\RealTimeDecision\CardAuthorization\PartialApprovalCapability;
@@ -25,6 +26,7 @@ use Increase\RealTimeDecisions\RealTimeDecision\CardAuthorization\Verification;
  * @phpstan-import-type AdditionalAmountsShape from \Increase\RealTimeDecisions\RealTimeDecision\CardAuthorization\AdditionalAmounts
  * @phpstan-import-type ApprovalShape from \Increase\RealTimeDecisions\RealTimeDecision\CardAuthorization\Approval
  * @phpstan-import-type DeclineShape from \Increase\RealTimeDecisions\RealTimeDecision\CardAuthorization\Decline
+ * @phpstan-import-type HealthcareShape from \Increase\RealTimeDecisions\RealTimeDecision\CardAuthorization\Healthcare
  * @phpstan-import-type NetworkDetailsShape from \Increase\RealTimeDecisions\RealTimeDecision\CardAuthorization\NetworkDetails
  * @phpstan-import-type NetworkIdentifiersShape from \Increase\RealTimeDecisions\RealTimeDecision\CardAuthorization\NetworkIdentifiers
  * @phpstan-import-type RequestDetailsShape from \Increase\RealTimeDecisions\RealTimeDecision\CardAuthorization\RequestDetails
@@ -39,6 +41,7 @@ use Increase\RealTimeDecisions\RealTimeDecision\CardAuthorization\Verification;
  *   decline: null|Decline|DeclineShape,
  *   digitalWalletTokenID: string|null,
  *   direction: Direction|value-of<Direction>,
+ *   healthcare: null|Healthcare|HealthcareShape,
  *   merchantAcceptorID: string,
  *   merchantCategoryCode: string,
  *   merchantCity: string|null,
@@ -118,6 +121,12 @@ final class CardAuthorization implements BaseModel
      */
     #[Required(enum: Direction::class)]
     public string $direction;
+
+    /**
+     * The healthcare-related fields for this authorization. Only present for specific programs.
+     */
+    #[Required]
+    public ?Healthcare $healthcare;
 
     /**
      * The merchant identifier (commonly abbreviated as MID) of the merchant the card is transacting with.
@@ -266,6 +275,7 @@ final class CardAuthorization implements BaseModel
      *   decline: ...,
      *   digitalWalletTokenID: ...,
      *   direction: ...,
+     *   healthcare: ...,
      *   merchantAcceptorID: ...,
      *   merchantCategoryCode: ...,
      *   merchantCity: ...,
@@ -302,6 +312,7 @@ final class CardAuthorization implements BaseModel
      *   ->withDecline(...)
      *   ->withDigitalWalletTokenID(...)
      *   ->withDirection(...)
+     *   ->withHealthcare(...)
      *   ->withMerchantAcceptorID(...)
      *   ->withMerchantCategoryCode(...)
      *   ->withMerchantCity(...)
@@ -340,6 +351,7 @@ final class CardAuthorization implements BaseModel
      * @param Decision|value-of<Decision>|null $decision
      * @param Decline|DeclineShape|null $decline
      * @param Direction|value-of<Direction> $direction
+     * @param Healthcare|HealthcareShape|null $healthcare
      * @param NetworkDetails|NetworkDetailsShape $networkDetails
      * @param NetworkIdentifiers|NetworkIdentifiersShape $networkIdentifiers
      * @param PartialApprovalCapability|value-of<PartialApprovalCapability> $partialApprovalCapability
@@ -356,6 +368,7 @@ final class CardAuthorization implements BaseModel
         Decline|array|null $decline,
         ?string $digitalWalletTokenID,
         Direction|string $direction,
+        Healthcare|array|null $healthcare,
         string $merchantAcceptorID,
         string $merchantCategoryCode,
         ?string $merchantCity,
@@ -388,6 +401,7 @@ final class CardAuthorization implements BaseModel
         $self['decline'] = $decline;
         $self['digitalWalletTokenID'] = $digitalWalletTokenID;
         $self['direction'] = $direction;
+        $self['healthcare'] = $healthcare;
         $self['merchantAcceptorID'] = $merchantAcceptorID;
         $self['merchantCategoryCode'] = $merchantCategoryCode;
         $self['merchantCity'] = $merchantCity;
@@ -509,6 +523,19 @@ final class CardAuthorization implements BaseModel
     {
         $self = clone $this;
         $self['direction'] = $direction;
+
+        return $self;
+    }
+
+    /**
+     * The healthcare-related fields for this authorization. Only present for specific programs.
+     *
+     * @param Healthcare|HealthcareShape|null $healthcare
+     */
+    public function withHealthcare(Healthcare|array|null $healthcare): self
+    {
+        $self = clone $this;
+        $self['healthcare'] = $healthcare;
 
         return $self;
     }

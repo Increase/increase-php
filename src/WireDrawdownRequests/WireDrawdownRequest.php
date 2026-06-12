@@ -33,11 +33,13 @@ use Increase\WireDrawdownRequests\WireDrawdownRequest\Type;
  *   debtorExternalAccountID: string|null,
  *   debtorName: string,
  *   debtorRoutingNumber: string,
+ *   endToEndIdentification: string|null,
  *   fulfillmentInboundWireTransferID: string|null,
  *   idempotencyKey: string|null,
  *   status: Status|value-of<Status>,
  *   submission: null|Submission|SubmissionShape,
  *   type: Type|value-of<Type>,
+ *   uniqueEndToEndTransactionReference: string|null,
  *   unstructuredRemittanceInformation: string,
  * }
  */
@@ -119,6 +121,12 @@ final class WireDrawdownRequest implements BaseModel
     public string $debtorRoutingNumber;
 
     /**
+     * A free-form reference string set by the sender, to be mirrored back in the subsequent wire transfer.
+     */
+    #[Required('end_to_end_identification')]
+    public ?string $endToEndIdentification;
+
+    /**
      * If the recipient fulfills the drawdown request by sending funds, then this will be the identifier of the corresponding Transaction.
      */
     #[Required('fulfillment_inbound_wire_transfer_id')]
@@ -153,6 +161,12 @@ final class WireDrawdownRequest implements BaseModel
     public string $type;
 
     /**
+     * The unique end-to-end transaction reference ([UETR](https://www.swift.com/payments/what-unique-end-end-transaction-reference-uetr)) of the drawdown request.
+     */
+    #[Required('unique_end_to_end_transaction_reference')]
+    public ?string $uniqueEndToEndTransactionReference;
+
+    /**
      * Remittance information the debtor will see as part of the drawdown request.
      */
     #[Required('unstructured_remittance_information')]
@@ -176,11 +190,13 @@ final class WireDrawdownRequest implements BaseModel
      *   debtorExternalAccountID: ...,
      *   debtorName: ...,
      *   debtorRoutingNumber: ...,
+     *   endToEndIdentification: ...,
      *   fulfillmentInboundWireTransferID: ...,
      *   idempotencyKey: ...,
      *   status: ...,
      *   submission: ...,
      *   type: ...,
+     *   uniqueEndToEndTransactionReference: ...,
      *   unstructuredRemittanceInformation: ...,
      * )
      * ```
@@ -201,11 +217,13 @@ final class WireDrawdownRequest implements BaseModel
      *   ->withDebtorExternalAccountID(...)
      *   ->withDebtorName(...)
      *   ->withDebtorRoutingNumber(...)
+     *   ->withEndToEndIdentification(...)
      *   ->withFulfillmentInboundWireTransferID(...)
      *   ->withIdempotencyKey(...)
      *   ->withStatus(...)
      *   ->withSubmission(...)
      *   ->withType(...)
+     *   ->withUniqueEndToEndTransactionReference(...)
      *   ->withUnstructuredRemittanceInformation(...)
      * ```
      */
@@ -238,11 +256,13 @@ final class WireDrawdownRequest implements BaseModel
         ?string $debtorExternalAccountID,
         string $debtorName,
         string $debtorRoutingNumber,
+        ?string $endToEndIdentification,
         ?string $fulfillmentInboundWireTransferID,
         ?string $idempotencyKey,
         Status|string $status,
         Submission|array|null $submission,
         Type|string $type,
+        ?string $uniqueEndToEndTransactionReference,
         string $unstructuredRemittanceInformation,
     ): self {
         $self = new self;
@@ -259,11 +279,13 @@ final class WireDrawdownRequest implements BaseModel
         $self['debtorExternalAccountID'] = $debtorExternalAccountID;
         $self['debtorName'] = $debtorName;
         $self['debtorRoutingNumber'] = $debtorRoutingNumber;
+        $self['endToEndIdentification'] = $endToEndIdentification;
         $self['fulfillmentInboundWireTransferID'] = $fulfillmentInboundWireTransferID;
         $self['idempotencyKey'] = $idempotencyKey;
         $self['status'] = $status;
         $self['submission'] = $submission;
         $self['type'] = $type;
+        $self['uniqueEndToEndTransactionReference'] = $uniqueEndToEndTransactionReference;
         $self['unstructuredRemittanceInformation'] = $unstructuredRemittanceInformation;
 
         return $self;
@@ -408,6 +430,18 @@ final class WireDrawdownRequest implements BaseModel
     }
 
     /**
+     * A free-form reference string set by the sender, to be mirrored back in the subsequent wire transfer.
+     */
+    public function withEndToEndIdentification(
+        ?string $endToEndIdentification
+    ): self {
+        $self = clone $this;
+        $self['endToEndIdentification'] = $endToEndIdentification;
+
+        return $self;
+    }
+
+    /**
      * If the recipient fulfills the drawdown request by sending funds, then this will be the identifier of the corresponding Transaction.
      */
     public function withFulfillmentInboundWireTransferID(
@@ -465,6 +499,18 @@ final class WireDrawdownRequest implements BaseModel
     {
         $self = clone $this;
         $self['type'] = $type;
+
+        return $self;
+    }
+
+    /**
+     * The unique end-to-end transaction reference ([UETR](https://www.swift.com/payments/what-unique-end-end-transaction-reference-uetr)) of the drawdown request.
+     */
+    public function withUniqueEndToEndTransactionReference(
+        ?string $uniqueEndToEndTransactionReference
+    ): self {
+        $self = clone $this;
+        $self['uniqueEndToEndTransactionReference'] = $uniqueEndToEndTransactionReference;
 
         return $self;
     }

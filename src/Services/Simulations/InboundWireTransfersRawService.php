@@ -42,6 +42,7 @@ final class InboundWireTransfersRawService implements InboundWireTransfersRawCon
      *   endToEndIdentification?: string,
      *   instructingAgentRoutingNumber?: string,
      *   instructionIdentification?: string,
+     *   purpose?: string,
      *   uniqueEndToEndTransactionReference?: string,
      *   unstructuredRemittanceInformation?: string,
      *   wireDrawdownRequestID?: string,

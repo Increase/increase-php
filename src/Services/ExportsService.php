@@ -15,6 +15,7 @@ use Increase\Exports\ExportCreateParams\BookkeepingAccountBalanceCsv;
 use Increase\Exports\ExportCreateParams\Category;
 use Increase\Exports\ExportCreateParams\DailyAccountBalanceCsv;
 use Increase\Exports\ExportCreateParams\EntityCsv;
+use Increase\Exports\ExportCreateParams\FeeCsv;
 use Increase\Exports\ExportCreateParams\FundingInstructions;
 use Increase\Exports\ExportCreateParams\TransactionCsv;
 use Increase\Exports\ExportCreateParams\VendorCsv;
@@ -34,6 +35,7 @@ use Increase\ServiceContracts\ExportsContract;
  * @phpstan-import-type BookkeepingAccountBalanceCsvShape from \Increase\Exports\ExportCreateParams\BookkeepingAccountBalanceCsv
  * @phpstan-import-type DailyAccountBalanceCsvShape from \Increase\Exports\ExportCreateParams\DailyAccountBalanceCsv
  * @phpstan-import-type EntityCsvShape from \Increase\Exports\ExportCreateParams\EntityCsv
+ * @phpstan-import-type FeeCsvShape from \Increase\Exports\ExportCreateParams\FeeCsv
  * @phpstan-import-type FundingInstructionsShape from \Increase\Exports\ExportCreateParams\FundingInstructions
  * @phpstan-import-type TransactionCsvShape from \Increase\Exports\ExportCreateParams\TransactionCsv
  * @phpstan-import-type VendorCsvShape from \Increase\Exports\ExportCreateParams\VendorCsv
@@ -71,6 +73,7 @@ final class ExportsService implements ExportsContract
      * @param BookkeepingAccountBalanceCsv|BookkeepingAccountBalanceCsvShape $bookkeepingAccountBalanceCsv Options for the created export. Required if `category` is equal to `bookkeeping_account_balance_csv`.
      * @param DailyAccountBalanceCsv|DailyAccountBalanceCsvShape $dailyAccountBalanceCsv Options for the created export. Required if `category` is equal to `daily_account_balance_csv`.
      * @param EntityCsv|EntityCsvShape $entityCsv Options for the created export. Required if `category` is equal to `entity_csv`.
+     * @param FeeCsv|FeeCsvShape $feeCsv Options for the created export. Required if `category` is equal to `fee_csv`.
      * @param FundingInstructions|FundingInstructionsShape $fundingInstructions Options for the created export. Required if `category` is equal to `funding_instructions`.
      * @param TransactionCsv|TransactionCsvShape $transactionCsv Options for the created export. Required if `category` is equal to `transaction_csv`.
      * @param VendorCsv|VendorCsvShape $vendorCsv Options for the created export. Required if `category` is equal to `vendor_csv`.
@@ -87,6 +90,7 @@ final class ExportsService implements ExportsContract
         BookkeepingAccountBalanceCsv|array|null $bookkeepingAccountBalanceCsv = null,
         DailyAccountBalanceCsv|array|null $dailyAccountBalanceCsv = null,
         EntityCsv|array|null $entityCsv = null,
+        FeeCsv|array|null $feeCsv = null,
         FundingInstructions|array|null $fundingInstructions = null,
         TransactionCsv|array|null $transactionCsv = null,
         VendorCsv|array|null $vendorCsv = null,
@@ -102,6 +106,7 @@ final class ExportsService implements ExportsContract
                 'bookkeepingAccountBalanceCsv' => $bookkeepingAccountBalanceCsv,
                 'dailyAccountBalanceCsv' => $dailyAccountBalanceCsv,
                 'entityCsv' => $entityCsv,
+                'feeCsv' => $feeCsv,
                 'fundingInstructions' => $fundingInstructions,
                 'transactionCsv' => $transactionCsv,
                 'vendorCsv' => $vendorCsv,

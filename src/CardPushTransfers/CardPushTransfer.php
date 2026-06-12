@@ -44,11 +44,17 @@ use Increase\Core\Contracts\BaseModel;
  *   idempotencyKey: string|null,
  *   merchantCategoryCode: string,
  *   merchantCityName: string,
+ *   merchantLegalBusinessName: string|null,
  *   merchantName: string,
  *   merchantNamePrefix: string,
  *   merchantPostalCode: string,
  *   merchantState: string,
+ *   merchantStreetAddress: string|null,
  *   presentmentAmount: PresentmentAmount|PresentmentAmountShape,
+ *   recipientAddressCity: string|null,
+ *   recipientAddressLine1: string|null,
+ *   recipientAddressPostalCode: string|null,
+ *   recipientAddressState: string|null,
  *   recipientName: string,
  *   route: Route|value-of<Route>,
  *   senderAddressCity: string,
@@ -151,6 +157,12 @@ final class CardPushTransfer implements BaseModel
     public string $merchantCityName;
 
     /**
+     * The legal business name of the merchant (generally your business) sending the transfer.
+     */
+    #[Required('merchant_legal_business_name')]
+    public ?string $merchantLegalBusinessName;
+
+    /**
      * The merchant name shows up as the statement descriptor for the transfer. This is typically the name of your business or organization.
      */
     #[Required('merchant_name')]
@@ -175,10 +187,40 @@ final class CardPushTransfer implements BaseModel
     public string $merchantState;
 
     /**
+     * The street address of the merchant (generally your business) sending the transfer.
+     */
+    #[Required('merchant_street_address')]
+    public ?string $merchantStreetAddress;
+
+    /**
      * The amount that was transferred. The receiving bank will have converted this to the cardholder's currency. The amount that is applied to your Increase account matches the currency of your account.
      */
     #[Required('presentment_amount')]
     public PresentmentAmount $presentmentAmount;
+
+    /**
+     * The city of the recipient. Required if the card is issued in Canada.
+     */
+    #[Required('recipient_address_city')]
+    public ?string $recipientAddressCity;
+
+    /**
+     * The first line of the recipient's address. Required if the card is issued in Canada.
+     */
+    #[Required('recipient_address_line1')]
+    public ?string $recipientAddressLine1;
+
+    /**
+     * The postal code of the recipient. Required if the card is issued in Canada.
+     */
+    #[Required('recipient_address_postal_code')]
+    public ?string $recipientAddressPostalCode;
+
+    /**
+     * The state or province of the recipient. Required if the card is issued in Canada.
+     */
+    #[Required('recipient_address_state')]
+    public ?string $recipientAddressState;
 
     /**
      * The name of the funds recipient.
@@ -271,11 +313,17 @@ final class CardPushTransfer implements BaseModel
      *   idempotencyKey: ...,
      *   merchantCategoryCode: ...,
      *   merchantCityName: ...,
+     *   merchantLegalBusinessName: ...,
      *   merchantName: ...,
      *   merchantNamePrefix: ...,
      *   merchantPostalCode: ...,
      *   merchantState: ...,
+     *   merchantStreetAddress: ...,
      *   presentmentAmount: ...,
+     *   recipientAddressCity: ...,
+     *   recipientAddressLine1: ...,
+     *   recipientAddressPostalCode: ...,
+     *   recipientAddressState: ...,
      *   recipientName: ...,
      *   route: ...,
      *   senderAddressCity: ...,
@@ -307,11 +355,17 @@ final class CardPushTransfer implements BaseModel
      *   ->withIdempotencyKey(...)
      *   ->withMerchantCategoryCode(...)
      *   ->withMerchantCityName(...)
+     *   ->withMerchantLegalBusinessName(...)
      *   ->withMerchantName(...)
      *   ->withMerchantNamePrefix(...)
      *   ->withMerchantPostalCode(...)
      *   ->withMerchantState(...)
+     *   ->withMerchantStreetAddress(...)
      *   ->withPresentmentAmount(...)
+     *   ->withRecipientAddressCity(...)
+     *   ->withRecipientAddressLine1(...)
+     *   ->withRecipientAddressPostalCode(...)
+     *   ->withRecipientAddressState(...)
      *   ->withRecipientName(...)
      *   ->withRoute(...)
      *   ->withSenderAddressCity(...)
@@ -361,11 +415,17 @@ final class CardPushTransfer implements BaseModel
         ?string $idempotencyKey,
         string $merchantCategoryCode,
         string $merchantCityName,
+        ?string $merchantLegalBusinessName,
         string $merchantName,
         string $merchantNamePrefix,
         string $merchantPostalCode,
         string $merchantState,
+        ?string $merchantStreetAddress,
         PresentmentAmount|array $presentmentAmount,
+        ?string $recipientAddressCity,
+        ?string $recipientAddressLine1,
+        ?string $recipientAddressPostalCode,
+        ?string $recipientAddressState,
         string $recipientName,
         Route|string $route,
         string $senderAddressCity,
@@ -393,11 +453,17 @@ final class CardPushTransfer implements BaseModel
         $self['idempotencyKey'] = $idempotencyKey;
         $self['merchantCategoryCode'] = $merchantCategoryCode;
         $self['merchantCityName'] = $merchantCityName;
+        $self['merchantLegalBusinessName'] = $merchantLegalBusinessName;
         $self['merchantName'] = $merchantName;
         $self['merchantNamePrefix'] = $merchantNamePrefix;
         $self['merchantPostalCode'] = $merchantPostalCode;
         $self['merchantState'] = $merchantState;
+        $self['merchantStreetAddress'] = $merchantStreetAddress;
         $self['presentmentAmount'] = $presentmentAmount;
+        $self['recipientAddressCity'] = $recipientAddressCity;
+        $self['recipientAddressLine1'] = $recipientAddressLine1;
+        $self['recipientAddressPostalCode'] = $recipientAddressPostalCode;
+        $self['recipientAddressState'] = $recipientAddressState;
         $self['recipientName'] = $recipientName;
         $self['route'] = $route;
         $self['senderAddressCity'] = $senderAddressCity;
@@ -571,6 +637,18 @@ final class CardPushTransfer implements BaseModel
     }
 
     /**
+     * The legal business name of the merchant (generally your business) sending the transfer.
+     */
+    public function withMerchantLegalBusinessName(
+        ?string $merchantLegalBusinessName
+    ): self {
+        $self = clone $this;
+        $self['merchantLegalBusinessName'] = $merchantLegalBusinessName;
+
+        return $self;
+    }
+
+    /**
      * The merchant name shows up as the statement descriptor for the transfer. This is typically the name of your business or organization.
      */
     public function withMerchantName(string $merchantName): self
@@ -615,6 +693,18 @@ final class CardPushTransfer implements BaseModel
     }
 
     /**
+     * The street address of the merchant (generally your business) sending the transfer.
+     */
+    public function withMerchantStreetAddress(
+        ?string $merchantStreetAddress
+    ): self {
+        $self = clone $this;
+        $self['merchantStreetAddress'] = $merchantStreetAddress;
+
+        return $self;
+    }
+
+    /**
      * The amount that was transferred. The receiving bank will have converted this to the cardholder's currency. The amount that is applied to your Increase account matches the currency of your account.
      *
      * @param PresentmentAmount|PresentmentAmountShape $presentmentAmount
@@ -624,6 +714,54 @@ final class CardPushTransfer implements BaseModel
     ): self {
         $self = clone $this;
         $self['presentmentAmount'] = $presentmentAmount;
+
+        return $self;
+    }
+
+    /**
+     * The city of the recipient. Required if the card is issued in Canada.
+     */
+    public function withRecipientAddressCity(
+        ?string $recipientAddressCity
+    ): self {
+        $self = clone $this;
+        $self['recipientAddressCity'] = $recipientAddressCity;
+
+        return $self;
+    }
+
+    /**
+     * The first line of the recipient's address. Required if the card is issued in Canada.
+     */
+    public function withRecipientAddressLine1(
+        ?string $recipientAddressLine1
+    ): self {
+        $self = clone $this;
+        $self['recipientAddressLine1'] = $recipientAddressLine1;
+
+        return $self;
+    }
+
+    /**
+     * The postal code of the recipient. Required if the card is issued in Canada.
+     */
+    public function withRecipientAddressPostalCode(
+        ?string $recipientAddressPostalCode
+    ): self {
+        $self = clone $this;
+        $self['recipientAddressPostalCode'] = $recipientAddressPostalCode;
+
+        return $self;
+    }
+
+    /**
+     * The state or province of the recipient. Required if the card is issued in Canada.
+     */
+    public function withRecipientAddressState(
+        ?string $recipientAddressState
+    ): self {
+        $self = clone $this;
+        $self['recipientAddressState'] = $recipientAddressState;
 
         return $self;
     }

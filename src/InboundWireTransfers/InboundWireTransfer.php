@@ -38,6 +38,7 @@ use Increase\InboundWireTransfers\InboundWireTransfer\Type;
  *   inputMessageAccountabilityData: string|null,
  *   instructingAgentRoutingNumber: string|null,
  *   instructionIdentification: string|null,
+ *   purpose: string|null,
  *   reversal: null|Reversal|ReversalShape,
  *   status: Status|value-of<Status>,
  *   type: Type|value-of<Type>,
@@ -166,6 +167,12 @@ final class InboundWireTransfer implements BaseModel
     public ?string $instructionIdentification;
 
     /**
+     * The reason for the wire transfer, as set by the sender.
+     */
+    #[Required]
+    public ?string $purpose;
+
+    /**
      * If the transfer is reversed, this will contain details of the reversal.
      */
     #[Required]
@@ -230,6 +237,7 @@ final class InboundWireTransfer implements BaseModel
      *   inputMessageAccountabilityData: ...,
      *   instructingAgentRoutingNumber: ...,
      *   instructionIdentification: ...,
+     *   purpose: ...,
      *   reversal: ...,
      *   status: ...,
      *   type: ...,
@@ -262,6 +270,7 @@ final class InboundWireTransfer implements BaseModel
      *   ->withInputMessageAccountabilityData(...)
      *   ->withInstructingAgentRoutingNumber(...)
      *   ->withInstructionIdentification(...)
+     *   ->withPurpose(...)
      *   ->withReversal(...)
      *   ->withStatus(...)
      *   ->withType(...)
@@ -305,6 +314,7 @@ final class InboundWireTransfer implements BaseModel
         ?string $inputMessageAccountabilityData,
         ?string $instructingAgentRoutingNumber,
         ?string $instructionIdentification,
+        ?string $purpose,
         Reversal|array|null $reversal,
         Status|string $status,
         Type|string $type,
@@ -333,6 +343,7 @@ final class InboundWireTransfer implements BaseModel
         $self['inputMessageAccountabilityData'] = $inputMessageAccountabilityData;
         $self['instructingAgentRoutingNumber'] = $instructingAgentRoutingNumber;
         $self['instructionIdentification'] = $instructionIdentification;
+        $self['purpose'] = $purpose;
         $self['reversal'] = $reversal;
         $self['status'] = $status;
         $self['type'] = $type;
@@ -557,6 +568,17 @@ final class InboundWireTransfer implements BaseModel
     ): self {
         $self = clone $this;
         $self['instructionIdentification'] = $instructionIdentification;
+
+        return $self;
+    }
+
+    /**
+     * The reason for the wire transfer, as set by the sender.
+     */
+    public function withPurpose(?string $purpose): self
+    {
+        $self = clone $this;
+        $self['purpose'] = $purpose;
 
         return $self;
     }

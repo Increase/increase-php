@@ -34,7 +34,7 @@ final class SwiftTransfersTest extends TestCase
         $result = $this->client->swiftTransfers->create(
             accountID: 'account_in71c4amph0vgo2qllky',
             accountNumber: '987654321',
-            bankIdentificationCode: 'ECBFDEFFTPP',
+            bankIdentificationCode: 'FRNYUS33XXX',
             creditorAddress: [
                 'city' => 'Frankfurt',
                 'country' => 'DE',
@@ -61,7 +61,7 @@ final class SwiftTransfersTest extends TestCase
         $result = $this->client->swiftTransfers->create(
             accountID: 'account_in71c4amph0vgo2qllky',
             accountNumber: '987654321',
-            bankIdentificationCode: 'ECBFDEFFTPP',
+            bankIdentificationCode: 'FRNYUS33XXX',
             creditorAddress: [
                 'city' => 'Frankfurt',
                 'country' => 'DE',

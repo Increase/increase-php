@@ -106,7 +106,7 @@ final class Element implements BaseModel
     public ?CardDecline $cardDecline;
 
     /**
-     * A Card Financial object. This field will be present in the JSON response if and only if `category` is equal to `card_financial`. Card Financials are temporary holds placed on a customer's funds with the intent to later clear a transaction.
+     * A Card Financial object. This field will be present in the JSON response if and only if `category` is equal to `card_financial`. Card Financials are card transactions that have cleared and settled. Unlike a Card Settlement, which clears a previous authorization, a Card Financial is authorized and cleared in a single message.
      */
     #[Optional('card_financial', nullable: true)]
     public ?CardFinancial $cardFinancial;
@@ -325,7 +325,7 @@ final class Element implements BaseModel
     }
 
     /**
-     * A Card Financial object. This field will be present in the JSON response if and only if `category` is equal to `card_financial`. Card Financials are temporary holds placed on a customer's funds with the intent to later clear a transaction.
+     * A Card Financial object. This field will be present in the JSON response if and only if `category` is equal to `card_financial`. Card Financials are card transactions that have cleared and settled. Unlike a Card Settlement, which clears a previous authorization, a Card Financial is authorized and cleared in a single message.
      *
      * @param CardFinancial|CardFinancialShape|null $cardFinancial
      */

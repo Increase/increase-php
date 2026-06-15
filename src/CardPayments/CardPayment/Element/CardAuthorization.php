@@ -8,6 +8,7 @@ use Increase\CardPayments\CardPayment\Element\CardAuthorization\Actioner;
 use Increase\CardPayments\CardPayment\Element\CardAuthorization\AdditionalAmounts;
 use Increase\CardPayments\CardPayment\Element\CardAuthorization\Currency;
 use Increase\CardPayments\CardPayment\Element\CardAuthorization\Direction;
+use Increase\CardPayments\CardPayment\Element\CardAuthorization\Healthcare;
 use Increase\CardPayments\CardPayment\Element\CardAuthorization\NetworkDetails;
 use Increase\CardPayments\CardPayment\Element\CardAuthorization\NetworkIdentifiers;
 use Increase\CardPayments\CardPayment\Element\CardAuthorization\ProcessingCategory;
@@ -22,6 +23,7 @@ use Increase\Core\Contracts\BaseModel;
  * A Card Authorization object. This field will be present in the JSON response if and only if `category` is equal to `card_authorization`. Card Authorizations are temporary holds placed on a customer's funds with the intent to later clear a transaction.
  *
  * @phpstan-import-type AdditionalAmountsShape from \Increase\CardPayments\CardPayment\Element\CardAuthorization\AdditionalAmounts
+ * @phpstan-import-type HealthcareShape from \Increase\CardPayments\CardPayment\Element\CardAuthorization\Healthcare
  * @phpstan-import-type NetworkDetailsShape from \Increase\CardPayments\CardPayment\Element\CardAuthorization\NetworkDetails
  * @phpstan-import-type NetworkIdentifiersShape from \Increase\CardPayments\CardPayment\Element\CardAuthorization\NetworkIdentifiers
  * @phpstan-import-type SchemeFeeShape from \Increase\CardPayments\CardPayment\Element\CardAuthorization\SchemeFee
@@ -37,6 +39,7 @@ use Increase\Core\Contracts\BaseModel;
  *   digitalWalletTokenID: string|null,
  *   direction: Direction|value-of<Direction>,
  *   expiresAt: \DateTimeInterface,
+ *   healthcare: null|Healthcare|HealthcareShape,
  *   merchantAcceptorID: string,
  *   merchantCategoryCode: string,
  *   merchantCity: string|null,
@@ -123,6 +126,12 @@ final class CardAuthorization implements BaseModel
      */
     #[Required('expires_at')]
     public \DateTimeInterface $expiresAt;
+
+    /**
+     * The healthcare-related fields for this authorization. Only present for specific programs.
+     */
+    #[Required]
+    public ?Healthcare $healthcare;
 
     /**
      * The merchant identifier (commonly abbreviated as MID) of the merchant the card is transacting with.
@@ -265,6 +274,7 @@ final class CardAuthorization implements BaseModel
      *   digitalWalletTokenID: ...,
      *   direction: ...,
      *   expiresAt: ...,
+     *   healthcare: ...,
      *   merchantAcceptorID: ...,
      *   merchantCategoryCode: ...,
      *   merchantCity: ...,
@@ -301,6 +311,7 @@ final class CardAuthorization implements BaseModel
      *   ->withDigitalWalletTokenID(...)
      *   ->withDirection(...)
      *   ->withExpiresAt(...)
+     *   ->withHealthcare(...)
      *   ->withMerchantAcceptorID(...)
      *   ->withMerchantCategoryCode(...)
      *   ->withMerchantCity(...)
@@ -337,6 +348,7 @@ final class CardAuthorization implements BaseModel
      * @param AdditionalAmounts|AdditionalAmountsShape $additionalAmounts
      * @param Currency|value-of<Currency> $currency
      * @param Direction|value-of<Direction> $direction
+     * @param Healthcare|HealthcareShape|null $healthcare
      * @param NetworkDetails|NetworkDetailsShape $networkDetails
      * @param NetworkIdentifiers|NetworkIdentifiersShape $networkIdentifiers
      * @param ProcessingCategory|value-of<ProcessingCategory> $processingCategory
@@ -354,6 +366,7 @@ final class CardAuthorization implements BaseModel
         ?string $digitalWalletTokenID,
         Direction|string $direction,
         \DateTimeInterface $expiresAt,
+        Healthcare|array|null $healthcare,
         string $merchantAcceptorID,
         string $merchantCategoryCode,
         ?string $merchantCity,
@@ -386,6 +399,7 @@ final class CardAuthorization implements BaseModel
         $self['digitalWalletTokenID'] = $digitalWalletTokenID;
         $self['direction'] = $direction;
         $self['expiresAt'] = $expiresAt;
+        $self['healthcare'] = $healthcare;
         $self['merchantAcceptorID'] = $merchantAcceptorID;
         $self['merchantCategoryCode'] = $merchantCategoryCode;
         $self['merchantCity'] = $merchantCity;
@@ -515,6 +529,19 @@ final class CardAuthorization implements BaseModel
     {
         $self = clone $this;
         $self['expiresAt'] = $expiresAt;
+
+        return $self;
+    }
+
+    /**
+     * The healthcare-related fields for this authorization. Only present for specific programs.
+     *
+     * @param Healthcare|HealthcareShape|null $healthcare
+     */
+    public function withHealthcare(Healthcare|array|null $healthcare): self
+    {
+        $self = clone $this;
+        $self['healthcare'] = $healthcare;
 
         return $self;
     }

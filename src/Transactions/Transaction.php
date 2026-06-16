@@ -54,7 +54,7 @@ final class Transaction implements BaseModel
     public int $amount;
 
     /**
-     * The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date on which the Transaction occurred.
+     * The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which the Transaction occurred.
      */
     #[Required('created_at')]
     public \DateTimeInterface $createdAt;
@@ -213,7 +213,7 @@ final class Transaction implements BaseModel
     }
 
     /**
-     * The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date on which the Transaction occurred.
+     * The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which the Transaction occurred.
      */
     public function withCreatedAt(\DateTimeInterface $createdAt): self
     {

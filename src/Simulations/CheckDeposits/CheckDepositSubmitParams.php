@@ -26,7 +26,7 @@ final class CheckDepositSubmitParams implements BaseModel
     use SdkParams;
 
     /**
-     * If set, the simulation will use these values for the check's scanned MICR data.
+     * If set, the simulation will use these values for the check's scanned MICR data. If not set, the simulation will use random values.
      */
     #[Optional]
     public ?Scan $scan;
@@ -53,7 +53,7 @@ final class CheckDepositSubmitParams implements BaseModel
     }
 
     /**
-     * If set, the simulation will use these values for the check's scanned MICR data.
+     * If set, the simulation will use these values for the check's scanned MICR data. If not set, the simulation will use random values.
      *
      * @param Scan|ScanShape $scan
      */

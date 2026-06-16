@@ -11,6 +11,7 @@ use Increase\FednowTransfers\FednowTransfer\Acknowledgement;
 use Increase\FednowTransfers\FednowTransfer\CreatedBy;
 use Increase\FednowTransfers\FednowTransfer\CreditorAddress;
 use Increase\FednowTransfers\FednowTransfer\Currency;
+use Increase\FednowTransfers\FednowTransfer\DebtorAddress;
 use Increase\FednowTransfers\FednowTransfer\Rejection;
 use Increase\FednowTransfers\FednowTransfer\Status;
 use Increase\FednowTransfers\FednowTransfer\Submission;
@@ -22,6 +23,7 @@ use Increase\FednowTransfers\FednowTransfer\Type;
  * @phpstan-import-type AcknowledgementShape from \Increase\FednowTransfers\FednowTransfer\Acknowledgement
  * @phpstan-import-type CreatedByShape from \Increase\FednowTransfers\FednowTransfer\CreatedBy
  * @phpstan-import-type CreditorAddressShape from \Increase\FednowTransfers\FednowTransfer\CreditorAddress
+ * @phpstan-import-type DebtorAddressShape from \Increase\FednowTransfers\FednowTransfer\DebtorAddress
  * @phpstan-import-type RejectionShape from \Increase\FednowTransfers\FednowTransfer\Rejection
  * @phpstan-import-type SubmissionShape from \Increase\FednowTransfers\FednowTransfer\Submission
  *
@@ -36,6 +38,7 @@ use Increase\FednowTransfers\FednowTransfer\Type;
  *   creditorAddress: null|CreditorAddress|CreditorAddressShape,
  *   creditorName: string,
  *   currency: Currency|value-of<Currency>,
+ *   debtorAddress: null|DebtorAddress|DebtorAddressShape,
  *   debtorName: string,
  *   externalAccountID: string|null,
  *   idempotencyKey: string|null,
@@ -117,6 +120,12 @@ final class FednowTransfer implements BaseModel
      */
     #[Required(enum: Currency::class)]
     public string $currency;
+
+    /**
+     * The debtor's address.
+     */
+    #[Required('debtor_address')]
+    public ?DebtorAddress $debtorAddress;
 
     /**
      * The name of the transfer's sender. If not provided, defaults to the name of the account's entity.
@@ -216,6 +225,7 @@ final class FednowTransfer implements BaseModel
      *   creditorAddress: ...,
      *   creditorName: ...,
      *   currency: ...,
+     *   debtorAddress: ...,
      *   debtorName: ...,
      *   externalAccountID: ...,
      *   idempotencyKey: ...,
@@ -246,6 +256,7 @@ final class FednowTransfer implements BaseModel
      *   ->withCreditorAddress(...)
      *   ->withCreditorName(...)
      *   ->withCurrency(...)
+     *   ->withDebtorAddress(...)
      *   ->withDebtorName(...)
      *   ->withExternalAccountID(...)
      *   ->withIdempotencyKey(...)
@@ -275,6 +286,7 @@ final class FednowTransfer implements BaseModel
      * @param CreatedBy|CreatedByShape|null $createdBy
      * @param CreditorAddress|CreditorAddressShape|null $creditorAddress
      * @param Currency|value-of<Currency> $currency
+     * @param DebtorAddress|DebtorAddressShape|null $debtorAddress
      * @param Rejection|RejectionShape|null $rejection
      * @param Status|value-of<Status> $status
      * @param Submission|SubmissionShape|null $submission
@@ -291,6 +303,7 @@ final class FednowTransfer implements BaseModel
         CreditorAddress|array|null $creditorAddress,
         string $creditorName,
         Currency|string $currency,
+        DebtorAddress|array|null $debtorAddress,
         string $debtorName,
         ?string $externalAccountID,
         ?string $idempotencyKey,
@@ -317,6 +330,7 @@ final class FednowTransfer implements BaseModel
         $self['creditorAddress'] = $creditorAddress;
         $self['creditorName'] = $creditorName;
         $self['currency'] = $currency;
+        $self['debtorAddress'] = $debtorAddress;
         $self['debtorName'] = $debtorName;
         $self['externalAccountID'] = $externalAccountID;
         $self['idempotencyKey'] = $idempotencyKey;
@@ -450,6 +464,20 @@ final class FednowTransfer implements BaseModel
     {
         $self = clone $this;
         $self['currency'] = $currency;
+
+        return $self;
+    }
+
+    /**
+     * The debtor's address.
+     *
+     * @param DebtorAddress|DebtorAddressShape|null $debtorAddress
+     */
+    public function withDebtorAddress(
+        DebtorAddress|array|null $debtorAddress
+    ): self {
+        $self = clone $this;
+        $self['debtorAddress'] = $debtorAddress;
 
         return $self;
     }

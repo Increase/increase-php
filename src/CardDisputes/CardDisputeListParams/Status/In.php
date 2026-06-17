@@ -19,4 +19,6 @@ enum In: string
     case LOST = 'lost';
 
     case WON = 'won';
+
+    case REJECTED = 'rejected';
 }

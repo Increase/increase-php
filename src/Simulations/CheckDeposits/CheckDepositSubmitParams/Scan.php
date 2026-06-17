@@ -10,10 +10,13 @@ use Increase\Core\Concerns\SdkModel;
 use Increase\Core\Contracts\BaseModel;
 
 /**
- * If set, the simulation will use these values for the check's scanned MICR data.
+ * If set, the simulation will use these values for the check's scanned MICR data. If not set, the simulation will use random values.
  *
  * @phpstan-type ScanShape = array{
- *   accountNumber: string, routingNumber: string, auxiliaryOnUs?: string|null
+ *   accountNumber: string,
+ *   routingNumber: string,
+ *   auxiliaryOnUs?: string|null,
+ *   serialNumber?: string|null,
  * }
  */
 final class Scan implements BaseModel
@@ -34,10 +37,16 @@ final class Scan implements BaseModel
     public string $routingNumber;
 
     /**
-     * The auxiliary on-us data to be returned in the check deposit's scan data.
+     * The auxiliary on-us data to be returned in the check deposit's scan data. Auxiliary on-us is typically the check number for business checks.
      */
     #[Optional('auxiliary_on_us')]
     public ?string $auxiliaryOnUs;
+
+    /**
+     * The serial number to be returned in the check deposit's scan data. Serial number is typically the check number for consumer checks.
+     */
+    #[Optional('serial_number')]
+    public ?string $serialNumber;
 
     /**
      * `new Scan()` is missing required properties by the API.
@@ -66,7 +75,8 @@ final class Scan implements BaseModel
     public static function with(
         string $accountNumber,
         string $routingNumber,
-        ?string $auxiliaryOnUs = null
+        ?string $auxiliaryOnUs = null,
+        ?string $serialNumber = null,
     ): self {
         $self = new self;
 
@@ -74,6 +84,7 @@ final class Scan implements BaseModel
         $self['routingNumber'] = $routingNumber;
 
         null !== $auxiliaryOnUs && $self['auxiliaryOnUs'] = $auxiliaryOnUs;
+        null !== $serialNumber && $self['serialNumber'] = $serialNumber;
 
         return $self;
     }
@@ -101,12 +112,23 @@ final class Scan implements BaseModel
     }
 
     /**
-     * The auxiliary on-us data to be returned in the check deposit's scan data.
+     * The auxiliary on-us data to be returned in the check deposit's scan data. Auxiliary on-us is typically the check number for business checks.
      */
     public function withAuxiliaryOnUs(string $auxiliaryOnUs): self
     {
         $self = clone $this;
         $self['auxiliaryOnUs'] = $auxiliaryOnUs;
+
+        return $self;
+    }
+
+    /**
+     * The serial number to be returned in the check deposit's scan data. Serial number is typically the check number for consumer checks.
+     */
+    public function withSerialNumber(string $serialNumber): self
+    {
+        $self = clone $this;
+        $self['serialNumber'] = $serialNumber;
 
         return $self;
     }

@@ -8,11 +8,14 @@ use Increase\Core\Attributes\Required;
 use Increase\Core\Concerns\SdkModel;
 use Increase\Core\Contracts\BaseModel;
 use Increase\PhysicalCardProfiles\PhysicalCardProfile\Creator;
+use Increase\PhysicalCardProfiles\PhysicalCardProfile\FrontText;
 use Increase\PhysicalCardProfiles\PhysicalCardProfile\Status;
 use Increase\PhysicalCardProfiles\PhysicalCardProfile\Type;
 
 /**
  * This contains artwork and metadata relating to a Physical Card's appearance. For more information, see our guide on [physical card artwork](https://increase.com/documentation/card-art-physical-cards).
+ *
+ * @phpstan-import-type FrontTextShape from \Increase\PhysicalCardProfiles\PhysicalCardProfile\FrontText
  *
  * @phpstan-type PhysicalCardProfileShape = array{
  *   id: string,
@@ -23,6 +26,7 @@ use Increase\PhysicalCardProfiles\PhysicalCardProfile\Type;
  *   creator: Creator|value-of<Creator>,
  *   description: string,
  *   frontImageFileID: string|null,
+ *   frontText: null|FrontText|FrontTextShape,
  *   idempotencyKey: string|null,
  *   isDefault: bool,
  *   programID: string,
@@ -86,6 +90,12 @@ final class PhysicalCardProfile implements BaseModel
     public ?string $frontImageFileID;
 
     /**
+     * Text printed on the front of the card. Reach out to [support@increase.com](mailto:support@increase.com) for more information.
+     */
+    #[Required('front_text')]
+    public ?FrontText $frontText;
+
+    /**
      * The idempotency key you chose for this object. This value is unique across Increase and is used to ensure that a request is only processed once. Learn more about [idempotency](https://increase.com/documentation/idempotency-keys).
      */
     #[Required('idempotency_key')]
@@ -133,6 +143,7 @@ final class PhysicalCardProfile implements BaseModel
      *   creator: ...,
      *   description: ...,
      *   frontImageFileID: ...,
+     *   frontText: ...,
      *   idempotencyKey: ...,
      *   isDefault: ...,
      *   programID: ...,
@@ -153,6 +164,7 @@ final class PhysicalCardProfile implements BaseModel
      *   ->withCreator(...)
      *   ->withDescription(...)
      *   ->withFrontImageFileID(...)
+     *   ->withFrontText(...)
      *   ->withIdempotencyKey(...)
      *   ->withIsDefault(...)
      *   ->withProgramID(...)
@@ -171,6 +183,7 @@ final class PhysicalCardProfile implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param Creator|value-of<Creator> $creator
+     * @param FrontText|FrontTextShape|null $frontText
      * @param Status|value-of<Status> $status
      * @param Type|value-of<Type> $type
      */
@@ -183,6 +196,7 @@ final class PhysicalCardProfile implements BaseModel
         Creator|string $creator,
         string $description,
         ?string $frontImageFileID,
+        FrontText|array|null $frontText,
         ?string $idempotencyKey,
         bool $isDefault,
         string $programID,
@@ -199,6 +213,7 @@ final class PhysicalCardProfile implements BaseModel
         $self['creator'] = $creator;
         $self['description'] = $description;
         $self['frontImageFileID'] = $frontImageFileID;
+        $self['frontText'] = $frontText;
         $self['idempotencyKey'] = $idempotencyKey;
         $self['isDefault'] = $isDefault;
         $self['programID'] = $programID;
@@ -294,6 +309,19 @@ final class PhysicalCardProfile implements BaseModel
     {
         $self = clone $this;
         $self['frontImageFileID'] = $frontImageFileID;
+
+        return $self;
+    }
+
+    /**
+     * Text printed on the front of the card. Reach out to [support@increase.com](mailto:support@increase.com) for more information.
+     *
+     * @param FrontText|FrontTextShape|null $frontText
+     */
+    public function withFrontText(FrontText|array|null $frontText): self
+    {
+        $self = clone $this;
+        $self['frontText'] = $frontText;
 
         return $self;
     }

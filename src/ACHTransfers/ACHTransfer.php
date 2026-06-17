@@ -241,7 +241,7 @@ final class ACHTransfer implements BaseModel
     public string $network;
 
     /**
-     * If the receiving bank accepts the transfer but notifies that future transfers should use different details, this will contain those details.
+     * If the receiving bank notifies that future transfers should use different details, this will contain those details.
      *
      * @var list<NotificationsOfChange> $notificationsOfChange
      */
@@ -808,7 +808,7 @@ final class ACHTransfer implements BaseModel
     }
 
     /**
-     * If the receiving bank accepts the transfer but notifies that future transfers should use different details, this will contain those details.
+     * If the receiving bank notifies that future transfers should use different details, this will contain those details.
      *
      * @param list<NotificationsOfChange|NotificationsOfChangeShape> $notificationsOfChange
      */

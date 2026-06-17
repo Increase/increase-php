@@ -13,5 +13,7 @@ enum Funding: string
 
     case SAVINGS = 'savings';
 
+    case LOAN = 'loan';
+
     case GENERAL_LEDGER = 'general_ledger';
 }

@@ -17,6 +17,7 @@ use Increase\Exports\ExportCreateParams\BookkeepingAccountBalanceCsv;
 use Increase\Exports\ExportCreateParams\Category;
 use Increase\Exports\ExportCreateParams\DailyAccountBalanceCsv;
 use Increase\Exports\ExportCreateParams\EntityCsv;
+use Increase\Exports\ExportCreateParams\FeeCsv;
 use Increase\Exports\ExportCreateParams\FundingInstructions;
 use Increase\Exports\ExportCreateParams\TransactionCsv;
 use Increase\Exports\ExportCreateParams\VendorCsv;
@@ -37,6 +38,7 @@ use Increase\ServiceContracts\ExportsRawContract;
  * @phpstan-import-type BookkeepingAccountBalanceCsvShape from \Increase\Exports\ExportCreateParams\BookkeepingAccountBalanceCsv
  * @phpstan-import-type DailyAccountBalanceCsvShape from \Increase\Exports\ExportCreateParams\DailyAccountBalanceCsv
  * @phpstan-import-type EntityCsvShape from \Increase\Exports\ExportCreateParams\EntityCsv
+ * @phpstan-import-type FeeCsvShape from \Increase\Exports\ExportCreateParams\FeeCsv
  * @phpstan-import-type FundingInstructionsShape from \Increase\Exports\ExportCreateParams\FundingInstructions
  * @phpstan-import-type TransactionCsvShape from \Increase\Exports\ExportCreateParams\TransactionCsv
  * @phpstan-import-type VendorCsvShape from \Increase\Exports\ExportCreateParams\VendorCsv
@@ -68,6 +70,7 @@ final class ExportsRawService implements ExportsRawContract
      *   bookkeepingAccountBalanceCsv?: BookkeepingAccountBalanceCsv|BookkeepingAccountBalanceCsvShape,
      *   dailyAccountBalanceCsv?: DailyAccountBalanceCsv|DailyAccountBalanceCsvShape,
      *   entityCsv?: EntityCsv|EntityCsvShape,
+     *   feeCsv?: FeeCsv|FeeCsvShape,
      *   fundingInstructions?: FundingInstructions|FundingInstructionsShape,
      *   transactionCsv?: TransactionCsv|TransactionCsvShape,
      *   vendorCsv?: VendorCsv|VendorCsvShape,

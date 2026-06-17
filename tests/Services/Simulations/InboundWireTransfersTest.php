@@ -56,6 +56,7 @@ final class InboundWireTransfersTest extends TestCase
             endToEndIdentification: 'x',
             instructingAgentRoutingNumber: 'x',
             instructionIdentification: 'x',
+            purpose: 'x',
             uniqueEndToEndTransactionReference: 'x',
             unstructuredRemittanceInformation: 'x',
             wireDrawdownRequestID: 'wire_drawdown_request_id',

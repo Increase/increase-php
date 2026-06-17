@@ -104,7 +104,7 @@ final class CheckDepositsService implements CheckDepositsContract
      * Simulates the submission of a [Check Deposit](#check-deposits) to the Federal Reserve. This Check Deposit must first have a `status` of `pending`.
      *
      * @param string $checkDepositID the identifier of the Check Deposit you wish to submit
-     * @param Scan|ScanShape $scan if set, the simulation will use these values for the check's scanned MICR data
+     * @param Scan|ScanShape $scan If set, the simulation will use these values for the check's scanned MICR data. If not set, the simulation will use random values.
      * @param RequestOpts|null $requestOptions
      *
      * @throws APIException

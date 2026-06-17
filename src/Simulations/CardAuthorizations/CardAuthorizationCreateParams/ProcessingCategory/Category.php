@@ -25,5 +25,7 @@ enum Category: string
 
     case CASH_DISBURSEMENT = 'cash_disbursement';
 
+    case CASH_DEPOSIT = 'cash_deposit';
+
     case BALANCE_INQUIRY = 'balance_inquiry';
 }

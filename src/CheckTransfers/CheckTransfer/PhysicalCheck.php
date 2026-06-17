@@ -32,7 +32,7 @@ use Increase\Core\Contracts\BaseModel;
  *   payer: list<Payer|PayerShape>,
  *   recipientName: string,
  *   returnAddress: null|ReturnAddress|ReturnAddressShape,
- *   shippingMethod: null|ShippingMethod|value-of<ShippingMethod>,
+ *   shippingMethod: ShippingMethod|value-of<ShippingMethod>,
  *   signature: Signature|SignatureShape,
  *   trackingUpdates: list<TrackingUpdate|TrackingUpdateShape>,
  * }
@@ -95,10 +95,10 @@ final class PhysicalCheck implements BaseModel
     /**
      * The shipping method for the check.
      *
-     * @var value-of<ShippingMethod>|null $shippingMethod
+     * @var value-of<ShippingMethod> $shippingMethod
      */
     #[Required('shipping_method', enum: ShippingMethod::class)]
-    public ?string $shippingMethod;
+    public string $shippingMethod;
 
     /**
      * The signature that will appear on the check.
@@ -164,7 +164,7 @@ final class PhysicalCheck implements BaseModel
      * @param MailingAddress|MailingAddressShape $mailingAddress
      * @param list<Payer|PayerShape> $payer
      * @param ReturnAddress|ReturnAddressShape|null $returnAddress
-     * @param ShippingMethod|value-of<ShippingMethod>|null $shippingMethod
+     * @param ShippingMethod|value-of<ShippingMethod> $shippingMethod
      * @param Signature|SignatureShape $signature
      * @param list<TrackingUpdate|TrackingUpdateShape> $trackingUpdates
      */
@@ -177,7 +177,7 @@ final class PhysicalCheck implements BaseModel
         array $payer,
         string $recipientName,
         ReturnAddress|array|null $returnAddress,
-        ShippingMethod|string|null $shippingMethod,
+        ShippingMethod|string $shippingMethod,
         Signature|array $signature,
         array $trackingUpdates,
     ): self {
@@ -298,10 +298,10 @@ final class PhysicalCheck implements BaseModel
     /**
      * The shipping method for the check.
      *
-     * @param ShippingMethod|value-of<ShippingMethod>|null $shippingMethod
+     * @param ShippingMethod|value-of<ShippingMethod> $shippingMethod
      */
     public function withShippingMethod(
-        ShippingMethod|string|null $shippingMethod
+        ShippingMethod|string $shippingMethod
     ): self {
         $self = clone $this;
         $self['shippingMethod'] = $shippingMethod;

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Increase\Accounts\BalanceLookup;
 
+use Increase\Accounts\BalanceLookup\Loan\Receivables;
 use Increase\Core\Attributes\Required;
 use Increase\Core\Concerns\SdkModel;
 use Increase\Core\Contracts\BaseModel;
@@ -11,8 +12,13 @@ use Increase\Core\Contracts\BaseModel;
 /**
  * The loan balances for the Account.
  *
+ * @phpstan-import-type ReceivablesShape from \Increase\Accounts\BalanceLookup\Loan\Receivables
+ *
  * @phpstan-type LoanShape = array{
- *   dueAt: \DateTimeInterface|null, dueBalance: int, pastDueBalance: int
+ *   dueAt: \DateTimeInterface|null,
+ *   dueBalance: int,
+ *   pastDueBalance: int,
+ *   receivables: null|Receivables|ReceivablesShape,
  * }
  */
 final class Loan implements BaseModel
@@ -39,17 +45,27 @@ final class Loan implements BaseModel
     public int $pastDueBalance;
 
     /**
+     * The receivables balances for the loan.
+     */
+    #[Required]
+    public ?Receivables $receivables;
+
+    /**
      * `new Loan()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
-     * Loan::with(dueAt: ..., dueBalance: ..., pastDueBalance: ...)
+     * Loan::with(dueAt: ..., dueBalance: ..., pastDueBalance: ..., receivables: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new Loan)->withDueAt(...)->withDueBalance(...)->withPastDueBalance(...)
+     * (new Loan)
+     *   ->withDueAt(...)
+     *   ->withDueBalance(...)
+     *   ->withPastDueBalance(...)
+     *   ->withReceivables(...)
      * ```
      */
     public function __construct()
@@ -61,17 +77,21 @@ final class Loan implements BaseModel
      * Construct an instance from the required parameters.
      *
      * You must use named parameters to construct any parameters with a default value.
+     *
+     * @param Receivables|ReceivablesShape|null $receivables
      */
     public static function with(
         ?\DateTimeInterface $dueAt,
         int $dueBalance,
-        int $pastDueBalance
+        int $pastDueBalance,
+        Receivables|array|null $receivables,
     ): self {
         $self = new self;
 
         $self['dueAt'] = $dueAt;
         $self['dueBalance'] = $dueBalance;
         $self['pastDueBalance'] = $pastDueBalance;
+        $self['receivables'] = $receivables;
 
         return $self;
     }
@@ -105,6 +125,19 @@ final class Loan implements BaseModel
     {
         $self = clone $this;
         $self['pastDueBalance'] = $pastDueBalance;
+
+        return $self;
+    }
+
+    /**
+     * The receivables balances for the loan.
+     *
+     * @param Receivables|ReceivablesShape|null $receivables
+     */
+    public function withReceivables(Receivables|array|null $receivables): self
+    {
+        $self = clone $this;
+        $self['receivables'] = $receivables;
 
         return $self;
     }

@@ -150,9 +150,13 @@ enum In: string
 
     case LOAN_APPLICATION_UPDATED = 'loan_application.updated';
 
+    case LOAN_DISTRIBUTION_CREATED = 'loan_distribution.created';
+
     case LOAN_OFFER_CREATED = 'loan_offer.created';
 
     case LOAN_OFFER_UPDATED = 'loan_offer.updated';
+
+    case LOAN_PURCHASE_CREATED = 'loan_purchase.created';
 
     case LOCKBOX_CREATED = 'lockbox.created';
 

@@ -11,9 +11,9 @@ enum Status: string
 {
     case PENDING_SUBMITTING = 'pending_submitting';
 
-    case REQUIRES_ATTENTION = 'requires_attention';
-
     case RETURNED = 'returned';
 
     case SUBMITTED = 'submitted';
+
+    case REQUIRES_ATTENTION = 'requires_attention';
 }

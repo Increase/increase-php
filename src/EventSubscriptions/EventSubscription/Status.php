@@ -14,6 +14,4 @@ enum Status: string
     case DISABLED = 'disabled';
 
     case DELETED = 'deleted';
-
-    case REQUIRES_ATTENTION = 'requires_attention';
 }

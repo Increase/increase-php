@@ -54,7 +54,14 @@ final class CardAuthorizationsTest extends TestCase
             merchantCountry: 'US',
             merchantDescriptor: 'AMAZON.COM',
             merchantState: 'NY',
-            networkDetails: ['visa' => ['standInProcessingReason' => 'issuer_error']],
+            networkDetails: [
+                'visa' => [
+                    'electronicCommerceIndicator' => 'mail_phone_order',
+                    'pointOfServiceEntryMode' => 'unknown',
+                    'standInProcessingReason' => 'issuer_error',
+                    'terminalEntryCapability' => 'unknown',
+                ],
+            ],
             networkRiskScore: 0,
             physicalCardID: 'physical_card_id',
             processingCategory: [

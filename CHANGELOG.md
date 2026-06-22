@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.135.0](https://github.com/Increase/increase-php/compare/v0.134.0...v0.135.0) (2026-06-22)
+
+
+### Features
+
+* **api:** add Visa network fields to card authorization simulations ([1df462c](https://github.com/Increase/increase-php/commit/1df462c38caa19f812aa229928208394e9e21560))
+
 ## [0.134.0](https://github.com/Increase/increase-php/compare/v0.133.0...v0.134.0) (2026-06-18)
 
 

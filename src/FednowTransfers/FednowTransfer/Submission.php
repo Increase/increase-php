@@ -12,7 +12,9 @@ use Increase\Core\Contracts\BaseModel;
  * After the transfer is submitted to FedNow, this will contain supplemental details.
  *
  * @phpstan-type SubmissionShape = array{
- *   messageIdentification: string, submittedAt: \DateTimeInterface|null
+ *   messageIdentification: string,
+ *   submittedAt: \DateTimeInterface|null,
+ *   uniqueEndToEndTransactionReference: string,
  * }
  */
 final class Submission implements BaseModel
@@ -33,17 +35,30 @@ final class Submission implements BaseModel
     public ?\DateTimeInterface $submittedAt;
 
     /**
+     * The Unique End-to-end Transaction Reference ([UETR](https://www.swift.com/payments/what-unique-end-end-transaction-reference-uetr)) of the transfer.
+     */
+    #[Required('unique_end_to_end_transaction_reference')]
+    public string $uniqueEndToEndTransactionReference;
+
+    /**
      * `new Submission()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
-     * Submission::with(messageIdentification: ..., submittedAt: ...)
+     * Submission::with(
+     *   messageIdentification: ...,
+     *   submittedAt: ...,
+     *   uniqueEndToEndTransactionReference: ...,
+     * )
      * ```
      *
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new Submission)->withMessageIdentification(...)->withSubmittedAt(...)
+     * (new Submission)
+     *   ->withMessageIdentification(...)
+     *   ->withSubmittedAt(...)
+     *   ->withUniqueEndToEndTransactionReference(...)
      * ```
      */
     public function __construct()
@@ -58,12 +73,14 @@ final class Submission implements BaseModel
      */
     public static function with(
         string $messageIdentification,
-        ?\DateTimeInterface $submittedAt
+        ?\DateTimeInterface $submittedAt,
+        string $uniqueEndToEndTransactionReference,
     ): self {
         $self = new self;
 
         $self['messageIdentification'] = $messageIdentification;
         $self['submittedAt'] = $submittedAt;
+        $self['uniqueEndToEndTransactionReference'] = $uniqueEndToEndTransactionReference;
 
         return $self;
     }
@@ -87,6 +104,18 @@ final class Submission implements BaseModel
     {
         $self = clone $this;
         $self['submittedAt'] = $submittedAt;
+
+        return $self;
+    }
+
+    /**
+     * The Unique End-to-end Transaction Reference ([UETR](https://www.swift.com/payments/what-unique-end-end-transaction-reference-uetr)) of the transfer.
+     */
+    public function withUniqueEndToEndTransactionReference(
+        string $uniqueEndToEndTransactionReference
+    ): self {
+        $self = clone $this;
+        $self['uniqueEndToEndTransactionReference'] = $uniqueEndToEndTransactionReference;
 
         return $self;
     }

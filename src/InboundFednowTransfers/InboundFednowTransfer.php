@@ -35,6 +35,7 @@ use Increase\InboundFednowTransfers\InboundFednowTransfer\Type;
  *   status: Status|value-of<Status>,
  *   transactionID: string|null,
  *   type: Type|value-of<Type>,
+ *   uniqueEndToEndTransactionReference: string|null,
  *   unstructuredRemittanceInformation: string|null,
  * }
  */
@@ -140,6 +141,12 @@ final class InboundFednowTransfer implements BaseModel
     public string $type;
 
     /**
+     * The Unique End-to-end Transaction Reference ([UETR](https://www.swift.com/payments/what-unique-end-end-transaction-reference-uetr)) of the transfer.
+     */
+    #[Required('unique_end_to_end_transaction_reference')]
+    public ?string $uniqueEndToEndTransactionReference;
+
+    /**
      * Additional information included with the transfer.
      */
     #[Required('unstructured_remittance_information')]
@@ -166,6 +173,7 @@ final class InboundFednowTransfer implements BaseModel
      *   status: ...,
      *   transactionID: ...,
      *   type: ...,
+     *   uniqueEndToEndTransactionReference: ...,
      *   unstructuredRemittanceInformation: ...,
      * )
      * ```
@@ -189,6 +197,7 @@ final class InboundFednowTransfer implements BaseModel
      *   ->withStatus(...)
      *   ->withTransactionID(...)
      *   ->withType(...)
+     *   ->withUniqueEndToEndTransactionReference(...)
      *   ->withUnstructuredRemittanceInformation(...)
      * ```
      */
@@ -224,6 +233,7 @@ final class InboundFednowTransfer implements BaseModel
         Status|string $status,
         ?string $transactionID,
         Type|string $type,
+        ?string $uniqueEndToEndTransactionReference,
         ?string $unstructuredRemittanceInformation,
     ): self {
         $self = new self;
@@ -243,6 +253,7 @@ final class InboundFednowTransfer implements BaseModel
         $self['status'] = $status;
         $self['transactionID'] = $transactionID;
         $self['type'] = $type;
+        $self['uniqueEndToEndTransactionReference'] = $uniqueEndToEndTransactionReference;
         $self['unstructuredRemittanceInformation'] = $unstructuredRemittanceInformation;
 
         return $self;
@@ -420,6 +431,18 @@ final class InboundFednowTransfer implements BaseModel
     {
         $self = clone $this;
         $self['type'] = $type;
+
+        return $self;
+    }
+
+    /**
+     * The Unique End-to-end Transaction Reference ([UETR](https://www.swift.com/payments/what-unique-end-end-transaction-reference-uetr)) of the transfer.
+     */
+    public function withUniqueEndToEndTransactionReference(
+        ?string $uniqueEndToEndTransactionReference
+    ): self {
+        $self = clone $this;
+        $self['uniqueEndToEndTransactionReference'] = $uniqueEndToEndTransactionReference;
 
         return $self;
     }

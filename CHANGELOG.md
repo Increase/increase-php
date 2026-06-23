@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.136.0](https://github.com/Increase/increase-php/compare/v0.135.0...v0.136.0) (2026-06-23)
+
+
+### Features
+
+* **api:** add UETR field to inbound FedNow transfers ([e501f9b](https://github.com/Increase/increase-php/commit/e501f9b46ea46def474d4a3140e2bd62bcc21e0d))
+
 ## [0.135.0](https://github.com/Increase/increase-php/compare/v0.134.0...v0.135.0) (2026-06-22)
 
 

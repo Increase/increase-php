@@ -27,7 +27,8 @@ Parameters with a default value must be set by name.
 use Increase\Client;
 
 $client = new Client(
-  apiKey: getenv('INCREASE_API_KEY') ?: 'My API Key', environment: 'sandbox'
+  apiKey: getenv('INCREASE_API_KEY'),
+  environment: 'sandbox',
 );
 
 $account = $client->accounts->create(
@@ -58,7 +59,8 @@ This library provides auto-paginating iterators with each list response, so you 
 use Increase\Client;
 
 $client = new Client(
-  apiKey: getenv('INCREASE_API_KEY') ?: 'My API Key', environment: 'sandbox'
+  apiKey: getenv('INCREASE_API_KEY'),
+  environment: 'sandbox',
 );
 
 $page = $client->accounts->list();

@@ -64,7 +64,7 @@ final class ACHTransfersService implements ACHTransfersContract
      * @param PreferredEffectiveDate|PreferredEffectiveDateShape $preferredEffectiveDate Configuration for how the effective date of the transfer will be set. This determines same-day vs future-dated settlement timing. If not set, defaults to a `settlement_schedule` of `same_day`. If set, exactly one of the child attributes must be set.
      * @param bool $requireApproval whether the transfer requires explicit approval via the dashboard or API
      * @param string $routingNumber the American Bankers' Association (ABA) Routing Transit Number (RTN) for the destination account
-     * @param StandardEntryClassCode|value-of<StandardEntryClassCode> $standardEntryClassCode the [Standard Entry Class (SEC) code](/documentation/ach-standard-entry-class-codes) to use for the transfer
+     * @param StandardEntryClassCode|value-of<StandardEntryClassCode> $standardEntryClassCode The [Standard Entry Class (SEC) code](/documentation/ach-standard-entry-class-codes) to use for the transfer. If not provided, the default is `corporate_credit_or_debit`.
      * @param TransactionTiming|value-of<TransactionTiming> $transactionTiming the timing of the transaction
      * @param RequestOpts|null $requestOptions
      *

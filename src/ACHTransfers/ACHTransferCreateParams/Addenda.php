@@ -13,7 +13,7 @@ use Increase\Core\Concerns\SdkModel;
 use Increase\Core\Contracts\BaseModel;
 
 /**
- * Additional information that will be sent to the recipient. This is included in the transfer data sent to the receiving bank.
+ * Additional information passed through to the receiving bank with the transfer. Most ACH transfers do not need this. Only set this if your recipient has asked for addendum data, typically unstructured remittance information. Corporate Trade Exchange (CTX) flows can carry structured X12 remittance advice instead.
  *
  * @phpstan-import-type FreeformShape from \Increase\ACHTransfers\ACHTransferCreateParams\Addenda\Freeform
  * @phpstan-import-type PaymentOrderRemittanceAdviceShape from \Increase\ACHTransfers\ACHTransferCreateParams\Addenda\PaymentOrderRemittanceAdvice

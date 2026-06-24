@@ -103,7 +103,7 @@ final class InboundMailItemsRawService implements InboundMailItemsRawContract
     /**
      * @api
      *
-     * Action an Inbound Mail Item
+     * Deposits or ignores each check contained in a pending Inbound Mail Item. Depositing a check creates a [Check Deposit](#check-deposits) into the Account you specify.
      *
      * @param string $inboundMailItemID the identifier of the Inbound Mail Item to action
      * @param array{checks: list<Check|CheckShape>}|InboundMailItemActionParams $params

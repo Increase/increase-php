@@ -10,13 +10,13 @@ enum In: string
 
     case CANCELED = 'canceled';
 
+    case PENDING_CREATING = 'pending_creating';
+
     case PENDING_REVIEWING = 'pending_reviewing';
 
     case REJECTED = 'rejected';
 
     case REQUIRES_ATTENTION = 'requires_attention';
-
-    case PENDING_CREATING = 'pending_creating';
 
     case REVERSED = 'reversed';
 

@@ -10,7 +10,7 @@ use Increase\Core\Contracts\BaseModel;
 use Increase\Transactions\Transaction\Source\ACHTransferReturn\ReturnReasonCode;
 
 /**
- * An ACH Transfer Return object. This field will be present in the JSON response if and only if `category` is equal to `ach_transfer_return`. An ACH Transfer Return is created when an ACH Transfer is returned by the receiving bank. It offsets the ACH Transfer Intention. ACH Transfer Returns usually occur within the first two business days after the transfer is initiated, but can occur much later.
+ * An ACH Transfer Return object. This field will be present in the JSON response if and only if `category` is equal to `ach_transfer_return`. An ACH Transfer Return is created when an ACH Transfer is returned by the receiving bank. It offsets the ACH Transfer Intention. ACH Transfer Returns usually occur within the first two business days after the transfer is initiated, but can occur much later. The return appears as a new posted Transaction; no Pending Transaction is created.
  *
  * @phpstan-type ACHTransferReturnShape = array{
  *   createdAt: \DateTimeInterface,
@@ -59,7 +59,7 @@ final class ACHTransferReturn implements BaseModel
     public string $transactionID;
 
     /**
-     * The identifier of the ACH Transfer associated with this return.
+     * The identifier of the ACH Transfer associated with this return. This matches the original Transaction's `source.ach_transfer_intention.transfer_id`.
      */
     #[Required('transfer_id')]
     public string $transferID;
@@ -182,7 +182,7 @@ final class ACHTransferReturn implements BaseModel
     }
 
     /**
-     * The identifier of the ACH Transfer associated with this return.
+     * The identifier of the ACH Transfer associated with this return. This matches the original Transaction's `source.ach_transfer_intention.transfer_id`.
      */
     public function withTransferID(string $transferID): self
     {

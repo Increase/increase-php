@@ -67,7 +67,7 @@ final class AccountCreateParams implements BaseModel
     public ?Loan $loan;
 
     /**
-     * The identifier for the Program that this Account falls under. Required if you operate more than one Program.
+     * The identifier for the Program that this Account falls under. Required if your Group operates more than one Program. List your [Programs](#programs) to find their identifiers.
      */
     #[Optional('program_id')]
     public ?string $programID;
@@ -181,7 +181,7 @@ final class AccountCreateParams implements BaseModel
     }
 
     /**
-     * The identifier for the Program that this Account falls under. Required if you operate more than one Program.
+     * The identifier for the Program that this Account falls under. Required if your Group operates more than one Program. List your [Programs](#programs) to find their identifiers.
      */
     public function withProgramID(string $programID): self
     {

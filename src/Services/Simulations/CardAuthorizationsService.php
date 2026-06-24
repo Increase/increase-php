@@ -37,7 +37,7 @@ final class CardAuthorizationsService implements CardAuthorizationsContract
     /**
      * @api
      *
-     * Simulates a purchase authorization on a [Card](#cards). Depending on the balance available to the card and the `amount` submitted, the authorization activity will result in a [Pending Transaction](#pending-transactions) of type `card_authorization` or a [Declined Transaction](#declined-transactions) of type `card_decline`. You can pass either a Card id or a [Digital Wallet Token](#digital-wallet-tokens) id to simulate the two different ways purchases can be made.
+     * Simulates a purchase authorization on a [Card](#cards). Depending on the balance available to the card and the `amount` submitted, the authorization activity will result in a [Pending Transaction](#pending-transactions) of type `card_authorization` or a [Declined Transaction](#declined-transactions) of type `card_decline`. You can pass either a Card id or a [Digital Wallet Token](#digital-wallet-tokens) id to simulate the two different ways purchases can be made. The response will contain either a `pending_transaction` or a `declined_transaction`; the other attribute will be null. If the authorization is declined, the reason is available on the Declined Transaction at `source.card_decline.reason`.
      *
      * @param int $amount the authorization amount in cents
      * @param string $authenticatedCardPaymentID the identifier of a Card Payment with a `card_authentication` if you want to simulate an authenticated authorization

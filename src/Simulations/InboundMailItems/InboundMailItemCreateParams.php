@@ -11,7 +11,7 @@ use Increase\Core\Concerns\SdkParams;
 use Increase\Core\Contracts\BaseModel;
 
 /**
- * Simulates an Inbound Mail Item to one of your Lockbox Addresses or Lockbox Recipients, as if someone had mailed a physical check.
+ * Simulates an Inbound Mail Item to one of your Lockbox Addresses or Lockbox Recipients, as if someone had mailed a physical check. Increase automatically deposits a check mailed to a Lockbox Recipient into the recipient's Account. A check mailed to a Lockbox Address must be deposited or ignored with the [Action an Inbound Mail Item](#inbound-mail-items) endpoint.
  *
  * @see Increase\Services\Simulations\InboundMailItemsService::create()
  *
@@ -41,13 +41,13 @@ final class InboundMailItemCreateParams implements BaseModel
     public ?string $contentsFileID;
 
     /**
-     * The identifier of the Lockbox Address to simulate inbound mail to.
+     * The identifier of the Lockbox Address to simulate inbound mail to. Exactly one lockbox identifier parameter must be provided.
      */
     #[Optional('lockbox_address_id')]
     public ?string $lockboxAddressID;
 
     /**
-     * The identifier of the Lockbox Recipient to simulate inbound mail to.
+     * The identifier of the Lockbox Recipient to simulate inbound mail to. Exactly one lockbox identifier parameter must be provided.
      */
     #[Optional('lockbox_recipient_id')]
     public ?string $lockboxRecipientID;
@@ -116,7 +116,7 @@ final class InboundMailItemCreateParams implements BaseModel
     }
 
     /**
-     * The identifier of the Lockbox Address to simulate inbound mail to.
+     * The identifier of the Lockbox Address to simulate inbound mail to. Exactly one lockbox identifier parameter must be provided.
      */
     public function withLockboxAddressID(string $lockboxAddressID): self
     {
@@ -127,7 +127,7 @@ final class InboundMailItemCreateParams implements BaseModel
     }
 
     /**
-     * The identifier of the Lockbox Recipient to simulate inbound mail to.
+     * The identifier of the Lockbox Recipient to simulate inbound mail to. Exactly one lockbox identifier parameter must be provided.
      */
     public function withLockboxRecipientID(string $lockboxRecipientID): self
     {

@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Increase\ACHTransfers\ACHTransfer;
 
 /**
- * The type of the account to which the transfer will be sent.
+ * The type of the receiver's bank account.
  */
 enum Funding: string
 {

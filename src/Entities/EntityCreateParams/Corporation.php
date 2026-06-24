@@ -52,7 +52,7 @@ final class Corporation implements BaseModel
     public array $beneficialOwners;
 
     /**
-     * The legal identifier of the corporation. This is usually the Employer Identification Number (EIN).
+     * The legal identifier of the corporation. This is usually the Employer Identification Number (EIN). This replaces the deprecated `tax_identifier` field.
      */
     #[Required('legal_identifier')]
     public LegalIdentifier $legalIdentifier;
@@ -187,7 +187,7 @@ final class Corporation implements BaseModel
     }
 
     /**
-     * The legal identifier of the corporation. This is usually the Employer Identification Number (EIN).
+     * The legal identifier of the corporation. This is usually the Employer Identification Number (EIN). This replaces the deprecated `tax_identifier` field.
      *
      * @param LegalIdentifier|LegalIdentifierShape $legalIdentifier
      */

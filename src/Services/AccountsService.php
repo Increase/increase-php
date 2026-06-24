@@ -49,7 +49,7 @@ final class AccountsService implements AccountsContract
      * @param Funding|value-of<Funding> $funding whether the Account is funded by a loan or by deposits
      * @param string $informationalEntityID The identifier of an Entity that, while not owning the Account, is associated with its activity. This is generally the beneficiary of the funds.
      * @param Loan|LoanShape $loan the loan details for the account
-     * @param string $programID The identifier for the Program that this Account falls under. Required if you operate more than one Program.
+     * @param string $programID The identifier for the Program that this Account falls under. Required if your Group operates more than one Program. List your [Programs](#programs) to find their identifiers.
      * @param RequestOpts|null $requestOptions
      *
      * @throws APIException

@@ -17,5 +17,7 @@ enum Category: string
 
     case DELIVERY_ISSUE = 'delivery_issue';
 
+    case RETURNING_TO_SENDER = 'returning_to_sender';
+
     case RETURNED_TO_SENDER = 'returned_to_sender';
 }

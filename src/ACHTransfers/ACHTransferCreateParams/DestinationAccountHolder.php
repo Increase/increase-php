@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Increase\ACHTransfers\ACHTransferCreateParams;
 
 /**
- * The type of entity that owns the account to which the ACH Transfer is being sent.
+ * The type of entity that owns the receiver's account.
  */
 enum DestinationAccountHolder: string
 {

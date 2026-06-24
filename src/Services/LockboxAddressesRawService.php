@@ -33,7 +33,7 @@ final class LockboxAddressesRawService implements LockboxAddressesRawContract
     /**
      * @api
      *
-     * Create a Lockbox Address
+     * The Lockbox Address starts with a `pending` status and a null `address`. Shortly after creation, Increase generates the mailing address and the status becomes `active`. You can only create Lockbox Recipients for an `active` Lockbox Address.
      *
      * @param array{description?: string}|LockboxAddressCreateParams $params
      * @param RequestOpts|null $requestOptions

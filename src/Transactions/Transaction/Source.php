@@ -170,7 +170,7 @@ final class Source implements BaseModel
     public ?ACHTransferRejection $achTransferRejection;
 
     /**
-     * An ACH Transfer Return object. This field will be present in the JSON response if and only if `category` is equal to `ach_transfer_return`. An ACH Transfer Return is created when an ACH Transfer is returned by the receiving bank. It offsets the ACH Transfer Intention. ACH Transfer Returns usually occur within the first two business days after the transfer is initiated, but can occur much later.
+     * An ACH Transfer Return object. This field will be present in the JSON response if and only if `category` is equal to `ach_transfer_return`. An ACH Transfer Return is created when an ACH Transfer is returned by the receiving bank. It offsets the ACH Transfer Intention. ACH Transfer Returns usually occur within the first two business days after the transfer is initiated, but can occur much later. The return appears as a new posted Transaction; no Pending Transaction is created.
      */
     #[Optional('ach_transfer_return', nullable: true)]
     public ?ACHTransferReturn $achTransferReturn;
@@ -597,7 +597,7 @@ final class Source implements BaseModel
     }
 
     /**
-     * An ACH Transfer Return object. This field will be present in the JSON response if and only if `category` is equal to `ach_transfer_return`. An ACH Transfer Return is created when an ACH Transfer is returned by the receiving bank. It offsets the ACH Transfer Intention. ACH Transfer Returns usually occur within the first two business days after the transfer is initiated, but can occur much later.
+     * An ACH Transfer Return object. This field will be present in the JSON response if and only if `category` is equal to `ach_transfer_return`. An ACH Transfer Return is created when an ACH Transfer is returned by the receiving bank. It offsets the ACH Transfer Intention. ACH Transfer Returns usually occur within the first two business days after the transfer is initiated, but can occur much later. The return appears as a new posted Transaction; no Pending Transaction is created.
      *
      * @param ACHTransferReturn|ACHTransferReturnShape|null $achTransferReturn
      */

@@ -97,7 +97,7 @@ final class InboundMailItemsService implements InboundMailItemsContract
     /**
      * @api
      *
-     * Action an Inbound Mail Item
+     * Deposits or ignores each check contained in a pending Inbound Mail Item. Depositing a check creates a [Check Deposit](#check-deposits) into the Account you specify.
      *
      * @param string $inboundMailItemID the identifier of the Inbound Mail Item to action
      * @param list<Check|CheckShape> $checks the actions to perform on the Inbound Mail Item

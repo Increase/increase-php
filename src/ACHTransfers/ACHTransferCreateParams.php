@@ -162,7 +162,7 @@ final class ACHTransferCreateParams implements BaseModel
     public ?string $routingNumber;
 
     /**
-     * The [Standard Entry Class (SEC) code](/documentation/ach-standard-entry-class-codes) to use for the transfer.
+     * The [Standard Entry Class (SEC) code](/documentation/ach-standard-entry-class-codes) to use for the transfer. If not provided, the default is `corporate_credit_or_debit`.
      *
      * @var value-of<StandardEntryClassCode>|null $standardEntryClassCode
      */
@@ -461,7 +461,7 @@ final class ACHTransferCreateParams implements BaseModel
     }
 
     /**
-     * The [Standard Entry Class (SEC) code](/documentation/ach-standard-entry-class-codes) to use for the transfer.
+     * The [Standard Entry Class (SEC) code](/documentation/ach-standard-entry-class-codes) to use for the transfer. If not provided, the default is `corporate_credit_or_debit`.
      *
      * @param StandardEntryClassCode|value-of<StandardEntryClassCode> $standardEntryClassCode
      */

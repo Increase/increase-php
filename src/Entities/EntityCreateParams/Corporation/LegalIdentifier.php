@@ -11,7 +11,7 @@ use Increase\Core\Contracts\BaseModel;
 use Increase\Entities\EntityCreateParams\Corporation\LegalIdentifier\Category;
 
 /**
- * The legal identifier of the corporation. This is usually the Employer Identification Number (EIN).
+ * The legal identifier of the corporation. This is usually the Employer Identification Number (EIN). This replaces the deprecated `tax_identifier` field.
  *
  * @phpstan-type LegalIdentifierShape = array{
  *   value: string, category?: null|Category|value-of<Category>
@@ -23,7 +23,7 @@ final class LegalIdentifier implements BaseModel
     use SdkModel;
 
     /**
-     * The legal identifier. For US Employer Identification Numbers, submit nine digits with no dashes or other separators.
+     * The legal identifier. For US Employer Identification Numbers, submit nine digits with no dashes or other separators. When testing in sandbox, use one of our [sandbox test values](https://increase.com/documentation/sandbox-test-values).
      */
     #[Required]
     public string $value;
@@ -76,7 +76,7 @@ final class LegalIdentifier implements BaseModel
     }
 
     /**
-     * The legal identifier. For US Employer Identification Numbers, submit nine digits with no dashes or other separators.
+     * The legal identifier. For US Employer Identification Numbers, submit nine digits with no dashes or other separators. When testing in sandbox, use one of our [sandbox test values](https://increase.com/documentation/sandbox-test-values).
      */
     public function withValue(string $value): self
     {

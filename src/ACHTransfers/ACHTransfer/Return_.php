@@ -59,7 +59,7 @@ final class Return_ implements BaseModel
     public string $transactionID;
 
     /**
-     * The identifier of the ACH Transfer associated with this return.
+     * The identifier of the ACH Transfer associated with this return. This matches the original Transaction's `source.ach_transfer_intention.transfer_id`.
      */
     #[Required('transfer_id')]
     public string $transferID;
@@ -182,7 +182,7 @@ final class Return_ implements BaseModel
     }
 
     /**
-     * The identifier of the ACH Transfer associated with this return.
+     * The identifier of the ACH Transfer associated with this return. This matches the original Transaction's `source.ach_transfer_intention.transfer_id`.
      */
     public function withTransferID(string $transferID): self
     {

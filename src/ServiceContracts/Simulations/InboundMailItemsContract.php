@@ -18,8 +18,8 @@ interface InboundMailItemsContract
      *
      * @param int $amount the amount of the check to be simulated, in cents
      * @param string $contentsFileID The file containing the PDF contents. If not present, a default check image file will be used.
-     * @param string $lockboxAddressID the identifier of the Lockbox Address to simulate inbound mail to
-     * @param string $lockboxRecipientID the identifier of the Lockbox Recipient to simulate inbound mail to
+     * @param string $lockboxAddressID The identifier of the Lockbox Address to simulate inbound mail to. Exactly one lockbox identifier parameter must be provided.
+     * @param string $lockboxRecipientID The identifier of the Lockbox Recipient to simulate inbound mail to. Exactly one lockbox identifier parameter must be provided.
      * @param RequestOpts|null $requestOptions
      *
      * @throws APIException

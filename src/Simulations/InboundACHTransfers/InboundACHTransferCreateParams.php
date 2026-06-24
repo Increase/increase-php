@@ -83,7 +83,7 @@ final class InboundACHTransferCreateParams implements BaseModel
     public ?string $companyID;
 
     /**
-     * The name of the sender.
+     * The name of the sender. This corresponds to the `originator_company_name` field on the resulting Inbound ACH Transfer.
      */
     #[Optional('company_name')]
     public ?string $companyName;
@@ -257,7 +257,7 @@ final class InboundACHTransferCreateParams implements BaseModel
     }
 
     /**
-     * The name of the sender.
+     * The name of the sender. This corresponds to the `originator_company_name` field on the resulting Inbound ACH Transfer.
      */
     public function withCompanyName(string $companyName): self
     {

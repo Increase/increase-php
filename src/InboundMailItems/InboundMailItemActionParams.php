@@ -11,7 +11,7 @@ use Increase\Core\Contracts\BaseModel;
 use Increase\InboundMailItems\InboundMailItemActionParams\Check;
 
 /**
- * Action an Inbound Mail Item.
+ * Deposits or ignores each check contained in a pending Inbound Mail Item. Depositing a check creates a [Check Deposit](#check-deposits) into the Account you specify.
  *
  * @see Increase\Services\InboundMailItemsService::action()
  *

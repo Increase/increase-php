@@ -9,6 +9,8 @@ namespace Increase\FednowTransfers\FednowTransfer;
  */
 enum Status: string
 {
+    case PENDING_SUBMITTING = 'pending_submitting';
+
     case PENDING_REVIEWING = 'pending_reviewing';
 
     case CANCELED = 'canceled';
@@ -18,8 +20,6 @@ enum Status: string
     case REQUIRES_ATTENTION = 'requires_attention';
 
     case PENDING_APPROVAL = 'pending_approval';
-
-    case PENDING_SUBMITTING = 'pending_submitting';
 
     case PENDING_RESPONSE = 'pending_response';
 

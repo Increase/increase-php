@@ -44,7 +44,7 @@ final class InboundACHTransfersService implements InboundACHTransfersContract
      * @param string $companyDiscretionaryData data associated with the transfer set by the sender
      * @param string $companyEntryDescription the description of the transfer set by the sender
      * @param string $companyID the sender's company ID
-     * @param string $companyName the name of the sender
+     * @param string $companyName The name of the sender. This corresponds to the `originator_company_name` field on the resulting Inbound ACH Transfer.
      * @param string $receiverIDNumber the ID of the receiver of the transfer
      * @param string $receiverName the name of the receiver of the transfer
      * @param \DateTimeInterface $resolveAt The time at which the transfer should be resolved. If not provided will resolve immediately.

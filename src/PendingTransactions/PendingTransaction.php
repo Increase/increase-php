@@ -52,7 +52,7 @@ final class PendingTransaction implements BaseModel
     public string $accountID;
 
     /**
-     * The Pending Transaction amount in the minor unit of its currency. For dollars, for example, this is cents.
+     * The Pending Transaction amount in the minor unit of its currency. For dollars, for example, this is cents. This amount does not change after the Pending Transaction is created. If a card authorization settles for a different amount, the settled amount is available on the resulting Transaction and on the Card Payment's `state.settled_amount`.
      */
     #[Required]
     public int $amount;
@@ -239,7 +239,7 @@ final class PendingTransaction implements BaseModel
     }
 
     /**
-     * The Pending Transaction amount in the minor unit of its currency. For dollars, for example, this is cents.
+     * The Pending Transaction amount in the minor unit of its currency. For dollars, for example, this is cents. This amount does not change after the Pending Transaction is created. If a card authorization settles for a different amount, the settled amount is available on the resulting Transaction and on the Card Payment's `state.settled_amount`.
      */
     public function withAmount(int $amount): self
     {

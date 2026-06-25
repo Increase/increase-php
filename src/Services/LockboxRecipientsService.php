@@ -39,7 +39,7 @@ final class LockboxRecipientsService implements LockboxRecipientsContract
      * Create a Lockbox Recipient
      *
      * @param string $accountID the Account that checks sent to this Lockbox Recipient should be deposited into
-     * @param string $lockboxAddressID the Lockbox Address where this Lockbox Recipient may receive mail
+     * @param string $lockboxAddressID The Lockbox Address where this Lockbox Recipient may receive mail. The Lockbox Address must have a `status` of `active`.
      * @param string $description the description you choose for the Lockbox Recipient
      * @param string $recipientName The name of the Lockbox Recipient
      * @param RequestOpts|null $requestOptions

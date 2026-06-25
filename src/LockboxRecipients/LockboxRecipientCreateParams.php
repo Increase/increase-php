@@ -35,7 +35,7 @@ final class LockboxRecipientCreateParams implements BaseModel
     public string $accountID;
 
     /**
-     * The Lockbox Address where this Lockbox Recipient may receive mail.
+     * The Lockbox Address where this Lockbox Recipient may receive mail. The Lockbox Address must have a `status` of `active`.
      */
     #[Required('lockbox_address_id')]
     public string $lockboxAddressID;
@@ -107,7 +107,7 @@ final class LockboxRecipientCreateParams implements BaseModel
     }
 
     /**
-     * The Lockbox Address where this Lockbox Recipient may receive mail.
+     * The Lockbox Address where this Lockbox Recipient may receive mail. The Lockbox Address must have a `status` of `active`.
      */
     public function withLockboxAddressID(string $lockboxAddressID): self
     {

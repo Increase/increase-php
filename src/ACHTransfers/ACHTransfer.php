@@ -98,7 +98,7 @@ final class ACHTransfer implements BaseModel
     public string $accountID;
 
     /**
-     * The destination account number.
+     * The receiver's account number.
      */
     #[Required('account_number')]
     public string $accountNumber;
@@ -184,7 +184,7 @@ final class ACHTransfer implements BaseModel
     public string $currency;
 
     /**
-     * The type of entity that owns the account to which the ACH Transfer is being sent.
+     * The type of entity that owns the receiver's account.
      *
      * @var value-of<DestinationAccountHolder> $destinationAccountHolder
      */
@@ -201,7 +201,7 @@ final class ACHTransfer implements BaseModel
     public ?string $externalAccountID;
 
     /**
-     * The type of the account to which the transfer will be sent.
+     * The type of the receiver's bank account.
      *
      * @var value-of<Funding> $funding
      */
@@ -221,7 +221,7 @@ final class ACHTransfer implements BaseModel
     public ?InboundFundsHold $inboundFundsHold;
 
     /**
-     * Your identifier for the transfer recipient.
+     * Your internal identifier for the transfer recipient. This value is informational and not verified by the recipient's bank.
      */
     #[Required('individual_id')]
     public ?string $individualID;
@@ -267,7 +267,7 @@ final class ACHTransfer implements BaseModel
     public ?Return_ $return;
 
     /**
-     * The American Bankers' Association (ABA) Routing Transit Number (RTN).
+     * The American Bankers' Association (ABA) Routing Transit Number (RTN) of the receiver's bank.
      */
     #[Required('routing_number')]
     public string $routingNumber;
@@ -539,7 +539,7 @@ final class ACHTransfer implements BaseModel
     }
 
     /**
-     * The destination account number.
+     * The receiver's account number.
      */
     public function withAccountNumber(string $accountNumber): self
     {
@@ -710,7 +710,7 @@ final class ACHTransfer implements BaseModel
     }
 
     /**
-     * The type of entity that owns the account to which the ACH Transfer is being sent.
+     * The type of entity that owns the receiver's account.
      *
      * @param DestinationAccountHolder|value-of<DestinationAccountHolder> $destinationAccountHolder
      */
@@ -735,7 +735,7 @@ final class ACHTransfer implements BaseModel
     }
 
     /**
-     * The type of the account to which the transfer will be sent.
+     * The type of the receiver's bank account.
      *
      * @param Funding|value-of<Funding> $funding
      */
@@ -773,7 +773,7 @@ final class ACHTransfer implements BaseModel
     }
 
     /**
-     * Your identifier for the transfer recipient.
+     * Your internal identifier for the transfer recipient. This value is informational and not verified by the recipient's bank.
      */
     public function withIndividualID(?string $individualID): self
     {
@@ -861,7 +861,7 @@ final class ACHTransfer implements BaseModel
     }
 
     /**
-     * The American Bankers' Association (ABA) Routing Transit Number (RTN).
+     * The American Bankers' Association (ABA) Routing Transit Number (RTN) of the receiver's bank.
      */
     public function withRoutingNumber(string $routingNumber): self
     {

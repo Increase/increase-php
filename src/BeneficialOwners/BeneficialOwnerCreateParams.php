@@ -33,7 +33,7 @@ final class BeneficialOwnerCreateParams implements BaseModel
     use SdkParams;
 
     /**
-     * The identifier of the Entity to associate with the new Beneficial Owner.
+     * The identifier of the Entity to associate with the new Beneficial Owner. Only `corporation` entities have beneficial owners.
      */
     #[Required('entity_id')]
     public string $entityID;
@@ -106,7 +106,7 @@ final class BeneficialOwnerCreateParams implements BaseModel
     }
 
     /**
-     * The identifier of the Entity to associate with the new Beneficial Owner.
+     * The identifier of the Entity to associate with the new Beneficial Owner. Only `corporation` entities have beneficial owners.
      */
     public function withEntityID(string $entityID): self
     {

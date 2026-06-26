@@ -15,6 +15,8 @@ enum Status: string
 
     case PENDING_SUBMISSION = 'pending_submission';
 
+    case PENDING_REVIEWING = 'pending_reviewing';
+
     case REQUIRES_ATTENTION = 'requires_attention';
 
     case REJECTED = 'rejected';

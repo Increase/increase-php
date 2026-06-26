@@ -42,7 +42,7 @@ final class BeneficialOwnersService implements BeneficialOwnersContract
      *
      * Create a Beneficial Owner
      *
-     * @param string $entityID the identifier of the Entity to associate with the new Beneficial Owner
+     * @param string $entityID The identifier of the Entity to associate with the new Beneficial Owner. Only `corporation` entities have beneficial owners.
      * @param Individual|IndividualShape $individual personal details for the beneficial owner
      * @param list<Prong|value-of<Prong>> $prongs Why this person is considered a beneficial owner of the entity. At least one option is required, if a person is both a control person and owner, submit an array containing both.
      * @param string $companyTitle this person's role or title within the entity

@@ -80,7 +80,7 @@ final class Corporation implements BaseModel
     public ?string $industryCode;
 
     /**
-     * The legal identifier of the corporation.
+     * The legal identifier of the corporation, like an Employer Identification Number (EIN).
      */
     #[Required('legal_identifier')]
     public ?LegalIdentifier $legalIdentifier;
@@ -245,7 +245,7 @@ final class Corporation implements BaseModel
     }
 
     /**
-     * The legal identifier of the corporation.
+     * The legal identifier of the corporation, like an Employer Identification Number (EIN).
      *
      * @param LegalIdentifier|LegalIdentifierShape|null $legalIdentifier
      */

@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.138.0](https://github.com/Increase/increase-php/compare/v0.137.0...v0.138.0) (2026-06-29)
+
+
+### Features
+
+* **api:** add pending_reviewing check transfer status ([d0a9882](https://github.com/Increase/increase-php/commit/d0a98824737fe2c57541710e89f0af7bda262a41))
+
 ## [0.137.0](https://github.com/Increase/increase-php/compare/v0.136.0...v0.137.0) (2026-06-25)
 
 

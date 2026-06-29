@@ -22,7 +22,7 @@ use Increase\Entities\Entity\Validation;
 use Increase\SupplementalDocuments\EntitySupplementalDocument;
 
 /**
- * Entities are the legal entities that own accounts. They can be people, corporations, partnerships, government authorities, or trusts. To learn more, see [Entities](/documentation/entities).
+ * Entities are the legal entities that own accounts. They can be people, corporations, joint accounts, trusts, or government authorities. To learn more, see [Entities](/documentation/entities).
  *
  * @phpstan-import-type CorporationShape from \Increase\Entities\Entity\Corporation
  * @phpstan-import-type GovernmentAuthorityShape from \Increase\Entities\Entity\GovernmentAuthority

@@ -10,7 +10,7 @@ use Increase\Core\Contracts\BaseModel;
 use Increase\SupplementalDocuments\EntitySupplementalDocument\Type;
 
 /**
- * Supplemental Documents are uploaded files connected to an Entity during onboarding.
+ * Supplemental Documents are uploaded files connected to an Entity during onboarding. Not all programs require supplemental documents.
  *
  * @phpstan-type EntitySupplementalDocumentShape = array{
  *   createdAt: \DateTimeInterface,

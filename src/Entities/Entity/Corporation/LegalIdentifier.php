@@ -10,7 +10,7 @@ use Increase\Core\Contracts\BaseModel;
 use Increase\Entities\Entity\Corporation\LegalIdentifier\Category;
 
 /**
- * The legal identifier of the corporation.
+ * The legal identifier of the corporation, like an Employer Identification Number (EIN).
  *
  * @phpstan-type LegalIdentifierShape = array{
  *   category: Category|value-of<Category>, value: string
@@ -30,7 +30,7 @@ final class LegalIdentifier implements BaseModel
     public string $category;
 
     /**
-     * The identifier of the legal identifier.
+     * The legal identifier itself.
      */
     #[Required]
     public string $value;
@@ -85,7 +85,7 @@ final class LegalIdentifier implements BaseModel
     }
 
     /**
-     * The identifier of the legal identifier.
+     * The legal identifier itself.
      */
     public function withValue(string $value): self
     {

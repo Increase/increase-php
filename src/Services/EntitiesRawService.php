@@ -23,6 +23,7 @@ use Increase\Entities\EntityCreateParams\Trust;
 use Increase\Entities\EntityListParams;
 use Increase\Entities\EntityListParams\CreatedAt;
 use Increase\Entities\EntityListParams\Status;
+use Increase\Entities\EntityListParams\ValidationStatus;
 use Increase\Entities\EntityUpdateParams;
 use Increase\Page;
 use Increase\RequestOptions;
@@ -47,6 +48,7 @@ use Increase\ServiceContracts\EntitiesRawContract;
  * @phpstan-import-type TrustShape from \Increase\Entities\EntityUpdateParams\Trust as TrustShape1
  * @phpstan-import-type CreatedAtShape from \Increase\Entities\EntityListParams\CreatedAt
  * @phpstan-import-type StatusShape from \Increase\Entities\EntityListParams\Status
+ * @phpstan-import-type ValidationStatusShape from \Increase\Entities\EntityListParams\ValidationStatus
  * @phpstan-import-type RequestOpts from \Increase\RequestOptions
  */
 final class EntitiesRawService implements EntitiesRawContract
@@ -178,6 +180,7 @@ final class EntitiesRawService implements EntitiesRawContract
      *   idempotencyKey?: string,
      *   limit?: int,
      *   status?: Status|StatusShape,
+     *   validationStatus?: ValidationStatus|ValidationStatusShape,
      * }|EntityListParams $params
      * @param RequestOpts|null $requestOptions
      *
@@ -200,7 +203,11 @@ final class EntitiesRawService implements EntitiesRawContract
             path: 'entities',
             query: Util::array_transform_keys(
                 $parsed,
-                ['createdAt' => 'created_at', 'idempotencyKey' => 'idempotency_key'],
+                [
+                    'createdAt' => 'created_at',
+                    'idempotencyKey' => 'idempotency_key',
+                    'validationStatus' => 'validation_status',
+                ],
             ),
             options: $options,
             convert: Entity::class,

@@ -63,11 +63,15 @@ final class CheckTransfersTest extends TestCase
                     'phone' => '+16505046304',
                 ],
                 'memo' => 'Check payment',
+                'payer' => [
+                    ['contents' => 'National Phonograph Company'],
+                    ['contents' => '33 Liberty Street'],
+                    ['contents' => 'New York, NY 10045'],
+                ],
                 'recipientName' => 'Ian Crease',
                 'attachmentFileID' => 'attachment_file_id',
                 'checkVoucherImageFileID' => 'check_voucher_image_file_id',
                 'note' => 'note',
-                'payer' => [['contents' => 'contents']],
                 'returnAddress' => [
                     'city' => 'city',
                     'line1' => 'line1',

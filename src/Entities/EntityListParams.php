@@ -10,6 +10,7 @@ use Increase\Core\Concerns\SdkParams;
 use Increase\Core\Contracts\BaseModel;
 use Increase\Entities\EntityListParams\CreatedAt;
 use Increase\Entities\EntityListParams\Status;
+use Increase\Entities\EntityListParams\ValidationStatus;
 
 /**
  * List Entities.
@@ -18,6 +19,7 @@ use Increase\Entities\EntityListParams\Status;
  *
  * @phpstan-import-type CreatedAtShape from \Increase\Entities\EntityListParams\CreatedAt
  * @phpstan-import-type StatusShape from \Increase\Entities\EntityListParams\Status
+ * @phpstan-import-type ValidationStatusShape from \Increase\Entities\EntityListParams\ValidationStatus
  *
  * @phpstan-type EntityListParamsShape = array{
  *   createdAt?: null|CreatedAt|CreatedAtShape,
@@ -25,6 +27,7 @@ use Increase\Entities\EntityListParams\Status;
  *   idempotencyKey?: string|null,
  *   limit?: int|null,
  *   status?: null|Status|StatusShape,
+ *   validationStatus?: null|ValidationStatus|ValidationStatusShape,
  * }
  */
 final class EntityListParams implements BaseModel
@@ -57,6 +60,9 @@ final class EntityListParams implements BaseModel
     #[Optional]
     public ?Status $status;
 
+    #[Optional]
+    public ?ValidationStatus $validationStatus;
+
     public function __construct()
     {
         $this->initialize();
@@ -69,6 +75,7 @@ final class EntityListParams implements BaseModel
      *
      * @param CreatedAt|CreatedAtShape|null $createdAt
      * @param Status|StatusShape|null $status
+     * @param ValidationStatus|ValidationStatusShape|null $validationStatus
      */
     public static function with(
         CreatedAt|array|null $createdAt = null,
@@ -76,6 +83,7 @@ final class EntityListParams implements BaseModel
         ?string $idempotencyKey = null,
         ?int $limit = null,
         Status|array|null $status = null,
+        ValidationStatus|array|null $validationStatus = null,
     ): self {
         $self = new self;
 
@@ -84,6 +92,7 @@ final class EntityListParams implements BaseModel
         null !== $idempotencyKey && $self['idempotencyKey'] = $idempotencyKey;
         null !== $limit && $self['limit'] = $limit;
         null !== $status && $self['status'] = $status;
+        null !== $validationStatus && $self['validationStatus'] = $validationStatus;
 
         return $self;
     }
@@ -139,6 +148,18 @@ final class EntityListParams implements BaseModel
     {
         $self = clone $this;
         $self['status'] = $status;
+
+        return $self;
+    }
+
+    /**
+     * @param ValidationStatus|ValidationStatusShape $validationStatus
+     */
+    public function withValidationStatus(
+        ValidationStatus|array $validationStatus
+    ): self {
+        $self = clone $this;
+        $self['validationStatus'] = $validationStatus;
 
         return $self;
     }

@@ -24,7 +24,7 @@ interface PendingTransactionsContract
      * @api
      *
      * @param string $accountID the Account to place the hold on
-     * @param int $amount The amount to hold in the minor unit of the account's currency. For dollars, for example, this is cents. This should be a negative amount - to hold $1.00 from the account, you would pass -100.
+     * @param int $amount The amount to hold in the minor unit of the account's currency. For dollars, for example, this is cents. This should be a negative amount: To hold $1.00 from the account, pass -100 as `amount`.
      * @param string $description the description you choose to give the hold
      * @param RequestOpts|null $requestOptions
      *

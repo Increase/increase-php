@@ -32,7 +32,7 @@ final class PendingTransactionCreateParams implements BaseModel
     public string $accountID;
 
     /**
-     * The amount to hold in the minor unit of the account's currency. For dollars, for example, this is cents. This should be a negative amount - to hold $1.00 from the account, you would pass -100.
+     * The amount to hold in the minor unit of the account's currency. For dollars, for example, this is cents. This should be a negative amount: To hold $1.00 from the account, pass -100 as `amount`.
      */
     #[Required]
     public int $amount;
@@ -94,7 +94,7 @@ final class PendingTransactionCreateParams implements BaseModel
     }
 
     /**
-     * The amount to hold in the minor unit of the account's currency. For dollars, for example, this is cents. This should be a negative amount - to hold $1.00 from the account, you would pass -100.
+     * The amount to hold in the minor unit of the account's currency. For dollars, for example, this is cents. This should be a negative amount: To hold $1.00 from the account, pass -100 as `amount`.
      */
     public function withAmount(int $amount): self
     {

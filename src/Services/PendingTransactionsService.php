@@ -42,7 +42,7 @@ final class PendingTransactionsService implements PendingTransactionsContract
      * Creates a pending transaction on an account. This can be useful to hold funds for an external payment or known future transaction outside of Increase (only negative amounts are supported). The resulting Pending Transaction will have a `category` of `user_initiated_hold` and can be released via the API to unlock the held funds.
      *
      * @param string $accountID the Account to place the hold on
-     * @param int $amount The amount to hold in the minor unit of the account's currency. For dollars, for example, this is cents. This should be a negative amount - to hold $1.00 from the account, you would pass -100.
+     * @param int $amount The amount to hold in the minor unit of the account's currency. For dollars, for example, this is cents. This should be a negative amount: To hold $1.00 from the account, pass -100 as `amount`.
      * @param string $description the description you choose to give the hold
      * @param RequestOpts|null $requestOptions
      *

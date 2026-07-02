@@ -32,6 +32,7 @@ use Increase\Core\Contracts\BaseModel;
  *   payer: list<Payer|PayerShape>,
  *   recipientName: string,
  *   returnAddress: null|ReturnAddress|ReturnAddressShape,
+ *   returnAddressName: string|null,
  *   shippingMethod: ShippingMethod|value-of<ShippingMethod>,
  *   signature: Signature|SignatureShape,
  *   trackingUpdates: list<TrackingUpdate|TrackingUpdateShape>,
@@ -93,6 +94,12 @@ final class PhysicalCheck implements BaseModel
     public ?ReturnAddress $returnAddress;
 
     /**
+     * A custom name printed above the Increase-managed return address.
+     */
+    #[Required('return_address_name')]
+    public ?string $returnAddressName;
+
+    /**
      * The shipping method for the check.
      *
      * @var value-of<ShippingMethod> $shippingMethod
@@ -128,6 +135,7 @@ final class PhysicalCheck implements BaseModel
      *   payer: ...,
      *   recipientName: ...,
      *   returnAddress: ...,
+     *   returnAddressName: ...,
      *   shippingMethod: ...,
      *   signature: ...,
      *   trackingUpdates: ...,
@@ -146,6 +154,7 @@ final class PhysicalCheck implements BaseModel
      *   ->withPayer(...)
      *   ->withRecipientName(...)
      *   ->withReturnAddress(...)
+     *   ->withReturnAddressName(...)
      *   ->withShippingMethod(...)
      *   ->withSignature(...)
      *   ->withTrackingUpdates(...)
@@ -177,6 +186,7 @@ final class PhysicalCheck implements BaseModel
         array $payer,
         string $recipientName,
         ReturnAddress|array|null $returnAddress,
+        ?string $returnAddressName,
         ShippingMethod|string $shippingMethod,
         Signature|array $signature,
         array $trackingUpdates,
@@ -191,6 +201,7 @@ final class PhysicalCheck implements BaseModel
         $self['payer'] = $payer;
         $self['recipientName'] = $recipientName;
         $self['returnAddress'] = $returnAddress;
+        $self['returnAddressName'] = $returnAddressName;
         $self['shippingMethod'] = $shippingMethod;
         $self['signature'] = $signature;
         $self['trackingUpdates'] = $trackingUpdates;
@@ -291,6 +302,17 @@ final class PhysicalCheck implements BaseModel
     ): self {
         $self = clone $this;
         $self['returnAddress'] = $returnAddress;
+
+        return $self;
+    }
+
+    /**
+     * A custom name printed above the Increase-managed return address.
+     */
+    public function withReturnAddressName(?string $returnAddressName): self
+    {
+        $self = clone $this;
+        $self['returnAddressName'] = $returnAddressName;
 
         return $self;
     }

@@ -18,6 +18,7 @@ use Increase\Entities\EntityCreateParams\ThirdPartyVerification;
 use Increase\Entities\EntityCreateParams\Trust;
 use Increase\Entities\EntityListParams\CreatedAt;
 use Increase\Entities\EntityListParams\Status;
+use Increase\Entities\EntityListParams\ValidationStatus;
 use Increase\Page;
 use Increase\RequestOptions;
 
@@ -40,6 +41,7 @@ use Increase\RequestOptions;
  * @phpstan-import-type TrustShape from \Increase\Entities\EntityUpdateParams\Trust as TrustShape1
  * @phpstan-import-type CreatedAtShape from \Increase\Entities\EntityListParams\CreatedAt
  * @phpstan-import-type StatusShape from \Increase\Entities\EntityListParams\Status
+ * @phpstan-import-type ValidationStatusShape from \Increase\Entities\EntityListParams\ValidationStatus
  * @phpstan-import-type RequestOpts from \Increase\RequestOptions
  */
 interface EntitiesContract
@@ -127,6 +129,7 @@ interface EntitiesContract
      * @param string $idempotencyKey Filter records to the one with the specified `idempotency_key` you chose for that object. This value is unique across Increase and is used to ensure that a request is only processed once. Learn more about [idempotency](https://increase.com/documentation/idempotency-keys).
      * @param int $limit Limit the size of the list that is returned. The default (and maximum) is 100 objects.
      * @param Status|StatusShape $status
+     * @param ValidationStatus|ValidationStatusShape $validationStatus
      * @param RequestOpts|null $requestOptions
      *
      * @return Page<Entity>
@@ -139,6 +142,7 @@ interface EntitiesContract
         ?string $idempotencyKey = null,
         ?int $limit = null,
         Status|array|null $status = null,
+        ValidationStatus|array|null $validationStatus = null,
         RequestOptions|array|null $requestOptions = null,
     ): Page;
 

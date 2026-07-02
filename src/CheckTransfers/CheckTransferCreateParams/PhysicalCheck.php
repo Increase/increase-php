@@ -25,12 +25,13 @@ use Increase\Core\Contracts\BaseModel;
  * @phpstan-type PhysicalCheckShape = array{
  *   mailingAddress: MailingAddress|MailingAddressShape,
  *   memo: string,
+ *   payer: list<Payer|PayerShape>,
  *   recipientName: string,
  *   attachmentFileID?: string|null,
  *   checkVoucherImageFileID?: string|null,
  *   note?: string|null,
- *   payer?: list<Payer|PayerShape>|null,
  *   returnAddress?: null|ReturnAddress|ReturnAddressShape,
+ *   returnAddressName?: string|null,
  *   shippingMethod?: null|ShippingMethod|value-of<ShippingMethod>,
  *   signature?: null|Signature|SignatureShape,
  * }
@@ -51,6 +52,14 @@ final class PhysicalCheck implements BaseModel
      */
     #[Required]
     public string $memo;
+
+    /**
+     * The payer of the check. This will be printed on the top-left portion of the check. This should be an array of up to 4 elements, each of which represents a line of the payer.
+     *
+     * @var list<Payer> $payer
+     */
+    #[Required(list: Payer::class)]
+    public array $payer;
 
     /**
      * The name that will be printed on the check in the 'To:' field.
@@ -77,18 +86,16 @@ final class PhysicalCheck implements BaseModel
     public ?string $note;
 
     /**
-     * The payer of the check. This will be printed on the top-left portion of the check and defaults to the return address if unspecified. This should be an array of up to 4 elements, each of which represents a line of the payer.
-     *
-     * @var list<Payer>|null $payer
-     */
-    #[Optional(list: Payer::class)]
-    public ?array $payer;
-
-    /**
      * The return address to be printed on the check. If omitted this will default to an Increase-owned address that will mark checks as delivery failed and shred them.
      */
     #[Optional('return_address')]
     public ?ReturnAddress $returnAddress;
+
+    /**
+     * A custom name to print above the default return address. Cannot be provided together with `return_address`.
+     */
+    #[Optional('return_address_name')]
+    public ?string $returnAddressName;
 
     /**
      * How to ship the check. For details on pricing, timing, and restrictions, see https://increase.com/documentation/originating-checks#printing-checks .
@@ -109,7 +116,9 @@ final class PhysicalCheck implements BaseModel
      *
      * To enforce required parameters use
      * ```
-     * PhysicalCheck::with(mailingAddress: ..., memo: ..., recipientName: ...)
+     * PhysicalCheck::with(
+     *   mailingAddress: ..., memo: ..., payer: ..., recipientName: ...
+     * )
      * ```
      *
      * Otherwise ensure the following setters are called
@@ -118,6 +127,7 @@ final class PhysicalCheck implements BaseModel
      * (new PhysicalCheck)
      *   ->withMailingAddress(...)
      *   ->withMemo(...)
+     *   ->withPayer(...)
      *   ->withRecipientName(...)
      * ```
      */
@@ -132,7 +142,7 @@ final class PhysicalCheck implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param MailingAddress|MailingAddressShape $mailingAddress
-     * @param list<Payer|PayerShape>|null $payer
+     * @param list<Payer|PayerShape> $payer
      * @param ReturnAddress|ReturnAddressShape|null $returnAddress
      * @param ShippingMethod|value-of<ShippingMethod>|null $shippingMethod
      * @param Signature|SignatureShape|null $signature
@@ -140,12 +150,13 @@ final class PhysicalCheck implements BaseModel
     public static function with(
         MailingAddress|array $mailingAddress,
         string $memo,
+        array $payer,
         string $recipientName,
         ?string $attachmentFileID = null,
         ?string $checkVoucherImageFileID = null,
         ?string $note = null,
-        ?array $payer = null,
         ReturnAddress|array|null $returnAddress = null,
+        ?string $returnAddressName = null,
         ShippingMethod|string|null $shippingMethod = null,
         Signature|array|null $signature = null,
     ): self {
@@ -153,13 +164,14 @@ final class PhysicalCheck implements BaseModel
 
         $self['mailingAddress'] = $mailingAddress;
         $self['memo'] = $memo;
+        $self['payer'] = $payer;
         $self['recipientName'] = $recipientName;
 
         null !== $attachmentFileID && $self['attachmentFileID'] = $attachmentFileID;
         null !== $checkVoucherImageFileID && $self['checkVoucherImageFileID'] = $checkVoucherImageFileID;
         null !== $note && $self['note'] = $note;
-        null !== $payer && $self['payer'] = $payer;
         null !== $returnAddress && $self['returnAddress'] = $returnAddress;
+        null !== $returnAddressName && $self['returnAddressName'] = $returnAddressName;
         null !== $shippingMethod && $self['shippingMethod'] = $shippingMethod;
         null !== $signature && $self['signature'] = $signature;
 
@@ -187,6 +199,19 @@ final class PhysicalCheck implements BaseModel
     {
         $self = clone $this;
         $self['memo'] = $memo;
+
+        return $self;
+    }
+
+    /**
+     * The payer of the check. This will be printed on the top-left portion of the check. This should be an array of up to 4 elements, each of which represents a line of the payer.
+     *
+     * @param list<Payer|PayerShape> $payer
+     */
+    public function withPayer(array $payer): self
+    {
+        $self = clone $this;
+        $self['payer'] = $payer;
 
         return $self;
     }
@@ -237,19 +262,6 @@ final class PhysicalCheck implements BaseModel
     }
 
     /**
-     * The payer of the check. This will be printed on the top-left portion of the check and defaults to the return address if unspecified. This should be an array of up to 4 elements, each of which represents a line of the payer.
-     *
-     * @param list<Payer|PayerShape> $payer
-     */
-    public function withPayer(array $payer): self
-    {
-        $self = clone $this;
-        $self['payer'] = $payer;
-
-        return $self;
-    }
-
-    /**
      * The return address to be printed on the check. If omitted this will default to an Increase-owned address that will mark checks as delivery failed and shred them.
      *
      * @param ReturnAddress|ReturnAddressShape $returnAddress
@@ -258,6 +270,17 @@ final class PhysicalCheck implements BaseModel
     {
         $self = clone $this;
         $self['returnAddress'] = $returnAddress;
+
+        return $self;
+    }
+
+    /**
+     * A custom name to print above the default return address. Cannot be provided together with `return_address`.
+     */
+    public function withReturnAddressName(string $returnAddressName): self
+    {
+        $self = clone $this;
+        $self['returnAddressName'] = $returnAddressName;
 
         return $self;
     }

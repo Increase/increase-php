@@ -15,5 +15,5 @@ enum Bank: string
 
     case GRASSHOPPER_BANK = 'grasshopper_bank';
 
-    case TWIN_CITY_BANK = 'twin_city_bank';
+    case INCREASE_BANK = 'increase_bank';
 }

@@ -33,6 +33,7 @@ use Increase\SwiftTransfers\SwiftTransferCreateParams\InstructedCurrency;
  *   instructedCurrency: InstructedCurrency|value-of<InstructedCurrency>,
  *   sourceAccountNumberID: string,
  *   unstructuredRemittanceInformation: string,
+ *   intermediaryBankIdentificationCode?: string|null,
  *   requireApproval?: bool|null,
  *   routingNumber?: string|null,
  * }
@@ -112,6 +113,12 @@ final class SwiftTransferCreateParams implements BaseModel
     public string $unstructuredRemittanceInformation;
 
     /**
+     * The bank identification code (BIC) of the intermediary bank, if the transfer should be routed through one.
+     */
+    #[Optional('intermediary_bank_identification_code')]
+    public ?string $intermediaryBankIdentificationCode;
+
+    /**
      * Whether the transfer requires explicit approval via the dashboard or API.
      */
     #[Optional('require_approval')]
@@ -186,6 +193,7 @@ final class SwiftTransferCreateParams implements BaseModel
         InstructedCurrency|string $instructedCurrency,
         string $sourceAccountNumberID,
         string $unstructuredRemittanceInformation,
+        ?string $intermediaryBankIdentificationCode = null,
         ?bool $requireApproval = null,
         ?string $routingNumber = null,
     ): self {
@@ -203,6 +211,7 @@ final class SwiftTransferCreateParams implements BaseModel
         $self['sourceAccountNumberID'] = $sourceAccountNumberID;
         $self['unstructuredRemittanceInformation'] = $unstructuredRemittanceInformation;
 
+        null !== $intermediaryBankIdentificationCode && $self['intermediaryBankIdentificationCode'] = $intermediaryBankIdentificationCode;
         null !== $requireApproval && $self['requireApproval'] = $requireApproval;
         null !== $routingNumber && $self['routingNumber'] = $routingNumber;
 
@@ -337,6 +346,18 @@ final class SwiftTransferCreateParams implements BaseModel
     ): self {
         $self = clone $this;
         $self['unstructuredRemittanceInformation'] = $unstructuredRemittanceInformation;
+
+        return $self;
+    }
+
+    /**
+     * The bank identification code (BIC) of the intermediary bank, if the transfer should be routed through one.
+     */
+    public function withIntermediaryBankIdentificationCode(
+        string $intermediaryBankIdentificationCode
+    ): self {
+        $self = clone $this;
+        $self['intermediaryBankIdentificationCode'] = $intermediaryBankIdentificationCode;
 
         return $self;
     }

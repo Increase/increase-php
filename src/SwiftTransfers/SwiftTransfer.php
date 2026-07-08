@@ -36,6 +36,7 @@ use Increase\SwiftTransfers\SwiftTransfer\Type;
  *   idempotencyKey: string|null,
  *   instructedAmount: int,
  *   instructedCurrency: InstructedCurrency|value-of<InstructedCurrency>,
+ *   intermediaryBankIdentificationCode: string|null,
  *   pendingTransactionID: string|null,
  *   routingNumber: string|null,
  *   sourceAccountNumberID: string,
@@ -138,6 +139,12 @@ final class SwiftTransfer implements BaseModel
     public string $instructedCurrency;
 
     /**
+     * The bank identification code (BIC) of the intermediary bank, if the transfer is routed through one.
+     */
+    #[Required('intermediary_bank_identification_code')]
+    public ?string $intermediaryBankIdentificationCode;
+
+    /**
      * The ID for the pending transaction representing the transfer.
      */
     #[Required('pending_transaction_id')]
@@ -209,6 +216,7 @@ final class SwiftTransfer implements BaseModel
      *   idempotencyKey: ...,
      *   instructedAmount: ...,
      *   instructedCurrency: ...,
+     *   intermediaryBankIdentificationCode: ...,
      *   pendingTransactionID: ...,
      *   routingNumber: ...,
      *   sourceAccountNumberID: ...,
@@ -238,6 +246,7 @@ final class SwiftTransfer implements BaseModel
      *   ->withIdempotencyKey(...)
      *   ->withInstructedAmount(...)
      *   ->withInstructedCurrency(...)
+     *   ->withIntermediaryBankIdentificationCode(...)
      *   ->withPendingTransactionID(...)
      *   ->withRoutingNumber(...)
      *   ->withSourceAccountNumberID(...)
@@ -280,6 +289,7 @@ final class SwiftTransfer implements BaseModel
         ?string $idempotencyKey,
         int $instructedAmount,
         InstructedCurrency|string $instructedCurrency,
+        ?string $intermediaryBankIdentificationCode,
         ?string $pendingTransactionID,
         ?string $routingNumber,
         string $sourceAccountNumberID,
@@ -305,6 +315,7 @@ final class SwiftTransfer implements BaseModel
         $self['idempotencyKey'] = $idempotencyKey;
         $self['instructedAmount'] = $instructedAmount;
         $self['instructedCurrency'] = $instructedCurrency;
+        $self['intermediaryBankIdentificationCode'] = $intermediaryBankIdentificationCode;
         $self['pendingTransactionID'] = $pendingTransactionID;
         $self['routingNumber'] = $routingNumber;
         $self['sourceAccountNumberID'] = $sourceAccountNumberID;
@@ -478,6 +489,18 @@ final class SwiftTransfer implements BaseModel
     ): self {
         $self = clone $this;
         $self['instructedCurrency'] = $instructedCurrency;
+
+        return $self;
+    }
+
+    /**
+     * The bank identification code (BIC) of the intermediary bank, if the transfer is routed through one.
+     */
+    public function withIntermediaryBankIdentificationCode(
+        ?string $intermediaryBankIdentificationCode
+    ): self {
+        $self = clone $this;
+        $self['intermediaryBankIdentificationCode'] = $intermediaryBankIdentificationCode;
 
         return $self;
     }

@@ -16,7 +16,7 @@ use Increase\Core\Contracts\BaseModel;
  * @see Increase\Services\Simulations\CardSettlementsService::create()
  *
  * @phpstan-type CardSettlementCreateParamsShape = array{
- *   cardID: string, pendingTransactionID: string, amount?: int|null
+ *   cardID: string, amount?: int|null, pendingTransactionID?: string|null
  * }
  */
 final class CardSettlementCreateParams implements BaseModel
@@ -32,29 +32,29 @@ final class CardSettlementCreateParams implements BaseModel
     public string $cardID;
 
     /**
-     * The identifier of the Pending Transaction for the Card Authorization you wish to settle.
-     */
-    #[Required('pending_transaction_id')]
-    public string $pendingTransactionID;
-
-    /**
-     * The amount to be settled. This defaults to the amount of the Pending Transaction being settled.
+     * The amount to be settled. This defaults to the amount of the Pending Transaction being settled, or a random amount if `pending_transaction_id` is not provided.
      */
     #[Optional]
     public ?int $amount;
+
+    /**
+     * The identifier of the Pending Transaction for the Card Authorization you wish to settle. If not provided, the settlement will be force posted without a Card Authorization.
+     */
+    #[Optional('pending_transaction_id')]
+    public ?string $pendingTransactionID;
 
     /**
      * `new CardSettlementCreateParams()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
-     * CardSettlementCreateParams::with(cardID: ..., pendingTransactionID: ...)
+     * CardSettlementCreateParams::with(cardID: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new CardSettlementCreateParams)->withCardID(...)->withPendingTransactionID(...)
+     * (new CardSettlementCreateParams)->withCardID(...)
      * ```
      */
     public function __construct()
@@ -69,15 +69,15 @@ final class CardSettlementCreateParams implements BaseModel
      */
     public static function with(
         string $cardID,
-        string $pendingTransactionID,
-        ?int $amount = null
+        ?int $amount = null,
+        ?string $pendingTransactionID = null
     ): self {
         $self = new self;
 
         $self['cardID'] = $cardID;
-        $self['pendingTransactionID'] = $pendingTransactionID;
 
         null !== $amount && $self['amount'] = $amount;
+        null !== $pendingTransactionID && $self['pendingTransactionID'] = $pendingTransactionID;
 
         return $self;
     }
@@ -94,23 +94,23 @@ final class CardSettlementCreateParams implements BaseModel
     }
 
     /**
-     * The identifier of the Pending Transaction for the Card Authorization you wish to settle.
-     */
-    public function withPendingTransactionID(string $pendingTransactionID): self
-    {
-        $self = clone $this;
-        $self['pendingTransactionID'] = $pendingTransactionID;
-
-        return $self;
-    }
-
-    /**
-     * The amount to be settled. This defaults to the amount of the Pending Transaction being settled.
+     * The amount to be settled. This defaults to the amount of the Pending Transaction being settled, or a random amount if `pending_transaction_id` is not provided.
      */
     public function withAmount(int $amount): self
     {
         $self = clone $this;
         $self['amount'] = $amount;
+
+        return $self;
+    }
+
+    /**
+     * The identifier of the Pending Transaction for the Card Authorization you wish to settle. If not provided, the settlement will be force posted without a Card Authorization.
+     */
+    public function withPendingTransactionID(string $pendingTransactionID): self
+    {
+        $self = clone $this;
+        $self['pendingTransactionID'] = $pendingTransactionID;
 
         return $self;
     }

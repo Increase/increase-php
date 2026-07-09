@@ -55,6 +55,7 @@ final class SwiftTransfersService implements SwiftTransfersContract
      * @param InstructedCurrency|value-of<InstructedCurrency> $instructedCurrency The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) currency code of the instructed amount.
      * @param string $sourceAccountNumberID the Account Number to include in the transfer as the debtor's account number
      * @param string $unstructuredRemittanceInformation unstructured remittance information to include in the transfer
+     * @param string $intermediaryBankIdentificationCode the bank identification code (BIC) of the intermediary bank, if the transfer should be routed through one
      * @param bool $requireApproval whether the transfer requires explicit approval via the dashboard or API
      * @param string $routingNumber The creditor's bank account routing or transit number. Required in certain countries.
      * @param RequestOpts|null $requestOptions
@@ -73,6 +74,7 @@ final class SwiftTransfersService implements SwiftTransfersContract
         InstructedCurrency|string $instructedCurrency,
         string $sourceAccountNumberID,
         string $unstructuredRemittanceInformation,
+        ?string $intermediaryBankIdentificationCode = null,
         ?bool $requireApproval = null,
         ?string $routingNumber = null,
         RequestOptions|array|null $requestOptions = null,
@@ -90,6 +92,7 @@ final class SwiftTransfersService implements SwiftTransfersContract
                 'instructedCurrency' => $instructedCurrency,
                 'sourceAccountNumberID' => $sourceAccountNumberID,
                 'unstructuredRemittanceInformation' => $unstructuredRemittanceInformation,
+                'intermediaryBankIdentificationCode' => $intermediaryBankIdentificationCode,
                 'requireApproval' => $requireApproval,
                 'routingNumber' => $routingNumber,
             ],

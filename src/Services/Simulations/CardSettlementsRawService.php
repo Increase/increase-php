@@ -29,7 +29,7 @@ final class CardSettlementsRawService implements CardSettlementsRawContract
      * Simulates the settlement of an authorization by a card acquirer. After a card authorization is created, the merchant will eventually send a settlement. This simulates that event, which may occur many days after the purchase in production. The amount settled can be different from the amount originally authorized, for example, when adding a tip to a restaurant bill.
      *
      * @param array{
-     *   cardID: string, pendingTransactionID: string, amount?: int
+     *   cardID: string, amount?: int, pendingTransactionID?: string
      * }|CardSettlementCreateParams $params
      * @param RequestOpts|null $requestOptions
      *

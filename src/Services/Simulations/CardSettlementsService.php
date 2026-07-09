@@ -35,23 +35,23 @@ final class CardSettlementsService implements CardSettlementsContract
      * Simulates the settlement of an authorization by a card acquirer. After a card authorization is created, the merchant will eventually send a settlement. This simulates that event, which may occur many days after the purchase in production. The amount settled can be different from the amount originally authorized, for example, when adding a tip to a restaurant bill.
      *
      * @param string $cardID the identifier of the Card to create a settlement on
-     * @param string $pendingTransactionID the identifier of the Pending Transaction for the Card Authorization you wish to settle
-     * @param int $amount The amount to be settled. This defaults to the amount of the Pending Transaction being settled.
+     * @param int $amount The amount to be settled. This defaults to the amount of the Pending Transaction being settled, or a random amount if `pending_transaction_id` is not provided.
+     * @param string $pendingTransactionID The identifier of the Pending Transaction for the Card Authorization you wish to settle. If not provided, the settlement will be force posted without a Card Authorization.
      * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
      */
     public function create(
         string $cardID,
-        string $pendingTransactionID,
         ?int $amount = null,
+        ?string $pendingTransactionID = null,
         RequestOptions|array|null $requestOptions = null,
     ): Transaction {
         $params = Util::removeNulls(
             [
                 'cardID' => $cardID,
-                'pendingTransactionID' => $pendingTransactionID,
                 'amount' => $amount,
+                'pendingTransactionID' => $pendingTransactionID,
             ],
         );
 

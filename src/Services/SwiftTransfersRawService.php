@@ -52,6 +52,7 @@ final class SwiftTransfersRawService implements SwiftTransfersRawContract
      *   instructedCurrency: InstructedCurrency|value-of<InstructedCurrency>,
      *   sourceAccountNumberID: string,
      *   unstructuredRemittanceInformation: string,
+     *   intermediaryBankIdentificationCode?: string,
      *   requireApproval?: bool,
      *   routingNumber?: string,
      * }|SwiftTransferCreateParams $params

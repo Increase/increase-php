@@ -31,8 +31,7 @@ final class CardSettlementsTest extends TestCase
     public function testCreate(): void
     {
         $result = $this->client->simulations->cardSettlements->create(
-            cardID: 'card_oubs0hwk5rn6knuecxg2',
-            pendingTransactionID: 'pending_transaction_k1sfetcau2qbvjbzgju4',
+            cardID: 'card_oubs0hwk5rn6knuecxg2'
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -44,8 +43,8 @@ final class CardSettlementsTest extends TestCase
     {
         $result = $this->client->simulations->cardSettlements->create(
             cardID: 'card_oubs0hwk5rn6knuecxg2',
-            pendingTransactionID: 'pending_transaction_k1sfetcau2qbvjbzgju4',
             amount: 1,
+            pendingTransactionID: 'pending_transaction_k1sfetcau2qbvjbzgju4',
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType

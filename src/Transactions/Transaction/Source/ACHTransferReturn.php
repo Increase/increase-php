@@ -13,6 +13,7 @@ use Increase\Transactions\Transaction\Source\ACHTransferReturn\ReturnReasonCode;
  * An ACH Transfer Return object. This field will be present in the JSON response if and only if `category` is equal to `ach_transfer_return`. An ACH Transfer Return is created when an ACH Transfer is returned by the receiving bank. It offsets the ACH Transfer Intention. ACH Transfer Returns usually occur within the first two business days after the transfer is initiated, but can occur much later. The return appears as a new posted Transaction; no Pending Transaction is created.
  *
  * @phpstan-type ACHTransferReturnShape = array{
+ *   addendaInformation: string|null,
  *   createdAt: \DateTimeInterface,
  *   rawReturnReasonCode: string,
  *   returnReasonCode: ReturnReasonCode|value-of<ReturnReasonCode>,
@@ -25,6 +26,12 @@ final class ACHTransferReturn implements BaseModel
 {
     /** @use SdkModel<ACHTransferReturnShape> */
     use SdkModel;
+
+    /**
+     * Additional free-form information included by the receiving bank in the return's addenda record. This is raw, uninterpreted text whose presence and format are not guaranteed. For a `file_record_edit_criteria` (R17) return the receiving bank may set this to `QUESTIONABLE` (optionally followed by more text) to indicate it believes the transfer was initiated under questionable circumstances.
+     */
+    #[Required('addenda_information')]
+    public ?string $addendaInformation;
 
     /**
      * The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which the transfer was created.
@@ -70,6 +77,7 @@ final class ACHTransferReturn implements BaseModel
      * To enforce required parameters use
      * ```
      * ACHTransferReturn::with(
+     *   addendaInformation: ...,
      *   createdAt: ...,
      *   rawReturnReasonCode: ...,
      *   returnReasonCode: ...,
@@ -83,6 +91,7 @@ final class ACHTransferReturn implements BaseModel
      *
      * ```
      * (new ACHTransferReturn)
+     *   ->withAddendaInformation(...)
      *   ->withCreatedAt(...)
      *   ->withRawReturnReasonCode(...)
      *   ->withReturnReasonCode(...)
@@ -104,6 +113,7 @@ final class ACHTransferReturn implements BaseModel
      * @param ReturnReasonCode|value-of<ReturnReasonCode> $returnReasonCode
      */
     public static function with(
+        ?string $addendaInformation,
         \DateTimeInterface $createdAt,
         string $rawReturnReasonCode,
         ReturnReasonCode|string $returnReasonCode,
@@ -113,12 +123,24 @@ final class ACHTransferReturn implements BaseModel
     ): self {
         $self = new self;
 
+        $self['addendaInformation'] = $addendaInformation;
         $self['createdAt'] = $createdAt;
         $self['rawReturnReasonCode'] = $rawReturnReasonCode;
         $self['returnReasonCode'] = $returnReasonCode;
         $self['traceNumber'] = $traceNumber;
         $self['transactionID'] = $transactionID;
         $self['transferID'] = $transferID;
+
+        return $self;
+    }
+
+    /**
+     * Additional free-form information included by the receiving bank in the return's addenda record. This is raw, uninterpreted text whose presence and format are not guaranteed. For a `file_record_edit_criteria` (R17) return the receiving bank may set this to `QUESTIONABLE` (optionally followed by more text) to indicate it believes the transfer was initiated under questionable circumstances.
+     */
+    public function withAddendaInformation(?string $addendaInformation): self
+    {
+        $self = clone $this;
+        $self['addendaInformation'] = $addendaInformation;
 
         return $self;
     }

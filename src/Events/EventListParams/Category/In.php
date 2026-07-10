@@ -128,6 +128,10 @@ enum In: string
 
     case INBOUND_MAIL_ITEM_UPDATED = 'inbound_mail_item.updated';
 
+    case INBOUND_REAL_TIME_PAYMENTS_REQUEST_FOR_PAYMENT_CREATED = 'inbound_real_time_payments_request_for_payment.created';
+
+    case INBOUND_REAL_TIME_PAYMENTS_REQUEST_FOR_PAYMENT_UPDATED = 'inbound_real_time_payments_request_for_payment.updated';
+
     case INBOUND_REAL_TIME_PAYMENTS_TRANSFER_CREATED = 'inbound_real_time_payments_transfer.created';
 
     case INBOUND_REAL_TIME_PAYMENTS_TRANSFER_UPDATED = 'inbound_real_time_payments_transfer.updated';

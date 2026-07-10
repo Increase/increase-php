@@ -16,7 +16,7 @@ use Increase\Simulations\ACHTransfers\ACHTransferReturnParams\Reason;
  * @see Increase\Services\Simulations\ACHTransfersService::return()
  *
  * @phpstan-type ACHTransferReturnParamsShape = array{
- *   reason?: null|Reason|value-of<Reason>
+ *   addendaInformation?: string|null, reason?: null|Reason|value-of<Reason>
  * }
  */
 final class ACHTransferReturnParams implements BaseModel
@@ -24,6 +24,12 @@ final class ACHTransferReturnParams implements BaseModel
     /** @use SdkModel<ACHTransferReturnParamsShape> */
     use SdkModel;
     use SdkParams;
+
+    /**
+     * Free-form information the returning bank includes in the return addenda. For a `file_record_edit_criteria` (R17) return, set this to `QUESTIONABLE` to simulate a return the bank believes was initiated under questionable circumstances.
+     */
+    #[Optional('addenda_information')]
+    public ?string $addendaInformation;
 
     /**
      * The reason why the Federal Reserve or destination bank returned this transfer. Defaults to `no_account`.
@@ -45,11 +51,25 @@ final class ACHTransferReturnParams implements BaseModel
      *
      * @param Reason|value-of<Reason>|null $reason
      */
-    public static function with(Reason|string|null $reason = null): self
-    {
+    public static function with(
+        ?string $addendaInformation = null,
+        Reason|string|null $reason = null
+    ): self {
         $self = new self;
 
+        null !== $addendaInformation && $self['addendaInformation'] = $addendaInformation;
         null !== $reason && $self['reason'] = $reason;
+
+        return $self;
+    }
+
+    /**
+     * Free-form information the returning bank includes in the return addenda. For a `file_record_edit_criteria` (R17) return, set this to `QUESTIONABLE` to simulate a return the bank believes was initiated under questionable circumstances.
+     */
+    public function withAddendaInformation(string $addendaInformation): self
+    {
+        $self = clone $this;
+        $self['addendaInformation'] = $addendaInformation;
 
         return $self;
     }

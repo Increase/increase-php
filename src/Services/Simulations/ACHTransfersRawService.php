@@ -100,7 +100,9 @@ final class ACHTransfersRawService implements ACHTransfersRawContract
      * Simulates the return of an [ACH Transfer](#ach-transfers) by the Federal Reserve due to an error condition. This will also create a Transaction to account for the returned funds. This transfer must first have a `status` of `submitted`.
      *
      * @param string $achTransferID the identifier of the ACH Transfer you wish to return
-     * @param array{reason?: value-of<Reason>}|ACHTransferReturnParams $params
+     * @param array{
+     *   addendaInformation?: string, reason?: value-of<Reason>
+     * }|ACHTransferReturnParams $params
      * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<ACHTransfer>

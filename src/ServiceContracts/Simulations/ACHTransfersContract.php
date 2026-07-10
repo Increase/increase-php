@@ -54,6 +54,7 @@ interface ACHTransfersContract
      * @api
      *
      * @param string $achTransferID the identifier of the ACH Transfer you wish to return
+     * @param string $addendaInformation Free-form information the returning bank includes in the return addenda. For a `file_record_edit_criteria` (R17) return, set this to `QUESTIONABLE` to simulate a return the bank believes was initiated under questionable circumstances.
      * @param Reason|value-of<Reason> $reason The reason why the Federal Reserve or destination bank returned this transfer. Defaults to `no_account`.
      * @param RequestOpts|null $requestOptions
      *
@@ -61,6 +62,7 @@ interface ACHTransfersContract
      */
     public function return(
         string $achTransferID,
+        ?string $addendaInformation = null,
         Reason|string|null $reason = null,
         RequestOptions|array|null $requestOptions = null,
     ): ACHTransfer;

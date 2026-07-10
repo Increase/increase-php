@@ -29,10 +29,12 @@ use Increase\InboundWireTransfers\InboundWireTransfer\Type;
  *   creditorAddressLine2: string|null,
  *   creditorAddressLine3: string|null,
  *   creditorName: string|null,
+ *   debtorAccountNumber: string|null,
  *   debtorAddressLine1: string|null,
  *   debtorAddressLine2: string|null,
  *   debtorAddressLine3: string|null,
  *   debtorName: string|null,
+ *   debtorRoutingNumber: string|null,
  *   description: string,
  *   endToEndIdentification: string|null,
  *   inputMessageAccountabilityData: string|null,
@@ -113,6 +115,12 @@ final class InboundWireTransfer implements BaseModel
     public ?string $creditorName;
 
     /**
+     * The account number of the sender.
+     */
+    #[Required('debtor_account_number')]
+    public ?string $debtorAccountNumber;
+
+    /**
      * A free-form address field set by the sender.
      */
     #[Required('debtor_address_line1')]
@@ -135,6 +143,12 @@ final class InboundWireTransfer implements BaseModel
      */
     #[Required('debtor_name')]
     public ?string $debtorName;
+
+    /**
+     * The American Banking Association (ABA) routing number of the sender.
+     */
+    #[Required('debtor_routing_number')]
+    public ?string $debtorRoutingNumber;
 
     /**
      * An Increase-constructed description of the transfer.
@@ -228,10 +242,12 @@ final class InboundWireTransfer implements BaseModel
      *   creditorAddressLine2: ...,
      *   creditorAddressLine3: ...,
      *   creditorName: ...,
+     *   debtorAccountNumber: ...,
      *   debtorAddressLine1: ...,
      *   debtorAddressLine2: ...,
      *   debtorAddressLine3: ...,
      *   debtorName: ...,
+     *   debtorRoutingNumber: ...,
      *   description: ...,
      *   endToEndIdentification: ...,
      *   inputMessageAccountabilityData: ...,
@@ -261,10 +277,12 @@ final class InboundWireTransfer implements BaseModel
      *   ->withCreditorAddressLine2(...)
      *   ->withCreditorAddressLine3(...)
      *   ->withCreditorName(...)
+     *   ->withDebtorAccountNumber(...)
      *   ->withDebtorAddressLine1(...)
      *   ->withDebtorAddressLine2(...)
      *   ->withDebtorAddressLine3(...)
      *   ->withDebtorName(...)
+     *   ->withDebtorRoutingNumber(...)
      *   ->withDescription(...)
      *   ->withEndToEndIdentification(...)
      *   ->withInputMessageAccountabilityData(...)
@@ -305,10 +323,12 @@ final class InboundWireTransfer implements BaseModel
         ?string $creditorAddressLine2,
         ?string $creditorAddressLine3,
         ?string $creditorName,
+        ?string $debtorAccountNumber,
         ?string $debtorAddressLine1,
         ?string $debtorAddressLine2,
         ?string $debtorAddressLine3,
         ?string $debtorName,
+        ?string $debtorRoutingNumber,
         string $description,
         ?string $endToEndIdentification,
         ?string $inputMessageAccountabilityData,
@@ -334,10 +354,12 @@ final class InboundWireTransfer implements BaseModel
         $self['creditorAddressLine2'] = $creditorAddressLine2;
         $self['creditorAddressLine3'] = $creditorAddressLine3;
         $self['creditorName'] = $creditorName;
+        $self['debtorAccountNumber'] = $debtorAccountNumber;
         $self['debtorAddressLine1'] = $debtorAddressLine1;
         $self['debtorAddressLine2'] = $debtorAddressLine2;
         $self['debtorAddressLine3'] = $debtorAddressLine3;
         $self['debtorName'] = $debtorName;
+        $self['debtorRoutingNumber'] = $debtorRoutingNumber;
         $self['description'] = $description;
         $self['endToEndIdentification'] = $endToEndIdentification;
         $self['inputMessageAccountabilityData'] = $inputMessageAccountabilityData;
@@ -470,6 +492,17 @@ final class InboundWireTransfer implements BaseModel
     }
 
     /**
+     * The account number of the sender.
+     */
+    public function withDebtorAccountNumber(?string $debtorAccountNumber): self
+    {
+        $self = clone $this;
+        $self['debtorAccountNumber'] = $debtorAccountNumber;
+
+        return $self;
+    }
+
+    /**
      * A free-form address field set by the sender.
      */
     public function withDebtorAddressLine1(?string $debtorAddressLine1): self
@@ -509,6 +542,17 @@ final class InboundWireTransfer implements BaseModel
     {
         $self = clone $this;
         $self['debtorName'] = $debtorName;
+
+        return $self;
+    }
+
+    /**
+     * The American Banking Association (ABA) routing number of the sender.
+     */
+    public function withDebtorRoutingNumber(?string $debtorRoutingNumber): self
+    {
+        $self = clone $this;
+        $self['debtorRoutingNumber'] = $debtorRoutingNumber;
 
         return $self;
     }

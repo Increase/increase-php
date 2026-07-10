@@ -13,6 +13,7 @@ use Increase\Core\Contracts\BaseModel;
  * If your transfer is returned, this will contain details of the return.
  *
  * @phpstan-type ReturnShape = array{
+ *   addendaInformation: string|null,
  *   createdAt: \DateTimeInterface,
  *   rawReturnReasonCode: string,
  *   returnReasonCode: ReturnReasonCode|value-of<ReturnReasonCode>,
@@ -25,6 +26,12 @@ final class Return_ implements BaseModel
 {
     /** @use SdkModel<ReturnShape> */
     use SdkModel;
+
+    /**
+     * Additional free-form information included by the receiving bank in the return's addenda record. This is raw, uninterpreted text whose presence and format are not guaranteed. For a `file_record_edit_criteria` (R17) return the receiving bank may set this to `QUESTIONABLE` (optionally followed by more text) to indicate it believes the transfer was initiated under questionable circumstances.
+     */
+    #[Required('addenda_information')]
+    public ?string $addendaInformation;
 
     /**
      * The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which the transfer was created.
@@ -70,6 +77,7 @@ final class Return_ implements BaseModel
      * To enforce required parameters use
      * ```
      * Return_::with(
+     *   addendaInformation: ...,
      *   createdAt: ...,
      *   rawReturnReasonCode: ...,
      *   returnReasonCode: ...,
@@ -83,6 +91,7 @@ final class Return_ implements BaseModel
      *
      * ```
      * (new Return_)
+     *   ->withAddendaInformation(...)
      *   ->withCreatedAt(...)
      *   ->withRawReturnReasonCode(...)
      *   ->withReturnReasonCode(...)
@@ -104,6 +113,7 @@ final class Return_ implements BaseModel
      * @param ReturnReasonCode|value-of<ReturnReasonCode> $returnReasonCode
      */
     public static function with(
+        ?string $addendaInformation,
         \DateTimeInterface $createdAt,
         string $rawReturnReasonCode,
         ReturnReasonCode|string $returnReasonCode,
@@ -113,12 +123,24 @@ final class Return_ implements BaseModel
     ): self {
         $self = new self;
 
+        $self['addendaInformation'] = $addendaInformation;
         $self['createdAt'] = $createdAt;
         $self['rawReturnReasonCode'] = $rawReturnReasonCode;
         $self['returnReasonCode'] = $returnReasonCode;
         $self['traceNumber'] = $traceNumber;
         $self['transactionID'] = $transactionID;
         $self['transferID'] = $transferID;
+
+        return $self;
+    }
+
+    /**
+     * Additional free-form information included by the receiving bank in the return's addenda record. This is raw, uninterpreted text whose presence and format are not guaranteed. For a `file_record_edit_criteria` (R17) return the receiving bank may set this to `QUESTIONABLE` (optionally followed by more text) to indicate it believes the transfer was initiated under questionable circumstances.
+     */
+    public function withAddendaInformation(?string $addendaInformation): self
+    {
+        $self = clone $this;
+        $self['addendaInformation'] = $addendaInformation;
 
         return $self;
     }

@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.140.0](https://github.com/Increase/increase-php/compare/v0.139.0...v0.140.0) (2026-07-13)
+
+
+### Features
+
+* **api:** api update ([#193](https://github.com/Increase/increase-php/issues/193)) ([8b5226c](https://github.com/Increase/increase-php/commit/8b5226c68565eea97849e1f01b1a28c1cc1afe26))
+
+
+### Bug Fixes
+
+* **api:** make address country optional, defaulting to US ([bf50aba](https://github.com/Increase/increase-php/commit/bf50aba0a5f1401c8460a9975b82dc9dc2e8c064))
+
 ## [0.139.0](https://github.com/Increase/increase-php/compare/v0.138.0...v0.139.0) (2026-07-02)
 
 

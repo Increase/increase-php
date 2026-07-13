@@ -14,8 +14,8 @@ use Increase\Core\Contracts\BaseModel;
  *
  * @phpstan-type AddressShape = array{
  *   city: string,
- *   country: string,
  *   line1: string,
+ *   country?: string|null,
  *   line2?: string|null,
  *   state?: string|null,
  *   zip?: string|null,
@@ -33,16 +33,16 @@ final class Address implements BaseModel
     public string $city;
 
     /**
-     * The two-letter ISO 3166-1 alpha-2 code for the country of the address.
-     */
-    #[Required]
-    public string $country;
-
-    /**
      * The first line of the address. This is usually the street number and street.
      */
     #[Required]
     public string $line1;
+
+    /**
+     * The two-letter ISO 3166-1 alpha-2 code for the country of the address. Defaults to `US`.
+     */
+    #[Optional]
+    public ?string $country;
 
     /**
      * The second line of the address. This might be the floor or room number.
@@ -67,13 +67,13 @@ final class Address implements BaseModel
      *
      * To enforce required parameters use
      * ```
-     * Address::with(city: ..., country: ..., line1: ...)
+     * Address::with(city: ..., line1: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new Address)->withCity(...)->withCountry(...)->withLine1(...)
+     * (new Address)->withCity(...)->withLine1(...)
      * ```
      */
     public function __construct()
@@ -88,8 +88,8 @@ final class Address implements BaseModel
      */
     public static function with(
         string $city,
-        string $country,
         string $line1,
+        ?string $country = null,
         ?string $line2 = null,
         ?string $state = null,
         ?string $zip = null,
@@ -97,9 +97,9 @@ final class Address implements BaseModel
         $self = new self;
 
         $self['city'] = $city;
-        $self['country'] = $country;
         $self['line1'] = $line1;
 
+        null !== $country && $self['country'] = $country;
         null !== $line2 && $self['line2'] = $line2;
         null !== $state && $self['state'] = $state;
         null !== $zip && $self['zip'] = $zip;
@@ -119,23 +119,23 @@ final class Address implements BaseModel
     }
 
     /**
-     * The two-letter ISO 3166-1 alpha-2 code for the country of the address.
-     */
-    public function withCountry(string $country): self
-    {
-        $self = clone $this;
-        $self['country'] = $country;
-
-        return $self;
-    }
-
-    /**
      * The first line of the address. This is usually the street number and street.
      */
     public function withLine1(string $line1): self
     {
         $self = clone $this;
         $self['line1'] = $line1;
+
+        return $self;
+    }
+
+    /**
+     * The two-letter ISO 3166-1 alpha-2 code for the country of the address. Defaults to `US`.
+     */
+    public function withCountry(string $country): self
+    {
+        $self = clone $this;
+        $self['country'] = $country;
 
         return $self;
     }

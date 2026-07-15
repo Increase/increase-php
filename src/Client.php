@@ -400,12 +400,6 @@ class Client extends BaseClient
             'Content-Type' => 'application/json',
             'Accept' => 'application/json',
             'User-Agent' => sprintf('increase/PHP %s', VERSION),
-            'X-Stainless-Lang' => 'php',
-            'X-Stainless-Package-Version' => '0.139.0',
-            'X-Stainless-Arch' => Util::machtype(),
-            'X-Stainless-OS' => Util::ostype(),
-            'X-Stainless-Runtime' => php_sapi_name(),
-            'X-Stainless-Runtime-Version' => phpversion(),
         ];
 
         $customHeadersEnv = Util::getenv('INCREASE_CUSTOM_HEADERS');

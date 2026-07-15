@@ -76,4 +76,13 @@ final class FilesTest extends TestCase
             $this->assertInstanceOf(File::class, $item);
         }
     }
+
+    #[Test]
+    public function testContents(): void
+    {
+        $result = $this->client->files->contents('file_makxrc67oh9l6sg7w9yc');
+
+        // @phpstan-ignore-next-line method.alreadyNarrowedType
+        $this->assertIsString($result);
+    }
 }

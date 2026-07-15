@@ -61,4 +61,19 @@ interface FilesRawContract
         array|FileListParams $params,
         RequestOptions|array|null $requestOptions = null,
     ): BaseResponse;
+
+    /**
+     * @api
+     *
+     * @param string $fileID the identifier of the File
+     * @param RequestOpts|null $requestOptions
+     *
+     * @return BaseResponse<string>
+     *
+     * @throws APIException
+     */
+    public function contents(
+        string $fileID,
+        RequestOptions|array|null $requestOptions = null
+    ): BaseResponse;
 }

@@ -71,4 +71,17 @@ interface FilesContract
         \Increase\Files\FileListParams\Purpose|array|null $purpose = null,
         RequestOptions|array|null $requestOptions = null,
     ): Page;
+
+    /**
+     * @api
+     *
+     * @param string $fileID the identifier of the File
+     * @param RequestOpts|null $requestOptions
+     *
+     * @throws APIException
+     */
+    public function contents(
+        string $fileID,
+        RequestOptions|array|null $requestOptions = null
+    ): string;
 }

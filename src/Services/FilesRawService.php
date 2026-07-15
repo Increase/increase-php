@@ -130,4 +130,30 @@ final class FilesRawService implements FilesRawContract
             page: Page::class,
         );
     }
+
+    /**
+     * @api
+     *
+     * Download the contents of a File. Responds with a 307 redirect whose `Location` header points at a short-lived, pre-signed URL. Our [SDKs](/documentation/software-development-kits) follow the redirect and return the File's contents; if you call the API directly, follow the redirect to download it. The pre-signed URL serves the File with a `Content-Type` matching its `mime` and a `Content-Disposition` header set to its `filename`. It expires in 10 minutes. To share a File with someone who doesn't have access to your API key, create a File Link.
+     *
+     * @param string $fileID the identifier of the File
+     * @param RequestOpts|null $requestOptions
+     *
+     * @return BaseResponse<string>
+     *
+     * @throws APIException
+     */
+    public function contents(
+        string $fileID,
+        RequestOptions|array|null $requestOptions = null
+    ): BaseResponse {
+        // @phpstan-ignore-next-line return.type
+        return $this->client->request(
+            method: 'get',
+            path: ['files/%1$s/contents', $fileID],
+            headers: ['Accept' => 'application/octet-stream'],
+            options: $requestOptions,
+            convert: 'string',
+        );
+    }
 }

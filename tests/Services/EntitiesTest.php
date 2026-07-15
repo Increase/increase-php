@@ -45,8 +45,8 @@ final class EntitiesTest extends TestCase
             corporation: [
                 'address' => [
                     'city' => 'New York',
-                    'line1' => '33 Liberty Street',
                     'country' => 'x',
+                    'line1' => '33 Liberty Street',
                     'line2' => 'x',
                     'state' => 'NY',
                     'zip' => '10045',
@@ -56,8 +56,8 @@ final class EntitiesTest extends TestCase
                         'individual' => [
                             'address' => [
                                 'city' => 'New York',
-                                'line1' => '33 Liberty Street',
                                 'country' => 'x',
+                                'line1' => '33 Liberty Street',
                                 'line2' => 'x',
                                 'state' => 'NY',
                                 'zip' => '10045',
@@ -123,8 +123,8 @@ final class EntitiesTest extends TestCase
                     [
                         'address' => [
                             'city' => 'x',
-                            'line1' => 'x',
                             'country' => 'x',
+                            'line1' => 'x',
                             'line2' => 'x',
                             'state' => 'x',
                             'zip' => 'x',
@@ -160,8 +160,8 @@ final class EntitiesTest extends TestCase
             naturalPerson: [
                 'address' => [
                     'city' => 'x',
-                    'line1' => 'x',
                     'country' => 'x',
+                    'line1' => 'x',
                     'line2' => 'x',
                     'state' => 'x',
                     'zip' => 'x',
@@ -221,8 +221,8 @@ final class EntitiesTest extends TestCase
                         'individual' => [
                             'address' => [
                                 'city' => 'x',
-                                'line1' => 'x',
                                 'country' => 'x',
+                                'line1' => 'x',
                                 'line2' => 'x',
                                 'state' => 'x',
                                 'zip' => 'x',
@@ -260,8 +260,8 @@ final class EntitiesTest extends TestCase
                 'grantor' => [
                     'address' => [
                         'city' => 'x',
-                        'line1' => 'x',
                         'country' => 'x',
+                        'line1' => 'x',
                         'line2' => 'x',
                         'state' => 'x',
                         'zip' => 'x',

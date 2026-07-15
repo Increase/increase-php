@@ -34,7 +34,11 @@ final class BeneficialOwnersTest extends TestCase
         $result = $this->client->beneficialOwners->create(
             entityID: 'entity_n8y8tnk2p9339ti393yi',
             individual: [
-                'address' => ['city' => 'New York', 'line1' => '33 Liberty Street'],
+                'address' => [
+                    'city' => 'New York',
+                    'country' => 'US',
+                    'line1' => '33 Liberty Street',
+                ],
                 'dateOfBirth' => '1970-01-31',
                 'identification' => [
                     'method' => 'social_security_number', 'number' => '078051120',
@@ -56,8 +60,8 @@ final class BeneficialOwnersTest extends TestCase
             individual: [
                 'address' => [
                     'city' => 'New York',
-                    'line1' => '33 Liberty Street',
                     'country' => 'US',
+                    'line1' => '33 Liberty Street',
                     'line2' => 'x',
                     'state' => 'NY',
                     'zip' => '10045',

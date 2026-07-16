@@ -194,9 +194,9 @@ enum In: string
 
     case PHYSICAL_CHECK_UPDATED = 'physical_check.updated';
 
-    case PHYSICAL_CHECK_BOOK_CREATED = 'physical_check_book.created';
+    case CHECKBOOK_CREATED = 'checkbook.created';
 
-    case PHYSICAL_CHECK_BOOK_UPDATED = 'physical_check_book.updated';
+    case CHECKBOOK_UPDATED = 'checkbook.updated';
 
     case PROGRAM_CREATED = 'program.created';
 

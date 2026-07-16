@@ -169,9 +169,46 @@ abstract class BaseClient
             throw new APIConnectionException($req, message: 'Redirection without Location header');
         }
 
-        $uri = Util::joinUri($req->getUri(), path: $location);
+        $oldUri = $req->getUri();
+        $parsed = parse_url($location);
+        if (false === $parsed) {
+            throw new APIConnectionException($req, message: 'Redirect to a malformed URL');
+        }
 
-        return $req->withUri($uri);
+        // A redirect's Location fully determines the query string and fragment.
+        // joinUri would merge in the original request's query -- leaking
+        // query-based credentials to the new host and appending params that break
+        // strictly-signed URLs -- and it never applies the Location's fragment, so
+        // set both from the Location (and don't carry over the prior fragment).
+        $uri = Util::joinUri($oldUri, path: $location)
+            ->withQuery($parsed['query'] ?? '')
+            ->withFragment($parsed['fragment'] ?? '')
+        ;
+
+        if ('https' === $oldUri->getScheme() && 'http' === $uri->getScheme()) {
+            throw new APIConnectionException($req, message: 'Tried to redirect to an insecure URL');
+        }
+
+        $req = $req->withUri($uri);
+
+        // On a cross-origin redirect, drop credentials so we don't leak them to a
+        // different host. Mirrors undici and the other Stainless SDKs; withUri()
+        // already rewrites Host. Default ports are normalized so an implicit vs
+        // explicit :443/:80 doesn't read as a different origin.
+        $oldPort = $oldUri->getPort() ?? ('https' === $oldUri->getScheme() ? 443 : 80);
+        $newPort = $uri->getPort() ?? ('https' === $uri->getScheme() ? 443 : 80);
+        $crossOrigin = $oldUri->getScheme() !== $uri->getScheme()
+            || $oldUri->getHost() !== $uri->getHost()
+            || $oldPort !== $newPort;
+        if ($crossOrigin) {
+            foreach ([
+                'Authorization', 'Cookie', 'Proxy-Authorization',
+            ] as $header) {
+                $req = $req->withoutHeader($header);
+            }
+        }
+
+        return $req;
     }
 
     /**

@@ -194,6 +194,10 @@ enum In: string
 
     case PHYSICAL_CHECK_UPDATED = 'physical_check.updated';
 
+    case PHYSICAL_CHECK_BOOK_CREATED = 'physical_check_book.created';
+
+    case PHYSICAL_CHECK_BOOK_UPDATED = 'physical_check_book.updated';
+
     case PROGRAM_CREATED = 'program.created';
 
     case PROGRAM_UPDATED = 'program.updated';

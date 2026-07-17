@@ -9,7 +9,7 @@ use Increase\Core\Concerns\SdkModel;
 use Increase\Core\Contracts\BaseModel;
 
 /**
- * The person's address.
+ * The grantor's address.
  *
  * @phpstan-type AddressShape = array{
  *   city: string|null,

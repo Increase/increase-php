@@ -31,13 +31,13 @@ final class Grantor implements BaseModel
     use SdkModel;
 
     /**
-     * The individual's physical address. Mail receiving locations like PO Boxes and PMB's are disallowed.
+     * The grantor's physical address. Mail receiving locations like PO Boxes and PMB's are disallowed.
      */
     #[Required]
     public Address $address;
 
     /**
-     * The person's date of birth in YYYY-MM-DD format.
+     * The grantor's date of birth in YYYY-MM-DD format.
      */
     #[Required('date_of_birth')]
     public string $dateOfBirth;
@@ -49,7 +49,7 @@ final class Grantor implements BaseModel
     public Identification $identification;
 
     /**
-     * The person's legal name.
+     * The grantor's legal name.
      */
     #[Required]
     public string $name;
@@ -111,7 +111,7 @@ final class Grantor implements BaseModel
     }
 
     /**
-     * The individual's physical address. Mail receiving locations like PO Boxes and PMB's are disallowed.
+     * The grantor's physical address. Mail receiving locations like PO Boxes and PMB's are disallowed.
      *
      * @param Address|AddressShape $address
      */
@@ -125,7 +125,7 @@ final class Grantor implements BaseModel
     }
 
     /**
-     * The person's date of birth in YYYY-MM-DD format.
+     * The grantor's date of birth in YYYY-MM-DD format.
      */
     public function withDateOfBirth(string $dateOfBirth): self
     {
@@ -150,7 +150,7 @@ final class Grantor implements BaseModel
     }
 
     /**
-     * The person's legal name.
+     * The grantor's legal name.
      */
     public function withName(string $name): self
     {

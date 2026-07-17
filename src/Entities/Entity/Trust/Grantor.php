@@ -17,8 +17,8 @@ use Increase\Entities\Entity\Trust\Grantor\Identification;
  * @phpstan-import-type IdentificationShape from \Increase\Entities\Entity\Trust\Grantor\Identification
  *
  * @phpstan-type GrantorShape = array{
- *   address: \Increase\Entities\Entity\Trust\Grantor\Address|AddressShape,
- *   dateOfBirth: string,
+ *   address: null|\Increase\Entities\Entity\Trust\Grantor\Address|AddressShape,
+ *   dateOfBirth: string|null,
  *   identification: null|Identification|IdentificationShape,
  *   name: string,
  * }
@@ -29,25 +29,25 @@ final class Grantor implements BaseModel
     use SdkModel;
 
     /**
-     * The person's address.
+     * The grantor's address.
      */
     #[Required]
-    public Address $address;
+    public ?Address $address;
 
     /**
-     * The person's date of birth in YYYY-MM-DD format.
+     * The grantor's date of birth in YYYY-MM-DD format.
      */
     #[Required('date_of_birth')]
-    public string $dateOfBirth;
+    public ?string $dateOfBirth;
 
     /**
-     * A means of verifying the person's identity.
+     * A means of verifying the grantor's identity.
      */
     #[Required]
     public ?Identification $identification;
 
     /**
-     * The person's legal name.
+     * The grantor's legal name.
      */
     #[Required]
     public string $name;
@@ -80,12 +80,12 @@ final class Grantor implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param Address|AddressShape $address
+     * @param Address|AddressShape|null $address
      * @param Identification|IdentificationShape|null $identification
      */
     public static function with(
-        Address|array $address,
-        string $dateOfBirth,
+        Address|array|null $address,
+        ?string $dateOfBirth,
         Identification|array|null $identification,
         string $name,
     ): self {
@@ -100,12 +100,12 @@ final class Grantor implements BaseModel
     }
 
     /**
-     * The person's address.
+     * The grantor's address.
      *
-     * @param Address|AddressShape $address
+     * @param Address|AddressShape|null $address
      */
     public function withAddress(
-        Address|array $address
+        Address|array|null $address
     ): self {
         $self = clone $this;
         $self['address'] = $address;
@@ -114,9 +114,9 @@ final class Grantor implements BaseModel
     }
 
     /**
-     * The person's date of birth in YYYY-MM-DD format.
+     * The grantor's date of birth in YYYY-MM-DD format.
      */
-    public function withDateOfBirth(string $dateOfBirth): self
+    public function withDateOfBirth(?string $dateOfBirth): self
     {
         $self = clone $this;
         $self['dateOfBirth'] = $dateOfBirth;
@@ -125,7 +125,7 @@ final class Grantor implements BaseModel
     }
 
     /**
-     * A means of verifying the person's identity.
+     * A means of verifying the grantor's identity.
      *
      * @param Identification|IdentificationShape|null $identification
      */
@@ -139,7 +139,7 @@ final class Grantor implements BaseModel
     }
 
     /**
-     * The person's legal name.
+     * The grantor's legal name.
      */
     public function withName(string $name): self
     {

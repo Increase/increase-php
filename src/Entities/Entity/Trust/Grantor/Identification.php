@@ -10,7 +10,7 @@ use Increase\Core\Contracts\BaseModel;
 use Increase\Entities\Entity\Trust\Grantor\Identification\Method;
 
 /**
- * A means of verifying the person's identity.
+ * A means of verifying the grantor's identity.
  *
  * @phpstan-type IdentificationShape = array{
  *   method: Method|value-of<Method>, numberLast4: string
@@ -22,7 +22,7 @@ final class Identification implements BaseModel
     use SdkModel;
 
     /**
-     * A method that can be used to verify the individual's identity.
+     * A method that can be used to verify the grantor's identity.
      *
      * @var value-of<Method> $method
      */
@@ -30,7 +30,7 @@ final class Identification implements BaseModel
     public string $method;
 
     /**
-     * The last 4 digits of the identification number that can be used to verify the individual's identity.
+     * The last 4 digits of the identification number that can be used to verify the grantor's identity.
      */
     #[Required('number_last4')]
     public string $numberLast4;
@@ -74,7 +74,7 @@ final class Identification implements BaseModel
     }
 
     /**
-     * A method that can be used to verify the individual's identity.
+     * A method that can be used to verify the grantor's identity.
      *
      * @param Method|value-of<Method> $method
      */
@@ -87,7 +87,7 @@ final class Identification implements BaseModel
     }
 
     /**
-     * The last 4 digits of the identification number that can be used to verify the individual's identity.
+     * The last 4 digits of the identification number that can be used to verify the grantor's identity.
      */
     public function withNumberLast4(string $numberLast4): self
     {

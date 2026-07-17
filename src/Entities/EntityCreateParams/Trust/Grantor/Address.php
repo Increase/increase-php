@@ -10,7 +10,7 @@ use Increase\Core\Concerns\SdkModel;
 use Increase\Core\Contracts\BaseModel;
 
 /**
- * The individual's physical address. Mail receiving locations like PO Boxes and PMB's are disallowed.
+ * The grantor's physical address. Mail receiving locations like PO Boxes and PMB's are disallowed.
  *
  * @phpstan-type AddressShape = array{
  *   city: string,

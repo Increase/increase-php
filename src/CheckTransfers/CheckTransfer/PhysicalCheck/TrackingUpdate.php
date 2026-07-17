@@ -11,6 +11,7 @@ use Increase\Core\Contracts\BaseModel;
 
 /**
  * @phpstan-type TrackingUpdateShape = array{
+ *   carrierEstimatedDeliveryAt: \DateTimeInterface|null,
  *   category: Category|value-of<Category>,
  *   country: string,
  *   createdAt: \DateTimeInterface,
@@ -21,6 +22,12 @@ final class TrackingUpdate implements BaseModel
 {
     /** @use SdkModel<TrackingUpdateShape> */
     use SdkModel;
+
+    /**
+     * The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time when the carrier expects the check to be delivered.
+     */
+    #[Required('carrier_estimated_delivery_at')]
+    public ?\DateTimeInterface $carrierEstimatedDeliveryAt;
 
     /**
      * The type of tracking event.
@@ -54,7 +61,11 @@ final class TrackingUpdate implements BaseModel
      * To enforce required parameters use
      * ```
      * TrackingUpdate::with(
-     *   category: ..., country: ..., createdAt: ..., postalCode: ...
+     *   carrierEstimatedDeliveryAt: ...,
+     *   category: ...,
+     *   country: ...,
+     *   createdAt: ...,
+     *   postalCode: ...,
      * )
      * ```
      *
@@ -62,6 +73,7 @@ final class TrackingUpdate implements BaseModel
      *
      * ```
      * (new TrackingUpdate)
+     *   ->withCarrierEstimatedDeliveryAt(...)
      *   ->withCategory(...)
      *   ->withCountry(...)
      *   ->withCreatedAt(...)
@@ -81,6 +93,7 @@ final class TrackingUpdate implements BaseModel
      * @param Category|value-of<Category> $category
      */
     public static function with(
+        ?\DateTimeInterface $carrierEstimatedDeliveryAt,
         Category|string $category,
         string $country,
         \DateTimeInterface $createdAt,
@@ -88,10 +101,23 @@ final class TrackingUpdate implements BaseModel
     ): self {
         $self = new self;
 
+        $self['carrierEstimatedDeliveryAt'] = $carrierEstimatedDeliveryAt;
         $self['category'] = $category;
         $self['country'] = $country;
         $self['createdAt'] = $createdAt;
         $self['postalCode'] = $postalCode;
+
+        return $self;
+    }
+
+    /**
+     * The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time when the carrier expects the check to be delivered.
+     */
+    public function withCarrierEstimatedDeliveryAt(
+        ?\DateTimeInterface $carrierEstimatedDeliveryAt
+    ): self {
+        $self = clone $this;
+        $self['carrierEstimatedDeliveryAt'] = $carrierEstimatedDeliveryAt;
 
         return $self;
     }

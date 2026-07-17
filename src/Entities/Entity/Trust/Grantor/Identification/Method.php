@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Increase\Entities\Entity\Trust\Grantor\Identification;
 
 /**
- * A method that can be used to verify the individual's identity.
+ * A method that can be used to verify the grantor's identity.
  */
 enum Method: string
 {

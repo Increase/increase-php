@@ -145,6 +145,10 @@ enum Category: string
 
     case INBOUND_WIRE_TRANSFER_UPDATED = 'inbound_wire_transfer.updated';
 
+    case INTEREST_RATE_PLAN_CREATED = 'interest_rate_plan.created';
+
+    case INTEREST_RATE_PLAN_UPDATED = 'interest_rate_plan.updated';
+
     case INTRAFI_ACCOUNT_ENROLLMENT_CREATED = 'intrafi_account_enrollment.created';
 
     case INTRAFI_ACCOUNT_ENROLLMENT_UPDATED = 'intrafi_account_enrollment.updated';

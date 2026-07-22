@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.145.0](https://github.com/Increase/increase-php/compare/v0.144.0...v0.145.0) (2026-07-22)
+
+
+### Features
+
+* **api:** add interest rate plan events and new fields ([27c53da](https://github.com/Increase/increase-php/commit/27c53da9ed294eb4df5ace1cb67b1be4c5a070b9))
+
+
+### Chores
+
+* **api:** sync generated spec metadata ([d9d43e2](https://github.com/Increase/increase-php/commit/d9d43e2f6f14f0e1a9f930fa389f21ef2164d1cf))
+
 ## [0.144.0](https://github.com/Increase/increase-php/compare/v0.143.0...v0.144.0) (2026-07-17)
 
 

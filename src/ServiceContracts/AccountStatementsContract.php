@@ -35,6 +35,8 @@ interface AccountStatementsContract
      * @param string $accountID filter Account Statements to those belonging to the specified Account
      * @param string $cursor return the page of entries after this one
      * @param int $limit Limit the size of the list that is returned. The default (and maximum) is 100 objects.
+     *
+     * Defaults to `100`.
      * @param StatementPeriodStart|StatementPeriodStartShape $statementPeriodStart
      * @param RequestOpts|null $requestOptions
      *
@@ -45,7 +47,7 @@ interface AccountStatementsContract
     public function list(
         ?string $accountID = null,
         ?string $cursor = null,
-        ?int $limit = null,
+        int $limit = 100,
         StatementPeriodStart|array|null $statementPeriodStart = null,
         RequestOptions|array|null $requestOptions = null,
     ): Page;

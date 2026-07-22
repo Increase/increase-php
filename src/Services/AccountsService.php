@@ -137,6 +137,8 @@ final class AccountsService implements AccountsContract
      * @param string $idempotencyKey Filter records to the one with the specified `idempotency_key` you chose for that object. This value is unique across Increase and is used to ensure that a request is only processed once. Learn more about [idempotency](https://increase.com/documentation/idempotency-keys).
      * @param string $informationalEntityID filter Accounts for those belonging to the specified Entity as informational
      * @param int $limit Limit the size of the list that is returned. The default (and maximum) is 100 objects.
+     *
+     * Defaults to `100`.
      * @param string $programID filter Accounts for those in a specific Program
      * @param Status|StatusShape $status
      * @param RequestOpts|null $requestOptions
@@ -151,7 +153,7 @@ final class AccountsService implements AccountsContract
         ?string $entityID = null,
         ?string $idempotencyKey = null,
         ?string $informationalEntityID = null,
-        ?int $limit = null,
+        int $limit = 100,
         ?string $programID = null,
         Status|array|null $status = null,
         RequestOptions|array|null $requestOptions = null,

@@ -126,6 +126,8 @@ final class ACHTransferCreateParams implements BaseModel
     /**
      * The type of the receiver's bank account.
      *
+     * Defaults to `checking`.
+     *
      * @var value-of<Funding>|null $funding
      */
     #[Optional(enum: Funding::class)]
@@ -391,6 +393,8 @@ final class ACHTransferCreateParams implements BaseModel
 
     /**
      * The type of the receiver's bank account.
+     *
+     * Defaults to `checking`.
      *
      * @param Funding|value-of<Funding> $funding
      */

@@ -39,6 +39,8 @@ interface TransactionsContract
      * @param CreatedAt|CreatedAtShape $createdAt
      * @param string $cursor return the page of entries after this one
      * @param int $limit Limit the size of the list that is returned. The default (and maximum) is 100 objects.
+     *
+     * Defaults to `100`.
      * @param string $routeID Filter Transactions for those belonging to the specified route. This could be a Card ID or an Account Number ID.
      * @param RequestOpts|null $requestOptions
      *
@@ -51,7 +53,7 @@ interface TransactionsContract
         Category|array|null $category = null,
         CreatedAt|array|null $createdAt = null,
         ?string $cursor = null,
-        ?int $limit = null,
+        int $limit = 100,
         ?string $routeID = null,
         RequestOptions|array|null $requestOptions = null,
     ): Page;

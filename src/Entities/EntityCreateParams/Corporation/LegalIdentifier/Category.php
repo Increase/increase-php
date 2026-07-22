@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Increase\Entities\EntityCreateParams\Corporation\LegalIdentifier;
 
 /**
- * The category of the legal identifier. If not provided, the default is `us_employer_identification_number`.
+ * The category of the legal identifier.
  */
 enum Category: string
 {

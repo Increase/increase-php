@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Increase\Simulations\ACHTransfers\ACHTransferReturnParams;
 
 /**
- * The reason why the Federal Reserve or destination bank returned this transfer. Defaults to `no_account`.
+ * The reason why the Federal Reserve or destination bank returned this transfer.
  */
 enum Reason: string
 {

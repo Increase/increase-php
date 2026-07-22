@@ -31,6 +31,8 @@ final class LegalIdentifier implements BaseModel
     /**
      * The category of the legal identifier.
      *
+     * Defaults to `us_employer_identification_number`.
+     *
      * @var value-of<Category>|null $category
      */
     #[Optional(enum: Category::class)]
@@ -88,6 +90,8 @@ final class LegalIdentifier implements BaseModel
 
     /**
      * The category of the legal identifier.
+     *
+     * Defaults to `us_employer_identification_number`.
      *
      * @param Category|value-of<Category> $category
      */

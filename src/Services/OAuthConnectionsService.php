@@ -59,6 +59,8 @@ final class OAuthConnectionsService implements OAuthConnectionsContract
      *
      * @param string $cursor return the page of entries after this one
      * @param int $limit Limit the size of the list that is returned. The default (and maximum) is 100 objects.
+     *
+     * Defaults to `100`.
      * @param string $oauthApplicationID filter results to only include OAuth Connections for a specific OAuth Application
      * @param Status|StatusShape $status
      * @param RequestOpts|null $requestOptions
@@ -69,7 +71,7 @@ final class OAuthConnectionsService implements OAuthConnectionsContract
      */
     public function list(
         ?string $cursor = null,
-        ?int $limit = null,
+        int $limit = 100,
         ?string $oauthApplicationID = null,
         Status|array|null $status = null,
         RequestOptions|array|null $requestOptions = null,

@@ -9,6 +9,7 @@ use Increase\Core\Concerns\SdkModel;
 use Increase\Core\Contracts\BaseModel;
 use Increase\RoutingNumbers\RoutingNumberListResponse\ACHTransfers;
 use Increase\RoutingNumbers\RoutingNumberListResponse\FednowTransfers;
+use Increase\RoutingNumbers\RoutingNumberListResponse\RealTimePaymentsRequestForPayment;
 use Increase\RoutingNumbers\RoutingNumberListResponse\RealTimePaymentsTransfers;
 use Increase\RoutingNumbers\RoutingNumberListResponse\Type;
 use Increase\RoutingNumbers\RoutingNumberListResponse\WireTransfers;
@@ -20,6 +21,7 @@ use Increase\RoutingNumbers\RoutingNumberListResponse\WireTransfers;
  *   achTransfers: ACHTransfers|value-of<ACHTransfers>,
  *   fednowTransfers: FednowTransfers|value-of<FednowTransfers>,
  *   name: string,
+ *   realTimePaymentsRequestForPayment: RealTimePaymentsRequestForPayment|value-of<RealTimePaymentsRequestForPayment>,
  *   realTimePaymentsTransfers: RealTimePaymentsTransfers|value-of<RealTimePaymentsTransfers>,
  *   routingNumber: string,
  *   type: Type|value-of<Type>,
@@ -52,6 +54,17 @@ final class RoutingNumberListResponse implements BaseModel
      */
     #[Required]
     public string $name;
+
+    /**
+     * This routing number's support for Real-Time Payments Requests for Payment.
+     *
+     * @var value-of<RealTimePaymentsRequestForPayment> $realTimePaymentsRequestForPayment
+     */
+    #[Required(
+        'real_time_payments_request_for_payment',
+        enum: RealTimePaymentsRequestForPayment::class,
+    )]
+    public string $realTimePaymentsRequestForPayment;
 
     /**
      * This routing number's support for Real-Time Payments Transfers.
@@ -95,6 +108,7 @@ final class RoutingNumberListResponse implements BaseModel
      *   achTransfers: ...,
      *   fednowTransfers: ...,
      *   name: ...,
+     *   realTimePaymentsRequestForPayment: ...,
      *   realTimePaymentsTransfers: ...,
      *   routingNumber: ...,
      *   type: ...,
@@ -109,6 +123,7 @@ final class RoutingNumberListResponse implements BaseModel
      *   ->withACHTransfers(...)
      *   ->withFednowTransfers(...)
      *   ->withName(...)
+     *   ->withRealTimePaymentsRequestForPayment(...)
      *   ->withRealTimePaymentsTransfers(...)
      *   ->withRoutingNumber(...)
      *   ->withType(...)
@@ -127,6 +142,7 @@ final class RoutingNumberListResponse implements BaseModel
      *
      * @param ACHTransfers|value-of<ACHTransfers> $achTransfers
      * @param FednowTransfers|value-of<FednowTransfers> $fednowTransfers
+     * @param RealTimePaymentsRequestForPayment|value-of<RealTimePaymentsRequestForPayment> $realTimePaymentsRequestForPayment
      * @param RealTimePaymentsTransfers|value-of<RealTimePaymentsTransfers> $realTimePaymentsTransfers
      * @param Type|value-of<Type> $type
      * @param WireTransfers|value-of<WireTransfers> $wireTransfers
@@ -135,6 +151,7 @@ final class RoutingNumberListResponse implements BaseModel
         ACHTransfers|string $achTransfers,
         FednowTransfers|string $fednowTransfers,
         string $name,
+        RealTimePaymentsRequestForPayment|string $realTimePaymentsRequestForPayment,
         RealTimePaymentsTransfers|string $realTimePaymentsTransfers,
         string $routingNumber,
         Type|string $type,
@@ -145,6 +162,7 @@ final class RoutingNumberListResponse implements BaseModel
         $self['achTransfers'] = $achTransfers;
         $self['fednowTransfers'] = $fednowTransfers;
         $self['name'] = $name;
+        $self['realTimePaymentsRequestForPayment'] = $realTimePaymentsRequestForPayment;
         $self['realTimePaymentsTransfers'] = $realTimePaymentsTransfers;
         $self['routingNumber'] = $routingNumber;
         $self['type'] = $type;
@@ -187,6 +205,20 @@ final class RoutingNumberListResponse implements BaseModel
     {
         $self = clone $this;
         $self['name'] = $name;
+
+        return $self;
+    }
+
+    /**
+     * This routing number's support for Real-Time Payments Requests for Payment.
+     *
+     * @param RealTimePaymentsRequestForPayment|value-of<RealTimePaymentsRequestForPayment> $realTimePaymentsRequestForPayment
+     */
+    public function withRealTimePaymentsRequestForPayment(
+        RealTimePaymentsRequestForPayment|string $realTimePaymentsRequestForPayment
+    ): self {
+        $self = clone $this;
+        $self['realTimePaymentsRequestForPayment'] = $realTimePaymentsRequestForPayment;
 
         return $self;
     }

@@ -124,6 +124,8 @@ final class CheckTransfersService implements CheckTransfersContract
      * @param string $cursor return the page of entries after this one
      * @param string $idempotencyKey Filter records to the one with the specified `idempotency_key` you chose for that object. This value is unique across Increase and is used to ensure that a request is only processed once. Learn more about [idempotency](https://increase.com/documentation/idempotency-keys).
      * @param int $limit Limit the size of the list that is returned. The default (and maximum) is 100 objects.
+     *
+     * Defaults to `100`.
      * @param Status|StatusShape $status
      * @param RequestOpts|null $requestOptions
      *
@@ -136,7 +138,7 @@ final class CheckTransfersService implements CheckTransfersContract
         CreatedAt|array|null $createdAt = null,
         ?string $cursor = null,
         ?string $idempotencyKey = null,
-        ?int $limit = null,
+        int $limit = 100,
         Status|array|null $status = null,
         RequestOptions|array|null $requestOptions = null,
     ): Page {
@@ -200,7 +202,7 @@ final class CheckTransfersService implements CheckTransfersContract
     /**
      * @api
      *
-     * Stop payment on a Check Transfer
+     * Request a stop payment on a Check Transfer. This can be done any time before the check is deposited. A stopped check cannot be deposited and the funds held by the transfer's Pending Transaction are released back to the account's available balance.
      *
      * @param string $checkTransferID the identifier of the Check Transfer
      * @param Reason|value-of<Reason> $reason the reason why this transfer should be stopped

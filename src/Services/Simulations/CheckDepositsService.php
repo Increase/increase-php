@@ -39,7 +39,9 @@ final class CheckDepositsService implements CheckDepositsContract
      *
      * @param string $checkDepositID the identifier of the Check Deposit you wish to adjust
      * @param int $amount The adjustment amount in the minor unit of the Check Deposit's currency (e.g., cents). A negative amount means that the funds are being clawed back by the other bank and is a debit to your account. Defaults to the negative of the Check Deposit amount.
-     * @param Reason|value-of<Reason> $reason The reason for the adjustment. Defaults to `non_conforming_item`, which is often used for a low quality image that the recipient wasn't able to handle.
+     * @param Reason|value-of<Reason> $reason The reason for the adjustment.
+     *
+     * Defaults to `non_conforming_item`.
      * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
@@ -47,7 +49,7 @@ final class CheckDepositsService implements CheckDepositsContract
     public function adjustment(
         string $checkDepositID,
         ?int $amount = null,
-        Reason|string|null $reason = null,
+        Reason|string $reason = 'non_conforming_item',
         RequestOptions|array|null $requestOptions = null,
     ): CheckDeposit {
         $params = Util::removeNulls(['amount' => $amount, 'reason' => $reason]);

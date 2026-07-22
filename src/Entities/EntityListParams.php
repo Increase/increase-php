@@ -53,6 +53,8 @@ final class EntityListParams implements BaseModel
 
     /**
      * Limit the size of the list that is returned. The default (and maximum) is 100 objects.
+     *
+     * Defaults to `100`.
      */
     #[Optional]
     public ?int $limit;
@@ -132,6 +134,8 @@ final class EntityListParams implements BaseModel
 
     /**
      * Limit the size of the list that is returned. The default (and maximum) is 100 objects.
+     *
+     * Defaults to `100`.
      */
     public function withLimit(int $limit): self
     {

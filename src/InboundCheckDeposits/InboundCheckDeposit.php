@@ -27,6 +27,7 @@ use Increase\InboundCheckDeposits\InboundCheckDeposit\Type;
  *   accountNumberID: string|null,
  *   adjustments: list<Adjustment|AdjustmentShape>,
  *   amount: int,
+ *   automaticallyResolvesAt: \DateTimeInterface,
  *   backImageFileID: string|null,
  *   bankOfFirstDepositRoutingNumber: string|null,
  *   checkNumber: string|null,
@@ -85,6 +86,12 @@ final class InboundCheckDeposit implements BaseModel
      */
     #[Required]
     public int $amount;
+
+    /**
+     * The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which the Inbound Check Deposit will be automatically resolved if it has not been actioned by then.
+     */
+    #[Required('automatically_resolves_at')]
+    public \DateTimeInterface $automaticallyResolvesAt;
 
     /**
      * The ID for the File containing the image of the back of the check.
@@ -190,6 +197,7 @@ final class InboundCheckDeposit implements BaseModel
      *   accountNumberID: ...,
      *   adjustments: ...,
      *   amount: ...,
+     *   automaticallyResolvesAt: ...,
      *   backImageFileID: ...,
      *   bankOfFirstDepositRoutingNumber: ...,
      *   checkNumber: ...,
@@ -217,6 +225,7 @@ final class InboundCheckDeposit implements BaseModel
      *   ->withAccountNumberID(...)
      *   ->withAdjustments(...)
      *   ->withAmount(...)
+     *   ->withAutomaticallyResolvesAt(...)
      *   ->withBackImageFileID(...)
      *   ->withBankOfFirstDepositRoutingNumber(...)
      *   ->withCheckNumber(...)
@@ -257,6 +266,7 @@ final class InboundCheckDeposit implements BaseModel
         ?string $accountNumberID,
         array $adjustments,
         int $amount,
+        \DateTimeInterface $automaticallyResolvesAt,
         ?string $backImageFileID,
         ?string $bankOfFirstDepositRoutingNumber,
         ?string $checkNumber,
@@ -280,6 +290,7 @@ final class InboundCheckDeposit implements BaseModel
         $self['accountNumberID'] = $accountNumberID;
         $self['adjustments'] = $adjustments;
         $self['amount'] = $amount;
+        $self['automaticallyResolvesAt'] = $automaticallyResolvesAt;
         $self['backImageFileID'] = $backImageFileID;
         $self['bankOfFirstDepositRoutingNumber'] = $bankOfFirstDepositRoutingNumber;
         $self['checkNumber'] = $checkNumber;
@@ -362,6 +373,18 @@ final class InboundCheckDeposit implements BaseModel
     {
         $self = clone $this;
         $self['amount'] = $amount;
+
+        return $self;
+    }
+
+    /**
+     * The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which the Inbound Check Deposit will be automatically resolved if it has not been actioned by then.
+     */
+    public function withAutomaticallyResolvesAt(
+        \DateTimeInterface $automaticallyResolvesAt
+    ): self {
+        $self = clone $this;
+        $self['automaticallyResolvesAt'] = $automaticallyResolvesAt;
 
         return $self;
     }

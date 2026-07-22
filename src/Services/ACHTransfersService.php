@@ -58,7 +58,9 @@ final class ACHTransfersService implements ACHTransfersContract
      * @param string $companyName The name by which the recipient knows you, sent in the company batch header. We recommend setting this on every transfer; if you do not, we fall back to the ACH company name configured on your account.
      * @param DestinationAccountHolder|value-of<DestinationAccountHolder> $destinationAccountHolder the type of entity that owns the receiver's account
      * @param string $externalAccountID The ID of an External Account to initiate a transfer to. If this parameter is provided, `account_number`, `routing_number`, and `funding` must be absent.
-     * @param Funding|value-of<Funding> $funding the type of the receiver's bank account
+     * @param Funding|value-of<Funding> $funding The type of the receiver's bank account.
+     *
+     * Defaults to `checking`.
      * @param string $individualID Your internal identifier for the transfer recipient. This value is informational and not verified by the recipient's bank. Most callers can leave this unset.
      * @param string $individualName The name of the transfer recipient. This value is informational and not verified by the recipient's bank.
      * @param PreferredEffectiveDate|PreferredEffectiveDateShape $preferredEffectiveDate Configuration for how the effective date of the transfer will be set. This determines same-day vs future-dated settlement timing. If not set, defaults to a `settlement_schedule` of `same_day`. If set, exactly one of the child attributes must be set.
@@ -82,7 +84,7 @@ final class ACHTransfersService implements ACHTransfersContract
         ?string $companyName = null,
         DestinationAccountHolder|string|null $destinationAccountHolder = null,
         ?string $externalAccountID = null,
-        Funding|string|null $funding = null,
+        Funding|string $funding = 'checking',
         ?string $individualID = null,
         ?string $individualName = null,
         PreferredEffectiveDate|array|null $preferredEffectiveDate = null,
@@ -153,6 +155,8 @@ final class ACHTransfersService implements ACHTransfersContract
      * @param string $externalAccountID filter ACH Transfers to those made to the specified External Account
      * @param string $idempotencyKey Filter records to the one with the specified `idempotency_key` you chose for that object. This value is unique across Increase and is used to ensure that a request is only processed once. Learn more about [idempotency](https://increase.com/documentation/idempotency-keys).
      * @param int $limit Limit the size of the list that is returned. The default (and maximum) is 100 objects.
+     *
+     * Defaults to `100`.
      * @param Status|StatusShape $status
      * @param RequestOpts|null $requestOptions
      *
@@ -166,7 +170,7 @@ final class ACHTransfersService implements ACHTransfersContract
         ?string $cursor = null,
         ?string $externalAccountID = null,
         ?string $idempotencyKey = null,
-        ?int $limit = null,
+        int $limit = 100,
         Status|array|null $status = null,
         RequestOptions|array|null $requestOptions = null,
     ): Page {

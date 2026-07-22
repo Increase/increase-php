@@ -29,7 +29,9 @@ final class LegalIdentifier implements BaseModel
     public string $value;
 
     /**
-     * The category of the legal identifier. If not provided, the default is `us_employer_identification_number`.
+     * The category of the legal identifier.
+     *
+     * Defaults to `us_employer_identification_number`.
      *
      * @var value-of<Category>|null $category
      */
@@ -87,7 +89,9 @@ final class LegalIdentifier implements BaseModel
     }
 
     /**
-     * The category of the legal identifier. If not provided, the default is `us_employer_identification_number`.
+     * The category of the legal identifier.
+     *
+     * Defaults to `us_employer_identification_number`.
      *
      * @param Category|value-of<Category> $category
      */

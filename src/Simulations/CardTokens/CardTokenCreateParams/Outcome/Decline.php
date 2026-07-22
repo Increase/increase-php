@@ -22,6 +22,8 @@ final class Decline implements BaseModel
     /**
      * The reason for the decline.
      *
+     * Defaults to `do_not_honor`.
+     *
      * @var value-of<Reason>|null $reason
      */
     #[Optional(enum: Reason::class)]
@@ -50,6 +52,8 @@ final class Decline implements BaseModel
 
     /**
      * The reason for the decline.
+     *
+     * Defaults to `do_not_honor`.
      *
      * @param Reason|value-of<Reason> $reason
      */

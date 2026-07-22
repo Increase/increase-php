@@ -22,10 +22,10 @@ interface PhysicalCardProfilesContract
     /**
      * @api
      *
-     * @param string $carrierImageFileID the identifier of the File containing the physical card's carrier image
+     * @param string $carrierImageFileID The identifier of the File containing the physical card's carrier image. This must have `purpose: physical_card_carrier` and be a 2550x3300 pixel PNG with a density of 300 dots per inch (DPI).
      * @param string $contactPhone a phone number the user can contact to receive support for their card
      * @param string $description a description you can use to identify the Card Profile
-     * @param string $frontImageFileID the identifier of the File containing the physical card's front image
+     * @param string $frontImageFileID The identifier of the File containing the physical card's front image. This must have `purpose: physical_card_front` and be a 2100x1344 pixel PNG with a density of 600 dots per inch (DPI).
      * @param string $programID the identifier for the Program that this Physical Card Profile falls under
      * @param FrontText|FrontTextShape $frontText Text printed on the front of the card. Reach out to [support@increase.com](mailto:support@increase.com) for more information.
      * @param RequestOpts|null $requestOptions
@@ -61,6 +61,8 @@ interface PhysicalCardProfilesContract
      * @param string $cursor return the page of entries after this one
      * @param string $idempotencyKey Filter records to the one with the specified `idempotency_key` you chose for that object. This value is unique across Increase and is used to ensure that a request is only processed once. Learn more about [idempotency](https://increase.com/documentation/idempotency-keys).
      * @param int $limit Limit the size of the list that is returned. The default (and maximum) is 100 objects.
+     *
+     * Defaults to `100`.
      * @param Status|StatusShape $status
      * @param RequestOpts|null $requestOptions
      *
@@ -71,7 +73,7 @@ interface PhysicalCardProfilesContract
     public function list(
         ?string $cursor = null,
         ?string $idempotencyKey = null,
-        ?int $limit = null,
+        int $limit = 100,
         Status|array|null $status = null,
         RequestOptions|array|null $requestOptions = null,
     ): Page;

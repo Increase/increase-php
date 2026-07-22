@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Increase\ExternalAccounts\ExternalAccountCreateParams;
 
 /**
- * The type of the destination account. Defaults to `checking`.
+ * The type of the destination account.
  */
 enum Funding: string
 {

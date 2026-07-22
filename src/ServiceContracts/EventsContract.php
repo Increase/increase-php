@@ -55,7 +55,7 @@ interface EventsContract
         Category|array|null $category = null,
         CreatedAt|array|null $createdAt = null,
         ?string $cursor = null,
-        ?int $limit = null,
+        int $limit = 100,
         OrderBy|array|null $orderBy = null,
         RequestOptions|array|null $requestOptions = null,
     ): Page;

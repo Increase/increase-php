@@ -123,7 +123,7 @@ final class DigitalCardProfilesService implements DigitalCardProfilesContract
     public function list(
         ?string $cursor = null,
         ?string $idempotencyKey = null,
-        ?int $limit = null,
+        int $limit = 100,
         Status|array|null $status = null,
         RequestOptions|array|null $requestOptions = null,
     ): Page {

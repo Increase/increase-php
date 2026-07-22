@@ -96,7 +96,7 @@ final class ACHTransfersService implements ACHTransfersContract
      *
      * @param string $achTransferID the identifier of the ACH Transfer you wish to return
      * @param string $addendaInformation Free-form information the returning bank includes in the return addenda. For a `file_record_edit_criteria` (R17) return, set this to `QUESTIONABLE` to simulate a return the bank believes was initiated under questionable circumstances.
-     * @param Reason|value-of<Reason> $reason The reason why the Federal Reserve or destination bank returned this transfer. Defaults to `no_account`.
+     * @param Reason|value-of<Reason> $reason the reason why the Federal Reserve or destination bank returned this transfer
      * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
@@ -104,7 +104,7 @@ final class ACHTransfersService implements ACHTransfersContract
     public function return(
         string $achTransferID,
         ?string $addendaInformation = null,
-        Reason|string|null $reason = null,
+        Reason|string $reason = 'no_account',
         RequestOptions|array|null $requestOptions = null,
     ): ACHTransfer {
         $params = Util::removeNulls(

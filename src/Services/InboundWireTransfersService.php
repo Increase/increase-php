@@ -78,7 +78,7 @@ final class InboundWireTransfersService implements InboundWireTransfersContract
         ?string $accountNumberID = null,
         CreatedAt|array|null $createdAt = null,
         ?string $cursor = null,
-        ?int $limit = null,
+        int $limit = 100,
         Status|array|null $status = null,
         ?string $wireDrawdownRequestID = null,
         RequestOptions|array|null $requestOptions = null,

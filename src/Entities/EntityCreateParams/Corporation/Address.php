@@ -88,8 +88,8 @@ final class Address implements BaseModel
      */
     public static function with(
         string $city,
-        string $country,
         string $line1,
+        string $country = 'US',
         ?string $line2 = null,
         ?string $state = null,
         ?string $zip = null,

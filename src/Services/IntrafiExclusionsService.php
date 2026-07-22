@@ -98,7 +98,7 @@ final class IntrafiExclusionsService implements IntrafiExclusionsContract
         ?string $cursor = null,
         ?string $entityID = null,
         ?string $idempotencyKey = null,
-        ?int $limit = null,
+        int $limit = 100,
         RequestOptions|array|null $requestOptions = null,
     ): Page {
         $params = Util::removeNulls(

@@ -65,11 +65,11 @@ final class ACHPrenotificationsService implements ACHPrenotificationsContract
         ?string $companyDiscretionaryData = null,
         ?string $companyEntryDescription = null,
         ?string $companyName = null,
-        CreditDebitIndicator|string|null $creditDebitIndicator = null,
+        CreditDebitIndicator|string $creditDebitIndicator = 'debit',
         ?string $effectiveDate = null,
         ?string $individualID = null,
         ?string $individualName = null,
-        StandardEntryClassCode|string|null $standardEntryClassCode = null,
+        StandardEntryClassCode|string $standardEntryClassCode = 'corporate_credit_or_debit',
         RequestOptions|array|null $requestOptions = null,
     ): ACHPrenotification {
         $params = Util::removeNulls(
@@ -135,7 +135,7 @@ final class ACHPrenotificationsService implements ACHPrenotificationsContract
         CreatedAt|array|null $createdAt = null,
         ?string $cursor = null,
         ?string $idempotencyKey = null,
-        ?int $limit = null,
+        int $limit = 100,
         RequestOptions|array|null $requestOptions = null,
     ): Page {
         $params = Util::removeNulls(

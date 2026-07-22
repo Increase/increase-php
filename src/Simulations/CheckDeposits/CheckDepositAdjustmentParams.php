@@ -32,7 +32,7 @@ final class CheckDepositAdjustmentParams implements BaseModel
     public ?int $amount;
 
     /**
-     * The reason for the adjustment. Defaults to `non_conforming_item`, which is often used for a low quality image that the recipient wasn't able to handle.
+     * The reason for the adjustment.
      *
      * @var value-of<Reason>|null $reason
      */
@@ -75,7 +75,7 @@ final class CheckDepositAdjustmentParams implements BaseModel
     }
 
     /**
-     * The reason for the adjustment. Defaults to `non_conforming_item`, which is often used for a low quality image that the recipient wasn't able to handle.
+     * The reason for the adjustment.
      *
      * @param Reason|value-of<Reason> $reason
      */

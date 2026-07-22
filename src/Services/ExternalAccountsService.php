@@ -43,7 +43,7 @@ final class ExternalAccountsService implements ExternalAccountsContract
      * @param string $description the name you choose for the Account
      * @param string $routingNumber the American Bankers' Association (ABA) Routing Transit Number (RTN) for the destination account
      * @param AccountHolder|value-of<AccountHolder> $accountHolder the type of entity that owns the External Account
-     * @param Funding|value-of<Funding> $funding The type of the destination account. Defaults to `checking`.
+     * @param Funding|value-of<Funding> $funding the type of the destination account
      * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
@@ -53,7 +53,7 @@ final class ExternalAccountsService implements ExternalAccountsContract
         string $description,
         string $routingNumber,
         AccountHolder|string|null $accountHolder = null,
-        Funding|string|null $funding = null,
+        Funding|string $funding = 'checking',
         RequestOptions|array|null $requestOptions = null,
     ): ExternalAccount {
         $params = Util::removeNulls(
@@ -148,7 +148,7 @@ final class ExternalAccountsService implements ExternalAccountsContract
     public function list(
         ?string $cursor = null,
         ?string $idempotencyKey = null,
-        ?int $limit = null,
+        int $limit = 100,
         ?string $routingNumber = null,
         \Increase\ExternalAccounts\ExternalAccountListParams\Status|array|null $status = null,
         RequestOptions|array|null $requestOptions = null,

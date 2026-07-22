@@ -110,7 +110,7 @@ interface CardsContract
         CreatedAt|array|null $createdAt = null,
         ?string $cursor = null,
         ?string $idempotencyKey = null,
-        ?int $limit = null,
+        int $limit = 100,
         \Increase\Cards\CardListParams\Status|array|null $status = null,
         RequestOptions|array|null $requestOptions = null,
     ): Page;

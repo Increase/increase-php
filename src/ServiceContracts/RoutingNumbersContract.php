@@ -29,7 +29,7 @@ interface RoutingNumbersContract
     public function list(
         string $routingNumber,
         ?string $cursor = null,
-        ?int $limit = null,
+        int $limit = 100,
         RequestOptions|array|null $requestOptions = null,
     ): Page;
 }

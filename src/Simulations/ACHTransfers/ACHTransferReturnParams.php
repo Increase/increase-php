@@ -32,7 +32,7 @@ final class ACHTransferReturnParams implements BaseModel
     public ?string $addendaInformation;
 
     /**
-     * The reason why the Federal Reserve or destination bank returned this transfer. Defaults to `no_account`.
+     * The reason why the Federal Reserve or destination bank returned this transfer.
      *
      * @var value-of<Reason>|null $reason
      */
@@ -75,7 +75,7 @@ final class ACHTransferReturnParams implements BaseModel
     }
 
     /**
-     * The reason why the Federal Reserve or destination bank returned this transfer. Defaults to `no_account`.
+     * The reason why the Federal Reserve or destination bank returned this transfer.
      *
      * @param Reason|value-of<Reason> $reason
      */

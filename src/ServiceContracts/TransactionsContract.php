@@ -51,7 +51,7 @@ interface TransactionsContract
         Category|array|null $category = null,
         CreatedAt|array|null $createdAt = null,
         ?string $cursor = null,
-        ?int $limit = null,
+        int $limit = 100,
         ?string $routeID = null,
         RequestOptions|array|null $requestOptions = null,
     ): Page;

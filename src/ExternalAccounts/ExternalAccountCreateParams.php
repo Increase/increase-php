@@ -58,7 +58,7 @@ final class ExternalAccountCreateParams implements BaseModel
     public ?string $accountHolder;
 
     /**
-     * The type of the destination account. Defaults to `checking`.
+     * The type of the destination account.
      *
      * @var value-of<Funding>|null $funding
      */
@@ -163,7 +163,7 @@ final class ExternalAccountCreateParams implements BaseModel
     }
 
     /**
-     * The type of the destination account. Defaults to `checking`.
+     * The type of the destination account.
      *
      * @param Funding|value-of<Funding> $funding
      */

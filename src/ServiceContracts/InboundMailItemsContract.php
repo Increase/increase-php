@@ -48,7 +48,7 @@ interface InboundMailItemsContract
     public function list(
         CreatedAt|array|null $createdAt = null,
         ?string $cursor = null,
-        ?int $limit = null,
+        int $limit = 100,
         ?string $lockboxAddressID = null,
         ?string $lockboxRecipientID = null,
         RequestOptions|array|null $requestOptions = null,

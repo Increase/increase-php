@@ -77,8 +77,8 @@ final class FileCreateParams implements BaseModel
      */
     public static function with(
         string|FileParam $file,
-        Purpose|string $purpose,
-        ?string $description = null
+        Purpose|string $purpose = 'other',
+        ?string $description = null,
     ): self {
         $self = new self;
 

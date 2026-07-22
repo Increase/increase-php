@@ -69,7 +69,7 @@ final class OAuthConnectionsService implements OAuthConnectionsContract
      */
     public function list(
         ?string $cursor = null,
-        ?int $limit = null,
+        int $limit = 100,
         ?string $oauthApplicationID = null,
         Status|array|null $status = null,
         RequestOptions|array|null $requestOptions = null,

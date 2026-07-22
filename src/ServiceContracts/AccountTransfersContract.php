@@ -69,7 +69,7 @@ interface AccountTransfersContract
         CreatedAt|array|null $createdAt = null,
         ?string $cursor = null,
         ?string $idempotencyKey = null,
-        ?int $limit = null,
+        int $limit = 100,
         RequestOptions|array|null $requestOptions = null,
     ): Page;
 

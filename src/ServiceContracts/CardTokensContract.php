@@ -45,7 +45,7 @@ interface CardTokensContract
     public function list(
         CreatedAt|array|null $createdAt = null,
         ?string $cursor = null,
-        ?int $limit = null,
+        int $limit = 100,
         RequestOptions|array|null $requestOptions = null,
     ): Page;
 

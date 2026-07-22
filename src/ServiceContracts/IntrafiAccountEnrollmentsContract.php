@@ -62,7 +62,7 @@ interface IntrafiAccountEnrollmentsContract
         ?string $accountID = null,
         ?string $cursor = null,
         ?string $idempotencyKey = null,
-        ?int $limit = null,
+        int $limit = 100,
         Status|array|null $status = null,
         RequestOptions|array|null $requestOptions = null,
     ): Page;

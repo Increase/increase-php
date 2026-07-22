@@ -45,7 +45,7 @@ interface AccountStatementsContract
     public function list(
         ?string $accountID = null,
         ?string $cursor = null,
-        ?int $limit = null,
+        int $limit = 100,
         StatementPeriodStart|array|null $statementPeriodStart = null,
         RequestOptions|array|null $requestOptions = null,
     ): Page;

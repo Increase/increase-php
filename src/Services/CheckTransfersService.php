@@ -136,7 +136,7 @@ final class CheckTransfersService implements CheckTransfersContract
         CreatedAt|array|null $createdAt = null,
         ?string $cursor = null,
         ?string $idempotencyKey = null,
-        ?int $limit = null,
+        int $limit = 100,
         Status|array|null $status = null,
         RequestOptions|array|null $requestOptions = null,
     ): Page {
@@ -200,7 +200,7 @@ final class CheckTransfersService implements CheckTransfersContract
     /**
      * @api
      *
-     * Stop payment on a Check Transfer
+     * Request a stop payment on a Check Transfer. This can be done any time before the check is deposited. A stopped check cannot be deposited and the funds held by the transfer's Pending Transaction are released back to the account's available balance.
      *
      * @param string $checkTransferID the identifier of the Check Transfer
      * @param Reason|value-of<Reason> $reason the reason why this transfer should be stopped

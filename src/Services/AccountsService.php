@@ -151,7 +151,7 @@ final class AccountsService implements AccountsContract
         ?string $entityID = null,
         ?string $idempotencyKey = null,
         ?string $informationalEntityID = null,
-        ?int $limit = null,
+        int $limit = 100,
         ?string $programID = null,
         Status|array|null $status = null,
         RequestOptions|array|null $requestOptions = null,

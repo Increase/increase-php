@@ -208,7 +208,7 @@ final class EntitiesService implements EntitiesContract
         CreatedAt|array|null $createdAt = null,
         ?string $cursor = null,
         ?string $idempotencyKey = null,
-        ?int $limit = null,
+        int $limit = 100,
         Status|array|null $status = null,
         ValidationStatus|array|null $validationStatus = null,
         RequestOptions|array|null $requestOptions = null,

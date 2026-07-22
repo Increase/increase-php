@@ -82,7 +82,7 @@ final class ACHTransfersService implements ACHTransfersContract
         ?string $companyName = null,
         DestinationAccountHolder|string|null $destinationAccountHolder = null,
         ?string $externalAccountID = null,
-        Funding|string|null $funding = null,
+        Funding|string $funding = 'checking',
         ?string $individualID = null,
         ?string $individualName = null,
         PreferredEffectiveDate|array|null $preferredEffectiveDate = null,
@@ -166,7 +166,7 @@ final class ACHTransfersService implements ACHTransfersContract
         ?string $cursor = null,
         ?string $externalAccountID = null,
         ?string $idempotencyKey = null,
-        ?int $limit = null,
+        int $limit = 100,
         Status|array|null $status = null,
         RequestOptions|array|null $requestOptions = null,
     ): Page {

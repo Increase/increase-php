@@ -65,7 +65,7 @@ final class InboundWireDrawdownRequestsService implements InboundWireDrawdownReq
      */
     public function list(
         ?string $cursor = null,
-        ?int $limit = null,
+        int $limit = 100,
         RequestOptions|array|null $requestOptions = null,
     ): Page {
         $params = Util::removeNulls(['cursor' => $cursor, 'limit' => $limit]);

@@ -86,7 +86,7 @@ interface RealTimePaymentsTransfersContract
         ?string $cursor = null,
         ?string $externalAccountID = null,
         ?string $idempotencyKey = null,
-        ?int $limit = null,
+        int $limit = 100,
         Status|array|null $status = null,
         RequestOptions|array|null $requestOptions = null,
     ): Page;

@@ -166,7 +166,7 @@ final class ExportsService implements ExportsContract
         Form1099Int|array|null $form1099Int = null,
         Form1099Misc|array|null $form1099Misc = null,
         ?string $idempotencyKey = null,
-        ?int $limit = null,
+        int $limit = 100,
         Status|array|null $status = null,
         RequestOptions|array|null $requestOptions = null,
     ): Page {

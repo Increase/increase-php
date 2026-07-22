@@ -95,8 +95,8 @@ final class Identification implements BaseModel
      * @param Passport|PassportShape|null $passport
      */
     public static function with(
-        Method|string $method,
         string $number,
+        Method|string $method = 'social_security_number',
         DriversLicense|array|null $driversLicense = null,
         Other|array|null $other = null,
         Passport|array|null $passport = null,

@@ -62,6 +62,8 @@ final class OAuthApplicationsService implements OAuthApplicationsContract
      * @param CreatedAt|CreatedAtShape $createdAt
      * @param string $cursor return the page of entries after this one
      * @param int $limit Limit the size of the list that is returned. The default (and maximum) is 100 objects.
+     *
+     * Defaults to `100`.
      * @param Status|StatusShape $status
      * @param RequestOpts|null $requestOptions
      *
@@ -72,7 +74,7 @@ final class OAuthApplicationsService implements OAuthApplicationsContract
     public function list(
         CreatedAt|array|null $createdAt = null,
         ?string $cursor = null,
-        ?int $limit = null,
+        int $limit = 100,
         Status|array|null $status = null,
         RequestOptions|array|null $requestOptions = null,
     ): Page {

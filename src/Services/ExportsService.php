@@ -152,6 +152,8 @@ final class ExportsService implements ExportsContract
      * @param Form1099Misc|Form1099MiscShape $form1099Misc
      * @param string $idempotencyKey Filter records to the one with the specified `idempotency_key` you chose for that object. This value is unique across Increase and is used to ensure that a request is only processed once. Learn more about [idempotency](https://increase.com/documentation/idempotency-keys).
      * @param int $limit Limit the size of the list that is returned. The default (and maximum) is 100 objects.
+     *
+     * Defaults to `100`.
      * @param Status|StatusShape $status
      * @param RequestOpts|null $requestOptions
      *
@@ -166,7 +168,7 @@ final class ExportsService implements ExportsContract
         Form1099Int|array|null $form1099Int = null,
         Form1099Misc|array|null $form1099Misc = null,
         ?string $idempotencyKey = null,
-        ?int $limit = null,
+        int $limit = 100,
         Status|array|null $status = null,
         RequestOptions|array|null $requestOptions = null,
     ): Page {

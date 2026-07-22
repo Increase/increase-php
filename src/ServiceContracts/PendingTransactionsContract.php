@@ -58,6 +58,8 @@ interface PendingTransactionsContract
      * @param CreatedAt|CreatedAtShape $createdAt
      * @param string $cursor return the page of entries after this one
      * @param int $limit Limit the size of the list that is returned. The default (and maximum) is 100 objects.
+     *
+     * Defaults to `100`.
      * @param string $routeID filter pending transactions to those belonging to the specified Route
      * @param Status|StatusShape $status
      * @param RequestOpts|null $requestOptions
@@ -71,7 +73,7 @@ interface PendingTransactionsContract
         Category|array|null $category = null,
         CreatedAt|array|null $createdAt = null,
         ?string $cursor = null,
-        ?int $limit = null,
+        int $limit = 100,
         ?string $routeID = null,
         Status|array|null $status = null,
         RequestOptions|array|null $requestOptions = null,

@@ -90,6 +90,8 @@ final class ACHPrenotificationCreateParams implements BaseModel
     /**
      * Whether the Prenotification is for a future debit or credit.
      *
+     * Defaults to `debit`.
+     *
      * @var value-of<CreditDebitIndicator>|null $creditDebitIndicator
      */
     #[Optional('credit_debit_indicator', enum: CreditDebitIndicator::class)]
@@ -115,6 +117,8 @@ final class ACHPrenotificationCreateParams implements BaseModel
 
     /**
      * The [Standard Entry Class (SEC) code](/documentation/ach-standard-entry-class-codes) to use for the ACH Prenotification.
+     *
+     * Defaults to `corporate_credit_or_debit`.
      *
      * @var value-of<StandardEntryClassCode>|null $standardEntryClassCode
      */
@@ -282,6 +286,8 @@ final class ACHPrenotificationCreateParams implements BaseModel
     /**
      * Whether the Prenotification is for a future debit or credit.
      *
+     * Defaults to `debit`.
+     *
      * @param CreditDebitIndicator|value-of<CreditDebitIndicator> $creditDebitIndicator
      */
     public function withCreditDebitIndicator(
@@ -328,6 +334,8 @@ final class ACHPrenotificationCreateParams implements BaseModel
 
     /**
      * The [Standard Entry Class (SEC) code](/documentation/ach-standard-entry-class-codes) to use for the ACH Prenotification.
+     *
+     * Defaults to `corporate_credit_or_debit`.
      *
      * @param StandardEntryClassCode|value-of<StandardEntryClassCode> $standardEntryClassCode
      */

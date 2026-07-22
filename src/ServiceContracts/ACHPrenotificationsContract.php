@@ -29,11 +29,15 @@ interface ACHPrenotificationsContract
      * @param string $companyDiscretionaryData the data you choose to associate with the ACH Prenotification
      * @param string $companyEntryDescription the description you wish to be shown to the recipient
      * @param string $companyName the name by which the recipient knows you
-     * @param CreditDebitIndicator|value-of<CreditDebitIndicator> $creditDebitIndicator whether the Prenotification is for a future debit or credit
+     * @param CreditDebitIndicator|value-of<CreditDebitIndicator> $creditDebitIndicator Whether the Prenotification is for a future debit or credit.
+     *
+     * Defaults to `debit`.
      * @param string $effectiveDate The ACH Prenotification effective date in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format.
      * @param string $individualID your identifier for the recipient
      * @param string $individualName The name of therecipient. This value is informational and not verified by the recipient's bank.
-     * @param StandardEntryClassCode|value-of<StandardEntryClassCode> $standardEntryClassCode the [Standard Entry Class (SEC) code](/documentation/ach-standard-entry-class-codes) to use for the ACH Prenotification
+     * @param StandardEntryClassCode|value-of<StandardEntryClassCode> $standardEntryClassCode The [Standard Entry Class (SEC) code](/documentation/ach-standard-entry-class-codes) to use for the ACH Prenotification.
+     *
+     * Defaults to `corporate_credit_or_debit`.
      * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
@@ -47,11 +51,11 @@ interface ACHPrenotificationsContract
         ?string $companyDiscretionaryData = null,
         ?string $companyEntryDescription = null,
         ?string $companyName = null,
-        CreditDebitIndicator|string|null $creditDebitIndicator = null,
+        CreditDebitIndicator|string $creditDebitIndicator = 'debit',
         ?string $effectiveDate = null,
         ?string $individualID = null,
         ?string $individualName = null,
-        StandardEntryClassCode|string|null $standardEntryClassCode = null,
+        StandardEntryClassCode|string $standardEntryClassCode = 'corporate_credit_or_debit',
         RequestOptions|array|null $requestOptions = null,
     ): ACHPrenotification;
 
@@ -75,6 +79,8 @@ interface ACHPrenotificationsContract
      * @param string $cursor return the page of entries after this one
      * @param string $idempotencyKey Filter records to the one with the specified `idempotency_key` you chose for that object. This value is unique across Increase and is used to ensure that a request is only processed once. Learn more about [idempotency](https://increase.com/documentation/idempotency-keys).
      * @param int $limit Limit the size of the list that is returned. The default (and maximum) is 100 objects.
+     *
+     * Defaults to `100`.
      * @param RequestOpts|null $requestOptions
      *
      * @return Page<ACHPrenotification>
@@ -85,7 +91,7 @@ interface ACHPrenotificationsContract
         CreatedAt|array|null $createdAt = null,
         ?string $cursor = null,
         ?string $idempotencyKey = null,
-        ?int $limit = null,
+        int $limit = 100,
         RequestOptions|array|null $requestOptions = null,
     ): Page;
 }

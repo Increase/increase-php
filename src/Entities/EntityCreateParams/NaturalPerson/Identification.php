@@ -36,6 +36,8 @@ final class Identification implements BaseModel
     /**
      * A method that can be used to verify the individual's identity.
      *
+     * Defaults to `social_security_number`.
+     *
      * @var value-of<Method> $method
      */
     #[Required(enum: Method::class)]
@@ -95,8 +97,8 @@ final class Identification implements BaseModel
      * @param Passport|PassportShape|null $passport
      */
     public static function with(
-        Method|string $method,
         string $number,
+        Method|string $method = 'social_security_number',
         DriversLicense|array|null $driversLicense = null,
         Other|array|null $other = null,
         Passport|array|null $passport = null,
@@ -115,6 +117,8 @@ final class Identification implements BaseModel
 
     /**
      * A method that can be used to verify the individual's identity.
+     *
+     * Defaults to `social_security_number`.
      *
      * @param Method|value-of<Method> $method
      */

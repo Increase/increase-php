@@ -38,6 +38,8 @@ final class FileCreateParams implements BaseModel
     /**
      * What the File will be used for in Increase's systems.
      *
+     * Defaults to `other`.
+     *
      * @var value-of<Purpose> $purpose
      */
     #[Required(enum: Purpose::class)]
@@ -77,8 +79,8 @@ final class FileCreateParams implements BaseModel
      */
     public static function with(
         string|FileParam $file,
-        Purpose|string $purpose,
-        ?string $description = null
+        Purpose|string $purpose = 'other',
+        ?string $description = null,
     ): self {
         $self = new self;
 
@@ -103,6 +105,8 @@ final class FileCreateParams implements BaseModel
 
     /**
      * What the File will be used for in Increase's systems.
+     *
+     * Defaults to `other`.
      *
      * @param Purpose|value-of<Purpose> $purpose
      */

@@ -25,7 +25,9 @@ interface ExternalAccountsContract
      * @param string $description the name you choose for the Account
      * @param string $routingNumber the American Bankers' Association (ABA) Routing Transit Number (RTN) for the destination account
      * @param AccountHolder|value-of<AccountHolder> $accountHolder the type of entity that owns the External Account
-     * @param Funding|value-of<Funding> $funding The type of the destination account. Defaults to `checking`.
+     * @param Funding|value-of<Funding> $funding The type of the destination account.
+     *
+     * Defaults to `checking`.
      * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
@@ -35,7 +37,7 @@ interface ExternalAccountsContract
         string $description,
         string $routingNumber,
         AccountHolder|string|null $accountHolder = null,
-        Funding|string|null $funding = null,
+        Funding|string $funding = 'checking',
         RequestOptions|array|null $requestOptions = null,
     ): ExternalAccount;
 
@@ -79,6 +81,8 @@ interface ExternalAccountsContract
      * @param string $cursor return the page of entries after this one
      * @param string $idempotencyKey Filter records to the one with the specified `idempotency_key` you chose for that object. This value is unique across Increase and is used to ensure that a request is only processed once. Learn more about [idempotency](https://increase.com/documentation/idempotency-keys).
      * @param int $limit Limit the size of the list that is returned. The default (and maximum) is 100 objects.
+     *
+     * Defaults to `100`.
      * @param string $routingNumber filter External Accounts to those with the specified Routing Number
      * @param \Increase\ExternalAccounts\ExternalAccountListParams\Status|StatusShape $status
      * @param RequestOpts|null $requestOptions
@@ -90,7 +94,7 @@ interface ExternalAccountsContract
     public function list(
         ?string $cursor = null,
         ?string $idempotencyKey = null,
-        ?int $limit = null,
+        int $limit = 100,
         ?string $routingNumber = null,
         \Increase\ExternalAccounts\ExternalAccountListParams\Status|array|null $status = null,
         RequestOptions|array|null $requestOptions = null,

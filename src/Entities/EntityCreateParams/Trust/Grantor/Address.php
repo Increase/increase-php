@@ -34,6 +34,8 @@ final class Address implements BaseModel
 
     /**
      * The two-letter ISO 3166-1 alpha-2 code for the country of the address.
+     *
+     * Defaults to `US`.
      */
     #[Required]
     public string $country;
@@ -88,8 +90,8 @@ final class Address implements BaseModel
      */
     public static function with(
         string $city,
-        string $country,
         string $line1,
+        string $country = 'US',
         ?string $line2 = null,
         ?string $state = null,
         ?string $zip = null,
@@ -120,6 +122,8 @@ final class Address implements BaseModel
 
     /**
      * The two-letter ISO 3166-1 alpha-2 code for the country of the address.
+     *
+     * Defaults to `US`.
      */
     public function withCountry(string $country): self
     {

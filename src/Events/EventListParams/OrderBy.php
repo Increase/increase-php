@@ -24,6 +24,8 @@ final class OrderBy implements BaseModel
     /**
      * The direction to order in.
      *
+     * Defaults to `ascending`.
+     *
      * @var value-of<Direction>|null $direction
      */
     #[Optional(enum: Direction::class)]
@@ -64,6 +66,8 @@ final class OrderBy implements BaseModel
 
     /**
      * The direction to order in.
+     *
+     * Defaults to `ascending`.
      *
      * @param Direction|value-of<Direction> $direction
      */

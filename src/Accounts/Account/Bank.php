@@ -14,4 +14,6 @@ enum Bank: string
     case FIRST_INTERNET_BANK = 'first_internet_bank';
 
     case GRASSHOPPER_BANK = 'grasshopper_bank';
+
+    case INCREASE_BANK = 'increase_bank';
 }

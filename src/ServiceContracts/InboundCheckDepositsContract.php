@@ -38,6 +38,8 @@ interface InboundCheckDepositsContract
      * @param CreatedAt|CreatedAtShape $createdAt
      * @param string $cursor return the page of entries after this one
      * @param int $limit Limit the size of the list that is returned. The default (and maximum) is 100 objects.
+     *
+     * Defaults to `100`.
      * @param RequestOpts|null $requestOptions
      *
      * @return Page<InboundCheckDeposit>
@@ -49,7 +51,7 @@ interface InboundCheckDepositsContract
         ?string $checkTransferID = null,
         CreatedAt|array|null $createdAt = null,
         ?string $cursor = null,
-        ?int $limit = null,
+        int $limit = 100,
         RequestOptions|array|null $requestOptions = null,
     ): Page;
 

@@ -40,10 +40,10 @@ final class PhysicalCardProfilesService implements PhysicalCardProfilesContract
      *
      * Create a Physical Card Profile
      *
-     * @param string $carrierImageFileID the identifier of the File containing the physical card's carrier image
+     * @param string $carrierImageFileID The identifier of the File containing the physical card's carrier image. This must have `purpose: physical_card_carrier` and be a 2550x3300 pixel PNG with a density of 300 dots per inch (DPI).
      * @param string $contactPhone a phone number the user can contact to receive support for their card
      * @param string $description a description you can use to identify the Card Profile
-     * @param string $frontImageFileID the identifier of the File containing the physical card's front image
+     * @param string $frontImageFileID The identifier of the File containing the physical card's front image. This must have `purpose: physical_card_front` and be a 2100x1344 pixel PNG with a density of 600 dots per inch (DPI).
      * @param string $programID the identifier for the Program that this Physical Card Profile falls under
      * @param FrontText|FrontTextShape $frontText Text printed on the front of the card. Reach out to [support@increase.com](mailto:support@increase.com) for more information.
      * @param RequestOpts|null $requestOptions

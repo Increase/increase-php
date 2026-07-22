@@ -50,7 +50,7 @@ final class DebtorAddress implements BaseModel
     public ?string $line2;
 
     /**
-     * The ZIP code of the address.
+     * The postal code of the address.
      */
     #[Required('postal_code')]
     public ?string $postalCode;
@@ -158,7 +158,7 @@ final class DebtorAddress implements BaseModel
     }
 
     /**
-     * The ZIP code of the address.
+     * The postal code of the address.
      */
     public function withPostalCode(?string $postalCode): self
     {

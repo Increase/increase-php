@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Increase\WireTransfers\WireTransferCreateParams\Creditor;
 
-use Increase\Core\Attributes\Required;
+use Increase\Core\Attributes\Optional;
 use Increase\Core\Concerns\SdkModel;
 use Increase\Core\Contracts\BaseModel;
 use Increase\WireTransfers\WireTransferCreateParams\Creditor\Address\Unstructured;
@@ -14,7 +14,9 @@ use Increase\WireTransfers\WireTransferCreateParams\Creditor\Address\Unstructure
  *
  * @phpstan-import-type UnstructuredShape from \Increase\WireTransfers\WireTransferCreateParams\Creditor\Address\Unstructured
  *
- * @phpstan-type AddressShape = array{unstructured: Unstructured|UnstructuredShape}
+ * @phpstan-type AddressShape = array{
+ *   unstructured?: null|Unstructured|UnstructuredShape
+ * }
  */
 final class Address implements BaseModel
 {
@@ -24,23 +26,9 @@ final class Address implements BaseModel
     /**
      * Unstructured address lines.
      */
-    #[Required]
-    public Unstructured $unstructured;
+    #[Optional]
+    public ?Unstructured $unstructured;
 
-    /**
-     * `new Address()` is missing required properties by the API.
-     *
-     * To enforce required parameters use
-     * ```
-     * Address::with(unstructured: ...)
-     * ```
-     *
-     * Otherwise ensure the following setters are called
-     *
-     * ```
-     * (new Address)->withUnstructured(...)
-     * ```
-     */
     public function __construct()
     {
         $this->initialize();
@@ -51,13 +39,13 @@ final class Address implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param Unstructured|UnstructuredShape $unstructured
+     * @param Unstructured|UnstructuredShape|null $unstructured
      */
-    public static function with(Unstructured|array $unstructured): self
+    public static function with(Unstructured|array|null $unstructured = null): self
     {
         $self = new self;
 
-        $self['unstructured'] = $unstructured;
+        null !== $unstructured && $self['unstructured'] = $unstructured;
 
         return $self;
     }

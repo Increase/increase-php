@@ -34,7 +34,7 @@ final class PhysicalCardProfileCreateParams implements BaseModel
     use SdkParams;
 
     /**
-     * The identifier of the File containing the physical card's carrier image.
+     * The identifier of the File containing the physical card's carrier image. This must have `purpose: physical_card_carrier` and be a 2550x3300 pixel PNG with a density of 300 dots per inch (DPI).
      */
     #[Required('carrier_image_file_id')]
     public string $carrierImageFileID;
@@ -52,7 +52,7 @@ final class PhysicalCardProfileCreateParams implements BaseModel
     public string $description;
 
     /**
-     * The identifier of the File containing the physical card's front image.
+     * The identifier of the File containing the physical card's front image. This must have `purpose: physical_card_front` and be a 2100x1344 pixel PNG with a density of 600 dots per inch (DPI).
      */
     #[Required('front_image_file_id')]
     public string $frontImageFileID;
@@ -128,7 +128,7 @@ final class PhysicalCardProfileCreateParams implements BaseModel
     }
 
     /**
-     * The identifier of the File containing the physical card's carrier image.
+     * The identifier of the File containing the physical card's carrier image. This must have `purpose: physical_card_carrier` and be a 2550x3300 pixel PNG with a density of 300 dots per inch (DPI).
      */
     public function withCarrierImageFileID(string $carrierImageFileID): self
     {
@@ -161,7 +161,7 @@ final class PhysicalCardProfileCreateParams implements BaseModel
     }
 
     /**
-     * The identifier of the File containing the physical card's front image.
+     * The identifier of the File containing the physical card's front image. This must have `purpose: physical_card_front` and be a 2100x1344 pixel PNG with a density of 600 dots per inch (DPI).
      */
     public function withFrontImageFileID(string $frontImageFileID): self
     {

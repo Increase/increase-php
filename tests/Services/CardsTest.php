@@ -80,6 +80,7 @@ final class CardsTest extends TestCase
                 'state' => 'x',
                 'line2' => 'x',
             ],
+            cardholderName: ['first' => 'x', 'last' => 'x', 'middle' => 'x'],
             description: 'Card for Ian Crease',
             digitalWallet: [
                 'digitalCardProfileID' => 'digital_card_profile_id',

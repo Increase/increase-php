@@ -9,6 +9,7 @@ use Increase\Cards\CardCreateDetailsIframeParams;
 use Increase\Cards\CardCreateParams;
 use Increase\Cards\CardCreateParams\AuthorizationControls;
 use Increase\Cards\CardCreateParams\BillingAddress;
+use Increase\Cards\CardCreateParams\CardholderName;
 use Increase\Cards\CardCreateParams\DigitalWallet;
 use Increase\Cards\CardDetails;
 use Increase\Cards\CardIframeURL;
@@ -28,6 +29,7 @@ use Increase\ServiceContracts\CardsRawContract;
 /**
  * @phpstan-import-type AuthorizationControlsShape from \Increase\Cards\CardCreateParams\AuthorizationControls
  * @phpstan-import-type BillingAddressShape from \Increase\Cards\CardCreateParams\BillingAddress
+ * @phpstan-import-type CardholderNameShape from \Increase\Cards\CardCreateParams\CardholderName
  * @phpstan-import-type DigitalWalletShape from \Increase\Cards\CardCreateParams\DigitalWallet
  * @phpstan-import-type AuthorizationControlsShape from \Increase\Cards\CardUpdateParams\AuthorizationControls as AuthorizationControlsShape1
  * @phpstan-import-type BillingAddressShape from \Increase\Cards\CardUpdateParams\BillingAddress as BillingAddressShape1
@@ -53,6 +55,7 @@ final class CardsRawService implements CardsRawContract
      *   accountID: string,
      *   authorizationControls?: AuthorizationControls|AuthorizationControlsShape,
      *   billingAddress?: BillingAddress|BillingAddressShape,
+     *   cardholderName?: CardholderName|CardholderNameShape,
      *   description?: string,
      *   digitalWallet?: DigitalWallet|DigitalWalletShape,
      *   entityID?: string,

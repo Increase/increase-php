@@ -7,6 +7,7 @@ namespace Increase\ServiceContracts;
 use Increase\Cards\Card;
 use Increase\Cards\CardCreateParams\AuthorizationControls;
 use Increase\Cards\CardCreateParams\BillingAddress;
+use Increase\Cards\CardCreateParams\CardholderName;
 use Increase\Cards\CardCreateParams\DigitalWallet;
 use Increase\Cards\CardDetails;
 use Increase\Cards\CardIframeURL;
@@ -19,6 +20,7 @@ use Increase\RequestOptions;
 /**
  * @phpstan-import-type AuthorizationControlsShape from \Increase\Cards\CardCreateParams\AuthorizationControls
  * @phpstan-import-type BillingAddressShape from \Increase\Cards\CardCreateParams\BillingAddress
+ * @phpstan-import-type CardholderNameShape from \Increase\Cards\CardCreateParams\CardholderName
  * @phpstan-import-type DigitalWalletShape from \Increase\Cards\CardCreateParams\DigitalWallet
  * @phpstan-import-type AuthorizationControlsShape from \Increase\Cards\CardUpdateParams\AuthorizationControls as AuthorizationControlsShape1
  * @phpstan-import-type BillingAddressShape from \Increase\Cards\CardUpdateParams\BillingAddress as BillingAddressShape1
@@ -35,6 +37,7 @@ interface CardsContract
      * @param string $accountID the Account the card should belong to
      * @param AuthorizationControls|AuthorizationControlsShape $authorizationControls controls that restrict how this card can be used
      * @param BillingAddress|BillingAddressShape $billingAddress the card's billing address
+     * @param CardholderName|CardholderNameShape $cardholderName The name of the cardholder. Used to respond to Account Name Inquiry requests from acquirers in Card Validations.
      * @param string $description the description you choose to give the card
      * @param DigitalWallet|DigitalWalletShape $digitalWallet The contact information used in the two-factor steps for digital wallet card creation. To add the card to a digital wallet, you may supply an email or phone number with this request. Otherwise, subscribe and then action a Real Time Decision with the category `digital_wallet_token_requested` or `digital_wallet_authentication_requested`.
      * @param string $entityID The Entity the card belongs to. You only need to supply this in rare situations when the card is not for the Account holder.
@@ -46,6 +49,7 @@ interface CardsContract
         string $accountID,
         AuthorizationControls|array|null $authorizationControls = null,
         BillingAddress|array|null $billingAddress = null,
+        CardholderName|array|null $cardholderName = null,
         ?string $description = null,
         DigitalWallet|array|null $digitalWallet = null,
         ?string $entityID = null,

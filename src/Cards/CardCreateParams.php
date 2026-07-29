@@ -6,6 +6,7 @@ namespace Increase\Cards;
 
 use Increase\Cards\CardCreateParams\AuthorizationControls;
 use Increase\Cards\CardCreateParams\BillingAddress;
+use Increase\Cards\CardCreateParams\CardholderName;
 use Increase\Cards\CardCreateParams\DigitalWallet;
 use Increase\Core\Attributes\Optional;
 use Increase\Core\Attributes\Required;
@@ -20,12 +21,14 @@ use Increase\Core\Contracts\BaseModel;
  *
  * @phpstan-import-type AuthorizationControlsShape from \Increase\Cards\CardCreateParams\AuthorizationControls
  * @phpstan-import-type BillingAddressShape from \Increase\Cards\CardCreateParams\BillingAddress
+ * @phpstan-import-type CardholderNameShape from \Increase\Cards\CardCreateParams\CardholderName
  * @phpstan-import-type DigitalWalletShape from \Increase\Cards\CardCreateParams\DigitalWallet
  *
  * @phpstan-type CardCreateParamsShape = array{
  *   accountID: string,
  *   authorizationControls?: null|AuthorizationControls|AuthorizationControlsShape,
  *   billingAddress?: null|BillingAddress|BillingAddressShape,
+ *   cardholderName?: null|CardholderName|CardholderNameShape,
  *   description?: string|null,
  *   digitalWallet?: null|DigitalWallet|DigitalWalletShape,
  *   entityID?: string|null,
@@ -54,6 +57,12 @@ final class CardCreateParams implements BaseModel
      */
     #[Optional('billing_address')]
     public ?BillingAddress $billingAddress;
+
+    /**
+     * The name of the cardholder. Used to respond to Account Name Inquiry requests from acquirers in Card Validations.
+     */
+    #[Optional('cardholder_name')]
+    public ?CardholderName $cardholderName;
 
     /**
      * The description you choose to give the card.
@@ -99,12 +108,14 @@ final class CardCreateParams implements BaseModel
      *
      * @param AuthorizationControls|AuthorizationControlsShape|null $authorizationControls
      * @param BillingAddress|BillingAddressShape|null $billingAddress
+     * @param CardholderName|CardholderNameShape|null $cardholderName
      * @param DigitalWallet|DigitalWalletShape|null $digitalWallet
      */
     public static function with(
         string $accountID,
         AuthorizationControls|array|null $authorizationControls = null,
         BillingAddress|array|null $billingAddress = null,
+        CardholderName|array|null $cardholderName = null,
         ?string $description = null,
         DigitalWallet|array|null $digitalWallet = null,
         ?string $entityID = null,
@@ -115,6 +126,7 @@ final class CardCreateParams implements BaseModel
 
         null !== $authorizationControls && $self['authorizationControls'] = $authorizationControls;
         null !== $billingAddress && $self['billingAddress'] = $billingAddress;
+        null !== $cardholderName && $self['cardholderName'] = $cardholderName;
         null !== $description && $self['description'] = $description;
         null !== $digitalWallet && $self['digitalWallet'] = $digitalWallet;
         null !== $entityID && $self['entityID'] = $entityID;
@@ -157,6 +169,20 @@ final class CardCreateParams implements BaseModel
     ): self {
         $self = clone $this;
         $self['billingAddress'] = $billingAddress;
+
+        return $self;
+    }
+
+    /**
+     * The name of the cardholder. Used to respond to Account Name Inquiry requests from acquirers in Card Validations.
+     *
+     * @param CardholderName|CardholderNameShape $cardholderName
+     */
+    public function withCardholderName(
+        CardholderName|array $cardholderName
+    ): self {
+        $self = clone $this;
+        $self['cardholderName'] = $cardholderName;
 
         return $self;
     }

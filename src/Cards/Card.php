@@ -6,6 +6,7 @@ namespace Increase\Cards;
 
 use Increase\Cards\Card\AuthorizationControls;
 use Increase\Cards\Card\BillingAddress;
+use Increase\Cards\Card\CardholderName;
 use Increase\Cards\Card\DigitalWallet;
 use Increase\Cards\Card\Status;
 use Increase\Cards\Card\Type;
@@ -18,6 +19,7 @@ use Increase\Core\Contracts\BaseModel;
  *
  * @phpstan-import-type AuthorizationControlsShape from \Increase\Cards\Card\AuthorizationControls
  * @phpstan-import-type BillingAddressShape from \Increase\Cards\Card\BillingAddress
+ * @phpstan-import-type CardholderNameShape from \Increase\Cards\Card\CardholderName
  * @phpstan-import-type DigitalWalletShape from \Increase\Cards\Card\DigitalWallet
  *
  * @phpstan-type CardShape = array{
@@ -26,6 +28,7 @@ use Increase\Core\Contracts\BaseModel;
  *   authorizationControls: null|AuthorizationControls|AuthorizationControlsShape,
  *   billingAddress: BillingAddress|BillingAddressShape,
  *   bin: string,
+ *   cardholderName: null|CardholderName|CardholderNameShape,
  *   createdAt: \DateTimeInterface,
  *   description: string|null,
  *   digitalWallet: null|DigitalWallet|DigitalWalletShape,
@@ -72,6 +75,12 @@ final class Card implements BaseModel
      */
     #[Required]
     public string $bin;
+
+    /**
+     * The name of the cardholder. Used to respond to Account Name Inquiry requests from acquirers in Card Validations.
+     */
+    #[Required('cardholder_name')]
+    public ?CardholderName $cardholderName;
 
     /**
      * The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which the Card was created.
@@ -148,6 +157,7 @@ final class Card implements BaseModel
      *   authorizationControls: ...,
      *   billingAddress: ...,
      *   bin: ...,
+     *   cardholderName: ...,
      *   createdAt: ...,
      *   description: ...,
      *   digitalWallet: ...,
@@ -170,6 +180,7 @@ final class Card implements BaseModel
      *   ->withAuthorizationControls(...)
      *   ->withBillingAddress(...)
      *   ->withBin(...)
+     *   ->withCardholderName(...)
      *   ->withCreatedAt(...)
      *   ->withDescription(...)
      *   ->withDigitalWallet(...)
@@ -194,6 +205,7 @@ final class Card implements BaseModel
      *
      * @param AuthorizationControls|AuthorizationControlsShape|null $authorizationControls
      * @param BillingAddress|BillingAddressShape $billingAddress
+     * @param CardholderName|CardholderNameShape|null $cardholderName
      * @param DigitalWallet|DigitalWalletShape|null $digitalWallet
      * @param Status|value-of<Status> $status
      * @param Type|value-of<Type> $type
@@ -204,6 +216,7 @@ final class Card implements BaseModel
         AuthorizationControls|array|null $authorizationControls,
         BillingAddress|array $billingAddress,
         string $bin,
+        CardholderName|array|null $cardholderName,
         \DateTimeInterface $createdAt,
         ?string $description,
         DigitalWallet|array|null $digitalWallet,
@@ -222,6 +235,7 @@ final class Card implements BaseModel
         $self['authorizationControls'] = $authorizationControls;
         $self['billingAddress'] = $billingAddress;
         $self['bin'] = $bin;
+        $self['cardholderName'] = $cardholderName;
         $self['createdAt'] = $createdAt;
         $self['description'] = $description;
         $self['digitalWallet'] = $digitalWallet;
@@ -293,6 +307,20 @@ final class Card implements BaseModel
     {
         $self = clone $this;
         $self['bin'] = $bin;
+
+        return $self;
+    }
+
+    /**
+     * The name of the cardholder. Used to respond to Account Name Inquiry requests from acquirers in Card Validations.
+     *
+     * @param CardholderName|CardholderNameShape|null $cardholderName
+     */
+    public function withCardholderName(
+        CardholderName|array|null $cardholderName
+    ): self {
+        $self = clone $this;
+        $self['cardholderName'] = $cardholderName;
 
         return $self;
     }

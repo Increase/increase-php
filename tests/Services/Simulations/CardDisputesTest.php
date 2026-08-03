@@ -51,6 +51,7 @@ final class CardDisputesTest extends TestCase
                 'acceptUserSubmission' => [],
                 'declineUserPrearbitration' => [],
                 'receiveMerchantPrearbitration' => [],
+                'reject' => ['explanation' => 'x'],
                 'represent' => [],
                 'requestFurtherInformation' => ['reason' => 'x'],
                 'timeOutChargeback' => [],

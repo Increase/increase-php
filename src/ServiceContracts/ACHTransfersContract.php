@@ -10,7 +10,6 @@ use Increase\ACHTransfers\ACHTransferCreateParams\DestinationAccountHolder;
 use Increase\ACHTransfers\ACHTransferCreateParams\Funding;
 use Increase\ACHTransfers\ACHTransferCreateParams\PreferredEffectiveDate;
 use Increase\ACHTransfers\ACHTransferCreateParams\StandardEntryClassCode;
-use Increase\ACHTransfers\ACHTransferCreateParams\TransactionTiming;
 use Increase\ACHTransfers\ACHTransferListParams\CreatedAt;
 use Increase\ACHTransfers\ACHTransferListParams\Status;
 use Increase\Core\Exceptions\APIException;
@@ -49,7 +48,6 @@ interface ACHTransfersContract
      * @param bool $requireApproval whether the transfer requires explicit approval via the dashboard or API
      * @param string $routingNumber the American Bankers' Association (ABA) Routing Transit Number (RTN) of the receiver's bank
      * @param StandardEntryClassCode|value-of<StandardEntryClassCode> $standardEntryClassCode The [Standard Entry Class (SEC) code](/documentation/ach-standard-entry-class-codes) to use for the transfer. If not provided, the default is `corporate_credit_or_debit`.
-     * @param TransactionTiming|value-of<TransactionTiming> $transactionTiming the timing of the transaction
      * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
@@ -73,7 +71,6 @@ interface ACHTransfersContract
         ?bool $requireApproval = null,
         ?string $routingNumber = null,
         StandardEntryClassCode|string|null $standardEntryClassCode = null,
-        TransactionTiming|string|null $transactionTiming = null,
         RequestOptions|array|null $requestOptions = null,
     ): ACHTransfer;
 

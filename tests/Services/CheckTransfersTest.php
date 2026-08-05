@@ -72,6 +72,7 @@ final class CheckTransfersTest extends TestCase
                 'attachmentFileID' => 'attachment_file_id',
                 'checkVoucherImageFileID' => 'check_voucher_image_file_id',
                 'note' => 'note',
+                'physicalCheckBatchID' => 'physical_check_batch_id',
                 'returnAddress' => [
                     'city' => 'city',
                     'line1' => 'line1',

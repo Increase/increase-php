@@ -30,6 +30,7 @@ use Increase\Core\Contracts\BaseModel;
  *   memo: string|null,
  *   note: string|null,
  *   payer: list<Payer|PayerShape>,
+ *   physicalCheckBatchID: string|null,
  *   recipientName: string,
  *   returnAddress: null|ReturnAddress|ReturnAddressShape,
  *   returnAddressName: string|null,
@@ -80,6 +81,12 @@ final class PhysicalCheck implements BaseModel
      */
     #[Required(list: Payer::class)]
     public array $payer;
+
+    /**
+     * The identifier of the Physical Check Batch that this check is a part of.
+     */
+    #[Required('physical_check_batch_id')]
+    public ?string $physicalCheckBatchID;
 
     /**
      * The name that will be printed on the check.
@@ -133,6 +140,7 @@ final class PhysicalCheck implements BaseModel
      *   memo: ...,
      *   note: ...,
      *   payer: ...,
+     *   physicalCheckBatchID: ...,
      *   recipientName: ...,
      *   returnAddress: ...,
      *   returnAddressName: ...,
@@ -152,6 +160,7 @@ final class PhysicalCheck implements BaseModel
      *   ->withMemo(...)
      *   ->withNote(...)
      *   ->withPayer(...)
+     *   ->withPhysicalCheckBatchID(...)
      *   ->withRecipientName(...)
      *   ->withReturnAddress(...)
      *   ->withReturnAddressName(...)
@@ -184,6 +193,7 @@ final class PhysicalCheck implements BaseModel
         ?string $memo,
         ?string $note,
         array $payer,
+        ?string $physicalCheckBatchID,
         string $recipientName,
         ReturnAddress|array|null $returnAddress,
         ?string $returnAddressName,
@@ -199,6 +209,7 @@ final class PhysicalCheck implements BaseModel
         $self['memo'] = $memo;
         $self['note'] = $note;
         $self['payer'] = $payer;
+        $self['physicalCheckBatchID'] = $physicalCheckBatchID;
         $self['recipientName'] = $recipientName;
         $self['returnAddress'] = $returnAddress;
         $self['returnAddressName'] = $returnAddressName;
@@ -277,6 +288,18 @@ final class PhysicalCheck implements BaseModel
     {
         $self = clone $this;
         $self['payer'] = $payer;
+
+        return $self;
+    }
+
+    /**
+     * The identifier of the Physical Check Batch that this check is a part of.
+     */
+    public function withPhysicalCheckBatchID(
+        ?string $physicalCheckBatchID
+    ): self {
+        $self = clone $this;
+        $self['physicalCheckBatchID'] = $physicalCheckBatchID;
 
         return $self;
     }

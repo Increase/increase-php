@@ -75,7 +75,6 @@ final class ACHTransfersTest extends TestCase
             requireApproval: true,
             routingNumber: '101050001',
             standardEntryClassCode: 'corporate_credit_or_debit',
-            transactionTiming: 'synchronous',
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType

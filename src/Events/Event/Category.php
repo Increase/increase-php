@@ -173,6 +173,10 @@ enum Category: string
 
     case LOCKBOX_UPDATED = 'lockbox.updated';
 
+    case LOCKBOX_ADDRESS_CREATED = 'lockbox_address.created';
+
+    case LOCKBOX_ADDRESS_UPDATED = 'lockbox_address.updated';
+
     case OAUTH_CONNECTION_CREATED = 'oauth_connection.created';
 
     case OAUTH_CONNECTION_DEACTIVATED = 'oauth_connection.deactivated';

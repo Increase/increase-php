@@ -10,7 +10,7 @@ use Increase\Core\Concerns\SdkModel;
 use Increase\Core\Contracts\BaseModel;
 
 /**
- * The return address to be printed on the check. If omitted this will default to an Increase-owned address that will mark checks as delivery failed and shred them.
+ * Details for where the courier will return the check to if it is unable to be delivered. Defaults to an Increase-owned address that will mark checks as delivery failed and shred them.
  *
  * @phpstan-type ReturnAddressShape = array{
  *   city: string,

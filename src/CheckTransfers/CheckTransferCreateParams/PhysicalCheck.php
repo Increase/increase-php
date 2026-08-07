@@ -30,6 +30,7 @@ use Increase\Core\Contracts\BaseModel;
  *   attachmentFileID?: string|null,
  *   checkVoucherImageFileID?: string|null,
  *   note?: string|null,
+ *   physicalCheckBatchID?: string|null,
  *   returnAddress?: null|ReturnAddress|ReturnAddressShape,
  *   returnAddressName?: string|null,
  *   shippingMethod?: null|ShippingMethod|value-of<ShippingMethod>,
@@ -42,7 +43,7 @@ final class PhysicalCheck implements BaseModel
     use SdkModel;
 
     /**
-     * Details for where Increase will mail the check.
+     * Details for where Increase will mail the check. When `physical_check_batch_id` is set, the address must match the Physical Check Batch.
      */
     #[Required('mailing_address')]
     public MailingAddress $mailingAddress;
@@ -86,7 +87,13 @@ final class PhysicalCheck implements BaseModel
     public ?string $note;
 
     /**
-     * The return address to be printed on the check. If omitted this will default to an Increase-owned address that will mark checks as delivery failed and shred them.
+     * The identifier of the Physical Check Batch to mail this check as a part of.
+     */
+    #[Optional('physical_check_batch_id')]
+    public ?string $physicalCheckBatchID;
+
+    /**
+     * Details for where the courier will return the check to if it is unable to be delivered. Defaults to an Increase-owned address that will mark checks as delivery failed and shred them.
      */
     #[Optional('return_address')]
     public ?ReturnAddress $returnAddress;
@@ -155,6 +162,7 @@ final class PhysicalCheck implements BaseModel
         ?string $attachmentFileID = null,
         ?string $checkVoucherImageFileID = null,
         ?string $note = null,
+        ?string $physicalCheckBatchID = null,
         ReturnAddress|array|null $returnAddress = null,
         ?string $returnAddressName = null,
         ShippingMethod|string|null $shippingMethod = null,
@@ -170,6 +178,7 @@ final class PhysicalCheck implements BaseModel
         null !== $attachmentFileID && $self['attachmentFileID'] = $attachmentFileID;
         null !== $checkVoucherImageFileID && $self['checkVoucherImageFileID'] = $checkVoucherImageFileID;
         null !== $note && $self['note'] = $note;
+        null !== $physicalCheckBatchID && $self['physicalCheckBatchID'] = $physicalCheckBatchID;
         null !== $returnAddress && $self['returnAddress'] = $returnAddress;
         null !== $returnAddressName && $self['returnAddressName'] = $returnAddressName;
         null !== $shippingMethod && $self['shippingMethod'] = $shippingMethod;
@@ -179,7 +188,7 @@ final class PhysicalCheck implements BaseModel
     }
 
     /**
-     * Details for where Increase will mail the check.
+     * Details for where Increase will mail the check. When `physical_check_batch_id` is set, the address must match the Physical Check Batch.
      *
      * @param MailingAddress|MailingAddressShape $mailingAddress
      */
@@ -262,7 +271,18 @@ final class PhysicalCheck implements BaseModel
     }
 
     /**
-     * The return address to be printed on the check. If omitted this will default to an Increase-owned address that will mark checks as delivery failed and shred them.
+     * The identifier of the Physical Check Batch to mail this check as a part of.
+     */
+    public function withPhysicalCheckBatchID(string $physicalCheckBatchID): self
+    {
+        $self = clone $this;
+        $self['physicalCheckBatchID'] = $physicalCheckBatchID;
+
+        return $self;
+    }
+
+    /**
+     * Details for where the courier will return the check to if it is unable to be delivered. Defaults to an Increase-owned address that will mark checks as delivery failed and shred them.
      *
      * @param ReturnAddress|ReturnAddressShape $returnAddress
      */

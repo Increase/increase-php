@@ -9,7 +9,6 @@ use Increase\ACHTransfers\ACHTransferCreateParams\DestinationAccountHolder;
 use Increase\ACHTransfers\ACHTransferCreateParams\Funding;
 use Increase\ACHTransfers\ACHTransferCreateParams\PreferredEffectiveDate;
 use Increase\ACHTransfers\ACHTransferCreateParams\StandardEntryClassCode;
-use Increase\ACHTransfers\ACHTransferCreateParams\TransactionTiming;
 use Increase\Core\Attributes\Optional;
 use Increase\Core\Attributes\Required;
 use Increase\Core\Concerns\SdkModel;
@@ -43,7 +42,6 @@ use Increase\Core\Contracts\BaseModel;
  *   requireApproval?: bool|null,
  *   routingNumber?: string|null,
  *   standardEntryClassCode?: null|StandardEntryClassCode|value-of<StandardEntryClassCode>,
- *   transactionTiming?: null|TransactionTiming|value-of<TransactionTiming>,
  * }
  */
 final class ACHTransferCreateParams implements BaseModel
@@ -172,14 +170,6 @@ final class ACHTransferCreateParams implements BaseModel
     public ?string $standardEntryClassCode;
 
     /**
-     * The timing of the transaction.
-     *
-     * @var value-of<TransactionTiming>|null $transactionTiming
-     */
-    #[Optional('transaction_timing', enum: TransactionTiming::class)]
-    public ?string $transactionTiming;
-
-    /**
      * `new ACHTransferCreateParams()` is missing required properties by the API.
      *
      * To enforce required parameters use
@@ -213,7 +203,6 @@ final class ACHTransferCreateParams implements BaseModel
      * @param Funding|value-of<Funding>|null $funding
      * @param PreferredEffectiveDate|PreferredEffectiveDateShape|null $preferredEffectiveDate
      * @param StandardEntryClassCode|value-of<StandardEntryClassCode>|null $standardEntryClassCode
-     * @param TransactionTiming|value-of<TransactionTiming>|null $transactionTiming
      */
     public static function with(
         string $accountID,
@@ -234,7 +223,6 @@ final class ACHTransferCreateParams implements BaseModel
         ?bool $requireApproval = null,
         ?string $routingNumber = null,
         StandardEntryClassCode|string|null $standardEntryClassCode = null,
-        TransactionTiming|string|null $transactionTiming = null,
     ): self {
         $self = new self;
 
@@ -257,7 +245,6 @@ final class ACHTransferCreateParams implements BaseModel
         null !== $requireApproval && $self['requireApproval'] = $requireApproval;
         null !== $routingNumber && $self['routingNumber'] = $routingNumber;
         null !== $standardEntryClassCode && $self['standardEntryClassCode'] = $standardEntryClassCode;
-        null !== $transactionTiming && $self['transactionTiming'] = $transactionTiming;
 
         return $self;
     }
@@ -474,20 +461,6 @@ final class ACHTransferCreateParams implements BaseModel
     ): self {
         $self = clone $this;
         $self['standardEntryClassCode'] = $standardEntryClassCode;
-
-        return $self;
-    }
-
-    /**
-     * The timing of the transaction.
-     *
-     * @param TransactionTiming|value-of<TransactionTiming> $transactionTiming
-     */
-    public function withTransactionTiming(
-        TransactionTiming|string $transactionTiming
-    ): self {
-        $self = clone $this;
-        $self['transactionTiming'] = $transactionTiming;
 
         return $self;
     }

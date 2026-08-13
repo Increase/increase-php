@@ -13,6 +13,8 @@ enum Category: string
 
     case ENTITY_ADDRESS = 'entity_address';
 
+    case ENTITY_IDENTITY = 'entity_identity';
+
     case BENEFICIAL_OWNER_IDENTITY = 'beneficial_owner_identity';
 
     case BENEFICIAL_OWNER_ADDRESS = 'beneficial_owner_address';

@@ -46,6 +46,7 @@ final class RealTimePaymentsTransfersService implements RealTimePaymentsTransfer
      * @param string $accountNumber the destination account number
      * @param string $debtorName The name of the transfer's sender. If not provided, defaults to the name of the account's entity.
      * @param string $externalAccountID The ID of an External Account to initiate a transfer to. If this parameter is provided, `account_number` and `routing_number` must be absent.
+     * @param string $inboundRealTimePaymentsRequestForPaymentID the ID of an Inbound Real-Time Payments Request for Payment in response to which this transfer is being sent
      * @param bool $requireApproval whether the transfer requires explicit approval via the dashboard or API
      * @param string $routingNumber the destination American Bankers' Association (ABA) Routing Transit Number (RTN)
      * @param string $ultimateCreditorName The name of the ultimate recipient of the transfer. Set this if the creditor is an intermediary receiving the payment for someone else.
@@ -62,6 +63,7 @@ final class RealTimePaymentsTransfersService implements RealTimePaymentsTransfer
         ?string $accountNumber = null,
         ?string $debtorName = null,
         ?string $externalAccountID = null,
+        ?string $inboundRealTimePaymentsRequestForPaymentID = null,
         ?bool $requireApproval = null,
         ?string $routingNumber = null,
         ?string $ultimateCreditorName = null,
@@ -77,6 +79,7 @@ final class RealTimePaymentsTransfersService implements RealTimePaymentsTransfer
                 'accountNumber' => $accountNumber,
                 'debtorName' => $debtorName,
                 'externalAccountID' => $externalAccountID,
+                'inboundRealTimePaymentsRequestForPaymentID' => $inboundRealTimePaymentsRequestForPaymentID,
                 'requireApproval' => $requireApproval,
                 'routingNumber' => $routingNumber,
                 'ultimateCreditorName' => $ultimateCreditorName,

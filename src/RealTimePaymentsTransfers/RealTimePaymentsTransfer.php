@@ -42,6 +42,7 @@ use Increase\RealTimePaymentsTransfers\RealTimePaymentsTransfer\Type;
  *   debtorName: string|null,
  *   externalAccountID: string|null,
  *   idempotencyKey: string|null,
+ *   inboundRealTimePaymentsRequestForPaymentID: string|null,
  *   pendingTransactionID: string|null,
  *   rejection: null|Rejection|RejectionShape,
  *   routingNumber: string,
@@ -147,6 +148,12 @@ final class RealTimePaymentsTransfer implements BaseModel
     public ?string $idempotencyKey;
 
     /**
+     * The identifier of the Inbound Real-Time Payments Request for Payment this transfer was sent in response to, if any.
+     */
+    #[Required('inbound_real_time_payments_request_for_payment_id')]
+    public ?string $inboundRealTimePaymentsRequestForPaymentID;
+
+    /**
      * The ID for the pending transaction representing the transfer. A pending transaction is created when the transfer [requires approval](https://increase.com/documentation/transfer-approvals#transfer-approvals) by someone else in your organization.
      */
     #[Required('pending_transaction_id')]
@@ -236,6 +243,7 @@ final class RealTimePaymentsTransfer implements BaseModel
      *   debtorName: ...,
      *   externalAccountID: ...,
      *   idempotencyKey: ...,
+     *   inboundRealTimePaymentsRequestForPaymentID: ...,
      *   pendingTransactionID: ...,
      *   rejection: ...,
      *   routingNumber: ...,
@@ -268,6 +276,7 @@ final class RealTimePaymentsTransfer implements BaseModel
      *   ->withDebtorName(...)
      *   ->withExternalAccountID(...)
      *   ->withIdempotencyKey(...)
+     *   ->withInboundRealTimePaymentsRequestForPaymentID(...)
      *   ->withPendingTransactionID(...)
      *   ->withRejection(...)
      *   ->withRoutingNumber(...)
@@ -316,6 +325,7 @@ final class RealTimePaymentsTransfer implements BaseModel
         ?string $debtorName,
         ?string $externalAccountID,
         ?string $idempotencyKey,
+        ?string $inboundRealTimePaymentsRequestForPaymentID,
         ?string $pendingTransactionID,
         Rejection|array|null $rejection,
         string $routingNumber,
@@ -344,6 +354,7 @@ final class RealTimePaymentsTransfer implements BaseModel
         $self['debtorName'] = $debtorName;
         $self['externalAccountID'] = $externalAccountID;
         $self['idempotencyKey'] = $idempotencyKey;
+        $self['inboundRealTimePaymentsRequestForPaymentID'] = $inboundRealTimePaymentsRequestForPaymentID;
         $self['pendingTransactionID'] = $pendingTransactionID;
         $self['rejection'] = $rejection;
         $self['routingNumber'] = $routingNumber;
@@ -521,6 +532,18 @@ final class RealTimePaymentsTransfer implements BaseModel
     {
         $self = clone $this;
         $self['idempotencyKey'] = $idempotencyKey;
+
+        return $self;
+    }
+
+    /**
+     * The identifier of the Inbound Real-Time Payments Request for Payment this transfer was sent in response to, if any.
+     */
+    public function withInboundRealTimePaymentsRequestForPaymentID(
+        ?string $inboundRealTimePaymentsRequestForPaymentID
+    ): self {
+        $self = clone $this;
+        $self['inboundRealTimePaymentsRequestForPaymentID'] = $inboundRealTimePaymentsRequestForPaymentID;
 
         return $self;
     }

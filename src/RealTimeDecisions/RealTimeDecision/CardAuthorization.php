@@ -52,6 +52,7 @@ use Increase\RealTimeDecisions\RealTimeDecision\CardAuthorization\Verification;
  *   networkDetails: NetworkDetails|NetworkDetailsShape,
  *   networkIdentifiers: NetworkIdentifiers|NetworkIdentifiersShape,
  *   networkRiskScore: int|null,
+ *   originalCardPaymentID: string|null,
  *   partialApprovalCapability: PartialApprovalCapability|value-of<PartialApprovalCapability>,
  *   physicalCardID: string|null,
  *   presentmentAmount: int,
@@ -189,6 +190,12 @@ final class CardAuthorization implements BaseModel
     public ?int $networkRiskScore;
 
     /**
+     * The identifier of the Card Payment containing the original authorization or card validation this transaction references. For a merchant-initiated transaction, this is the Card Payment from when the card was first stored, which is typically where the CVV2 was verified. The reference this is derived from is supplied by the merchant or their acquirer, so it is not guaranteed to be present.
+     */
+    #[Required('original_card_payment_id')]
+    public ?string $originalCardPaymentID;
+
+    /**
      * Whether or not the authorization supports partial approvals.
      *
      * @var value-of<PartialApprovalCapability> $partialApprovalCapability
@@ -286,6 +293,7 @@ final class CardAuthorization implements BaseModel
      *   networkDetails: ...,
      *   networkIdentifiers: ...,
      *   networkRiskScore: ...,
+     *   originalCardPaymentID: ...,
      *   partialApprovalCapability: ...,
      *   physicalCardID: ...,
      *   presentmentAmount: ...,
@@ -323,6 +331,7 @@ final class CardAuthorization implements BaseModel
      *   ->withNetworkDetails(...)
      *   ->withNetworkIdentifiers(...)
      *   ->withNetworkRiskScore(...)
+     *   ->withOriginalCardPaymentID(...)
      *   ->withPartialApprovalCapability(...)
      *   ->withPhysicalCardID(...)
      *   ->withPresentmentAmount(...)
@@ -379,6 +388,7 @@ final class CardAuthorization implements BaseModel
         NetworkDetails|array $networkDetails,
         NetworkIdentifiers|array $networkIdentifiers,
         ?int $networkRiskScore,
+        ?string $originalCardPaymentID,
         PartialApprovalCapability|string $partialApprovalCapability,
         ?string $physicalCardID,
         int $presentmentAmount,
@@ -412,6 +422,7 @@ final class CardAuthorization implements BaseModel
         $self['networkDetails'] = $networkDetails;
         $self['networkIdentifiers'] = $networkIdentifiers;
         $self['networkRiskScore'] = $networkRiskScore;
+        $self['originalCardPaymentID'] = $originalCardPaymentID;
         $self['partialApprovalCapability'] = $partialApprovalCapability;
         $self['physicalCardID'] = $physicalCardID;
         $self['presentmentAmount'] = $presentmentAmount;
@@ -652,6 +663,18 @@ final class CardAuthorization implements BaseModel
     {
         $self = clone $this;
         $self['networkRiskScore'] = $networkRiskScore;
+
+        return $self;
+    }
+
+    /**
+     * The identifier of the Card Payment containing the original authorization or card validation this transaction references. For a merchant-initiated transaction, this is the Card Payment from when the card was first stored, which is typically where the CVV2 was verified. The reference this is derived from is supplied by the merchant or their acquirer, so it is not guaranteed to be present.
+     */
+    public function withOriginalCardPaymentID(
+        ?string $originalCardPaymentID
+    ): self {
+        $self = clone $this;
+        $self['originalCardPaymentID'] = $originalCardPaymentID;
 
         return $self;
     }

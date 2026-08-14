@@ -23,6 +23,7 @@ use Increase\Core\Contracts\BaseModel;
  *   accountNumber?: string|null,
  *   debtorName?: string|null,
  *   externalAccountID?: string|null,
+ *   inboundRealTimePaymentsRequestForPaymentID?: string|null,
  *   requireApproval?: bool|null,
  *   routingNumber?: string|null,
  *   ultimateCreditorName?: string|null,
@@ -76,6 +77,12 @@ final class RealTimePaymentsTransferCreateParams implements BaseModel
      */
     #[Optional('external_account_id')]
     public ?string $externalAccountID;
+
+    /**
+     * The ID of an Inbound Real-Time Payments Request for Payment in response to which this transfer is being sent.
+     */
+    #[Optional('inbound_real_time_payments_request_for_payment_id')]
+    public ?string $inboundRealTimePaymentsRequestForPaymentID;
 
     /**
      * Whether the transfer requires explicit approval via the dashboard or API.
@@ -142,6 +149,7 @@ final class RealTimePaymentsTransferCreateParams implements BaseModel
         ?string $accountNumber = null,
         ?string $debtorName = null,
         ?string $externalAccountID = null,
+        ?string $inboundRealTimePaymentsRequestForPaymentID = null,
         ?bool $requireApproval = null,
         ?string $routingNumber = null,
         ?string $ultimateCreditorName = null,
@@ -157,6 +165,7 @@ final class RealTimePaymentsTransferCreateParams implements BaseModel
         null !== $accountNumber && $self['accountNumber'] = $accountNumber;
         null !== $debtorName && $self['debtorName'] = $debtorName;
         null !== $externalAccountID && $self['externalAccountID'] = $externalAccountID;
+        null !== $inboundRealTimePaymentsRequestForPaymentID && $self['inboundRealTimePaymentsRequestForPaymentID'] = $inboundRealTimePaymentsRequestForPaymentID;
         null !== $requireApproval && $self['requireApproval'] = $requireApproval;
         null !== $routingNumber && $self['routingNumber'] = $routingNumber;
         null !== $ultimateCreditorName && $self['ultimateCreditorName'] = $ultimateCreditorName;
@@ -240,6 +249,18 @@ final class RealTimePaymentsTransferCreateParams implements BaseModel
     {
         $self = clone $this;
         $self['externalAccountID'] = $externalAccountID;
+
+        return $self;
+    }
+
+    /**
+     * The ID of an Inbound Real-Time Payments Request for Payment in response to which this transfer is being sent.
+     */
+    public function withInboundRealTimePaymentsRequestForPaymentID(
+        string $inboundRealTimePaymentsRequestForPaymentID
+    ): self {
+        $self = clone $this;
+        $self['inboundRealTimePaymentsRequestForPaymentID'] = $inboundRealTimePaymentsRequestForPaymentID;
 
         return $self;
     }

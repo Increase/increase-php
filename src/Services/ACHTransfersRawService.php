@@ -11,7 +11,6 @@ use Increase\ACHTransfers\ACHTransferCreateParams\DestinationAccountHolder;
 use Increase\ACHTransfers\ACHTransferCreateParams\Funding;
 use Increase\ACHTransfers\ACHTransferCreateParams\PreferredEffectiveDate;
 use Increase\ACHTransfers\ACHTransferCreateParams\StandardEntryClassCode;
-use Increase\ACHTransfers\ACHTransferCreateParams\TransactionTiming;
 use Increase\ACHTransfers\ACHTransferListParams;
 use Increase\ACHTransfers\ACHTransferListParams\CreatedAt;
 use Increase\ACHTransfers\ACHTransferListParams\Status;
@@ -62,7 +61,6 @@ final class ACHTransfersRawService implements ACHTransfersRawContract
      *   requireApproval?: bool,
      *   routingNumber?: string,
      *   standardEntryClassCode?: value-of<StandardEntryClassCode>,
-     *   transactionTiming?: TransactionTiming|value-of<TransactionTiming>,
      * }|ACHTransferCreateParams $params
      * @param RequestOpts|null $requestOptions
      *

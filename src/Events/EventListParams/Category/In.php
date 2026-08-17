@@ -160,6 +160,8 @@ enum In: string
 
     case LOAN_DISTRIBUTION_CREATED = 'loan_distribution.created';
 
+    case LOAN_OBLIGATION_CREATED = 'loan_obligation.created';
+
     case LOAN_OFFER_CREATED = 'loan_offer.created';
 
     case LOAN_OFFER_UPDATED = 'loan_offer.updated';
@@ -169,6 +171,10 @@ enum In: string
     case LOCKBOX_CREATED = 'lockbox.created';
 
     case LOCKBOX_UPDATED = 'lockbox.updated';
+
+    case LOCKBOX_ADDRESS_CREATED = 'lockbox_address.created';
+
+    case LOCKBOX_ADDRESS_UPDATED = 'lockbox_address.updated';
 
     case OAUTH_CONNECTION_CREATED = 'oauth_connection.created';
 

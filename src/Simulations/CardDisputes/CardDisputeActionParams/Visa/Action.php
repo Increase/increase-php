@@ -17,6 +17,8 @@ enum Action: string
 
     case RECEIVE_MERCHANT_PREARBITRATION = 'receive_merchant_prearbitration';
 
+    case REJECT = 'reject';
+
     case REPRESENT = 'represent';
 
     case REQUEST_FURTHER_INFORMATION = 'request_further_information';

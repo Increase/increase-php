@@ -43,6 +43,7 @@ final class RealTimePaymentsTransfersRawService implements RealTimePaymentsTrans
      *   accountNumber?: string,
      *   debtorName?: string,
      *   externalAccountID?: string,
+     *   inboundRealTimePaymentsRequestForPaymentID?: string,
      *   requireApproval?: bool,
      *   routingNumber?: string,
      *   ultimateCreditorName?: string,

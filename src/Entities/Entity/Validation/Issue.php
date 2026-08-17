@@ -11,12 +11,14 @@ use Increase\Entities\Entity\Validation\Issue\BeneficialOwnerAddress;
 use Increase\Entities\Entity\Validation\Issue\BeneficialOwnerIdentity;
 use Increase\Entities\Entity\Validation\Issue\Category;
 use Increase\Entities\Entity\Validation\Issue\EntityAddress;
+use Increase\Entities\Entity\Validation\Issue\EntityIdentity;
 use Increase\Entities\Entity\Validation\Issue\EntityTaxIdentifier;
 
 /**
  * @phpstan-import-type BeneficialOwnerAddressShape from \Increase\Entities\Entity\Validation\Issue\BeneficialOwnerAddress
  * @phpstan-import-type BeneficialOwnerIdentityShape from \Increase\Entities\Entity\Validation\Issue\BeneficialOwnerIdentity
  * @phpstan-import-type EntityAddressShape from \Increase\Entities\Entity\Validation\Issue\EntityAddress
+ * @phpstan-import-type EntityIdentityShape from \Increase\Entities\Entity\Validation\Issue\EntityIdentity
  * @phpstan-import-type EntityTaxIdentifierShape from \Increase\Entities\Entity\Validation\Issue\EntityTaxIdentifier
  *
  * @phpstan-type IssueShape = array{
@@ -24,6 +26,7 @@ use Increase\Entities\Entity\Validation\Issue\EntityTaxIdentifier;
  *   beneficialOwnerIdentity: null|BeneficialOwnerIdentity|BeneficialOwnerIdentityShape,
  *   category: Category|value-of<Category>,
  *   entityAddress: null|EntityAddress|EntityAddressShape,
+ *   entityIdentity: null|EntityIdentity|EntityIdentityShape,
  *   entityTaxIdentifier: null|EntityTaxIdentifier|EntityTaxIdentifierShape,
  * }
  */
@@ -59,6 +62,12 @@ final class Issue implements BaseModel
     public ?EntityAddress $entityAddress;
 
     /**
+     * Details when the issue is with the entity's identity verification.
+     */
+    #[Required('entity_identity')]
+    public ?EntityIdentity $entityIdentity;
+
+    /**
      * Details when the issue is with the entity's tax ID.
      */
     #[Required('entity_tax_identifier')]
@@ -74,6 +83,7 @@ final class Issue implements BaseModel
      *   beneficialOwnerIdentity: ...,
      *   category: ...,
      *   entityAddress: ...,
+     *   entityIdentity: ...,
      *   entityTaxIdentifier: ...,
      * )
      * ```
@@ -86,6 +96,7 @@ final class Issue implements BaseModel
      *   ->withBeneficialOwnerIdentity(...)
      *   ->withCategory(...)
      *   ->withEntityAddress(...)
+     *   ->withEntityIdentity(...)
      *   ->withEntityTaxIdentifier(...)
      * ```
      */
@@ -103,6 +114,7 @@ final class Issue implements BaseModel
      * @param BeneficialOwnerIdentity|BeneficialOwnerIdentityShape|null $beneficialOwnerIdentity
      * @param Category|value-of<Category> $category
      * @param EntityAddress|EntityAddressShape|null $entityAddress
+     * @param EntityIdentity|EntityIdentityShape|null $entityIdentity
      * @param EntityTaxIdentifier|EntityTaxIdentifierShape|null $entityTaxIdentifier
      */
     public static function with(
@@ -110,6 +122,7 @@ final class Issue implements BaseModel
         BeneficialOwnerIdentity|array|null $beneficialOwnerIdentity,
         Category|string $category,
         EntityAddress|array|null $entityAddress,
+        EntityIdentity|array|null $entityIdentity,
         EntityTaxIdentifier|array|null $entityTaxIdentifier,
     ): self {
         $self = new self;
@@ -118,6 +131,7 @@ final class Issue implements BaseModel
         $self['beneficialOwnerIdentity'] = $beneficialOwnerIdentity;
         $self['category'] = $category;
         $self['entityAddress'] = $entityAddress;
+        $self['entityIdentity'] = $entityIdentity;
         $self['entityTaxIdentifier'] = $entityTaxIdentifier;
 
         return $self;
@@ -174,6 +188,20 @@ final class Issue implements BaseModel
     ): self {
         $self = clone $this;
         $self['entityAddress'] = $entityAddress;
+
+        return $self;
+    }
+
+    /**
+     * Details when the issue is with the entity's identity verification.
+     *
+     * @param EntityIdentity|EntityIdentityShape|null $entityIdentity
+     */
+    public function withEntityIdentity(
+        EntityIdentity|array|null $entityIdentity
+    ): self {
+        $self = clone $this;
+        $self['entityIdentity'] = $entityIdentity;
 
         return $self;
     }

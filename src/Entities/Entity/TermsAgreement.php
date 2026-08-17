@@ -10,7 +10,7 @@ use Increase\Core\Contracts\BaseModel;
 
 /**
  * @phpstan-type TermsAgreementShape = array{
- *   agreedAt: \DateTimeInterface, ipAddress: string, termsURL: string
+ *   agreedAt: \DateTimeInterface, ipAddress: string|null, termsURL: string
  * }
  */
 final class TermsAgreement implements BaseModel
@@ -28,7 +28,7 @@ final class TermsAgreement implements BaseModel
      * The IP address the Entity accessed reviewed the terms from.
      */
     #[Required('ip_address')]
-    public string $ipAddress;
+    public ?string $ipAddress;
 
     /**
      * The URL of the terms agreement. This link will be provided by your bank partner.
@@ -62,7 +62,7 @@ final class TermsAgreement implements BaseModel
      */
     public static function with(
         \DateTimeInterface $agreedAt,
-        string $ipAddress,
+        ?string $ipAddress,
         string $termsURL
     ): self {
         $self = new self;
@@ -88,7 +88,7 @@ final class TermsAgreement implements BaseModel
     /**
      * The IP address the Entity accessed reviewed the terms from.
      */
-    public function withIPAddress(string $ipAddress): self
+    public function withIPAddress(?string $ipAddress): self
     {
         $self = clone $this;
         $self['ipAddress'] = $ipAddress;

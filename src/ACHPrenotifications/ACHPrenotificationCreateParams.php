@@ -110,7 +110,7 @@ final class ACHPrenotificationCreateParams implements BaseModel
     public ?string $individualID;
 
     /**
-     * The name of therecipient. This value is informational and not verified by the recipient's bank.
+     * The name of the recipient. This value is informational and not verified by the recipient's bank.
      */
     #[Optional('individual_name')]
     public ?string $individualName;
@@ -322,7 +322,7 @@ final class ACHPrenotificationCreateParams implements BaseModel
     }
 
     /**
-     * The name of therecipient. This value is informational and not verified by the recipient's bank.
+     * The name of the recipient. This value is informational and not verified by the recipient's bank.
      */
     public function withIndividualName(string $individualName): self
     {

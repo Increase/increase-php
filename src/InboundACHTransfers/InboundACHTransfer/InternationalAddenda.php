@@ -133,7 +133,7 @@ final class InternationalAddenda implements BaseModel
     public string $originatingDepositoryFinancialInstitutionBranchCountry;
 
     /**
-     * An identifier for the originating bank. One of an International Bank Account Number (IBAN) bank identifier, SWIFT Bank Identification Code (BIC), or a domestic identifier like a US Routing Number.
+     * An identifier for the originating bank. One of an International Bank Account Number (IBAN) bank identifier, Swift Bank Identification Code (BIC), or a domestic identifier like a US Routing Number.
      */
     #[Required('originating_depository_financial_institution_id')]
     public string $originatingDepositoryFinancialInstitutionID;
@@ -258,7 +258,7 @@ final class InternationalAddenda implements BaseModel
     public string $receivingDepositoryFinancialInstitutionCountry;
 
     /**
-     * An identifier for the receiving bank. One of an International Bank Account Number (IBAN) bank identifier, SWIFT Bank Identification Code (BIC), or a domestic identifier like a US Routing Number.
+     * An identifier for the receiving bank. One of an International Bank Account Number (IBAN) bank identifier, Swift Bank Identification Code (BIC), or a domestic identifier like a US Routing Number.
      */
     #[Required('receiving_depository_financial_institution_id')]
     public string $receivingDepositoryFinancialInstitutionID;
@@ -576,7 +576,7 @@ final class InternationalAddenda implements BaseModel
     }
 
     /**
-     * An identifier for the originating bank. One of an International Bank Account Number (IBAN) bank identifier, SWIFT Bank Identification Code (BIC), or a domestic identifier like a US Routing Number.
+     * An identifier for the originating bank. One of an International Bank Account Number (IBAN) bank identifier, Swift Bank Identification Code (BIC), or a domestic identifier like a US Routing Number.
      */
     public function withOriginatingDepositoryFinancialInstitutionID(
         string $originatingDepositoryFinancialInstitutionID
@@ -812,7 +812,7 @@ final class InternationalAddenda implements BaseModel
     }
 
     /**
-     * An identifier for the receiving bank. One of an International Bank Account Number (IBAN) bank identifier, SWIFT Bank Identification Code (BIC), or a domestic identifier like a US Routing Number.
+     * An identifier for the receiving bank. One of an International Bank Account Number (IBAN) bank identifier, Swift Bank Identification Code (BIC), or a domestic identifier like a US Routing Number.
      */
     public function withReceivingDepositoryFinancialInstitutionID(
         string $receivingDepositoryFinancialInstitutionID

@@ -13,6 +13,8 @@ enum Status: string
 
     case CANCELED = 'canceled';
 
+    case PENDING_BATCH_COMPLETING = 'pending_batch_completing';
+
     case PENDING_SUBMISSION = 'pending_submission';
 
     case PENDING_REVIEWING = 'pending_reviewing';

@@ -10,7 +10,7 @@ use Increase\Core\Concerns\SdkModel;
 use Increase\Core\Contracts\BaseModel;
 
 /**
- * Details for where Increase will mail the check.
+ * Details for where Increase will mail the check. When `physical_check_batch_id` is set, the address must match the Physical Check Batch.
  *
  * @phpstan-type MailingAddressShape = array{
  *   city: string,

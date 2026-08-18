@@ -13,6 +13,7 @@ use Increase\Simulations\CardDisputes\CardDisputeActionParams\Visa\AcceptUserSub
 use Increase\Simulations\CardDisputes\CardDisputeActionParams\Visa\Action;
 use Increase\Simulations\CardDisputes\CardDisputeActionParams\Visa\DeclineUserPrearbitration;
 use Increase\Simulations\CardDisputes\CardDisputeActionParams\Visa\ReceiveMerchantPrearbitration;
+use Increase\Simulations\CardDisputes\CardDisputeActionParams\Visa\Reject;
 use Increase\Simulations\CardDisputes\CardDisputeActionParams\Visa\Represent;
 use Increase\Simulations\CardDisputes\CardDisputeActionParams\Visa\RequestFurtherInformation;
 use Increase\Simulations\CardDisputes\CardDisputeActionParams\Visa\TimeOutChargeback;
@@ -27,6 +28,7 @@ use Increase\Simulations\CardDisputes\CardDisputeActionParams\Visa\TimeOutUserPr
  * @phpstan-import-type AcceptUserSubmissionShape from \Increase\Simulations\CardDisputes\CardDisputeActionParams\Visa\AcceptUserSubmission
  * @phpstan-import-type DeclineUserPrearbitrationShape from \Increase\Simulations\CardDisputes\CardDisputeActionParams\Visa\DeclineUserPrearbitration
  * @phpstan-import-type ReceiveMerchantPrearbitrationShape from \Increase\Simulations\CardDisputes\CardDisputeActionParams\Visa\ReceiveMerchantPrearbitration
+ * @phpstan-import-type RejectShape from \Increase\Simulations\CardDisputes\CardDisputeActionParams\Visa\Reject
  * @phpstan-import-type RepresentShape from \Increase\Simulations\CardDisputes\CardDisputeActionParams\Visa\Represent
  * @phpstan-import-type RequestFurtherInformationShape from \Increase\Simulations\CardDisputes\CardDisputeActionParams\Visa\RequestFurtherInformation
  * @phpstan-import-type TimeOutChargebackShape from \Increase\Simulations\CardDisputes\CardDisputeActionParams\Visa\TimeOutChargeback
@@ -40,6 +42,7 @@ use Increase\Simulations\CardDisputes\CardDisputeActionParams\Visa\TimeOutUserPr
  *   acceptUserSubmission?: null|AcceptUserSubmission|AcceptUserSubmissionShape,
  *   declineUserPrearbitration?: null|DeclineUserPrearbitration|DeclineUserPrearbitrationShape,
  *   receiveMerchantPrearbitration?: null|ReceiveMerchantPrearbitration|ReceiveMerchantPrearbitrationShape,
+ *   reject?: null|Reject|RejectShape,
  *   represent?: null|Represent|RepresentShape,
  *   requestFurtherInformation?: null|RequestFurtherInformation|RequestFurtherInformationShape,
  *   timeOutChargeback?: null|TimeOutChargeback|TimeOutChargebackShape,
@@ -84,6 +87,12 @@ final class Visa implements BaseModel
      */
     #[Optional('receive_merchant_prearbitration')]
     public ?ReceiveMerchantPrearbitration $receiveMerchantPrearbitration;
+
+    /**
+     * The parameters for rejecting the dispute. Required if and only if `action` is `reject`.
+     */
+    #[Optional]
+    public ?Reject $reject;
 
     /**
      * The parameters for re-presenting the dispute. Required if and only if `action` is `represent`.
@@ -150,6 +159,7 @@ final class Visa implements BaseModel
      * @param AcceptUserSubmission|AcceptUserSubmissionShape|null $acceptUserSubmission
      * @param DeclineUserPrearbitration|DeclineUserPrearbitrationShape|null $declineUserPrearbitration
      * @param ReceiveMerchantPrearbitration|ReceiveMerchantPrearbitrationShape|null $receiveMerchantPrearbitration
+     * @param Reject|RejectShape|null $reject
      * @param Represent|RepresentShape|null $represent
      * @param RequestFurtherInformation|RequestFurtherInformationShape|null $requestFurtherInformation
      * @param TimeOutChargeback|TimeOutChargebackShape|null $timeOutChargeback
@@ -163,6 +173,7 @@ final class Visa implements BaseModel
         AcceptUserSubmission|array|null $acceptUserSubmission = null,
         DeclineUserPrearbitration|array|null $declineUserPrearbitration = null,
         ReceiveMerchantPrearbitration|array|null $receiveMerchantPrearbitration = null,
+        Reject|array|null $reject = null,
         Represent|array|null $represent = null,
         RequestFurtherInformation|array|null $requestFurtherInformation = null,
         TimeOutChargeback|array|null $timeOutChargeback = null,
@@ -178,6 +189,7 @@ final class Visa implements BaseModel
         null !== $acceptUserSubmission && $self['acceptUserSubmission'] = $acceptUserSubmission;
         null !== $declineUserPrearbitration && $self['declineUserPrearbitration'] = $declineUserPrearbitration;
         null !== $receiveMerchantPrearbitration && $self['receiveMerchantPrearbitration'] = $receiveMerchantPrearbitration;
+        null !== $reject && $self['reject'] = $reject;
         null !== $represent && $self['represent'] = $represent;
         null !== $requestFurtherInformation && $self['requestFurtherInformation'] = $requestFurtherInformation;
         null !== $timeOutChargeback && $self['timeOutChargeback'] = $timeOutChargeback;
@@ -253,6 +265,19 @@ final class Visa implements BaseModel
     ): self {
         $self = clone $this;
         $self['receiveMerchantPrearbitration'] = $receiveMerchantPrearbitration;
+
+        return $self;
+    }
+
+    /**
+     * The parameters for rejecting the dispute. Required if and only if `action` is `reject`.
+     *
+     * @param Reject|RejectShape $reject
+     */
+    public function withReject(Reject|array $reject): self
+    {
+        $self = clone $this;
+        $self['reject'] = $reject;
 
         return $self;
     }

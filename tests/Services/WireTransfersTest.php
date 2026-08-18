@@ -51,10 +51,13 @@ final class WireTransfersTest extends TestCase
             creditor: [
                 'name' => 'Ian Crease',
                 'address' => [
-                    'unstructured' => [
+                    'structured' => [
+                        'city' => 'New York',
+                        'country' => 'US',
                         'line1' => '33 Liberty Street',
-                        'line2' => 'New York',
-                        'line3' => 'NY 10045',
+                        'line2' => 'line2',
+                        'postalCode' => '10045',
+                        'state' => 'NY',
                     ],
                 ],
             ],
@@ -71,8 +74,13 @@ final class WireTransfersTest extends TestCase
             debtor: [
                 'name' => 'name',
                 'address' => [
-                    'unstructured' => [
-                        'line1' => 'line1', 'line2' => 'line2', 'line3' => 'line3',
+                    'structured' => [
+                        'city' => 'city',
+                        'country' => 'xx',
+                        'line1' => 'line1',
+                        'line2' => 'line2',
+                        'postalCode' => 'postal_code',
+                        'state' => 'state',
                     ],
                 ],
             ],

@@ -34,7 +34,7 @@ interface ACHPrenotificationsContract
      * Defaults to `debit`.
      * @param string $effectiveDate The ACH Prenotification effective date in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format.
      * @param string $individualID your identifier for the recipient
-     * @param string $individualName The name of therecipient. This value is informational and not verified by the recipient's bank.
+     * @param string $individualName The name of the recipient. This value is informational and not verified by the recipient's bank.
      * @param StandardEntryClassCode|value-of<StandardEntryClassCode> $standardEntryClassCode The [Standard Entry Class (SEC) code](/documentation/ach-standard-entry-class-codes) to use for the ACH Prenotification.
      *
      * Defaults to `corporate_credit_or_debit`.

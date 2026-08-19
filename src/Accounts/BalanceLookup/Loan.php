@@ -17,6 +17,12 @@ use Increase\Core\Contracts\BaseModel;
  * @phpstan-type LoanShape = array{
  *   dueAt: \DateTimeInterface|null,
  *   dueBalance: int,
+ *   dueFees: int|null,
+ *   dueInterest: int|null,
+ *   duePrincipal: int|null,
+ *   notDueFees: int|null,
+ *   notDueInterest: int|null,
+ *   notDuePrincipal: int|null,
  *   pastDueBalance: int,
  *   receivables: null|Receivables|ReceivablesShape,
  * }
@@ -39,6 +45,42 @@ final class Loan implements BaseModel
     public int $dueBalance;
 
     /**
+     * The fees on the loan that are due and unpaid.
+     */
+    #[Required('due_fees')]
+    public ?int $dueFees;
+
+    /**
+     * The interest on the loan that is due and unpaid.
+     */
+    #[Required('due_interest')]
+    public ?int $dueInterest;
+
+    /**
+     * The principal on the loan that is due and unpaid.
+     */
+    #[Required('due_principal')]
+    public ?int $duePrincipal;
+
+    /**
+     * The fees on the loan that are not yet due.
+     */
+    #[Required('not_due_fees')]
+    public ?int $notDueFees;
+
+    /**
+     * The interest on the loan that is not yet due.
+     */
+    #[Required('not_due_interest')]
+    public ?int $notDueInterest;
+
+    /**
+     * The principal on the loan that is not yet due.
+     */
+    #[Required('not_due_principal')]
+    public ?int $notDuePrincipal;
+
+    /**
      * The amount past due on the loan.
      */
     #[Required('past_due_balance')]
@@ -55,7 +97,18 @@ final class Loan implements BaseModel
      *
      * To enforce required parameters use
      * ```
-     * Loan::with(dueAt: ..., dueBalance: ..., pastDueBalance: ..., receivables: ...)
+     * Loan::with(
+     *   dueAt: ...,
+     *   dueBalance: ...,
+     *   dueFees: ...,
+     *   dueInterest: ...,
+     *   duePrincipal: ...,
+     *   notDueFees: ...,
+     *   notDueInterest: ...,
+     *   notDuePrincipal: ...,
+     *   pastDueBalance: ...,
+     *   receivables: ...,
+     * )
      * ```
      *
      * Otherwise ensure the following setters are called
@@ -64,6 +117,12 @@ final class Loan implements BaseModel
      * (new Loan)
      *   ->withDueAt(...)
      *   ->withDueBalance(...)
+     *   ->withDueFees(...)
+     *   ->withDueInterest(...)
+     *   ->withDuePrincipal(...)
+     *   ->withNotDueFees(...)
+     *   ->withNotDueInterest(...)
+     *   ->withNotDuePrincipal(...)
      *   ->withPastDueBalance(...)
      *   ->withReceivables(...)
      * ```
@@ -83,6 +142,12 @@ final class Loan implements BaseModel
     public static function with(
         ?\DateTimeInterface $dueAt,
         int $dueBalance,
+        ?int $dueFees,
+        ?int $dueInterest,
+        ?int $duePrincipal,
+        ?int $notDueFees,
+        ?int $notDueInterest,
+        ?int $notDuePrincipal,
         int $pastDueBalance,
         Receivables|array|null $receivables,
     ): self {
@@ -90,6 +155,12 @@ final class Loan implements BaseModel
 
         $self['dueAt'] = $dueAt;
         $self['dueBalance'] = $dueBalance;
+        $self['dueFees'] = $dueFees;
+        $self['dueInterest'] = $dueInterest;
+        $self['duePrincipal'] = $duePrincipal;
+        $self['notDueFees'] = $notDueFees;
+        $self['notDueInterest'] = $notDueInterest;
+        $self['notDuePrincipal'] = $notDuePrincipal;
         $self['pastDueBalance'] = $pastDueBalance;
         $self['receivables'] = $receivables;
 
@@ -114,6 +185,72 @@ final class Loan implements BaseModel
     {
         $self = clone $this;
         $self['dueBalance'] = $dueBalance;
+
+        return $self;
+    }
+
+    /**
+     * The fees on the loan that are due and unpaid.
+     */
+    public function withDueFees(?int $dueFees): self
+    {
+        $self = clone $this;
+        $self['dueFees'] = $dueFees;
+
+        return $self;
+    }
+
+    /**
+     * The interest on the loan that is due and unpaid.
+     */
+    public function withDueInterest(?int $dueInterest): self
+    {
+        $self = clone $this;
+        $self['dueInterest'] = $dueInterest;
+
+        return $self;
+    }
+
+    /**
+     * The principal on the loan that is due and unpaid.
+     */
+    public function withDuePrincipal(?int $duePrincipal): self
+    {
+        $self = clone $this;
+        $self['duePrincipal'] = $duePrincipal;
+
+        return $self;
+    }
+
+    /**
+     * The fees on the loan that are not yet due.
+     */
+    public function withNotDueFees(?int $notDueFees): self
+    {
+        $self = clone $this;
+        $self['notDueFees'] = $notDueFees;
+
+        return $self;
+    }
+
+    /**
+     * The interest on the loan that is not yet due.
+     */
+    public function withNotDueInterest(?int $notDueInterest): self
+    {
+        $self = clone $this;
+        $self['notDueInterest'] = $notDueInterest;
+
+        return $self;
+    }
+
+    /**
+     * The principal on the loan that is not yet due.
+     */
+    public function withNotDuePrincipal(?int $notDuePrincipal): self
+    {
+        $self = clone $this;
+        $self['notDuePrincipal'] = $notDuePrincipal;
 
         return $self;
     }

@@ -23,6 +23,7 @@ use Increase\Core\Contracts\BaseModel;
  * @phpstan-type BeneficialOwnerUpdateParamsShape = array{
  *   address?: null|Address|AddressShape,
  *   confirmedNoUsTaxID?: bool|null,
+ *   dateOfBirth?: string|null,
  *   identification?: null|Identification|IdentificationShape,
  *   name?: string|null,
  *   prongs?: list<Prong|value-of<Prong>>|null,
@@ -45,6 +46,12 @@ final class BeneficialOwnerUpdateParams implements BaseModel
      */
     #[Optional('confirmed_no_us_tax_id')]
     public ?bool $confirmedNoUsTaxID;
+
+    /**
+     * The person's date of birth in YYYY-MM-DD format.
+     */
+    #[Optional('date_of_birth')]
+    public ?string $dateOfBirth;
 
     /**
      * A means of verifying the person's identity.
@@ -83,6 +90,7 @@ final class BeneficialOwnerUpdateParams implements BaseModel
     public static function with(
         Address|array|null $address = null,
         ?bool $confirmedNoUsTaxID = null,
+        ?string $dateOfBirth = null,
         Identification|array|null $identification = null,
         ?string $name = null,
         ?array $prongs = null,
@@ -91,6 +99,7 @@ final class BeneficialOwnerUpdateParams implements BaseModel
 
         null !== $address && $self['address'] = $address;
         null !== $confirmedNoUsTaxID && $self['confirmedNoUsTaxID'] = $confirmedNoUsTaxID;
+        null !== $dateOfBirth && $self['dateOfBirth'] = $dateOfBirth;
         null !== $identification && $self['identification'] = $identification;
         null !== $name && $self['name'] = $name;
         null !== $prongs && $self['prongs'] = $prongs;
@@ -118,6 +127,17 @@ final class BeneficialOwnerUpdateParams implements BaseModel
     {
         $self = clone $this;
         $self['confirmedNoUsTaxID'] = $confirmedNoUsTaxID;
+
+        return $self;
+    }
+
+    /**
+     * The person's date of birth in YYYY-MM-DD format.
+     */
+    public function withDateOfBirth(string $dateOfBirth): self
+    {
+        $self = clone $this;
+        $self['dateOfBirth'] = $dateOfBirth;
 
         return $self;
     }

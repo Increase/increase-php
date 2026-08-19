@@ -104,6 +104,7 @@ final class BeneficialOwnersRawService implements BeneficialOwnersRawContract
      * @param array{
      *   address?: Address|AddressShape,
      *   confirmedNoUsTaxID?: bool,
+     *   dateOfBirth?: string,
      *   identification?: Identification|IdentificationShape,
      *   name?: string,
      *   prongs?: list<BeneficialOwnerUpdateParams\Prong|value-of<BeneficialOwnerUpdateParams\Prong>>,

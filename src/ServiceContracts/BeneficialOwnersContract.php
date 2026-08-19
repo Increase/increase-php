@@ -59,6 +59,7 @@ interface BeneficialOwnersContract
      * @param string $entityBeneficialOwnerID the identifier of the Beneficial Owner to update
      * @param Address|AddressShape $address The individual's physical address. Mail receiving locations like PO Boxes and PMB's are disallowed.
      * @param bool $confirmedNoUsTaxID the identification method for an individual can only be a passport, driver's license, or other document if you've confirmed the individual does not have a US tax id (either a Social Security Number or Individual Taxpayer Identification Number)
+     * @param string $dateOfBirth the person's date of birth in YYYY-MM-DD format
      * @param Identification|IdentificationShape $identification a means of verifying the person's identity
      * @param string $name the individual's legal name
      * @param list<\Increase\BeneficialOwners\BeneficialOwnerUpdateParams\Prong|value-of<\Increase\BeneficialOwners\BeneficialOwnerUpdateParams\Prong>> $prongs Why this person is considered a beneficial owner of the entity. At least one option is required, if a person is both a control person and owner, submit an array containing both. Providing this replaces the beneficial owner's current prongs.
@@ -70,6 +71,7 @@ interface BeneficialOwnersContract
         string $entityBeneficialOwnerID,
         Address|array|null $address = null,
         ?bool $confirmedNoUsTaxID = null,
+        ?string $dateOfBirth = null,
         Identification|array|null $identification = null,
         ?string $name = null,
         ?array $prongs = null,

@@ -7,16 +7,14 @@ namespace Increase\WireTransfers\WireTransferCreateParams\Debtor;
 use Increase\Core\Attributes\Optional;
 use Increase\Core\Concerns\SdkModel;
 use Increase\Core\Contracts\BaseModel;
-use Increase\WireTransfers\WireTransferCreateParams\Debtor\Address\Unstructured;
+use Increase\WireTransfers\WireTransferCreateParams\Debtor\Address\Structured;
 
 /**
  * The person or business's address.
  *
- * @phpstan-import-type UnstructuredShape from \Increase\WireTransfers\WireTransferCreateParams\Debtor\Address\Unstructured
+ * @phpstan-import-type StructuredShape from \Increase\WireTransfers\WireTransferCreateParams\Debtor\Address\Structured
  *
- * @phpstan-type AddressShape = array{
- *   unstructured?: null|Unstructured|UnstructuredShape
- * }
+ * @phpstan-type AddressShape = array{structured?: null|Structured|StructuredShape}
  */
 final class Address implements BaseModel
 {
@@ -24,10 +22,10 @@ final class Address implements BaseModel
     use SdkModel;
 
     /**
-     * Unstructured address lines.
+     * Structured address components. City and country are required.
      */
     #[Optional]
-    public ?Unstructured $unstructured;
+    public ?Structured $structured;
 
     public function __construct()
     {
@@ -39,26 +37,26 @@ final class Address implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param Unstructured|UnstructuredShape|null $unstructured
+     * @param Structured|StructuredShape|null $structured
      */
-    public static function with(Unstructured|array|null $unstructured = null): self
+    public static function with(Structured|array|null $structured = null): self
     {
         $self = new self;
 
-        null !== $unstructured && $self['unstructured'] = $unstructured;
+        null !== $structured && $self['structured'] = $structured;
 
         return $self;
     }
 
     /**
-     * Unstructured address lines.
+     * Structured address components. City and country are required.
      *
-     * @param Unstructured|UnstructuredShape $unstructured
+     * @param Structured|StructuredShape $structured
      */
-    public function withUnstructured(Unstructured|array $unstructured): self
+    public function withStructured(Structured|array $structured): self
     {
         $self = clone $this;
-        $self['unstructured'] = $unstructured;
+        $self['structured'] = $structured;
 
         return $self;
     }

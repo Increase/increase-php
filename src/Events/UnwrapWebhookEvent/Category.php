@@ -207,6 +207,8 @@ enum Category: string
 
     case PHYSICAL_CHECK_UPDATED = 'physical_check.updated';
 
+    case PLAID_PROCESSOR_TOKEN_CREATED = 'plaid_processor_token.created';
+
     case CHECKBOOK_CREATED = 'checkbook.created';
 
     case CHECKBOOK_UPDATED = 'checkbook.updated';

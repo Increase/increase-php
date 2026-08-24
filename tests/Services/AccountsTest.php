@@ -49,9 +49,9 @@ final class AccountsTest extends TestCase
             loan: [
                 'creditLimit' => 0,
                 'gracePeriodDays' => 0,
+                'maturityDate' => '2019-12-27',
                 'statementDayOfMonth' => 1,
                 'statementPaymentType' => 'balance',
-                'maturityDate' => '2019-12-27',
             ],
             programID: 'program_i2v2os4mwza1oetokh9i',
         );

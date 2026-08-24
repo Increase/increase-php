@@ -15,10 +15,10 @@ use Increase\Core\Contracts\BaseModel;
  *
  * @phpstan-type LoanShape = array{
  *   creditLimit: int,
- *   gracePeriodDays: int,
- *   statementDayOfMonth: int,
- *   statementPaymentType: StatementPaymentType|value-of<StatementPaymentType>,
+ *   gracePeriodDays?: int|null,
  *   maturityDate?: string|null,
+ *   statementDayOfMonth?: int|null,
+ *   statementPaymentType?: null|StatementPaymentType|value-of<StatementPaymentType>,
  * }
  */
 final class Loan implements BaseModel
@@ -35,22 +35,8 @@ final class Loan implements BaseModel
     /**
      * The number of days after the statement date that the Account can be past due before being considered delinquent.
      */
-    #[Required('grace_period_days')]
-    public int $gracePeriodDays;
-
-    /**
-     * The day of the month on which the loan statement is generated.
-     */
-    #[Required('statement_day_of_month')]
-    public int $statementDayOfMonth;
-
-    /**
-     * The type of statement payment for the account.
-     *
-     * @var value-of<StatementPaymentType> $statementPaymentType
-     */
-    #[Required('statement_payment_type', enum: StatementPaymentType::class)]
-    public string $statementPaymentType;
+    #[Optional('grace_period_days')]
+    public ?int $gracePeriodDays;
 
     /**
      * The date on which the loan matures.
@@ -59,26 +45,31 @@ final class Loan implements BaseModel
     public ?string $maturityDate;
 
     /**
+     * The day of the month on which the loan statement is generated.
+     */
+    #[Optional('statement_day_of_month')]
+    public ?int $statementDayOfMonth;
+
+    /**
+     * The type of statement payment for the account.
+     *
+     * @var value-of<StatementPaymentType>|null $statementPaymentType
+     */
+    #[Optional('statement_payment_type', enum: StatementPaymentType::class)]
+    public ?string $statementPaymentType;
+
+    /**
      * `new Loan()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
-     * Loan::with(
-     *   creditLimit: ...,
-     *   gracePeriodDays: ...,
-     *   statementDayOfMonth: ...,
-     *   statementPaymentType: ...,
-     * )
+     * Loan::with(creditLimit: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new Loan)
-     *   ->withCreditLimit(...)
-     *   ->withGracePeriodDays(...)
-     *   ->withStatementDayOfMonth(...)
-     *   ->withStatementPaymentType(...)
+     * (new Loan)->withCreditLimit(...)
      * ```
      */
     public function __construct()
@@ -91,23 +82,23 @@ final class Loan implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param StatementPaymentType|value-of<StatementPaymentType> $statementPaymentType
+     * @param StatementPaymentType|value-of<StatementPaymentType>|null $statementPaymentType
      */
     public static function with(
         int $creditLimit,
-        int $gracePeriodDays,
-        int $statementDayOfMonth,
-        StatementPaymentType|string $statementPaymentType,
+        ?int $gracePeriodDays = null,
         ?string $maturityDate = null,
+        ?int $statementDayOfMonth = null,
+        StatementPaymentType|string|null $statementPaymentType = null,
     ): self {
         $self = new self;
 
         $self['creditLimit'] = $creditLimit;
-        $self['gracePeriodDays'] = $gracePeriodDays;
-        $self['statementDayOfMonth'] = $statementDayOfMonth;
-        $self['statementPaymentType'] = $statementPaymentType;
 
+        null !== $gracePeriodDays && $self['gracePeriodDays'] = $gracePeriodDays;
         null !== $maturityDate && $self['maturityDate'] = $maturityDate;
+        null !== $statementDayOfMonth && $self['statementDayOfMonth'] = $statementDayOfMonth;
+        null !== $statementPaymentType && $self['statementPaymentType'] = $statementPaymentType;
 
         return $self;
     }
@@ -135,6 +126,17 @@ final class Loan implements BaseModel
     }
 
     /**
+     * The date on which the loan matures.
+     */
+    public function withMaturityDate(string $maturityDate): self
+    {
+        $self = clone $this;
+        $self['maturityDate'] = $maturityDate;
+
+        return $self;
+    }
+
+    /**
      * The day of the month on which the loan statement is generated.
      */
     public function withStatementDayOfMonth(int $statementDayOfMonth): self
@@ -155,17 +157,6 @@ final class Loan implements BaseModel
     ): self {
         $self = clone $this;
         $self['statementPaymentType'] = $statementPaymentType;
-
-        return $self;
-    }
-
-    /**
-     * The date on which the loan matures.
-     */
-    public function withMaturityDate(string $maturityDate): self
-    {
-        $self = clone $this;
-        $self['maturityDate'] = $maturityDate;
 
         return $self;
     }

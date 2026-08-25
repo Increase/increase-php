@@ -9,7 +9,7 @@ use Increase\Core\Concerns\SdkModel;
 use Increase\Core\Contracts\BaseModel;
 
 /**
- * Details about the cardholder, as it will appear on the physical card.
+ * Details about the cardholder, as it will appear on the physical card. The combined first name and last name cannot exceed 25 characters.
  *
  * @phpstan-type CardholderShape = array{firstName: string, lastName: string}
  */

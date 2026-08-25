@@ -25,7 +25,7 @@ interface PhysicalCardsContract
      * @api
      *
      * @param string $cardID the underlying card representing this physical card
-     * @param Cardholder|CardholderShape $cardholder details about the cardholder, as it will appear on the physical card
+     * @param Cardholder|CardholderShape $cardholder Details about the cardholder, as it will appear on the physical card. The combined first name and last name cannot exceed 25 characters.
      * @param Shipment|ShipmentShape $shipment the details used to ship this physical card
      * @param string $physicalCardProfileID The physical card profile to use for this physical card. The latest default physical card profile will be used if not provided.
      * @param RequestOpts|null $requestOptions

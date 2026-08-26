@@ -32,8 +32,10 @@ use Increase\InboundFednowTransfers\InboundFednowTransfer\Type;
  *   debtorName: string,
  *   debtorRoutingNumber: string,
  *   decline: null|Decline|DeclineShape,
+ *   endToEndIdentification: string|null,
  *   status: Status|value-of<Status>,
  *   transactionID: string|null,
+ *   transactionIdentification: string|null,
  *   type: Type|value-of<Type>,
  *   uniqueEndToEndTransactionReference: string|null,
  *   unstructuredRemittanceInformation: string|null,
@@ -119,6 +121,12 @@ final class InboundFednowTransfer implements BaseModel
     public ?Decline $decline;
 
     /**
+     * A free-form reference string set by the sender, to help identify the transfer.
+     */
+    #[Required('end_to_end_identification')]
+    public ?string $endToEndIdentification;
+
+    /**
      * The lifecycle status of the transfer.
      *
      * @var value-of<Status> $status
@@ -131,6 +139,12 @@ final class InboundFednowTransfer implements BaseModel
      */
     #[Required('transaction_id')]
     public ?string $transactionID;
+
+    /**
+     * The FedNow network identification of the transfer.
+     */
+    #[Required('transaction_identification')]
+    public ?string $transactionIdentification;
 
     /**
      * A constant representing the object's type. For this resource it will always be `inbound_fednow_transfer`.
@@ -170,8 +184,10 @@ final class InboundFednowTransfer implements BaseModel
      *   debtorName: ...,
      *   debtorRoutingNumber: ...,
      *   decline: ...,
+     *   endToEndIdentification: ...,
      *   status: ...,
      *   transactionID: ...,
+     *   transactionIdentification: ...,
      *   type: ...,
      *   uniqueEndToEndTransactionReference: ...,
      *   unstructuredRemittanceInformation: ...,
@@ -194,8 +210,10 @@ final class InboundFednowTransfer implements BaseModel
      *   ->withDebtorName(...)
      *   ->withDebtorRoutingNumber(...)
      *   ->withDecline(...)
+     *   ->withEndToEndIdentification(...)
      *   ->withStatus(...)
      *   ->withTransactionID(...)
+     *   ->withTransactionIdentification(...)
      *   ->withType(...)
      *   ->withUniqueEndToEndTransactionReference(...)
      *   ->withUnstructuredRemittanceInformation(...)
@@ -230,8 +248,10 @@ final class InboundFednowTransfer implements BaseModel
         string $debtorName,
         string $debtorRoutingNumber,
         Decline|array|null $decline,
+        ?string $endToEndIdentification,
         Status|string $status,
         ?string $transactionID,
+        ?string $transactionIdentification,
         Type|string $type,
         ?string $uniqueEndToEndTransactionReference,
         ?string $unstructuredRemittanceInformation,
@@ -250,8 +270,10 @@ final class InboundFednowTransfer implements BaseModel
         $self['debtorName'] = $debtorName;
         $self['debtorRoutingNumber'] = $debtorRoutingNumber;
         $self['decline'] = $decline;
+        $self['endToEndIdentification'] = $endToEndIdentification;
         $self['status'] = $status;
         $self['transactionID'] = $transactionID;
+        $self['transactionIdentification'] = $transactionIdentification;
         $self['type'] = $type;
         $self['uniqueEndToEndTransactionReference'] = $uniqueEndToEndTransactionReference;
         $self['unstructuredRemittanceInformation'] = $unstructuredRemittanceInformation;
@@ -399,6 +421,18 @@ final class InboundFednowTransfer implements BaseModel
     }
 
     /**
+     * A free-form reference string set by the sender, to help identify the transfer.
+     */
+    public function withEndToEndIdentification(
+        ?string $endToEndIdentification
+    ): self {
+        $self = clone $this;
+        $self['endToEndIdentification'] = $endToEndIdentification;
+
+        return $self;
+    }
+
+    /**
      * The lifecycle status of the transfer.
      *
      * @param Status|value-of<Status> $status
@@ -418,6 +452,18 @@ final class InboundFednowTransfer implements BaseModel
     {
         $self = clone $this;
         $self['transactionID'] = $transactionID;
+
+        return $self;
+    }
+
+    /**
+     * The FedNow network identification of the transfer.
+     */
+    public function withTransactionIdentification(
+        ?string $transactionIdentification
+    ): self {
+        $self = clone $this;
+        $self['transactionIdentification'] = $transactionIdentification;
 
         return $self;
     }

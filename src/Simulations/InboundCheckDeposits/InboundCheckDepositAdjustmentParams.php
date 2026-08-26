@@ -26,7 +26,7 @@ final class InboundCheckDepositAdjustmentParams implements BaseModel
     use SdkParams;
 
     /**
-     * The adjustment amount in cents. Defaults to the amount of the Inbound Check Deposit.
+     * The adjustment amount in cents. A positive amount means that the funds are being returned to you by the other bank and is a credit to your account, as happens for a `wrong_payee_credit`. A negative amount is a debit to your account, as happens for a `late_return`. Defaults to the amount of the Inbound Check Deposit.
      */
     #[Optional]
     public ?int $amount;
@@ -64,7 +64,7 @@ final class InboundCheckDepositAdjustmentParams implements BaseModel
     }
 
     /**
-     * The adjustment amount in cents. Defaults to the amount of the Inbound Check Deposit.
+     * The adjustment amount in cents. A positive amount means that the funds are being returned to you by the other bank and is a credit to your account, as happens for a `wrong_payee_credit`. A negative amount is a debit to your account, as happens for a `late_return`. Defaults to the amount of the Inbound Check Deposit.
      */
     public function withAmount(int $amount): self
     {

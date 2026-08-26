@@ -29,7 +29,7 @@ final class Adjustment implements BaseModel
     public \DateTimeInterface $adjustedAt;
 
     /**
-     * The amount of the adjustment.
+     * The amount of the adjustment in USD cents. A positive amount is a credit to your account and a negative amount is a debit.
      */
     #[Required]
     public int $amount;
@@ -106,7 +106,7 @@ final class Adjustment implements BaseModel
     }
 
     /**
-     * The amount of the adjustment.
+     * The amount of the adjustment in USD cents. A positive amount is a credit to your account and a negative amount is a debit.
      */
     public function withAmount(int $amount): self
     {

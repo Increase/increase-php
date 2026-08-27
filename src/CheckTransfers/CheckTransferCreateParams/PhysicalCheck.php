@@ -81,7 +81,7 @@ final class PhysicalCheck implements BaseModel
     public ?string $checkVoucherImageFileID;
 
     /**
-     * The descriptor that will be printed on the letter included with the check.
+     * A few paragraphs of text printed on the letter included with the check. It can contain at most 24 lines. Paragraphs will wrap at about 120 characters, but depending on your exact message, it might be slightly more or slightly less.
      */
     #[Optional]
     public ?string $note;
@@ -260,7 +260,7 @@ final class PhysicalCheck implements BaseModel
     }
 
     /**
-     * The descriptor that will be printed on the letter included with the check.
+     * A few paragraphs of text printed on the letter included with the check. It can contain at most 24 lines. Paragraphs will wrap at about 120 characters, but depending on your exact message, it might be slightly more or slightly less.
      */
     public function withNote(string $note): self
     {

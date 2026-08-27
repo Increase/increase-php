@@ -12,6 +12,7 @@ use Increase\Entities\Entity\GovernmentAuthority;
 use Increase\Entities\Entity\Joint;
 use Increase\Entities\Entity\NaturalPerson;
 use Increase\Entities\Entity\RiskRating;
+use Increase\Entities\Entity\SoleProprietorship;
 use Increase\Entities\Entity\Status;
 use Increase\Entities\Entity\Structure;
 use Increase\Entities\Entity\TermsAgreement;
@@ -29,6 +30,7 @@ use Increase\SupplementalDocuments\EntitySupplementalDocument;
  * @phpstan-import-type JointShape from \Increase\Entities\Entity\Joint
  * @phpstan-import-type NaturalPersonShape from \Increase\Entities\Entity\NaturalPerson
  * @phpstan-import-type RiskRatingShape from \Increase\Entities\Entity\RiskRating
+ * @phpstan-import-type SoleProprietorshipShape from \Increase\Entities\Entity\SoleProprietorship
  * @phpstan-import-type EntitySupplementalDocumentShape from \Increase\SupplementalDocuments\EntitySupplementalDocument
  * @phpstan-import-type TermsAgreementShape from \Increase\Entities\Entity\TermsAgreement
  * @phpstan-import-type ThirdPartyVerificationShape from \Increase\Entities\Entity\ThirdPartyVerification
@@ -47,6 +49,7 @@ use Increase\SupplementalDocuments\EntitySupplementalDocument;
  *   joint: null|Joint|JointShape,
  *   naturalPerson: null|NaturalPerson|NaturalPersonShape,
  *   riskRating: null|RiskRating|RiskRatingShape,
+ *   soleProprietorship: null|SoleProprietorship|SoleProprietorshipShape,
  *   status: Status|value-of<Status>,
  *   structure: Structure|value-of<Structure>,
  *   supplementalDocuments: list<EntitySupplementalDocument|EntitySupplementalDocumentShape>,
@@ -129,6 +132,12 @@ final class Entity implements BaseModel
     public ?RiskRating $riskRating;
 
     /**
+     * Details of the sole proprietorship entity. Will be present if `structure` is equal to `sole_proprietorship`.
+     */
+    #[Required('sole_proprietorship')]
+    public ?SoleProprietorship $soleProprietorship;
+
+    /**
      * The status of the entity.
      *
      * @var value-of<Status> $status
@@ -203,6 +212,7 @@ final class Entity implements BaseModel
      *   joint: ...,
      *   naturalPerson: ...,
      *   riskRating: ...,
+     *   soleProprietorship: ...,
      *   status: ...,
      *   structure: ...,
      *   supplementalDocuments: ...,
@@ -229,6 +239,7 @@ final class Entity implements BaseModel
      *   ->withJoint(...)
      *   ->withNaturalPerson(...)
      *   ->withRiskRating(...)
+     *   ->withSoleProprietorship(...)
      *   ->withStatus(...)
      *   ->withStructure(...)
      *   ->withSupplementalDocuments(...)
@@ -254,6 +265,7 @@ final class Entity implements BaseModel
      * @param Joint|JointShape|null $joint
      * @param NaturalPerson|NaturalPersonShape|null $naturalPerson
      * @param RiskRating|RiskRatingShape|null $riskRating
+     * @param SoleProprietorship|SoleProprietorshipShape|null $soleProprietorship
      * @param Status|value-of<Status> $status
      * @param Structure|value-of<Structure> $structure
      * @param list<EntitySupplementalDocument|EntitySupplementalDocumentShape> $supplementalDocuments
@@ -275,6 +287,7 @@ final class Entity implements BaseModel
         Joint|array|null $joint,
         NaturalPerson|array|null $naturalPerson,
         RiskRating|array|null $riskRating,
+        SoleProprietorship|array|null $soleProprietorship,
         Status|string $status,
         Structure|string $structure,
         array $supplementalDocuments,
@@ -297,6 +310,7 @@ final class Entity implements BaseModel
         $self['joint'] = $joint;
         $self['naturalPerson'] = $naturalPerson;
         $self['riskRating'] = $riskRating;
+        $self['soleProprietorship'] = $soleProprietorship;
         $self['status'] = $status;
         $self['structure'] = $structure;
         $self['supplementalDocuments'] = $supplementalDocuments;
@@ -440,6 +454,20 @@ final class Entity implements BaseModel
     {
         $self = clone $this;
         $self['riskRating'] = $riskRating;
+
+        return $self;
+    }
+
+    /**
+     * Details of the sole proprietorship entity. Will be present if `structure` is equal to `sole_proprietorship`.
+     *
+     * @param SoleProprietorship|SoleProprietorshipShape|null $soleProprietorship
+     */
+    public function withSoleProprietorship(
+        SoleProprietorship|array|null $soleProprietorship
+    ): self {
+        $self = clone $this;
+        $self['soleProprietorship'] = $soleProprietorship;
 
         return $self;
     }

@@ -18,4 +18,6 @@ enum Structure: string
     case TRUST = 'trust';
 
     case GOVERNMENT_AUTHORITY = 'government_authority';
+
+    case SOLE_PROPRIETORSHIP = 'sole_proprietorship';
 }

@@ -72,7 +72,7 @@ final class InboundCheckDepositsService implements InboundCheckDepositsContract
      * Simulates an adjustment on an Inbound Check Deposit. The Inbound Check Deposit must have a `status` of `accepted`.
      *
      * @param string $inboundCheckDepositID the identifier of the Inbound Check Deposit to adjust
-     * @param int $amount The adjustment amount in cents. Defaults to the amount of the Inbound Check Deposit.
+     * @param int $amount The adjustment amount in cents. A positive amount means that the funds are being returned to you by the other bank and is a credit to your account, as happens for a `wrong_payee_credit`. A negative amount is a debit to your account, as happens for a `late_return`. Defaults to the amount of the Inbound Check Deposit.
      * @param Reason|value-of<Reason> $reason The reason for the adjustment. Defaults to `wrong_payee_credit`.
      * @param RequestOpts|null $requestOptions
      *

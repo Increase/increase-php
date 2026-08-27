@@ -28,7 +28,7 @@ final class InboundCheckAdjustment implements BaseModel
     public string $adjustedTransactionID;
 
     /**
-     * The amount of the check adjustment.
+     * The amount of the check adjustment in USD cents. A positive amount is a credit to your account and a negative amount is a debit.
      */
     #[Required]
     public int $amount;
@@ -99,7 +99,7 @@ final class InboundCheckAdjustment implements BaseModel
     }
 
     /**
-     * The amount of the check adjustment.
+     * The amount of the check adjustment in USD cents. A positive amount is a credit to your account and a negative amount is a debit.
      */
     public function withAmount(int $amount): self
     {

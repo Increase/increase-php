@@ -69,7 +69,7 @@ final class InboundCheckDepositsRawService implements InboundCheckDepositsRawCon
      *
      * @param string $inboundCheckDepositID the identifier of the Inbound Check Deposit to adjust
      * @param array{
-     *   amount?: int, reason?: value-of<Reason>
+     *   amount?: int, reason?: Reason|value-of<Reason>
      * }|InboundCheckDepositAdjustmentParams $params
      * @param RequestOpts|null $requestOptions
      *

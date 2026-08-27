@@ -40,7 +40,7 @@ final class PhysicalCardCreateParams implements BaseModel
     public string $cardID;
 
     /**
-     * Details about the cardholder, as it will appear on the physical card.
+     * Details about the cardholder, as it will appear on the physical card. The combined first name and last name cannot exceed 25 characters.
      */
     #[Required]
     public Cardholder $cardholder;
@@ -116,7 +116,7 @@ final class PhysicalCardCreateParams implements BaseModel
     }
 
     /**
-     * Details about the cardholder, as it will appear on the physical card.
+     * Details about the cardholder, as it will appear on the physical card. The combined first name and last name cannot exceed 25 characters.
      *
      * @param Cardholder|CardholderShape $cardholder
      */

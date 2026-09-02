@@ -10,7 +10,7 @@ use Increase\Core\Contracts\BaseModel;
 use Increase\Transactions\Transaction\Source\InboundCheckAdjustment\Reason;
 
 /**
- * An Inbound Check Adjustment object. This field will be present in the JSON response if and only if `category` is equal to `inbound_check_adjustment`. An Inbound Check Adjustment is created when Increase receives an adjustment for a check or return deposited through Check21.
+ * An Inbound Check Adjustment object. This field will be present in the JSON response if and only if `category` is equal to `inbound_check_adjustment`. An Inbound Check Adjustment is created when Increase receives an adjustment for a check or return deposited through Check 21.
  *
  * @phpstan-type InboundCheckAdjustmentShape = array{
  *   adjustedTransactionID: string, amount: int, reason: Reason|value-of<Reason>

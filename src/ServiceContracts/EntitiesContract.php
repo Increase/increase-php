@@ -11,6 +11,7 @@ use Increase\Entities\EntityCreateParams\GovernmentAuthority;
 use Increase\Entities\EntityCreateParams\Joint;
 use Increase\Entities\EntityCreateParams\NaturalPerson;
 use Increase\Entities\EntityCreateParams\RiskRating;
+use Increase\Entities\EntityCreateParams\SoleProprietorship;
 use Increase\Entities\EntityCreateParams\Structure;
 use Increase\Entities\EntityCreateParams\SupplementalDocument;
 use Increase\Entities\EntityCreateParams\TermsAgreement;
@@ -28,6 +29,7 @@ use Increase\RequestOptions;
  * @phpstan-import-type JointShape from \Increase\Entities\EntityCreateParams\Joint
  * @phpstan-import-type NaturalPersonShape from \Increase\Entities\EntityCreateParams\NaturalPerson
  * @phpstan-import-type RiskRatingShape from \Increase\Entities\EntityCreateParams\RiskRating
+ * @phpstan-import-type SoleProprietorshipShape from \Increase\Entities\EntityCreateParams\SoleProprietorship
  * @phpstan-import-type SupplementalDocumentShape from \Increase\Entities\EntityCreateParams\SupplementalDocument
  * @phpstan-import-type TermsAgreementShape from \Increase\Entities\EntityCreateParams\TermsAgreement
  * @phpstan-import-type ThirdPartyVerificationShape from \Increase\Entities\EntityCreateParams\ThirdPartyVerification
@@ -56,6 +58,7 @@ interface EntitiesContract
      * @param Joint|JointShape $joint Details of the joint entity to create. Required if `structure` is equal to `joint`.
      * @param NaturalPerson|NaturalPersonShape $naturalPerson Details of the natural person entity to create. Required if `structure` is equal to `natural_person`. Natural people entities should be submitted with `social_security_number` or `individual_taxpayer_identification_number` identification methods.
      * @param RiskRating|RiskRatingShape $riskRating an assessment of the entity's potential risk of involvement in financial crimes, such as money laundering
+     * @param SoleProprietorship|SoleProprietorshipShape $soleProprietorship Details of the sole proprietorship entity to create. Required if `structure` is equal to `sole_proprietorship`.
      * @param list<SupplementalDocument|SupplementalDocumentShape> $supplementalDocuments additional documentation associated with the entity
      * @param list<TermsAgreement|TermsAgreementShape> $termsAgreements The terms that the Entity agreed to. Not all programs are required to submit this data.
      * @param ThirdPartyVerification|ThirdPartyVerificationShape $thirdPartyVerification if you are using a third-party service for identity verification, you can use this field to associate this Entity with the identifier that represents them in that service
@@ -72,6 +75,7 @@ interface EntitiesContract
         Joint|array|null $joint = null,
         NaturalPerson|array|null $naturalPerson = null,
         RiskRating|array|null $riskRating = null,
+        SoleProprietorship|array|null $soleProprietorship = null,
         ?array $supplementalDocuments = null,
         ?array $termsAgreements = null,
         ThirdPartyVerification|array|null $thirdPartyVerification = null,

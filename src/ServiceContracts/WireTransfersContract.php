@@ -37,7 +37,7 @@ interface WireTransfersContract
      * @param string $inboundWireDrawdownRequestID the ID of an Inbound Wire Drawdown Request in response to which this transfer is being sent
      * @param bool $requireApproval whether the transfer requires explicit approval via the dashboard or API
      * @param string $routingNumber the American Bankers' Association (ABA) Routing Transit Number (RTN) for the destination account
-     * @param string $sourceAccountNumberID The ID of an Account Number that will be passed to the wire's recipient
+     * @param string $sourceAccountNumberID the ID of an Account Number that will be passed to the wire's recipient
      * @param RequestOpts|null $requestOptions
      *
      * @throws APIException

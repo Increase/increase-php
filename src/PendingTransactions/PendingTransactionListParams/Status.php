@@ -18,7 +18,7 @@ final class Status implements BaseModel
     use SdkModel;
 
     /**
-     * Filter Pending Transactions for those with the specified status. By default only Pending Transactions in with status `pending` will be returned. For GET requests, this should be encoded as a comma-delimited string, such as `?in=one,two,three`.
+     * Filter Pending Transactions for those with the specified status. By default only Pending Transactions with status `pending` will be returned. For GET requests, this should be encoded as a comma-delimited string, such as `?in=one,two,three`.
      *
      * @var list<value-of<In>>|null $in
      */
@@ -47,7 +47,7 @@ final class Status implements BaseModel
     }
 
     /**
-     * Filter Pending Transactions for those with the specified status. By default only Pending Transactions in with status `pending` will be returned. For GET requests, this should be encoded as a comma-delimited string, such as `?in=one,two,three`.
+     * Filter Pending Transactions for those with the specified status. By default only Pending Transactions with status `pending` will be returned. For GET requests, this should be encoded as a comma-delimited string, such as `?in=one,two,three`.
      *
      * @param list<In|value-of<In>> $in
      */

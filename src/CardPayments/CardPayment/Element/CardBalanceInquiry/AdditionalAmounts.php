@@ -19,7 +19,7 @@ use Increase\Core\Concerns\SdkModel;
 use Increase\Core\Contracts\BaseModel;
 
 /**
- * Additional amounts associated with the card authorization, such as ATM surcharges fees. These are usually a subset of the `amount` field and are used to provide more detailed information about the transaction.
+ * Additional amounts associated with the card authorization, such as ATM surcharge fees. These are usually a subset of the `amount` field and are used to provide more detailed information about the transaction.
  *
  * @phpstan-import-type ClinicShape from \Increase\CardPayments\CardPayment\Element\CardBalanceInquiry\AdditionalAmounts\Clinic
  * @phpstan-import-type DentalShape from \Increase\CardPayments\CardPayment\Element\CardBalanceInquiry\AdditionalAmounts\Dental

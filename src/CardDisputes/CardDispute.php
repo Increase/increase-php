@@ -27,6 +27,7 @@ use Increase\Core\Contracts\BaseModel;
  *
  * @phpstan-type CardDisputeShape = array{
  *   id: string,
+ *   accountID: string,
  *   amount: int,
  *   cardID: string,
  *   createdAt: \DateTimeInterface,
@@ -53,6 +54,12 @@ final class CardDispute implements BaseModel
      */
     #[Required]
     public string $id;
+
+    /**
+     * The Account that the Card Dispute is associated with.
+     */
+    #[Required('account_id')]
+    public string $accountID;
 
     /**
      * The amount of the dispute.
@@ -151,6 +158,7 @@ final class CardDispute implements BaseModel
      * ```
      * CardDispute::with(
      *   id: ...,
+     *   accountID: ...,
      *   amount: ...,
      *   cardID: ...,
      *   createdAt: ...,
@@ -173,6 +181,7 @@ final class CardDispute implements BaseModel
      * ```
      * (new CardDispute)
      *   ->withID(...)
+     *   ->withAccountID(...)
      *   ->withAmount(...)
      *   ->withCardID(...)
      *   ->withCreatedAt(...)
@@ -210,6 +219,7 @@ final class CardDispute implements BaseModel
      */
     public static function with(
         string $id,
+        string $accountID,
         int $amount,
         string $cardID,
         \DateTimeInterface $createdAt,
@@ -228,6 +238,7 @@ final class CardDispute implements BaseModel
         $self = new self;
 
         $self['id'] = $id;
+        $self['accountID'] = $accountID;
         $self['amount'] = $amount;
         $self['cardID'] = $cardID;
         $self['createdAt'] = $createdAt;
@@ -253,6 +264,17 @@ final class CardDispute implements BaseModel
     {
         $self = clone $this;
         $self['id'] = $id;
+
+        return $self;
+    }
+
+    /**
+     * The Account that the Card Dispute is associated with.
+     */
+    public function withAccountID(string $accountID): self
+    {
+        $self = clone $this;
+        $self['accountID'] = $accountID;
 
         return $self;
     }

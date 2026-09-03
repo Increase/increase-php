@@ -27,7 +27,7 @@ final class PendingTransactionsRawService implements PendingTransactionsRawContr
      *
      * This endpoint simulates immediately releasing an Inbound Funds Hold, which might be created as a result of, for example, an ACH debit.
      *
-     * @param string $pendingTransactionID The pending transaction to release. The pending transaction must have a `inbound_funds_hold` source.
+     * @param string $pendingTransactionID The pending transaction to release. The pending transaction must have an `inbound_funds_hold` source.
      * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<PendingTransaction>

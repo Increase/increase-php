@@ -284,7 +284,7 @@ final class Source implements BaseModel
     public ?InboundACHTransferReturnIntention $inboundACHTransferReturnIntention;
 
     /**
-     * An Inbound Check Adjustment object. This field will be present in the JSON response if and only if `category` is equal to `inbound_check_adjustment`. An Inbound Check Adjustment is created when Increase receives an adjustment for a check or return deposited through Check21.
+     * An Inbound Check Adjustment object. This field will be present in the JSON response if and only if `category` is equal to `inbound_check_adjustment`. An Inbound Check Adjustment is created when Increase receives an adjustment for a check or return deposited through Check 21.
      */
     #[Optional('inbound_check_adjustment', nullable: true)]
     public ?InboundCheckAdjustment $inboundCheckAdjustment;
@@ -861,7 +861,7 @@ final class Source implements BaseModel
     }
 
     /**
-     * An Inbound Check Adjustment object. This field will be present in the JSON response if and only if `category` is equal to `inbound_check_adjustment`. An Inbound Check Adjustment is created when Increase receives an adjustment for a check or return deposited through Check21.
+     * An Inbound Check Adjustment object. This field will be present in the JSON response if and only if `category` is equal to `inbound_check_adjustment`. An Inbound Check Adjustment is created when Increase receives an adjustment for a check or return deposited through Check 21.
      *
      * @param InboundCheckAdjustment|InboundCheckAdjustmentShape|null $inboundCheckAdjustment
      */

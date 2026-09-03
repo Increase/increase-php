@@ -19,7 +19,7 @@ use Increase\RealTimeDecisions\RealTimeDecision\CardAuthorization\AdditionalAmou
 use Increase\RealTimeDecisions\RealTimeDecision\CardAuthorization\AdditionalAmounts\Vision;
 
 /**
- * Additional amounts associated with the card authorization, such as ATM surcharges fees. These are usually a subset of the `amount` field and are used to provide more detailed information about the transaction.
+ * Additional amounts associated with the card authorization, such as ATM surcharge fees. These are usually a subset of the `amount` field and are used to provide more detailed information about the transaction.
  *
  * @phpstan-import-type ClinicShape from \Increase\RealTimeDecisions\RealTimeDecision\CardAuthorization\AdditionalAmounts\Clinic
  * @phpstan-import-type DentalShape from \Increase\RealTimeDecisions\RealTimeDecision\CardAuthorization\AdditionalAmounts\Dental

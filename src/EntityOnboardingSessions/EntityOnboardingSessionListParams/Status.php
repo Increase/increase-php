@@ -18,7 +18,7 @@ final class Status implements BaseModel
     use SdkModel;
 
     /**
-     * Filter Entity Onboarding Session for those with the specified status or statuses. For GET requests, this should be encoded as a comma-delimited string, such as `?in=one,two,three`.
+     * Filter Entity Onboarding Sessions for those with the specified status or statuses. For GET requests, this should be encoded as a comma-delimited string, such as `?in=one,two,three`.
      *
      * @var list<value-of<In>>|null $in
      */
@@ -47,7 +47,7 @@ final class Status implements BaseModel
     }
 
     /**
-     * Filter Entity Onboarding Session for those with the specified status or statuses. For GET requests, this should be encoded as a comma-delimited string, such as `?in=one,two,three`.
+     * Filter Entity Onboarding Sessions for those with the specified status or statuses. For GET requests, this should be encoded as a comma-delimited string, such as `?in=one,two,three`.
      *
      * @param list<In|value-of<In>> $in
      */

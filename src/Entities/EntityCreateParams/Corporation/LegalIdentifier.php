@@ -23,7 +23,7 @@ final class LegalIdentifier implements BaseModel
     use SdkModel;
 
     /**
-     * The legal identifier itself. For US Employer Identification Numbers, submit nine digits with no dashes or other separators. When testing in sandbox, use one of our [sandbox test values](https://increase.com/documentation/sandbox-test-values).
+     * The legal identifier itself. For US Employer Identification Numbers, submit nine digits with no dashes or other separators.
      */
     #[Required]
     public string $value;
@@ -78,7 +78,7 @@ final class LegalIdentifier implements BaseModel
     }
 
     /**
-     * The legal identifier itself. For US Employer Identification Numbers, submit nine digits with no dashes or other separators. When testing in sandbox, use one of our [sandbox test values](https://increase.com/documentation/sandbox-test-values).
+     * The legal identifier itself. For US Employer Identification Numbers, submit nine digits with no dashes or other separators.
      */
     public function withValue(string $value): self
     {

@@ -45,6 +45,7 @@ final class ProgramsTest extends TestCase
             name: 'For Benefit Of',
             bank: 'core_bank',
             lendingMaximumExtendableCredit: 0,
+            loanAccountsRequireLoanOffers: true,
             reserveAccountID: 'reserve_account_id',
         );
 

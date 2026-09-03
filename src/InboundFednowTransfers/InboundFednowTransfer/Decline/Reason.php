@@ -20,4 +20,6 @@ enum Reason: string
     case ENTITY_NOT_ACTIVE = 'entity_not_active';
 
     case FEDNOW_NOT_ENABLED = 'fednow_not_enabled';
+
+    case TRANSACTION_NOT_ALLOWED = 'transaction_not_allowed';
 }

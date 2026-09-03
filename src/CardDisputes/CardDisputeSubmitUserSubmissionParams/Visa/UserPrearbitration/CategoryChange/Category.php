@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace Increase\CardDisputes\CardDisputeSubmitUserSubmissionParams\Visa\UserPrearbitration\CategoryChange;
 
+/**
+ * The category the dispute is being changed to.
+ */
 enum Category: string
 {
     case AUTHORIZATION = 'authorization';

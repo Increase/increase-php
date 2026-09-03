@@ -30,7 +30,7 @@ final class InterestPaymentCreateParams implements BaseModel
     use SdkParams;
 
     /**
-     * The identifier of the Account the Interest Payment should be paid to is for.
+     * The identifier of the Account the Interest Payment should be paid to.
      */
     #[Required('account_id')]
     public string $accountID;
@@ -103,7 +103,7 @@ final class InterestPaymentCreateParams implements BaseModel
     }
 
     /**
-     * The identifier of the Account the Interest Payment should be paid to is for.
+     * The identifier of the Account the Interest Payment should be paid to.
      */
     public function withAccountID(string $accountID): self
     {

@@ -13,6 +13,7 @@ use Increase\Entities\EntityCreateParams\GovernmentAuthority;
 use Increase\Entities\EntityCreateParams\Joint;
 use Increase\Entities\EntityCreateParams\NaturalPerson;
 use Increase\Entities\EntityCreateParams\RiskRating;
+use Increase\Entities\EntityCreateParams\SoleProprietorship;
 use Increase\Entities\EntityCreateParams\Structure;
 use Increase\Entities\EntityCreateParams\SupplementalDocument;
 use Increase\Entities\EntityCreateParams\TermsAgreement;
@@ -31,6 +32,7 @@ use Increase\ServiceContracts\EntitiesContract;
  * @phpstan-import-type JointShape from \Increase\Entities\EntityCreateParams\Joint
  * @phpstan-import-type NaturalPersonShape from \Increase\Entities\EntityCreateParams\NaturalPerson
  * @phpstan-import-type RiskRatingShape from \Increase\Entities\EntityCreateParams\RiskRating
+ * @phpstan-import-type SoleProprietorshipShape from \Increase\Entities\EntityCreateParams\SoleProprietorship
  * @phpstan-import-type SupplementalDocumentShape from \Increase\Entities\EntityCreateParams\SupplementalDocument
  * @phpstan-import-type TermsAgreementShape from \Increase\Entities\EntityCreateParams\TermsAgreement
  * @phpstan-import-type ThirdPartyVerificationShape from \Increase\Entities\EntityCreateParams\ThirdPartyVerification
@@ -39,6 +41,7 @@ use Increase\ServiceContracts\EntitiesContract;
  * @phpstan-import-type GovernmentAuthorityShape from \Increase\Entities\EntityUpdateParams\GovernmentAuthority as GovernmentAuthorityShape1
  * @phpstan-import-type NaturalPersonShape from \Increase\Entities\EntityUpdateParams\NaturalPerson as NaturalPersonShape1
  * @phpstan-import-type RiskRatingShape from \Increase\Entities\EntityUpdateParams\RiskRating as RiskRatingShape1
+ * @phpstan-import-type SoleProprietorshipShape from \Increase\Entities\EntityUpdateParams\SoleProprietorship as SoleProprietorshipShape1
  * @phpstan-import-type TermsAgreementShape from \Increase\Entities\EntityUpdateParams\TermsAgreement as TermsAgreementShape1
  * @phpstan-import-type ThirdPartyVerificationShape from \Increase\Entities\EntityUpdateParams\ThirdPartyVerification as ThirdPartyVerificationShape1
  * @phpstan-import-type TrustShape from \Increase\Entities\EntityUpdateParams\Trust as TrustShape1
@@ -74,6 +77,7 @@ final class EntitiesService implements EntitiesContract
      * @param Joint|JointShape $joint Details of the joint entity to create. Required if `structure` is equal to `joint`.
      * @param NaturalPerson|NaturalPersonShape $naturalPerson Details of the natural person entity to create. Required if `structure` is equal to `natural_person`. Natural people entities should be submitted with `social_security_number` or `individual_taxpayer_identification_number` identification methods.
      * @param RiskRating|RiskRatingShape $riskRating an assessment of the entity's potential risk of involvement in financial crimes, such as money laundering
+     * @param SoleProprietorship|SoleProprietorshipShape $soleProprietorship Details of the sole proprietorship entity to create. Required if `structure` is equal to `sole_proprietorship`.
      * @param list<SupplementalDocument|SupplementalDocumentShape> $supplementalDocuments additional documentation associated with the entity
      * @param list<TermsAgreement|TermsAgreementShape> $termsAgreements The terms that the Entity agreed to. Not all programs are required to submit this data.
      * @param ThirdPartyVerification|ThirdPartyVerificationShape $thirdPartyVerification if you are using a third-party service for identity verification, you can use this field to associate this Entity with the identifier that represents them in that service
@@ -90,6 +94,7 @@ final class EntitiesService implements EntitiesContract
         Joint|array|null $joint = null,
         NaturalPerson|array|null $naturalPerson = null,
         RiskRating|array|null $riskRating = null,
+        SoleProprietorship|array|null $soleProprietorship = null,
         ?array $supplementalDocuments = null,
         ?array $termsAgreements = null,
         ThirdPartyVerification|array|null $thirdPartyVerification = null,
@@ -105,6 +110,7 @@ final class EntitiesService implements EntitiesContract
                 'joint' => $joint,
                 'naturalPerson' => $naturalPerson,
                 'riskRating' => $riskRating,
+                'soleProprietorship' => $soleProprietorship,
                 'supplementalDocuments' => $supplementalDocuments,
                 'termsAgreements' => $termsAgreements,
                 'thirdPartyVerification' => $thirdPartyVerification,
@@ -149,6 +155,7 @@ final class EntitiesService implements EntitiesContract
      * @param \Increase\Entities\EntityUpdateParams\GovernmentAuthority|GovernmentAuthorityShape1 $governmentAuthority Details of the government authority entity to update. If you specify this parameter and the entity is not a government authority, the request will fail.
      * @param \Increase\Entities\EntityUpdateParams\NaturalPerson|NaturalPersonShape1 $naturalPerson Details of the natural person entity to update. If you specify this parameter and the entity is not a natural person, the request will fail.
      * @param \Increase\Entities\EntityUpdateParams\RiskRating|RiskRatingShape1 $riskRating an assessment of the entity’s potential risk of involvement in financial crimes, such as money laundering
+     * @param \Increase\Entities\EntityUpdateParams\SoleProprietorship|SoleProprietorshipShape1 $soleProprietorship Details of the sole proprietorship entity to update. If you specify this parameter and the entity is not a sole proprietorship, the request will fail.
      * @param list<\Increase\Entities\EntityUpdateParams\TermsAgreement|TermsAgreementShape1> $termsAgreements New terms that the Entity agreed to. Not all programs are required to submit this data. This will not archive previously submitted terms.
      * @param \Increase\Entities\EntityUpdateParams\ThirdPartyVerification|ThirdPartyVerificationShape1 $thirdPartyVerification if you are using a third-party service for identity verification, you can use this field to associate this Entity with the identifier that represents them in that service
      * @param \Increase\Entities\EntityUpdateParams\Trust|TrustShape1 $trust Details of the trust entity to update. If you specify this parameter and the entity is not a trust, the request will fail.
@@ -163,6 +170,7 @@ final class EntitiesService implements EntitiesContract
         \Increase\Entities\EntityUpdateParams\GovernmentAuthority|array|null $governmentAuthority = null,
         \Increase\Entities\EntityUpdateParams\NaturalPerson|array|null $naturalPerson = null,
         \Increase\Entities\EntityUpdateParams\RiskRating|array|null $riskRating = null,
+        \Increase\Entities\EntityUpdateParams\SoleProprietorship|array|null $soleProprietorship = null,
         ?array $termsAgreements = null,
         \Increase\Entities\EntityUpdateParams\ThirdPartyVerification|array|null $thirdPartyVerification = null,
         \Increase\Entities\EntityUpdateParams\Trust|array|null $trust = null,
@@ -175,6 +183,7 @@ final class EntitiesService implements EntitiesContract
                 'governmentAuthority' => $governmentAuthority,
                 'naturalPerson' => $naturalPerson,
                 'riskRating' => $riskRating,
+                'soleProprietorship' => $soleProprietorship,
                 'termsAgreements' => $termsAgreements,
                 'thirdPartyVerification' => $thirdPartyVerification,
                 'trust' => $trust,

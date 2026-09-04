@@ -36,6 +36,8 @@ enum In: string
 
     case FEDNOW_TRANSFER_ACKNOWLEDGEMENT = 'fednow_transfer_acknowledgement';
 
+    case FEDNOW_TRANSFER_RETURN = 'fednow_transfer_return';
+
     case CHECK_TRANSFER_DEPOSIT = 'check_transfer_deposit';
 
     case FEE_PAYMENT = 'fee_payment';

@@ -145,7 +145,7 @@ final class InboundWireTransfer implements BaseModel
     public ?string $debtorName;
 
     /**
-     * The American Banking Association (ABA) routing number of the sender.
+     * The American Bankers' Association (ABA) routing number of the sender.
      */
     #[Required('debtor_routing_number')]
     public ?string $debtorRoutingNumber;
@@ -169,7 +169,7 @@ final class InboundWireTransfer implements BaseModel
     public ?string $inputMessageAccountabilityData;
 
     /**
-     * The American Banking Association (ABA) routing number of the bank that sent the wire.
+     * The American Bankers' Association (ABA) routing number of the bank that sent the wire.
      */
     #[Required('instructing_agent_routing_number')]
     public ?string $instructingAgentRoutingNumber;
@@ -547,7 +547,7 @@ final class InboundWireTransfer implements BaseModel
     }
 
     /**
-     * The American Banking Association (ABA) routing number of the sender.
+     * The American Bankers' Association (ABA) routing number of the sender.
      */
     public function withDebtorRoutingNumber(?string $debtorRoutingNumber): self
     {
@@ -593,7 +593,7 @@ final class InboundWireTransfer implements BaseModel
     }
 
     /**
-     * The American Banking Association (ABA) routing number of the bank that sent the wire.
+     * The American Bankers' Association (ABA) routing number of the bank that sent the wire.
      */
     public function withInstructingAgentRoutingNumber(
         ?string $instructingAgentRoutingNumber

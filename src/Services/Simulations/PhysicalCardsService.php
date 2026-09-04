@@ -74,7 +74,7 @@ final class PhysicalCardsService implements PhysicalCardsContract
     /**
      * @api
      *
-     * This endpoint allows you to simulate advancing the shipment status of a Physical Card, to simulate e.g., that a physical card was attempted shipped but then failed delivery.
+     * This endpoint allows you to simulate advancing the shipment status of a Physical Card, to simulate e.g., that a physical card was attempted to be shipped but then failed delivery.
      *
      * @param string $physicalCardID the Physical Card you would like to action
      * @param ShipmentStatus|value-of<ShipmentStatus> $shipmentStatus the shipment status to move the Physical Card to

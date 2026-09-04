@@ -20,6 +20,7 @@ use Increase\Simulations\Programs\ProgramCreateParams\Bank;
  *   name: string,
  *   bank?: null|Bank|value-of<Bank>,
  *   lendingMaximumExtendableCredit?: int|null,
+ *   loanAccountsRequireLoanOffers?: bool|null,
  *   reserveAccountID?: string|null,
  * }
  */
@@ -50,7 +51,13 @@ final class ProgramCreateParams implements BaseModel
     public ?int $lendingMaximumExtendableCredit;
 
     /**
-     * The identifier of the Account the Program should be added to is for.
+     * Whether opening a loan Account under this Program requires an accepted Loan Offer. Requires `lending_maximum_extendable_credit`. Defaults to `false`.
+     */
+    #[Optional('loan_accounts_require_loan_offers')]
+    public ?bool $loanAccountsRequireLoanOffers;
+
+    /**
+     * The identifier of the Account the Program should be added to.
      */
     #[Optional('reserve_account_id')]
     public ?string $reserveAccountID;
@@ -85,6 +92,7 @@ final class ProgramCreateParams implements BaseModel
         string $name,
         Bank|string|null $bank = null,
         ?int $lendingMaximumExtendableCredit = null,
+        ?bool $loanAccountsRequireLoanOffers = null,
         ?string $reserveAccountID = null,
     ): self {
         $self = new self;
@@ -93,6 +101,7 @@ final class ProgramCreateParams implements BaseModel
 
         null !== $bank && $self['bank'] = $bank;
         null !== $lendingMaximumExtendableCredit && $self['lendingMaximumExtendableCredit'] = $lendingMaximumExtendableCredit;
+        null !== $loanAccountsRequireLoanOffers && $self['loanAccountsRequireLoanOffers'] = $loanAccountsRequireLoanOffers;
         null !== $reserveAccountID && $self['reserveAccountID'] = $reserveAccountID;
 
         return $self;
@@ -135,7 +144,19 @@ final class ProgramCreateParams implements BaseModel
     }
 
     /**
-     * The identifier of the Account the Program should be added to is for.
+     * Whether opening a loan Account under this Program requires an accepted Loan Offer. Requires `lending_maximum_extendable_credit`. Defaults to `false`.
+     */
+    public function withLoanAccountsRequireLoanOffers(
+        bool $loanAccountsRequireLoanOffers
+    ): self {
+        $self = clone $this;
+        $self['loanAccountsRequireLoanOffers'] = $loanAccountsRequireLoanOffers;
+
+        return $self;
+    }
+
+    /**
+     * The identifier of the Account the Program should be added to.
      */
     public function withReserveAccountID(string $reserveAccountID): self
     {

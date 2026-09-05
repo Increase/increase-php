@@ -21,7 +21,7 @@ interface CardDisputesContract
      *
      * @param string $cardDisputeID the dispute you would like to action
      * @param Network|value-of<Network> $network The network of the Card Dispute. Details specific to the network are required under the sub-object with the same identifier as the network.
-     * @param Visa|VisaShape $visa The Visa-specific parameters for the taking action on the dispute. Required if and only if `network` is `visa`.
+     * @param Visa|VisaShape $visa The Visa-specific parameters for taking action on the dispute. Required if and only if `network` is `visa`.
      * @param RequestOpts|null $requestOptions
      *
      * @throws APIException

@@ -221,7 +221,7 @@ final class CheckTransfer implements BaseModel
     public string $type;
 
     /**
-     * If set, the check will be valid on or before this date. After this date, the check transfer will be automatically stopped and deposits will not be accepted. For checks printed by Increase, this date is included on the check as its expiry.
+     * If set, the check will be valid on or before this date. After this date, the check transfer will be automatically stopped and deposits will not be accepted. For checks printed by Increase, this date is included on the check as its expiration.
      */
     #[Required('valid_until_date')]
     public ?string $validUntilDate;
@@ -672,7 +672,7 @@ final class CheckTransfer implements BaseModel
     }
 
     /**
-     * If set, the check will be valid on or before this date. After this date, the check transfer will be automatically stopped and deposits will not be accepted. For checks printed by Increase, this date is included on the check as its expiry.
+     * If set, the check will be valid on or before this date. After this date, the check transfer will be automatically stopped and deposits will not be accepted. For checks printed by Increase, this date is included on the check as its expiration.
      */
     public function withValidUntilDate(?string $validUntilDate): self
     {

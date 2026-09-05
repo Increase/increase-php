@@ -70,7 +70,7 @@ final class CardValidation implements BaseModel
     public string $actioner;
 
     /**
-     * Additional amounts associated with the card authorization, such as ATM surcharges fees. These are usually a subset of the `amount` field and are used to provide more detailed information about the transaction.
+     * Additional amounts associated with the card authorization, such as ATM surcharge fees. These are usually a subset of the `amount` field and are used to provide more detailed information about the transaction.
      */
     #[Required('additional_amounts')]
     public AdditionalAmounts $additionalAmounts;
@@ -350,7 +350,7 @@ final class CardValidation implements BaseModel
     }
 
     /**
-     * Additional amounts associated with the card authorization, such as ATM surcharges fees. These are usually a subset of the `amount` field and are used to provide more detailed information about the transaction.
+     * Additional amounts associated with the card authorization, such as ATM surcharge fees. These are usually a subset of the `amount` field and are used to provide more detailed information about the transaction.
      *
      * @param AdditionalAmounts|AdditionalAmountsShape $additionalAmounts
      */

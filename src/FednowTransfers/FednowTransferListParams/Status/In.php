@@ -12,8 +12,6 @@ enum In: string
 
     case CANCELED = 'canceled';
 
-    case REVIEWING_REJECTED = 'reviewing_rejected';
-
     case REQUIRES_ATTENTION = 'requires_attention';
 
     case PENDING_APPROVAL = 'pending_approval';
@@ -23,4 +21,6 @@ enum In: string
     case COMPLETE = 'complete';
 
     case REJECTED = 'rejected';
+
+    case RETURNED = 'returned';
 }

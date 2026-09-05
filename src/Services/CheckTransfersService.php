@@ -55,7 +55,7 @@ final class CheckTransfersService implements CheckTransfersContract
      * @param PhysicalCheck|PhysicalCheckShape $physicalCheck Details relating to the physical check that Increase will print and mail. This is required if `fulfillment_method` is equal to `physical_check`. It must not be included if any other `fulfillment_method` is provided.
      * @param bool $requireApproval whether the transfer requires explicit approval via the dashboard or API
      * @param ThirdParty|ThirdPartyShape $thirdParty Details relating to the custom fulfillment you will perform. This is required if `fulfillment_method` is equal to `third_party`. It must not be included if any other `fulfillment_method` is provided.
-     * @param string $validUntilDate If provided, the check will be valid on or before this date. After this date, the check transfer will be automatically stopped and deposits will not be accepted. For checks printed by Increase, this date is included on the check as its expiry.
+     * @param string $validUntilDate If provided, the check will be valid on or before this date. After this date, the check transfer will be automatically stopped and deposits will not be accepted. For checks printed by Increase, this date is included on the check as its expiration.
      * @param RequestOpts|null $requestOptions
      *
      * @throws APIException

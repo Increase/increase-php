@@ -29,6 +29,7 @@ use Increase\Transactions\Transaction\Source\CheckDepositAcceptance;
 use Increase\Transactions\Transaction\Source\CheckDepositReturn;
 use Increase\Transactions\Transaction\Source\CheckTransferDeposit;
 use Increase\Transactions\Transaction\Source\FednowTransferAcknowledgement;
+use Increase\Transactions\Transaction\Source\FednowTransferReturn;
 use Increase\Transactions\Transaction\Source\FeePayment;
 use Increase\Transactions\Transaction\Source\InboundACHTransfer;
 use Increase\Transactions\Transaction\Source\InboundACHTransferReturnIntention;
@@ -71,6 +72,7 @@ use Increase\Transactions\Transaction\Source\WireTransferIntention;
  * @phpstan-import-type CheckDepositReturnShape from \Increase\Transactions\Transaction\Source\CheckDepositReturn
  * @phpstan-import-type CheckTransferDepositShape from \Increase\Transactions\Transaction\Source\CheckTransferDeposit
  * @phpstan-import-type FednowTransferAcknowledgementShape from \Increase\Transactions\Transaction\Source\FednowTransferAcknowledgement
+ * @phpstan-import-type FednowTransferReturnShape from \Increase\Transactions\Transaction\Source\FednowTransferReturn
  * @phpstan-import-type FeePaymentShape from \Increase\Transactions\Transaction\Source\FeePayment
  * @phpstan-import-type InboundACHTransferShape from \Increase\Transactions\Transaction\Source\InboundACHTransfer
  * @phpstan-import-type InboundACHTransferReturnIntentionShape from \Increase\Transactions\Transaction\Source\InboundACHTransferReturnIntention
@@ -112,6 +114,7 @@ use Increase\Transactions\Transaction\Source\WireTransferIntention;
  *   checkDepositReturn?: null|CheckDepositReturn|CheckDepositReturnShape,
  *   checkTransferDeposit?: null|CheckTransferDeposit|CheckTransferDepositShape,
  *   fednowTransferAcknowledgement?: null|FednowTransferAcknowledgement|FednowTransferAcknowledgementShape,
+ *   fednowTransferReturn?: null|FednowTransferReturn|FednowTransferReturnShape,
  *   feePayment?: null|FeePayment|FeePaymentShape,
  *   inboundACHTransfer?: null|InboundACHTransfer|InboundACHTransferShape,
  *   inboundACHTransferReturnIntention?: null|InboundACHTransferReturnIntention|InboundACHTransferReturnIntentionShape,
@@ -266,6 +269,12 @@ final class Source implements BaseModel
     public ?FednowTransferAcknowledgement $fednowTransferAcknowledgement;
 
     /**
+     * A FedNow Transfer Return object. This field will be present in the JSON response if and only if `category` is equal to `fednow_transfer_return`. A FedNow Transfer Return is created when a FedNow Transfer sent from Increase is returned by the recipient's bank.
+     */
+    #[Optional('fednow_transfer_return', nullable: true)]
+    public ?FednowTransferReturn $fednowTransferReturn;
+
+    /**
      * A Fee Payment object. This field will be present in the JSON response if and only if `category` is equal to `fee_payment`. A Fee Payment represents a payment made to Increase.
      */
     #[Optional('fee_payment', nullable: true)]
@@ -284,7 +293,7 @@ final class Source implements BaseModel
     public ?InboundACHTransferReturnIntention $inboundACHTransferReturnIntention;
 
     /**
-     * An Inbound Check Adjustment object. This field will be present in the JSON response if and only if `category` is equal to `inbound_check_adjustment`. An Inbound Check Adjustment is created when Increase receives an adjustment for a check or return deposited through Check21.
+     * An Inbound Check Adjustment object. This field will be present in the JSON response if and only if `category` is equal to `inbound_check_adjustment`. An Inbound Check Adjustment is created when Increase receives an adjustment for a check or return deposited through Check 21.
      */
     #[Optional('inbound_check_adjustment', nullable: true)]
     public ?InboundCheckAdjustment $inboundCheckAdjustment;
@@ -421,6 +430,7 @@ final class Source implements BaseModel
      * @param CheckDepositReturn|CheckDepositReturnShape|null $checkDepositReturn
      * @param CheckTransferDeposit|CheckTransferDepositShape|null $checkTransferDeposit
      * @param FednowTransferAcknowledgement|FednowTransferAcknowledgementShape|null $fednowTransferAcknowledgement
+     * @param FednowTransferReturn|FednowTransferReturnShape|null $fednowTransferReturn
      * @param FeePayment|FeePaymentShape|null $feePayment
      * @param InboundACHTransfer|InboundACHTransferShape|null $inboundACHTransfer
      * @param InboundACHTransferReturnIntention|InboundACHTransferReturnIntentionShape|null $inboundACHTransferReturnIntention
@@ -462,6 +472,7 @@ final class Source implements BaseModel
         CheckDepositReturn|array|null $checkDepositReturn = null,
         CheckTransferDeposit|array|null $checkTransferDeposit = null,
         FednowTransferAcknowledgement|array|null $fednowTransferAcknowledgement = null,
+        FednowTransferReturn|array|null $fednowTransferReturn = null,
         FeePayment|array|null $feePayment = null,
         InboundACHTransfer|array|null $inboundACHTransfer = null,
         InboundACHTransferReturnIntention|array|null $inboundACHTransferReturnIntention = null,
@@ -505,6 +516,7 @@ final class Source implements BaseModel
         null !== $checkDepositReturn && $self['checkDepositReturn'] = $checkDepositReturn;
         null !== $checkTransferDeposit && $self['checkTransferDeposit'] = $checkTransferDeposit;
         null !== $fednowTransferAcknowledgement && $self['fednowTransferAcknowledgement'] = $fednowTransferAcknowledgement;
+        null !== $fednowTransferReturn && $self['fednowTransferReturn'] = $fednowTransferReturn;
         null !== $feePayment && $self['feePayment'] = $feePayment;
         null !== $inboundACHTransfer && $self['inboundACHTransfer'] = $inboundACHTransfer;
         null !== $inboundACHTransferReturnIntention && $self['inboundACHTransferReturnIntention'] = $inboundACHTransferReturnIntention;
@@ -820,6 +832,20 @@ final class Source implements BaseModel
     }
 
     /**
+     * A FedNow Transfer Return object. This field will be present in the JSON response if and only if `category` is equal to `fednow_transfer_return`. A FedNow Transfer Return is created when a FedNow Transfer sent from Increase is returned by the recipient's bank.
+     *
+     * @param FednowTransferReturn|FednowTransferReturnShape|null $fednowTransferReturn
+     */
+    public function withFednowTransferReturn(
+        FednowTransferReturn|array|null $fednowTransferReturn
+    ): self {
+        $self = clone $this;
+        $self['fednowTransferReturn'] = $fednowTransferReturn;
+
+        return $self;
+    }
+
+    /**
      * A Fee Payment object. This field will be present in the JSON response if and only if `category` is equal to `fee_payment`. A Fee Payment represents a payment made to Increase.
      *
      * @param FeePayment|FeePaymentShape|null $feePayment
@@ -861,7 +887,7 @@ final class Source implements BaseModel
     }
 
     /**
-     * An Inbound Check Adjustment object. This field will be present in the JSON response if and only if `category` is equal to `inbound_check_adjustment`. An Inbound Check Adjustment is created when Increase receives an adjustment for a check or return deposited through Check21.
+     * An Inbound Check Adjustment object. This field will be present in the JSON response if and only if `category` is equal to `inbound_check_adjustment`. An Inbound Check Adjustment is created when Increase receives an adjustment for a check or return deposited through Check 21.
      *
      * @param InboundCheckAdjustment|InboundCheckAdjustmentShape|null $inboundCheckAdjustment
      */

@@ -14,6 +14,7 @@ use Increase\InboundWireDrawdownRequests\InboundWireDrawdownRequest\Type;
  *
  * @phpstan-type InboundWireDrawdownRequestShape = array{
  *   id: string,
+ *   accountID: string,
  *   amount: int,
  *   createdAt: \DateTimeInterface,
  *   creditorAccountNumber: string,
@@ -46,6 +47,12 @@ final class InboundWireDrawdownRequest implements BaseModel
      */
     #[Required]
     public string $id;
+
+    /**
+     * The Account from which the recipient of this request is being requested to send funds.
+     */
+    #[Required('account_id')]
+    public string $accountID;
 
     /**
      * The amount being requested in cents.
@@ -176,6 +183,7 @@ final class InboundWireDrawdownRequest implements BaseModel
      * ```
      * InboundWireDrawdownRequest::with(
      *   id: ...,
+     *   accountID: ...,
      *   amount: ...,
      *   createdAt: ...,
      *   creditorAccountNumber: ...,
@@ -204,6 +212,7 @@ final class InboundWireDrawdownRequest implements BaseModel
      * ```
      * (new InboundWireDrawdownRequest)
      *   ->withID(...)
+     *   ->withAccountID(...)
      *   ->withAmount(...)
      *   ->withCreatedAt(...)
      *   ->withCreditorAccountNumber(...)
@@ -240,6 +249,7 @@ final class InboundWireDrawdownRequest implements BaseModel
      */
     public static function with(
         string $id,
+        string $accountID,
         int $amount,
         \DateTimeInterface $createdAt,
         string $creditorAccountNumber,
@@ -264,6 +274,7 @@ final class InboundWireDrawdownRequest implements BaseModel
         $self = new self;
 
         $self['id'] = $id;
+        $self['accountID'] = $accountID;
         $self['amount'] = $amount;
         $self['createdAt'] = $createdAt;
         $self['creditorAccountNumber'] = $creditorAccountNumber;
@@ -295,6 +306,17 @@ final class InboundWireDrawdownRequest implements BaseModel
     {
         $self = clone $this;
         $self['id'] = $id;
+
+        return $self;
+    }
+
+    /**
+     * The Account from which the recipient of this request is being requested to send funds.
+     */
+    public function withAccountID(string $accountID): self
+    {
+        $self = clone $this;
+        $self['accountID'] = $accountID;
 
         return $self;
     }

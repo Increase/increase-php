@@ -35,7 +35,7 @@ final class CheckTransferDeposit implements BaseModel
     public ?string $backImageFileID;
 
     /**
-     * The American Bankers' Association (ABA) Routing Transit Number (RTN) for the bank depositing this check. In some rare cases, this is not transmitted via Check21 and the value will be null.
+     * The American Bankers' Association (ABA) Routing Transit Number (RTN) for the bank depositing this check. In some rare cases, this is not transmitted via Check 21 and the value will be null.
      */
     #[Required('bank_of_first_deposit_routing_number')]
     public ?string $bankOfFirstDepositRoutingNumber;
@@ -157,7 +157,7 @@ final class CheckTransferDeposit implements BaseModel
     }
 
     /**
-     * The American Bankers' Association (ABA) Routing Transit Number (RTN) for the bank depositing this check. In some rare cases, this is not transmitted via Check21 and the value will be null.
+     * The American Bankers' Association (ABA) Routing Transit Number (RTN) for the bank depositing this check. In some rare cases, this is not transmitted via Check 21 and the value will be null.
      */
     public function withBankOfFirstDepositRoutingNumber(
         ?string $bankOfFirstDepositRoutingNumber

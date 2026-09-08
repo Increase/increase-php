@@ -25,7 +25,7 @@ final class TermsAgreement implements BaseModel
     public \DateTimeInterface $agreedAt;
 
     /**
-     * The IP address the Entity accessed reviewed the terms from.
+     * The IP address the Entity reviewed the terms from.
      */
     #[Required('ip_address')]
     public ?string $ipAddress;
@@ -86,7 +86,7 @@ final class TermsAgreement implements BaseModel
     }
 
     /**
-     * The IP address the Entity accessed reviewed the terms from.
+     * The IP address the Entity reviewed the terms from.
      */
     public function withIPAddress(?string $ipAddress): self
     {

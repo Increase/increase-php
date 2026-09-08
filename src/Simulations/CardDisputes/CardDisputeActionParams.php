@@ -38,7 +38,7 @@ final class CardDisputeActionParams implements BaseModel
     public string $network;
 
     /**
-     * The Visa-specific parameters for the taking action on the dispute. Required if and only if `network` is `visa`.
+     * The Visa-specific parameters for taking action on the dispute. Required if and only if `network` is `visa`.
      */
     #[Optional]
     public ?Visa $visa;
@@ -97,7 +97,7 @@ final class CardDisputeActionParams implements BaseModel
     }
 
     /**
-     * The Visa-specific parameters for the taking action on the dispute. Required if and only if `network` is `visa`.
+     * The Visa-specific parameters for taking action on the dispute. Required if and only if `network` is `visa`.
      *
      * @param Visa|VisaShape $visa
      */

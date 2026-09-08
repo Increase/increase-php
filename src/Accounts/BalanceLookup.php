@@ -11,7 +11,7 @@ use Increase\Core\Concerns\SdkModel;
 use Increase\Core\Contracts\BaseModel;
 
 /**
- * Represents a request to lookup the balance of an Account at a given point in time.
+ * Represents a request to look up the balance of an Account at a given point in time.
  *
  * @phpstan-import-type LoanShape from \Increase\Accounts\BalanceLookup\Loan
  *

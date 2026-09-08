@@ -25,7 +25,7 @@ final class CardTokenCapabilities implements BaseModel
     use SdkModel;
 
     /**
-     * Each route represent a path e.g., a push transfer can take.
+     * Each route represents a path e.g., a push transfer can take.
      *
      * @var list<Route> $routes
      */
@@ -78,7 +78,7 @@ final class CardTokenCapabilities implements BaseModel
     }
 
     /**
-     * Each route represent a path e.g., a push transfer can take.
+     * Each route represents a path e.g., a push transfer can take.
      *
      * @param list<Route|Route1Shape> $routes
      */

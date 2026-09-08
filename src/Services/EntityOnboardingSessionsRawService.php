@@ -89,7 +89,7 @@ final class EntityOnboardingSessionsRawService implements EntityOnboardingSessio
     /**
      * @api
      *
-     * List Entity Onboarding Session
+     * List Entity Onboarding Sessions
      *
      * @param array{
      *   cursor?: string,

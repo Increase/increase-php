@@ -21,6 +21,7 @@ use Increase\Core\Contracts\BaseModel;
  *
  * @phpstan-type CardPurchaseSupplementShape = array{
  *   id: string,
+ *   accountID: string,
  *   cardPaymentID: string|null,
  *   invoice: null|Invoice|InvoiceShape,
  *   lineItems: list<LineItem|LineItemShape>|null,
@@ -39,6 +40,12 @@ final class CardPurchaseSupplement implements BaseModel
      */
     #[Required]
     public string $id;
+
+    /**
+     * The identifier for the Account the Card Purchase Supplement belongs to.
+     */
+    #[Required('account_id')]
+    public string $accountID;
 
     /**
      * The ID of the Card Payment this transaction belongs to.
@@ -87,6 +94,7 @@ final class CardPurchaseSupplement implements BaseModel
      * ```
      * CardPurchaseSupplement::with(
      *   id: ...,
+     *   accountID: ...,
      *   cardPaymentID: ...,
      *   invoice: ...,
      *   lineItems: ...,
@@ -101,6 +109,7 @@ final class CardPurchaseSupplement implements BaseModel
      * ```
      * (new CardPurchaseSupplement)
      *   ->withID(...)
+     *   ->withAccountID(...)
      *   ->withCardPaymentID(...)
      *   ->withInvoice(...)
      *   ->withLineItems(...)
@@ -126,6 +135,7 @@ final class CardPurchaseSupplement implements BaseModel
      */
     public static function with(
         string $id,
+        string $accountID,
         ?string $cardPaymentID,
         Invoice|array|null $invoice,
         ?array $lineItems,
@@ -136,6 +146,7 @@ final class CardPurchaseSupplement implements BaseModel
         $self = new self;
 
         $self['id'] = $id;
+        $self['accountID'] = $accountID;
         $self['cardPaymentID'] = $cardPaymentID;
         $self['invoice'] = $invoice;
         $self['lineItems'] = $lineItems;
@@ -153,6 +164,17 @@ final class CardPurchaseSupplement implements BaseModel
     {
         $self = clone $this;
         $self['id'] = $id;
+
+        return $self;
+    }
+
+    /**
+     * The identifier for the Account the Card Purchase Supplement belongs to.
+     */
+    public function withAccountID(string $accountID): self
+    {
+        $self = clone $this;
+        $self['accountID'] = $accountID;
 
         return $self;
     }

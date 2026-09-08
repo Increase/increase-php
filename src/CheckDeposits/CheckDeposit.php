@@ -110,7 +110,7 @@ final class CheckDeposit implements BaseModel
     public ?DepositReturn $depositReturn;
 
     /**
-     * After the check is parsed, it is submitted to the Check21 network for processing. This will contain details of the submission.
+     * After the check is parsed, it is submitted to the Check 21 network for processing. This will contain details of the submission.
      */
     #[Required('deposit_submission')]
     public ?DepositSubmission $depositSubmission;
@@ -402,7 +402,7 @@ final class CheckDeposit implements BaseModel
     }
 
     /**
-     * After the check is parsed, it is submitted to the Check21 network for processing. This will contain details of the submission.
+     * After the check is parsed, it is submitted to the Check 21 network for processing. This will contain details of the submission.
      *
      * @param DepositSubmission|DepositSubmissionShape|null $depositSubmission
      */

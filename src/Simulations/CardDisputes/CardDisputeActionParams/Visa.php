@@ -22,7 +22,7 @@ use Increase\Simulations\CardDisputes\CardDisputeActionParams\Visa\TimeOutRepres
 use Increase\Simulations\CardDisputes\CardDisputeActionParams\Visa\TimeOutUserPrearbitration;
 
 /**
- * The Visa-specific parameters for the taking action on the dispute. Required if and only if `network` is `visa`.
+ * The Visa-specific parameters for taking action on the dispute. Required if and only if `network` is `visa`.
  *
  * @phpstan-import-type AcceptChargebackShape from \Increase\Simulations\CardDisputes\CardDisputeActionParams\Visa\AcceptChargeback
  * @phpstan-import-type AcceptUserSubmissionShape from \Increase\Simulations\CardDisputes\CardDisputeActionParams\Visa\AcceptUserSubmission

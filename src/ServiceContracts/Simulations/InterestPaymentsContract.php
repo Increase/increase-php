@@ -16,7 +16,7 @@ interface InterestPaymentsContract
     /**
      * @api
      *
-     * @param string $accountID the identifier of the Account the Interest Payment should be paid to is for
+     * @param string $accountID the identifier of the Account the Interest Payment should be paid to
      * @param int $amount The interest amount in cents. Must be positive.
      * @param string $accruedOnAccountID The identifier of the Account the Interest accrued on. Defaults to `account_id`.
      * @param \DateTimeInterface $periodEnd The end of the interest period. If not provided, defaults to the current time.

@@ -27,6 +27,7 @@ use Increase\DigitalWalletTokens\DigitalWalletToken\Update;
  *
  * @phpstan-type DigitalWalletTokenShape = array{
  *   id: string,
+ *   accountID: string,
  *   cardID: string,
  *   cardholder: Cardholder|CardholderShape,
  *   createdAt: \DateTimeInterface,
@@ -49,6 +50,12 @@ final class DigitalWalletToken implements BaseModel
      */
     #[Required]
     public string $id;
+
+    /**
+     * The identifier for the Account this Digital Wallet Token belongs to.
+     */
+    #[Required('account_id')]
+    public string $accountID;
 
     /**
      * The identifier for the Card this Digital Wallet Token belongs to.
@@ -125,6 +132,7 @@ final class DigitalWalletToken implements BaseModel
      * ```
      * DigitalWalletToken::with(
      *   id: ...,
+     *   accountID: ...,
      *   cardID: ...,
      *   cardholder: ...,
      *   createdAt: ...,
@@ -143,6 +151,7 @@ final class DigitalWalletToken implements BaseModel
      * ```
      * (new DigitalWalletToken)
      *   ->withID(...)
+     *   ->withAccountID(...)
      *   ->withCardID(...)
      *   ->withCardholder(...)
      *   ->withCreatedAt(...)
@@ -176,6 +185,7 @@ final class DigitalWalletToken implements BaseModel
      */
     public static function with(
         string $id,
+        string $accountID,
         string $cardID,
         Cardholder|array $cardholder,
         \DateTimeInterface $createdAt,
@@ -190,6 +200,7 @@ final class DigitalWalletToken implements BaseModel
         $self = new self;
 
         $self['id'] = $id;
+        $self['accountID'] = $accountID;
         $self['cardID'] = $cardID;
         $self['cardholder'] = $cardholder;
         $self['createdAt'] = $createdAt;
@@ -211,6 +222,17 @@ final class DigitalWalletToken implements BaseModel
     {
         $self = clone $this;
         $self['id'] = $id;
+
+        return $self;
+    }
+
+    /**
+     * The identifier for the Account this Digital Wallet Token belongs to.
+     */
+    public function withAccountID(string $accountID): self
+    {
+        $self = clone $this;
+        $self['accountID'] = $accountID;
 
         return $self;
     }

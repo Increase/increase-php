@@ -22,7 +22,7 @@ final class InboundACH implements BaseModel
     use SdkModel;
 
     /**
-     * Whether ACH debits are allowed against this Account Number. Note that they will still be declined if this is `allowed` if the Account Number is not active.
+     * Whether ACH debits are allowed against this Account Number. Note that they will still be declined if this is `allowed` but the Account Number is not active.
      *
      * @var value-of<DebitStatus> $debitStatus
      */
@@ -65,7 +65,7 @@ final class InboundACH implements BaseModel
     }
 
     /**
-     * Whether ACH debits are allowed against this Account Number. Note that they will still be declined if this is `allowed` if the Account Number is not active.
+     * Whether ACH debits are allowed against this Account Number. Note that they will still be declined if this is `allowed` but the Account Number is not active.
      *
      * @param DebitStatus|value-of<DebitStatus> $debitStatus
      */

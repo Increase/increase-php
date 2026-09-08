@@ -21,7 +21,11 @@ final class CategoryChange implements BaseModel
     /** @use SdkModel<CategoryChangeShape> */
     use SdkModel;
 
-    /** @var value-of<Category> $category */
+    /**
+     * The category the dispute is being changed to.
+     *
+     * @var value-of<Category> $category
+     */
     #[Required(enum: Category::class)]
     public string $category;
 
@@ -68,6 +72,8 @@ final class CategoryChange implements BaseModel
     }
 
     /**
+     * The category the dispute is being changed to.
+     *
      * @param Category|value-of<Category> $category
      */
     public function withCategory(Category|string $category): self

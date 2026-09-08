@@ -11,7 +11,7 @@ use Increase\Core\Contracts\BaseModel;
 use Increase\EntityOnboardingSessions\EntityOnboardingSessionListParams\Status;
 
 /**
- * List Entity Onboarding Session.
+ * List Entity Onboarding Sessions.
  *
  * @see Increase\Services\EntityOnboardingSessionsService::list()
  *

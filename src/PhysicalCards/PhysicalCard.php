@@ -20,6 +20,7 @@ use Increase\PhysicalCards\PhysicalCard\Type;
  *
  * @phpstan-type PhysicalCardShape = array{
  *   id: string,
+ *   accountID: string,
  *   cardID: string,
  *   cardholder: Cardholder|CardholderShape,
  *   createdAt: \DateTimeInterface,
@@ -40,6 +41,12 @@ final class PhysicalCard implements BaseModel
      */
     #[Required]
     public string $id;
+
+    /**
+     * The identifier for the Account this Physical Card belongs to.
+     */
+    #[Required('account_id')]
+    public string $accountID;
 
     /**
      * The identifier for the Card this Physical Card represents.
@@ -100,6 +107,7 @@ final class PhysicalCard implements BaseModel
      * ```
      * PhysicalCard::with(
      *   id: ...,
+     *   accountID: ...,
      *   cardID: ...,
      *   cardholder: ...,
      *   createdAt: ...,
@@ -116,6 +124,7 @@ final class PhysicalCard implements BaseModel
      * ```
      * (new PhysicalCard)
      *   ->withID(...)
+     *   ->withAccountID(...)
      *   ->withCardID(...)
      *   ->withCardholder(...)
      *   ->withCreatedAt(...)
@@ -143,6 +152,7 @@ final class PhysicalCard implements BaseModel
      */
     public static function with(
         string $id,
+        string $accountID,
         string $cardID,
         Cardholder|array $cardholder,
         \DateTimeInterface $createdAt,
@@ -155,6 +165,7 @@ final class PhysicalCard implements BaseModel
         $self = new self;
 
         $self['id'] = $id;
+        $self['accountID'] = $accountID;
         $self['cardID'] = $cardID;
         $self['cardholder'] = $cardholder;
         $self['createdAt'] = $createdAt;
@@ -174,6 +185,17 @@ final class PhysicalCard implements BaseModel
     {
         $self = clone $this;
         $self['id'] = $id;
+
+        return $self;
+    }
+
+    /**
+     * The identifier for the Account this Physical Card belongs to.
+     */
+    public function withAccountID(string $accountID): self
+    {
+        $self = clone $this;
+        $self['accountID'] = $accountID;
 
         return $self;
     }

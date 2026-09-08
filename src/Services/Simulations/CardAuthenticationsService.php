@@ -42,7 +42,7 @@ final class CardAuthenticationsService implements CardAuthenticationsContract
      * @param string $merchantAcceptorID the merchant identifier (commonly abbreviated as MID) of the merchant the card is transacting with
      * @param string $merchantCategoryCode the Merchant Category Code (commonly abbreviated as MCC) of the merchant the card is transacting with
      * @param string $merchantCountry the country the merchant resides in
-     * @param string $merchantName The name of the merchant
+     * @param string $merchantName the name of the merchant
      * @param int $purchaseAmount the purchase amount in cents
      * @param RequestOpts|null $requestOptions
      *

@@ -83,7 +83,7 @@ final class CardAuthorization implements BaseModel
     public string $actioner;
 
     /**
-     * Additional amounts associated with the card authorization, such as ATM surcharges fees. These are usually a subset of the `amount` field and are used to provide more detailed information about the transaction.
+     * Additional amounts associated with the card authorization, such as ATM surcharge fees. These are usually a subset of the `amount` field and are used to provide more detailed information about the transaction.
      */
     #[Required('additional_amounts')]
     public AdditionalAmounts $additionalAmounts;
@@ -123,7 +123,7 @@ final class CardAuthorization implements BaseModel
     public string $direction;
 
     /**
-     * The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) when this authorization will expire and the pending transaction will be released.
+     * The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) time at which this authorization will expire and the pending transaction will be released.
      */
     #[Required('expires_at')]
     public \DateTimeInterface $expiresAt;
@@ -460,7 +460,7 @@ final class CardAuthorization implements BaseModel
     }
 
     /**
-     * Additional amounts associated with the card authorization, such as ATM surcharges fees. These are usually a subset of the `amount` field and are used to provide more detailed information about the transaction.
+     * Additional amounts associated with the card authorization, such as ATM surcharge fees. These are usually a subset of the `amount` field and are used to provide more detailed information about the transaction.
      *
      * @param AdditionalAmounts|AdditionalAmountsShape $additionalAmounts
      */
@@ -534,7 +534,7 @@ final class CardAuthorization implements BaseModel
     }
 
     /**
-     * The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) when this authorization will expire and the pending transaction will be released.
+     * The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) time at which this authorization will expire and the pending transaction will be released.
      */
     public function withExpiresAt(\DateTimeInterface $expiresAt): self
     {

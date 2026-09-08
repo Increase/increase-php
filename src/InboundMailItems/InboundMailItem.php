@@ -19,6 +19,7 @@ use Increase\InboundMailItems\InboundMailItem\Type;
  *
  * @phpstan-type InboundMailItemShape = array{
  *   id: string,
+ *   accountID: string|null,
  *   checks: list<Check|CheckShape>,
  *   createdAt: \DateTimeInterface,
  *   fileID: string,
@@ -40,6 +41,12 @@ final class InboundMailItem implements BaseModel
      */
     #[Required]
     public string $id;
+
+    /**
+     * The identifier for the Account that checks in this mail item are deposited into. For mail items that could not be routed to a Lockbox Recipient, this will be null.
+     */
+    #[Required('account_id')]
+    public ?string $accountID;
 
     /**
      * The checks in the mail item.
@@ -110,6 +117,7 @@ final class InboundMailItem implements BaseModel
      * ```
      * InboundMailItem::with(
      *   id: ...,
+     *   accountID: ...,
      *   checks: ...,
      *   createdAt: ...,
      *   fileID: ...,
@@ -127,6 +135,7 @@ final class InboundMailItem implements BaseModel
      * ```
      * (new InboundMailItem)
      *   ->withID(...)
+     *   ->withAccountID(...)
      *   ->withChecks(...)
      *   ->withCreatedAt(...)
      *   ->withFileID(...)
@@ -155,6 +164,7 @@ final class InboundMailItem implements BaseModel
      */
     public static function with(
         string $id,
+        ?string $accountID,
         array $checks,
         \DateTimeInterface $createdAt,
         string $fileID,
@@ -168,6 +178,7 @@ final class InboundMailItem implements BaseModel
         $self = new self;
 
         $self['id'] = $id;
+        $self['accountID'] = $accountID;
         $self['checks'] = $checks;
         $self['createdAt'] = $createdAt;
         $self['fileID'] = $fileID;
@@ -188,6 +199,17 @@ final class InboundMailItem implements BaseModel
     {
         $self = clone $this;
         $self['id'] = $id;
+
+        return $self;
+    }
+
+    /**
+     * The identifier for the Account that checks in this mail item are deposited into. For mail items that could not be routed to a Lockbox Recipient, this will be null.
+     */
+    public function withAccountID(?string $accountID): self
+    {
+        $self = clone $this;
+        $self['accountID'] = $accountID;
 
         return $self;
     }

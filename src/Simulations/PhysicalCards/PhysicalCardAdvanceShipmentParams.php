@@ -11,7 +11,7 @@ use Increase\Core\Contracts\BaseModel;
 use Increase\Simulations\PhysicalCards\PhysicalCardAdvanceShipmentParams\ShipmentStatus;
 
 /**
- * This endpoint allows you to simulate advancing the shipment status of a Physical Card, to simulate e.g., that a physical card was attempted shipped but then failed delivery.
+ * This endpoint allows you to simulate advancing the shipment status of a Physical Card, to simulate e.g., that a physical card was attempted to be shipped but then failed delivery.
  *
  * @see Increase\Services\Simulations\PhysicalCardsService::advanceShipment()
  *

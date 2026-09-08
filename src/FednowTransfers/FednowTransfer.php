@@ -13,6 +13,7 @@ use Increase\FednowTransfers\FednowTransfer\CreditorAddress;
 use Increase\FednowTransfers\FednowTransfer\Currency;
 use Increase\FednowTransfers\FednowTransfer\DebtorAddress;
 use Increase\FednowTransfers\FednowTransfer\Rejection;
+use Increase\FednowTransfers\FednowTransfer\Return_;
 use Increase\FednowTransfers\FednowTransfer\Status;
 use Increase\FednowTransfers\FednowTransfer\Submission;
 use Increase\FednowTransfers\FednowTransfer\Type;
@@ -25,6 +26,7 @@ use Increase\FednowTransfers\FednowTransfer\Type;
  * @phpstan-import-type CreditorAddressShape from \Increase\FednowTransfers\FednowTransfer\CreditorAddress
  * @phpstan-import-type DebtorAddressShape from \Increase\FednowTransfers\FednowTransfer\DebtorAddress
  * @phpstan-import-type RejectionShape from \Increase\FednowTransfers\FednowTransfer\Rejection
+ * @phpstan-import-type ReturnShape from \Increase\FednowTransfers\FednowTransfer\Return_
  * @phpstan-import-type SubmissionShape from \Increase\FednowTransfers\FednowTransfer\Submission
  *
  * @phpstan-type FednowTransferShape = array{
@@ -44,6 +46,7 @@ use Increase\FednowTransfers\FednowTransfer\Type;
  *   idempotencyKey: string|null,
  *   pendingTransactionID: string|null,
  *   rejection: null|Rejection|RejectionShape,
+ *   returns: list<Return_|ReturnShape>,
  *   routingNumber: string,
  *   sourceAccountNumberID: string,
  *   status: Status|value-of<Status>,
@@ -158,6 +161,14 @@ final class FednowTransfer implements BaseModel
     public ?Rejection $rejection;
 
     /**
+     * If the transfer is returned by the recipient's bank, this will contain details of each return. FedNow allows returning part of a transfer, so a transfer can be returned more than once.
+     *
+     * @var list<Return_> $returns
+     */
+    #[Required(list: Return_::class)]
+    public array $returns;
+
+    /**
      * The destination American Bankers' Association (ABA) Routing Transit Number (RTN).
      */
     #[Required('routing_number')]
@@ -231,6 +242,7 @@ final class FednowTransfer implements BaseModel
      *   idempotencyKey: ...,
      *   pendingTransactionID: ...,
      *   rejection: ...,
+     *   returns: ...,
      *   routingNumber: ...,
      *   sourceAccountNumberID: ...,
      *   status: ...,
@@ -262,6 +274,7 @@ final class FednowTransfer implements BaseModel
      *   ->withIdempotencyKey(...)
      *   ->withPendingTransactionID(...)
      *   ->withRejection(...)
+     *   ->withReturns(...)
      *   ->withRoutingNumber(...)
      *   ->withSourceAccountNumberID(...)
      *   ->withStatus(...)
@@ -288,6 +301,7 @@ final class FednowTransfer implements BaseModel
      * @param Currency|value-of<Currency> $currency
      * @param DebtorAddress|DebtorAddressShape|null $debtorAddress
      * @param Rejection|RejectionShape|null $rejection
+     * @param list<Return_|ReturnShape> $returns
      * @param Status|value-of<Status> $status
      * @param Submission|SubmissionShape|null $submission
      * @param Type|value-of<Type> $type
@@ -309,6 +323,7 @@ final class FednowTransfer implements BaseModel
         ?string $idempotencyKey,
         ?string $pendingTransactionID,
         Rejection|array|null $rejection,
+        array $returns,
         string $routingNumber,
         string $sourceAccountNumberID,
         Status|string $status,
@@ -336,6 +351,7 @@ final class FednowTransfer implements BaseModel
         $self['idempotencyKey'] = $idempotencyKey;
         $self['pendingTransactionID'] = $pendingTransactionID;
         $self['rejection'] = $rejection;
+        $self['returns'] = $returns;
         $self['routingNumber'] = $routingNumber;
         $self['sourceAccountNumberID'] = $sourceAccountNumberID;
         $self['status'] = $status;
@@ -536,6 +552,19 @@ final class FednowTransfer implements BaseModel
     {
         $self = clone $this;
         $self['rejection'] = $rejection;
+
+        return $self;
+    }
+
+    /**
+     * If the transfer is returned by the recipient's bank, this will contain details of each return. FedNow allows returning part of a transfer, so a transfer can be returned more than once.
+     *
+     * @param list<Return_|ReturnShape> $returns
+     */
+    public function withReturns(array $returns): self
+    {
+        $self = clone $this;
+        $self['returns'] = $returns;
 
         return $self;
     }

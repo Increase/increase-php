@@ -14,6 +14,7 @@ use Increase\Entities\EntityCreateParams\GovernmentAuthority;
 use Increase\Entities\EntityCreateParams\Joint;
 use Increase\Entities\EntityCreateParams\NaturalPerson;
 use Increase\Entities\EntityCreateParams\RiskRating;
+use Increase\Entities\EntityCreateParams\SoleProprietorship;
 use Increase\Entities\EntityCreateParams\Structure;
 use Increase\Entities\EntityCreateParams\SupplementalDocument;
 use Increase\Entities\EntityCreateParams\TermsAgreement;
@@ -30,6 +31,7 @@ use Increase\Entities\EntityCreateParams\Trust;
  * @phpstan-import-type JointShape from \Increase\Entities\EntityCreateParams\Joint
  * @phpstan-import-type NaturalPersonShape from \Increase\Entities\EntityCreateParams\NaturalPerson
  * @phpstan-import-type RiskRatingShape from \Increase\Entities\EntityCreateParams\RiskRating
+ * @phpstan-import-type SoleProprietorshipShape from \Increase\Entities\EntityCreateParams\SoleProprietorship
  * @phpstan-import-type SupplementalDocumentShape from \Increase\Entities\EntityCreateParams\SupplementalDocument
  * @phpstan-import-type TermsAgreementShape from \Increase\Entities\EntityCreateParams\TermsAgreement
  * @phpstan-import-type ThirdPartyVerificationShape from \Increase\Entities\EntityCreateParams\ThirdPartyVerification
@@ -43,6 +45,7 @@ use Increase\Entities\EntityCreateParams\Trust;
  *   joint?: null|Joint|JointShape,
  *   naturalPerson?: null|NaturalPerson|NaturalPersonShape,
  *   riskRating?: null|RiskRating|RiskRatingShape,
+ *   soleProprietorship?: null|SoleProprietorship|SoleProprietorshipShape,
  *   supplementalDocuments?: list<SupplementalDocument|SupplementalDocumentShape>|null,
  *   termsAgreements?: list<TermsAgreement|TermsAgreementShape>|null,
  *   thirdPartyVerification?: null|ThirdPartyVerification|ThirdPartyVerificationShape,
@@ -98,6 +101,12 @@ final class EntityCreateParams implements BaseModel
      */
     #[Optional('risk_rating')]
     public ?RiskRating $riskRating;
+
+    /**
+     * Details of the sole proprietorship entity to create. Required if `structure` is equal to `sole_proprietorship`.
+     */
+    #[Optional('sole_proprietorship')]
+    public ?SoleProprietorship $soleProprietorship;
 
     /**
      * Additional documentation associated with the entity.
@@ -157,6 +166,7 @@ final class EntityCreateParams implements BaseModel
      * @param Joint|JointShape|null $joint
      * @param NaturalPerson|NaturalPersonShape|null $naturalPerson
      * @param RiskRating|RiskRatingShape|null $riskRating
+     * @param SoleProprietorship|SoleProprietorshipShape|null $soleProprietorship
      * @param list<SupplementalDocument|SupplementalDocumentShape>|null $supplementalDocuments
      * @param list<TermsAgreement|TermsAgreementShape>|null $termsAgreements
      * @param ThirdPartyVerification|ThirdPartyVerificationShape|null $thirdPartyVerification
@@ -170,6 +180,7 @@ final class EntityCreateParams implements BaseModel
         Joint|array|null $joint = null,
         NaturalPerson|array|null $naturalPerson = null,
         RiskRating|array|null $riskRating = null,
+        SoleProprietorship|array|null $soleProprietorship = null,
         ?array $supplementalDocuments = null,
         ?array $termsAgreements = null,
         ThirdPartyVerification|array|null $thirdPartyVerification = null,
@@ -185,6 +196,7 @@ final class EntityCreateParams implements BaseModel
         null !== $joint && $self['joint'] = $joint;
         null !== $naturalPerson && $self['naturalPerson'] = $naturalPerson;
         null !== $riskRating && $self['riskRating'] = $riskRating;
+        null !== $soleProprietorship && $self['soleProprietorship'] = $soleProprietorship;
         null !== $supplementalDocuments && $self['supplementalDocuments'] = $supplementalDocuments;
         null !== $termsAgreements && $self['termsAgreements'] = $termsAgreements;
         null !== $thirdPartyVerification && $self['thirdPartyVerification'] = $thirdPartyVerification;
@@ -279,6 +291,20 @@ final class EntityCreateParams implements BaseModel
     {
         $self = clone $this;
         $self['riskRating'] = $riskRating;
+
+        return $self;
+    }
+
+    /**
+     * Details of the sole proprietorship entity to create. Required if `structure` is equal to `sole_proprietorship`.
+     *
+     * @param SoleProprietorship|SoleProprietorshipShape $soleProprietorship
+     */
+    public function withSoleProprietorship(
+        SoleProprietorship|array $soleProprietorship
+    ): self {
+        $self = clone $this;
+        $self['soleProprietorship'] = $soleProprietorship;
 
         return $self;
     }

@@ -176,7 +176,7 @@ final class InboundACHTransfer implements BaseModel
     public string $originatorCompanyName;
 
     /**
-     * The American Banking Association (ABA) routing number of the bank originating the transfer.
+     * The American Bankers' Association (ABA) routing number of the bank originating the transfer.
      */
     #[Required('originator_routing_number')]
     public string $originatorRoutingNumber;
@@ -606,7 +606,7 @@ final class InboundACHTransfer implements BaseModel
     }
 
     /**
-     * The American Banking Association (ABA) routing number of the bank originating the transfer.
+     * The American Bankers' Association (ABA) routing number of the bank originating the transfer.
      */
     public function withOriginatorRoutingNumber(
         string $originatorRoutingNumber

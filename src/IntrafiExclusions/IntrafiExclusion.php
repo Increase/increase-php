@@ -56,7 +56,7 @@ final class IntrafiExclusion implements BaseModel
     public string $entityID;
 
     /**
-     * When this was exclusion was confirmed by IntraFi.
+     * When this exclusion was confirmed by IntraFi.
      */
     #[Required('excluded_at')]
     public ?\DateTimeInterface $excludedAt;
@@ -82,7 +82,7 @@ final class IntrafiExclusion implements BaseModel
     public string $status;
 
     /**
-     * When this was exclusion was submitted to IntraFi by Increase.
+     * When this exclusion was submitted to IntraFi by Increase.
      */
     #[Required('submitted_at')]
     public ?\DateTimeInterface $submittedAt;
@@ -216,7 +216,7 @@ final class IntrafiExclusion implements BaseModel
     }
 
     /**
-     * When this was exclusion was confirmed by IntraFi.
+     * When this exclusion was confirmed by IntraFi.
      */
     public function withExcludedAt(?\DateTimeInterface $excludedAt): self
     {
@@ -263,7 +263,7 @@ final class IntrafiExclusion implements BaseModel
     }
 
     /**
-     * When this was exclusion was submitted to IntraFi by Increase.
+     * When this exclusion was submitted to IntraFi by Increase.
      */
     public function withSubmittedAt(?\DateTimeInterface $submittedAt): self
     {

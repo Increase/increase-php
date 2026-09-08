@@ -16,7 +16,7 @@ interface PendingTransactionsContract
     /**
      * @api
      *
-     * @param string $pendingTransactionID The pending transaction to release. The pending transaction must have a `inbound_funds_hold` source.
+     * @param string $pendingTransactionID The pending transaction to release. The pending transaction must have an `inbound_funds_hold` source.
      * @param RequestOpts|null $requestOptions
      *
      * @throws APIException

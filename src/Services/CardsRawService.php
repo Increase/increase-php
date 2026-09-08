@@ -232,7 +232,7 @@ final class CardsRawService implements CardsRawContract
     /**
      * @api
      *
-     * Sensitive details for a Card include the primary account number, expiry, card verification code, and PIN.
+     * Sensitive details for a Card include the primary account number, expiration, card verification code, and PIN.
      *
      * @param string $cardID the identifier of the Card to retrieve details for
      * @param RequestOpts|null $requestOptions

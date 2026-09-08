@@ -196,6 +196,35 @@ final class EntitiesTest extends TestCase
                 'ratedAt' => new \DateTimeImmutable('2019-12-27T18:11:19.117Z'),
                 'rating' => 'low',
             ],
+            soleProprietorship: [
+                'address' => [
+                    'city' => 'x',
+                    'line1' => 'x',
+                    'state' => 'xx',
+                    'zip' => 'x',
+                    'line2' => 'x',
+                ],
+                'soleProprietor' => [
+                    'address' => [
+                        'city' => 'x',
+                        'country' => 'x',
+                        'line1' => 'x',
+                        'line2' => 'x',
+                        'state' => 'x',
+                        'zip' => 'x',
+                    ],
+                    'dateOfBirth' => '2019-12-27',
+                    'identification' => [
+                        'method' => 'social_security_number', 'number' => 'xxxx',
+                    ],
+                    'name' => 'x',
+                ],
+                'doingBusinessAsName' => 'x',
+                'email' => 'dev@stainless.com',
+                'industryCode' => 'x',
+                'taxIdentifier' => 'x',
+                'website' => 'website',
+            ],
             supplementalDocuments: [['fileID' => 'file_id']],
             termsAgreements: [
                 [

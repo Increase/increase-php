@@ -33,6 +33,7 @@ final class ProgramsRawService implements ProgramsRawContract
      *   name: string,
      *   bank?: Bank|value-of<Bank>,
      *   lendingMaximumExtendableCredit?: int,
+     *   loanAccountsRequireLoanOffers?: bool,
      *   reserveAccountID?: string,
      * }|ProgramCreateParams $params
      * @param RequestOpts|null $requestOptions

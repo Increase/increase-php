@@ -19,7 +19,7 @@ use Increase\PendingTransactions\PendingTransaction\Source\CardAuthorization\Add
 use Increase\PendingTransactions\PendingTransaction\Source\CardAuthorization\AdditionalAmounts\Vision;
 
 /**
- * Additional amounts associated with the card authorization, such as ATM surcharges fees. These are usually a subset of the `amount` field and are used to provide more detailed information about the transaction.
+ * Additional amounts associated with the card authorization, such as ATM surcharge fees. These are usually a subset of the `amount` field and are used to provide more detailed information about the transaction.
  *
  * @phpstan-import-type ClinicShape from \Increase\PendingTransactions\PendingTransaction\Source\CardAuthorization\AdditionalAmounts\Clinic
  * @phpstan-import-type DentalShape from \Increase\PendingTransactions\PendingTransaction\Source\CardAuthorization\AdditionalAmounts\Dental

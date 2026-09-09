@@ -20,4 +20,6 @@ enum Reason: string
     case ENTITY_NOT_ACTIVE = 'entity_not_active';
 
     case REAL_TIME_PAYMENTS_NOT_ENABLED = 'real_time_payments_not_enabled';
+
+    case TRANSACTION_NOT_ALLOWED = 'transaction_not_allowed';
 }

@@ -34,7 +34,9 @@ use Increase\DigitalWalletTokens\DigitalWalletToken\Update;
  *   decline: null|Decline|DeclineShape,
  *   device: Device|DeviceShape,
  *   dynamicPrimaryAccountNumber: null|DynamicPrimaryAccountNumber|DynamicPrimaryAccountNumberShape,
+ *   primaryAccountNumberReferenceIdentifier: string,
  *   status: Status|value-of<Status>,
+ *   tokenReferenceIdentifier: string,
  *   tokenRequestor: TokenRequestor|value-of<TokenRequestor>,
  *   type: Type|value-of<Type>,
  *   updates: list<Update|UpdateShape>,
@@ -94,12 +96,24 @@ final class DigitalWalletToken implements BaseModel
     public ?DynamicPrimaryAccountNumber $dynamicPrimaryAccountNumber;
 
     /**
+     * The reference identifier assigned by the card network to the underlying Card.
+     */
+    #[Required('primary_account_number_reference_identifier')]
+    public string $primaryAccountNumberReferenceIdentifier;
+
+    /**
      * This indicates if payments can be made with the Digital Wallet Token.
      *
      * @var value-of<Status> $status
      */
     #[Required(enum: Status::class)]
     public string $status;
+
+    /**
+     * The reference identifier assigned by the card network to the token.
+     */
+    #[Required('token_reference_identifier')]
+    public string $tokenReferenceIdentifier;
 
     /**
      * The digital wallet app being used.
@@ -139,7 +153,9 @@ final class DigitalWalletToken implements BaseModel
      *   decline: ...,
      *   device: ...,
      *   dynamicPrimaryAccountNumber: ...,
+     *   primaryAccountNumberReferenceIdentifier: ...,
      *   status: ...,
+     *   tokenReferenceIdentifier: ...,
      *   tokenRequestor: ...,
      *   type: ...,
      *   updates: ...,
@@ -158,7 +174,9 @@ final class DigitalWalletToken implements BaseModel
      *   ->withDecline(...)
      *   ->withDevice(...)
      *   ->withDynamicPrimaryAccountNumber(...)
+     *   ->withPrimaryAccountNumberReferenceIdentifier(...)
      *   ->withStatus(...)
+     *   ->withTokenReferenceIdentifier(...)
      *   ->withTokenRequestor(...)
      *   ->withType(...)
      *   ->withUpdates(...)
@@ -192,7 +210,9 @@ final class DigitalWalletToken implements BaseModel
         Decline|array|null $decline,
         Device|array $device,
         DynamicPrimaryAccountNumber|array|null $dynamicPrimaryAccountNumber,
+        string $primaryAccountNumberReferenceIdentifier,
         Status|string $status,
+        string $tokenReferenceIdentifier,
         TokenRequestor|string $tokenRequestor,
         Type|string $type,
         array $updates,
@@ -207,7 +227,9 @@ final class DigitalWalletToken implements BaseModel
         $self['decline'] = $decline;
         $self['device'] = $device;
         $self['dynamicPrimaryAccountNumber'] = $dynamicPrimaryAccountNumber;
+        $self['primaryAccountNumberReferenceIdentifier'] = $primaryAccountNumberReferenceIdentifier;
         $self['status'] = $status;
+        $self['tokenReferenceIdentifier'] = $tokenReferenceIdentifier;
         $self['tokenRequestor'] = $tokenRequestor;
         $self['type'] = $type;
         $self['updates'] = $updates;
@@ -313,6 +335,18 @@ final class DigitalWalletToken implements BaseModel
     }
 
     /**
+     * The reference identifier assigned by the card network to the underlying Card.
+     */
+    public function withPrimaryAccountNumberReferenceIdentifier(
+        string $primaryAccountNumberReferenceIdentifier
+    ): self {
+        $self = clone $this;
+        $self['primaryAccountNumberReferenceIdentifier'] = $primaryAccountNumberReferenceIdentifier;
+
+        return $self;
+    }
+
+    /**
      * This indicates if payments can be made with the Digital Wallet Token.
      *
      * @param Status|value-of<Status> $status
@@ -321,6 +355,18 @@ final class DigitalWalletToken implements BaseModel
     {
         $self = clone $this;
         $self['status'] = $status;
+
+        return $self;
+    }
+
+    /**
+     * The reference identifier assigned by the card network to the token.
+     */
+    public function withTokenReferenceIdentifier(
+        string $tokenReferenceIdentifier
+    ): self {
+        $self = clone $this;
+        $self['tokenReferenceIdentifier'] = $tokenReferenceIdentifier;
 
         return $self;
     }

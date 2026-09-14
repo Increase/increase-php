@@ -247,6 +247,10 @@ enum Category: string
 
     case TRANSACTION_CREATED = 'transaction.created';
 
+    case UK_FASTER_PAYMENT_SYSTEM_TRANSFER_CREATED = 'uk_faster_payment_system_transfer.created';
+
+    case UK_FASTER_PAYMENT_SYSTEM_TRANSFER_UPDATED = 'uk_faster_payment_system_transfer.updated';
+
     case WIRE_DRAWDOWN_REQUEST_CREATED = 'wire_drawdown_request.created';
 
     case WIRE_DRAWDOWN_REQUEST_UPDATED = 'wire_drawdown_request.updated';

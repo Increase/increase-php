@@ -241,11 +241,19 @@ enum EventCategory: string
 
     case REAL_TIME_PAYMENTS_REQUEST_FOR_PAYMENT_UPDATED = 'real_time_payments_request_for_payment.updated';
 
+    case SEPA_INSTANT_TRANSFER_CREATED = 'sepa_instant_transfer.created';
+
+    case SEPA_INSTANT_TRANSFER_UPDATED = 'sepa_instant_transfer.updated';
+
     case SWIFT_TRANSFER_CREATED = 'swift_transfer.created';
 
     case SWIFT_TRANSFER_UPDATED = 'swift_transfer.updated';
 
     case TRANSACTION_CREATED = 'transaction.created';
+
+    case UK_FASTER_PAYMENT_SYSTEM_TRANSFER_CREATED = 'uk_faster_payment_system_transfer.created';
+
+    case UK_FASTER_PAYMENT_SYSTEM_TRANSFER_UPDATED = 'uk_faster_payment_system_transfer.updated';
 
     case WIRE_DRAWDOWN_REQUEST_CREATED = 'wire_drawdown_request.created';
 

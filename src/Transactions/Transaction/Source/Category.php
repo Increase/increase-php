@@ -85,5 +85,7 @@ enum Category: string
 
     case BLOCKCHAIN_OFFRAMP_TRANSFER_SETTLEMENT = 'blockchain_offramp_transfer_settlement';
 
+    case UK_FASTER_PAYMENT_SYSTEM_TRANSFER_ACCEPTANCE = 'uk_faster_payment_system_transfer_acceptance';
+
     case OTHER = 'other';
 }

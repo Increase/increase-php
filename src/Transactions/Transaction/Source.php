@@ -47,6 +47,7 @@ use Increase\Transactions\Transaction\Source\RealTimePaymentsTransferAcknowledge
 use Increase\Transactions\Transaction\Source\SampleFunds;
 use Increase\Transactions\Transaction\Source\SwiftTransferIntention;
 use Increase\Transactions\Transaction\Source\SwiftTransferReturn;
+use Increase\Transactions\Transaction\Source\UkFasterPaymentSystemTransferAcceptance;
 use Increase\Transactions\Transaction\Source\WireTransferIntention;
 
 /**
@@ -90,6 +91,7 @@ use Increase\Transactions\Transaction\Source\WireTransferIntention;
  * @phpstan-import-type SampleFundsShape from \Increase\Transactions\Transaction\Source\SampleFunds
  * @phpstan-import-type SwiftTransferIntentionShape from \Increase\Transactions\Transaction\Source\SwiftTransferIntention
  * @phpstan-import-type SwiftTransferReturnShape from \Increase\Transactions\Transaction\Source\SwiftTransferReturn
+ * @phpstan-import-type UkFasterPaymentSystemTransferAcceptanceShape from \Increase\Transactions\Transaction\Source\UkFasterPaymentSystemTransferAcceptance
  * @phpstan-import-type WireTransferIntentionShape from \Increase\Transactions\Transaction\Source\WireTransferIntention
  *
  * @phpstan-type SourceShape = array{
@@ -132,6 +134,7 @@ use Increase\Transactions\Transaction\Source\WireTransferIntention;
  *   sampleFunds?: null|SampleFunds|SampleFundsShape,
  *   swiftTransferIntention?: null|SwiftTransferIntention|SwiftTransferIntentionShape,
  *   swiftTransferReturn?: null|SwiftTransferReturn|SwiftTransferReturnShape,
+ *   ukFasterPaymentSystemTransferAcceptance?: null|UkFasterPaymentSystemTransferAcceptance|UkFasterPaymentSystemTransferAcceptanceShape,
  *   wireTransferIntention?: null|WireTransferIntention|WireTransferIntentionShape,
  * }
  */
@@ -380,6 +383,12 @@ final class Source implements BaseModel
     public ?SwiftTransferReturn $swiftTransferReturn;
 
     /**
+     * An UK Faster Payment System Transfer Acceptance object. This field will be present in the JSON response if and only if `category` is equal to `uk_faster_payment_system_transfer_acceptance`. A UK Faster Payment System Transfer Acceptance is created when a UK Faster Payment System Transfer sent from Increase is accepted by the recipient's bank.
+     */
+    #[Optional('uk_faster_payment_system_transfer_acceptance', nullable: true)]
+    public ?UkFasterPaymentSystemTransferAcceptance $ukFasterPaymentSystemTransferAcceptance;
+
+    /**
      * A Wire Transfer Intention object. This field will be present in the JSON response if and only if `category` is equal to `wire_transfer_intention`. A Wire Transfer initiated via Increase and sent to a different bank.
      */
     #[Optional('wire_transfer_intention', nullable: true)]
@@ -448,6 +457,7 @@ final class Source implements BaseModel
      * @param SampleFunds|SampleFundsShape|null $sampleFunds
      * @param SwiftTransferIntention|SwiftTransferIntentionShape|null $swiftTransferIntention
      * @param SwiftTransferReturn|SwiftTransferReturnShape|null $swiftTransferReturn
+     * @param UkFasterPaymentSystemTransferAcceptance|UkFasterPaymentSystemTransferAcceptanceShape|null $ukFasterPaymentSystemTransferAcceptance
      * @param WireTransferIntention|WireTransferIntentionShape|null $wireTransferIntention
      */
     public static function with(
@@ -490,6 +500,7 @@ final class Source implements BaseModel
         SampleFunds|array|null $sampleFunds = null,
         SwiftTransferIntention|array|null $swiftTransferIntention = null,
         SwiftTransferReturn|array|null $swiftTransferReturn = null,
+        UkFasterPaymentSystemTransferAcceptance|array|null $ukFasterPaymentSystemTransferAcceptance = null,
         WireTransferIntention|array|null $wireTransferIntention = null,
     ): self {
         $self = new self;
@@ -534,6 +545,7 @@ final class Source implements BaseModel
         null !== $sampleFunds && $self['sampleFunds'] = $sampleFunds;
         null !== $swiftTransferIntention && $self['swiftTransferIntention'] = $swiftTransferIntention;
         null !== $swiftTransferReturn && $self['swiftTransferReturn'] = $swiftTransferReturn;
+        null !== $ukFasterPaymentSystemTransferAcceptance && $self['ukFasterPaymentSystemTransferAcceptance'] = $ukFasterPaymentSystemTransferAcceptance;
         null !== $wireTransferIntention && $self['wireTransferIntention'] = $wireTransferIntention;
 
         return $self;
@@ -1076,6 +1088,20 @@ final class Source implements BaseModel
     ): self {
         $self = clone $this;
         $self['swiftTransferReturn'] = $swiftTransferReturn;
+
+        return $self;
+    }
+
+    /**
+     * An UK Faster Payment System Transfer Acceptance object. This field will be present in the JSON response if and only if `category` is equal to `uk_faster_payment_system_transfer_acceptance`. A UK Faster Payment System Transfer Acceptance is created when a UK Faster Payment System Transfer sent from Increase is accepted by the recipient's bank.
+     *
+     * @param UkFasterPaymentSystemTransferAcceptance|UkFasterPaymentSystemTransferAcceptanceShape|null $ukFasterPaymentSystemTransferAcceptance
+     */
+    public function withUkFasterPaymentSystemTransferAcceptance(
+        UkFasterPaymentSystemTransferAcceptance|array|null $ukFasterPaymentSystemTransferAcceptance,
+    ): self {
+        $self = clone $this;
+        $self['ukFasterPaymentSystemTransferAcceptance'] = $ukFasterPaymentSystemTransferAcceptance;
 
         return $self;
     }

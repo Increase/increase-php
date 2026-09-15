@@ -22,7 +22,9 @@ use Increase\PendingTransactions\PendingTransaction\Source\InboundFundsHold;
 use Increase\PendingTransactions\PendingTransaction\Source\InboundWireTransferReversal;
 use Increase\PendingTransactions\PendingTransaction\Source\Other;
 use Increase\PendingTransactions\PendingTransaction\Source\RealTimePaymentsTransferInstruction;
+use Increase\PendingTransactions\PendingTransaction\Source\SepaInstantTransferInstruction;
 use Increase\PendingTransactions\PendingTransaction\Source\SwiftTransferInstruction;
+use Increase\PendingTransactions\PendingTransaction\Source\UkFasterPaymentSystemTransferInstruction;
 use Increase\PendingTransactions\PendingTransaction\Source\WireTransferInstruction;
 
 /**
@@ -41,7 +43,9 @@ use Increase\PendingTransactions\PendingTransaction\Source\WireTransferInstructi
  * @phpstan-import-type InboundWireTransferReversalShape from \Increase\PendingTransactions\PendingTransaction\Source\InboundWireTransferReversal
  * @phpstan-import-type OtherShape from \Increase\PendingTransactions\PendingTransaction\Source\Other
  * @phpstan-import-type RealTimePaymentsTransferInstructionShape from \Increase\PendingTransactions\PendingTransaction\Source\RealTimePaymentsTransferInstruction
+ * @phpstan-import-type SepaInstantTransferInstructionShape from \Increase\PendingTransactions\PendingTransaction\Source\SepaInstantTransferInstruction
  * @phpstan-import-type SwiftTransferInstructionShape from \Increase\PendingTransactions\PendingTransaction\Source\SwiftTransferInstruction
+ * @phpstan-import-type UkFasterPaymentSystemTransferInstructionShape from \Increase\PendingTransactions\PendingTransaction\Source\UkFasterPaymentSystemTransferInstruction
  * @phpstan-import-type WireTransferInstructionShape from \Increase\PendingTransactions\PendingTransaction\Source\WireTransferInstruction
  *
  * @phpstan-type SourceShape = array{
@@ -59,7 +63,9 @@ use Increase\PendingTransactions\PendingTransaction\Source\WireTransferInstructi
  *   inboundWireTransferReversal?: null|InboundWireTransferReversal|InboundWireTransferReversalShape,
  *   other?: null|Other|OtherShape,
  *   realTimePaymentsTransferInstruction?: null|RealTimePaymentsTransferInstruction|RealTimePaymentsTransferInstructionShape,
+ *   sepaInstantTransferInstruction?: null|SepaInstantTransferInstruction|SepaInstantTransferInstructionShape,
  *   swiftTransferInstruction?: null|SwiftTransferInstruction|SwiftTransferInstructionShape,
+ *   ukFasterPaymentSystemTransferInstruction?: null|UkFasterPaymentSystemTransferInstruction|UkFasterPaymentSystemTransferInstructionShape,
  *   userInitiatedHold?: array<string,mixed>|null,
  *   wireTransferInstruction?: null|WireTransferInstruction|WireTransferInstructionShape,
  * }
@@ -156,10 +162,22 @@ final class Source implements BaseModel
     public ?RealTimePaymentsTransferInstruction $realTimePaymentsTransferInstruction;
 
     /**
+     * A SEPA Instant Transfer Instruction object. This field will be present in the JSON response if and only if `category` is equal to `sepa_instant_transfer_instruction`.
+     */
+    #[Optional('sepa_instant_transfer_instruction', nullable: true)]
+    public ?SepaInstantTransferInstruction $sepaInstantTransferInstruction;
+
+    /**
      * A Swift Transfer Instruction object. This field will be present in the JSON response if and only if `category` is equal to `swift_transfer_instruction`.
      */
     #[Optional('swift_transfer_instruction', nullable: true)]
     public ?SwiftTransferInstruction $swiftTransferInstruction;
+
+    /**
+     * An UK Faster Payment System Transfer Instruction object. This field will be present in the JSON response if and only if `category` is equal to `uk_faster_payment_system_transfer_instruction`.
+     */
+    #[Optional('uk_faster_payment_system_transfer_instruction', nullable: true)]
+    public ?UkFasterPaymentSystemTransferInstruction $ukFasterPaymentSystemTransferInstruction;
 
     /**
      * An User Initiated Hold object. This field will be present in the JSON response if and only if `category` is equal to `user_initiated_hold`. Created when a user initiates a hold on funds in their account.
@@ -213,7 +231,9 @@ final class Source implements BaseModel
      * @param InboundWireTransferReversal|InboundWireTransferReversalShape|null $inboundWireTransferReversal
      * @param Other|OtherShape|null $other
      * @param RealTimePaymentsTransferInstruction|RealTimePaymentsTransferInstructionShape|null $realTimePaymentsTransferInstruction
+     * @param SepaInstantTransferInstruction|SepaInstantTransferInstructionShape|null $sepaInstantTransferInstruction
      * @param SwiftTransferInstruction|SwiftTransferInstructionShape|null $swiftTransferInstruction
+     * @param UkFasterPaymentSystemTransferInstruction|UkFasterPaymentSystemTransferInstructionShape|null $ukFasterPaymentSystemTransferInstruction
      * @param array<string,mixed>|null $userInitiatedHold
      * @param WireTransferInstruction|WireTransferInstructionShape|null $wireTransferInstruction
      */
@@ -232,7 +252,9 @@ final class Source implements BaseModel
         InboundWireTransferReversal|array|null $inboundWireTransferReversal = null,
         Other|array|null $other = null,
         RealTimePaymentsTransferInstruction|array|null $realTimePaymentsTransferInstruction = null,
+        SepaInstantTransferInstruction|array|null $sepaInstantTransferInstruction = null,
         SwiftTransferInstruction|array|null $swiftTransferInstruction = null,
+        UkFasterPaymentSystemTransferInstruction|array|null $ukFasterPaymentSystemTransferInstruction = null,
         ?array $userInitiatedHold = null,
         WireTransferInstruction|array|null $wireTransferInstruction = null,
     ): self {
@@ -253,7 +275,9 @@ final class Source implements BaseModel
         null !== $inboundWireTransferReversal && $self['inboundWireTransferReversal'] = $inboundWireTransferReversal;
         null !== $other && $self['other'] = $other;
         null !== $realTimePaymentsTransferInstruction && $self['realTimePaymentsTransferInstruction'] = $realTimePaymentsTransferInstruction;
+        null !== $sepaInstantTransferInstruction && $self['sepaInstantTransferInstruction'] = $sepaInstantTransferInstruction;
         null !== $swiftTransferInstruction && $self['swiftTransferInstruction'] = $swiftTransferInstruction;
+        null !== $ukFasterPaymentSystemTransferInstruction && $self['ukFasterPaymentSystemTransferInstruction'] = $ukFasterPaymentSystemTransferInstruction;
         null !== $userInitiatedHold && $self['userInitiatedHold'] = $userInitiatedHold;
         null !== $wireTransferInstruction && $self['wireTransferInstruction'] = $wireTransferInstruction;
 
@@ -455,6 +479,20 @@ final class Source implements BaseModel
     }
 
     /**
+     * A SEPA Instant Transfer Instruction object. This field will be present in the JSON response if and only if `category` is equal to `sepa_instant_transfer_instruction`.
+     *
+     * @param SepaInstantTransferInstruction|SepaInstantTransferInstructionShape|null $sepaInstantTransferInstruction
+     */
+    public function withSepaInstantTransferInstruction(
+        SepaInstantTransferInstruction|array|null $sepaInstantTransferInstruction
+    ): self {
+        $self = clone $this;
+        $self['sepaInstantTransferInstruction'] = $sepaInstantTransferInstruction;
+
+        return $self;
+    }
+
+    /**
      * A Swift Transfer Instruction object. This field will be present in the JSON response if and only if `category` is equal to `swift_transfer_instruction`.
      *
      * @param SwiftTransferInstruction|SwiftTransferInstructionShape|null $swiftTransferInstruction
@@ -464,6 +502,20 @@ final class Source implements BaseModel
     ): self {
         $self = clone $this;
         $self['swiftTransferInstruction'] = $swiftTransferInstruction;
+
+        return $self;
+    }
+
+    /**
+     * An UK Faster Payment System Transfer Instruction object. This field will be present in the JSON response if and only if `category` is equal to `uk_faster_payment_system_transfer_instruction`.
+     *
+     * @param UkFasterPaymentSystemTransferInstruction|UkFasterPaymentSystemTransferInstructionShape|null $ukFasterPaymentSystemTransferInstruction
+     */
+    public function withUkFasterPaymentSystemTransferInstruction(
+        UkFasterPaymentSystemTransferInstruction|array|null $ukFasterPaymentSystemTransferInstruction,
+    ): self {
+        $self = clone $this;
+        $self['ukFasterPaymentSystemTransferInstruction'] = $ukFasterPaymentSystemTransferInstruction;
 
         return $self;
     }

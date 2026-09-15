@@ -21,9 +21,9 @@ interface PhysicalCardsContract
      * @param string $physicalCardID the Physical Card you would like to action
      * @param Category|value-of<Category> $category the type of tracking event
      * @param \DateTimeInterface $carrierEstimatedDeliveryAt The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time when the carrier expects the card to be delivered.
-     * @param string $city the city where the event took place
-     * @param string $postalCode the postal code where the event took place
-     * @param string $state the state where the event took place
+     * @param string $city The city where the event took place. Required if postal_code is not provided.
+     * @param string $postalCode The postal code where the event took place. Required unless both city and state are provided.
+     * @param string $state The state where the event took place. Required if postal_code is not provided.
      * @param RequestOpts|null $requestOptions
      *
      * @throws APIException

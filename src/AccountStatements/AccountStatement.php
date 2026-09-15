@@ -76,13 +76,13 @@ final class AccountStatement implements BaseModel
     public int $startingBalance;
 
     /**
-     * The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) time representing the end of the period the Account Statement covers.
+     * The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) time representing the end of the period the Account Statement covers. The statement covers all transactions up to, but not including this timestamp. Usually, this is the beginning of the following month.
      */
     #[Required('statement_period_end')]
     public \DateTimeInterface $statementPeriodEnd;
 
     /**
-     * The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) time representing the start of the period the Account Statement covers.
+     * The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) time representing the start of the period the Account Statement covers. This is the first moment of the statement period and is inclusive. Usually, this is the beginning of the month this statement covers.
      */
     #[Required('statement_period_start')]
     public \DateTimeInterface $statementPeriodStart;
@@ -251,7 +251,7 @@ final class AccountStatement implements BaseModel
     }
 
     /**
-     * The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) time representing the end of the period the Account Statement covers.
+     * The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) time representing the end of the period the Account Statement covers. The statement covers all transactions up to, but not including this timestamp. Usually, this is the beginning of the following month.
      */
     public function withStatementPeriodEnd(
         \DateTimeInterface $statementPeriodEnd
@@ -263,7 +263,7 @@ final class AccountStatement implements BaseModel
     }
 
     /**
-     * The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) time representing the start of the period the Account Statement covers.
+     * The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) time representing the start of the period the Account Statement covers. This is the first moment of the statement period and is inclusive. Usually, this is the beginning of the month this statement covers.
      */
     public function withStatementPeriodStart(
         \DateTimeInterface $statementPeriodStart

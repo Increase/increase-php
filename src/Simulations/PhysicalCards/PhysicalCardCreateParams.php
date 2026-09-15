@@ -45,19 +45,19 @@ final class PhysicalCardCreateParams implements BaseModel
     public ?\DateTimeInterface $carrierEstimatedDeliveryAt;
 
     /**
-     * The city where the event took place.
+     * The city where the event took place. Required if postal_code is not provided.
      */
     #[Optional]
     public ?string $city;
 
     /**
-     * The postal code where the event took place.
+     * The postal code where the event took place. Required unless both city and state are provided.
      */
     #[Optional('postal_code')]
     public ?string $postalCode;
 
     /**
-     * The state where the event took place.
+     * The state where the event took place. Required if postal_code is not provided.
      */
     #[Optional]
     public ?string $state;
@@ -133,7 +133,7 @@ final class PhysicalCardCreateParams implements BaseModel
     }
 
     /**
-     * The city where the event took place.
+     * The city where the event took place. Required if postal_code is not provided.
      */
     public function withCity(string $city): self
     {
@@ -144,7 +144,7 @@ final class PhysicalCardCreateParams implements BaseModel
     }
 
     /**
-     * The postal code where the event took place.
+     * The postal code where the event took place. Required unless both city and state are provided.
      */
     public function withPostalCode(string $postalCode): self
     {
@@ -155,7 +155,7 @@ final class PhysicalCardCreateParams implements BaseModel
     }
 
     /**
-     * The state where the event took place.
+     * The state where the event took place. Required if postal_code is not provided.
      */
     public function withState(string $state): self
     {

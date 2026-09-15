@@ -10,7 +10,7 @@ use Increase\Core\Concerns\SdkParams;
 use Increase\Core\Contracts\BaseModel;
 
 /**
- * Simulates an [Account Statement](#account-statements) being created for an account. In production, Account Statements are generated once per month.
+ * Simulates an [Account Statement](#account-statements) being created for an account. In production, Account Statements are generated once per month. As in production, the simulated statement covers the previous calendar month.
  *
  * @see Increase\Services\Simulations\AccountStatementsService::create()
  *

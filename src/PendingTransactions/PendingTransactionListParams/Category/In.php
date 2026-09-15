@@ -36,5 +36,9 @@ enum In: string
 
     case BLOCKCHAIN_OFFRAMP_TRANSFER = 'blockchain_offramp_transfer';
 
+    case UK_FASTER_PAYMENT_SYSTEM_TRANSFER_INSTRUCTION = 'uk_faster_payment_system_transfer_instruction';
+
+    case SEPA_INSTANT_TRANSFER_INSTRUCTION = 'sepa_instant_transfer_instruction';
+
     case OTHER = 'other';
 }

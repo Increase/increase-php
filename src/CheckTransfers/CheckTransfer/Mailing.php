@@ -9,7 +9,7 @@ use Increase\Core\Concerns\SdkModel;
 use Increase\Core\Contracts\BaseModel;
 
 /**
- * If the check has been mailed by Increase, this will contain details of the shipment.
+ * Once the check has been mailed, this will contain details about the shipment. Only available when `fulfillment_method` is equal to `physical_check`.
  *
  * @phpstan-type MailingShape = array{mailedAt: \DateTimeInterface}
  */

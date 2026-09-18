@@ -11,6 +11,8 @@ enum Method: string
 {
     case SOCIAL_SECURITY_NUMBER = 'social_security_number';
 
+    case SOCIAL_SECURITY_NUMBER_LAST4 = 'social_security_number_last4';
+
     case INDIVIDUAL_TAXPAYER_IDENTIFICATION_NUMBER = 'individual_taxpayer_identification_number';
 
     case PASSPORT = 'passport';

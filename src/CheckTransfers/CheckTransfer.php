@@ -157,7 +157,7 @@ final class CheckTransfer implements BaseModel
     public ?string $idempotencyKey;
 
     /**
-     * If the check has been mailed by Increase, this will contain details of the shipment.
+     * Once the check has been mailed, this will contain details about the shipment. Only available when `fulfillment_method` is equal to `physical_check`.
      */
     #[Required]
     public ?Mailing $mailing;
@@ -201,7 +201,7 @@ final class CheckTransfer implements BaseModel
     public ?StopPaymentRequest $stopPaymentRequest;
 
     /**
-     * After the transfer is submitted, this will contain supplemental details.
+     * Once the check has been submitted to our printer, this will contain details about the submission. Only available when `fulfillment_method` is equal to `physical_check`.
      */
     #[Required]
     public ?Submission $submission;
@@ -544,7 +544,7 @@ final class CheckTransfer implements BaseModel
     }
 
     /**
-     * If the check has been mailed by Increase, this will contain details of the shipment.
+     * Once the check has been mailed, this will contain details about the shipment. Only available when `fulfillment_method` is equal to `physical_check`.
      *
      * @param Mailing|MailingShape|null $mailing
      */
@@ -633,7 +633,7 @@ final class CheckTransfer implements BaseModel
     }
 
     /**
-     * After the transfer is submitted, this will contain supplemental details.
+     * Once the check has been submitted to our printer, this will contain details about the submission. Only available when `fulfillment_method` is equal to `physical_check`.
      *
      * @param Submission|SubmissionShape|null $submission
      */

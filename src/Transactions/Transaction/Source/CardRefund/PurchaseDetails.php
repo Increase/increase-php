@@ -8,6 +8,7 @@ use Increase\Core\Attributes\Required;
 use Increase\Core\Concerns\SdkModel;
 use Increase\Core\Contracts\BaseModel;
 use Increase\Transactions\Transaction\Source\CardRefund\PurchaseDetails\CarRental;
+use Increase\Transactions\Transaction\Source\CardRefund\PurchaseDetails\Fleet;
 use Increase\Transactions\Transaction\Source\CardRefund\PurchaseDetails\Lodging;
 use Increase\Transactions\Transaction\Source\CardRefund\PurchaseDetails\PurchaseIdentifierFormat;
 use Increase\Transactions\Transaction\Source\CardRefund\PurchaseDetails\Travel;
@@ -16,12 +17,14 @@ use Increase\Transactions\Transaction\Source\CardRefund\PurchaseDetails\Travel;
  * Additional details about the card purchase, such as tax and industry-specific fields.
  *
  * @phpstan-import-type CarRentalShape from \Increase\Transactions\Transaction\Source\CardRefund\PurchaseDetails\CarRental
+ * @phpstan-import-type FleetShape from \Increase\Transactions\Transaction\Source\CardRefund\PurchaseDetails\Fleet
  * @phpstan-import-type LodgingShape from \Increase\Transactions\Transaction\Source\CardRefund\PurchaseDetails\Lodging
  * @phpstan-import-type TravelShape from \Increase\Transactions\Transaction\Source\CardRefund\PurchaseDetails\Travel
  *
  * @phpstan-type PurchaseDetailsShape = array{
  *   carRental: null|CarRental|CarRentalShape,
  *   customerReferenceIdentifier: string|null,
+ *   fleet: null|Fleet|FleetShape,
  *   localTaxAmount: int|null,
  *   localTaxCurrency: string|null,
  *   lodging: null|Lodging|LodgingShape,
@@ -48,6 +51,12 @@ final class PurchaseDetails implements BaseModel
      */
     #[Required('customer_reference_identifier')]
     public ?string $customerReferenceIdentifier;
+
+    /**
+     * Fields specific to fleet purchases.
+     */
+    #[Required]
+    public ?Fleet $fleet;
 
     /**
      * The state or provincial tax amount in minor units.
@@ -110,6 +119,7 @@ final class PurchaseDetails implements BaseModel
      * PurchaseDetails::with(
      *   carRental: ...,
      *   customerReferenceIdentifier: ...,
+     *   fleet: ...,
      *   localTaxAmount: ...,
      *   localTaxCurrency: ...,
      *   lodging: ...,
@@ -127,6 +137,7 @@ final class PurchaseDetails implements BaseModel
      * (new PurchaseDetails)
      *   ->withCarRental(...)
      *   ->withCustomerReferenceIdentifier(...)
+     *   ->withFleet(...)
      *   ->withLocalTaxAmount(...)
      *   ->withLocalTaxCurrency(...)
      *   ->withLodging(...)
@@ -148,6 +159,7 @@ final class PurchaseDetails implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param CarRental|CarRentalShape|null $carRental
+     * @param Fleet|FleetShape|null $fleet
      * @param Lodging|LodgingShape|null $lodging
      * @param PurchaseIdentifierFormat|value-of<PurchaseIdentifierFormat>|null $purchaseIdentifierFormat
      * @param Travel|TravelShape|null $travel
@@ -155,6 +167,7 @@ final class PurchaseDetails implements BaseModel
     public static function with(
         CarRental|array|null $carRental,
         ?string $customerReferenceIdentifier,
+        Fleet|array|null $fleet,
         ?int $localTaxAmount,
         ?string $localTaxCurrency,
         Lodging|array|null $lodging,
@@ -168,6 +181,7 @@ final class PurchaseDetails implements BaseModel
 
         $self['carRental'] = $carRental;
         $self['customerReferenceIdentifier'] = $customerReferenceIdentifier;
+        $self['fleet'] = $fleet;
         $self['localTaxAmount'] = $localTaxAmount;
         $self['localTaxCurrency'] = $localTaxCurrency;
         $self['lodging'] = $lodging;
@@ -201,6 +215,19 @@ final class PurchaseDetails implements BaseModel
     ): self {
         $self = clone $this;
         $self['customerReferenceIdentifier'] = $customerReferenceIdentifier;
+
+        return $self;
+    }
+
+    /**
+     * Fields specific to fleet purchases.
+     *
+     * @param Fleet|FleetShape|null $fleet
+     */
+    public function withFleet(Fleet|array|null $fleet): self
+    {
+        $self = clone $this;
+        $self['fleet'] = $fleet;
 
         return $self;
     }

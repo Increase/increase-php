@@ -10,7 +10,7 @@ use Increase\Core\Concerns\SdkModel;
 use Increase\Core\Contracts\BaseModel;
 
 /**
- * After the transfer is submitted, this will contain supplemental details.
+ * Once the check has been submitted to our printer, this will contain details about the submission. Only available when `fulfillment_method` is equal to `physical_check`.
  *
  * @phpstan-import-type SubmittedAddressShape from \Increase\CheckTransfers\CheckTransfer\Submission\SubmittedAddress
  *

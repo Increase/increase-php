@@ -11,9 +11,9 @@ enum Status: string
 {
     case PENDING_SUBMISSION = 'pending_submission';
 
-    case FULFILLED = 'fulfilled';
-
     case PENDING_RESPONSE = 'pending_response';
+
+    case FULFILLED = 'fulfilled';
 
     case REFUSED = 'refused';
 }

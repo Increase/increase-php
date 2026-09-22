@@ -9,27 +9,27 @@ namespace Increase\Exports\ExportCreateParams;
  */
 enum Category: string
 {
-    case ACCOUNT_STATEMENT_OFX = 'account_statement_ofx';
-
     case ACCOUNT_STATEMENT_BAI2 = 'account_statement_bai2';
 
-    case TRANSACTION_CSV = 'transaction_csv';
+    case ACCOUNT_STATEMENT_OFX = 'account_statement_ofx';
+
+    case ACCOUNT_VERIFICATION_LETTER = 'account_verification_letter';
 
     case BALANCE_CSV = 'balance_csv';
 
     case BOOKKEEPING_ACCOUNT_BALANCE_CSV = 'bookkeeping_account_balance_csv';
 
+    case DAILY_ACCOUNT_BALANCE_CSV = 'daily_account_balance_csv';
+
     case ENTITY_CSV = 'entity_csv';
-
-    case VENDOR_CSV = 'vendor_csv';
-
-    case ACCOUNT_VERIFICATION_LETTER = 'account_verification_letter';
-
-    case FUNDING_INSTRUCTIONS = 'funding_instructions';
 
     case FEE_CSV = 'fee_csv';
 
-    case VOIDED_CHECK = 'voided_check';
+    case FUNDING_INSTRUCTIONS = 'funding_instructions';
 
-    case DAILY_ACCOUNT_BALANCE_CSV = 'daily_account_balance_csv';
+    case TRANSACTION_CSV = 'transaction_csv';
+
+    case VENDOR_CSV = 'vendor_csv';
+
+    case VOIDED_CHECK = 'voided_check';
 }

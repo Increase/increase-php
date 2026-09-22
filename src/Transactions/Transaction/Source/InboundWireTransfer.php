@@ -25,6 +25,7 @@ use Increase\Core\Contracts\BaseModel;
  *   endToEndIdentification: string|null,
  *   inputMessageAccountabilityData: string|null,
  *   instructingAgentRoutingNumber: string|null,
+ *   instructionForCreditorAgent: string|null,
  *   instructionIdentification: string|null,
  *   purpose: string|null,
  *   transferID: string,
@@ -116,6 +117,12 @@ final class InboundWireTransfer implements BaseModel
     public ?string $instructingAgentRoutingNumber;
 
     /**
+     * A free-form instruction for the receiving bank set by the sender.
+     */
+    #[Required('instruction_for_creditor_agent')]
+    public ?string $instructionForCreditorAgent;
+
+    /**
      * The sending bank's identifier for the wire transfer.
      */
     #[Required('instruction_identification')]
@@ -164,6 +171,7 @@ final class InboundWireTransfer implements BaseModel
      *   endToEndIdentification: ...,
      *   inputMessageAccountabilityData: ...,
      *   instructingAgentRoutingNumber: ...,
+     *   instructionForCreditorAgent: ...,
      *   instructionIdentification: ...,
      *   purpose: ...,
      *   transferID: ...,
@@ -189,6 +197,7 @@ final class InboundWireTransfer implements BaseModel
      *   ->withEndToEndIdentification(...)
      *   ->withInputMessageAccountabilityData(...)
      *   ->withInstructingAgentRoutingNumber(...)
+     *   ->withInstructionForCreditorAgent(...)
      *   ->withInstructionIdentification(...)
      *   ->withPurpose(...)
      *   ->withTransferID(...)
@@ -220,6 +229,7 @@ final class InboundWireTransfer implements BaseModel
         ?string $endToEndIdentification,
         ?string $inputMessageAccountabilityData,
         ?string $instructingAgentRoutingNumber,
+        ?string $instructionForCreditorAgent,
         ?string $instructionIdentification,
         ?string $purpose,
         string $transferID,
@@ -241,6 +251,7 @@ final class InboundWireTransfer implements BaseModel
         $self['endToEndIdentification'] = $endToEndIdentification;
         $self['inputMessageAccountabilityData'] = $inputMessageAccountabilityData;
         $self['instructingAgentRoutingNumber'] = $instructingAgentRoutingNumber;
+        $self['instructionForCreditorAgent'] = $instructionForCreditorAgent;
         $self['instructionIdentification'] = $instructionIdentification;
         $self['purpose'] = $purpose;
         $self['transferID'] = $transferID;
@@ -395,6 +406,18 @@ final class InboundWireTransfer implements BaseModel
     ): self {
         $self = clone $this;
         $self['instructingAgentRoutingNumber'] = $instructingAgentRoutingNumber;
+
+        return $self;
+    }
+
+    /**
+     * A free-form instruction for the receiving bank set by the sender.
+     */
+    public function withInstructionForCreditorAgent(
+        ?string $instructionForCreditorAgent
+    ): self {
+        $self = clone $this;
+        $self['instructionForCreditorAgent'] = $instructionForCreditorAgent;
 
         return $self;
     }

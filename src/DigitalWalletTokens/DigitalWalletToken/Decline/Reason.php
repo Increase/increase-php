@@ -20,4 +20,10 @@ enum Reason: string
     case INCORRECT_CARD_VERIFICATION_CODE = 'incorrect_card_verification_code';
 
     case DECLINED_BY_TOKEN_REQUESTOR = 'declined_by_token_requestor';
+
+    case GROUP_LOCKED = 'group_locked';
+
+    case ACCOUNT_CLOSED = 'account_closed';
+
+    case ENTITY_NOT_ACTIVE = 'entity_not_active';
 }

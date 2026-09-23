@@ -11,7 +11,7 @@ use Increase\Core\Contracts\BaseModel;
 /**
  * After the transfer is acknowledged by FedACH, this will contain supplemental details. The Federal Reserve sends an acknowledgement message for each file that Increase submits.
  *
- * @phpstan-type AcknowledgementShape = array{acknowledgedAt: string}
+ * @phpstan-type AcknowledgementShape = array{acknowledgedAt: \DateTimeInterface}
  */
 final class Acknowledgement implements BaseModel
 {
@@ -22,7 +22,7 @@ final class Acknowledgement implements BaseModel
      * When the Federal Reserve acknowledged the submitted file containing this transfer.
      */
     #[Required('acknowledged_at')]
-    public string $acknowledgedAt;
+    public \DateTimeInterface $acknowledgedAt;
 
     /**
      * `new Acknowledgement()` is missing required properties by the API.
@@ -48,7 +48,7 @@ final class Acknowledgement implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      */
-    public static function with(string $acknowledgedAt): self
+    public static function with(\DateTimeInterface $acknowledgedAt): self
     {
         $self = new self;
 
@@ -60,7 +60,7 @@ final class Acknowledgement implements BaseModel
     /**
      * When the Federal Reserve acknowledged the submitted file containing this transfer.
      */
-    public function withAcknowledgedAt(string $acknowledgedAt): self
+    public function withAcknowledgedAt(\DateTimeInterface $acknowledgedAt): self
     {
         $self = clone $this;
         $self['acknowledgedAt'] = $acknowledgedAt;

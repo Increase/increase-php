@@ -19,5 +19,7 @@ enum RealTimeDecisionReason: string
 
     case SUSPECTED_FRAUD = 'suspected_fraud';
 
+    case ADDITIONAL_CUSTOMER_AUTHENTICATION_REQUIRED = 'additional_customer_authentication_required';
+
     case OTHER = 'other';
 }

@@ -18,4 +18,6 @@ enum Category: string
     case BENEFICIAL_OWNER_IDENTITY = 'beneficial_owner_identity';
 
     case BENEFICIAL_OWNER_ADDRESS = 'beneficial_owner_address';
+
+    case BENEFICIAL_OWNER_TAX_IDENTIFIER = 'beneficial_owner_tax_identifier';
 }

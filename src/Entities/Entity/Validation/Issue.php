@@ -9,6 +9,7 @@ use Increase\Core\Concerns\SdkModel;
 use Increase\Core\Contracts\BaseModel;
 use Increase\Entities\Entity\Validation\Issue\BeneficialOwnerAddress;
 use Increase\Entities\Entity\Validation\Issue\BeneficialOwnerIdentity;
+use Increase\Entities\Entity\Validation\Issue\BeneficialOwnerTaxIdentifier;
 use Increase\Entities\Entity\Validation\Issue\Category;
 use Increase\Entities\Entity\Validation\Issue\EntityAddress;
 use Increase\Entities\Entity\Validation\Issue\EntityIdentity;
@@ -17,6 +18,7 @@ use Increase\Entities\Entity\Validation\Issue\EntityTaxIdentifier;
 /**
  * @phpstan-import-type BeneficialOwnerAddressShape from \Increase\Entities\Entity\Validation\Issue\BeneficialOwnerAddress
  * @phpstan-import-type BeneficialOwnerIdentityShape from \Increase\Entities\Entity\Validation\Issue\BeneficialOwnerIdentity
+ * @phpstan-import-type BeneficialOwnerTaxIdentifierShape from \Increase\Entities\Entity\Validation\Issue\BeneficialOwnerTaxIdentifier
  * @phpstan-import-type EntityAddressShape from \Increase\Entities\Entity\Validation\Issue\EntityAddress
  * @phpstan-import-type EntityIdentityShape from \Increase\Entities\Entity\Validation\Issue\EntityIdentity
  * @phpstan-import-type EntityTaxIdentifierShape from \Increase\Entities\Entity\Validation\Issue\EntityTaxIdentifier
@@ -24,6 +26,7 @@ use Increase\Entities\Entity\Validation\Issue\EntityTaxIdentifier;
  * @phpstan-type IssueShape = array{
  *   beneficialOwnerAddress: null|BeneficialOwnerAddress|BeneficialOwnerAddressShape,
  *   beneficialOwnerIdentity: null|BeneficialOwnerIdentity|BeneficialOwnerIdentityShape,
+ *   beneficialOwnerTaxIdentifier: null|BeneficialOwnerTaxIdentifier|BeneficialOwnerTaxIdentifierShape,
  *   category: Category|value-of<Category>,
  *   entityAddress: null|EntityAddress|EntityAddressShape,
  *   entityIdentity: null|EntityIdentity|EntityIdentityShape,
@@ -46,6 +49,12 @@ final class Issue implements BaseModel
      */
     #[Required('beneficial_owner_identity')]
     public ?BeneficialOwnerIdentity $beneficialOwnerIdentity;
+
+    /**
+     * Details when the issue is with a beneficial owner's tax identifier.
+     */
+    #[Required('beneficial_owner_tax_identifier')]
+    public ?BeneficialOwnerTaxIdentifier $beneficialOwnerTaxIdentifier;
 
     /**
      * The type of issue. We may add additional possible values for this enum over time; your application should be able to handle such additions gracefully.
@@ -81,6 +90,7 @@ final class Issue implements BaseModel
      * Issue::with(
      *   beneficialOwnerAddress: ...,
      *   beneficialOwnerIdentity: ...,
+     *   beneficialOwnerTaxIdentifier: ...,
      *   category: ...,
      *   entityAddress: ...,
      *   entityIdentity: ...,
@@ -94,6 +104,7 @@ final class Issue implements BaseModel
      * (new Issue)
      *   ->withBeneficialOwnerAddress(...)
      *   ->withBeneficialOwnerIdentity(...)
+     *   ->withBeneficialOwnerTaxIdentifier(...)
      *   ->withCategory(...)
      *   ->withEntityAddress(...)
      *   ->withEntityIdentity(...)
@@ -112,6 +123,7 @@ final class Issue implements BaseModel
      *
      * @param BeneficialOwnerAddress|BeneficialOwnerAddressShape|null $beneficialOwnerAddress
      * @param BeneficialOwnerIdentity|BeneficialOwnerIdentityShape|null $beneficialOwnerIdentity
+     * @param BeneficialOwnerTaxIdentifier|BeneficialOwnerTaxIdentifierShape|null $beneficialOwnerTaxIdentifier
      * @param Category|value-of<Category> $category
      * @param EntityAddress|EntityAddressShape|null $entityAddress
      * @param EntityIdentity|EntityIdentityShape|null $entityIdentity
@@ -120,6 +132,7 @@ final class Issue implements BaseModel
     public static function with(
         BeneficialOwnerAddress|array|null $beneficialOwnerAddress,
         BeneficialOwnerIdentity|array|null $beneficialOwnerIdentity,
+        BeneficialOwnerTaxIdentifier|array|null $beneficialOwnerTaxIdentifier,
         Category|string $category,
         EntityAddress|array|null $entityAddress,
         EntityIdentity|array|null $entityIdentity,
@@ -129,6 +142,7 @@ final class Issue implements BaseModel
 
         $self['beneficialOwnerAddress'] = $beneficialOwnerAddress;
         $self['beneficialOwnerIdentity'] = $beneficialOwnerIdentity;
+        $self['beneficialOwnerTaxIdentifier'] = $beneficialOwnerTaxIdentifier;
         $self['category'] = $category;
         $self['entityAddress'] = $entityAddress;
         $self['entityIdentity'] = $entityIdentity;
@@ -161,6 +175,20 @@ final class Issue implements BaseModel
     ): self {
         $self = clone $this;
         $self['beneficialOwnerIdentity'] = $beneficialOwnerIdentity;
+
+        return $self;
+    }
+
+    /**
+     * Details when the issue is with a beneficial owner's tax identifier.
+     *
+     * @param BeneficialOwnerTaxIdentifier|BeneficialOwnerTaxIdentifierShape|null $beneficialOwnerTaxIdentifier
+     */
+    public function withBeneficialOwnerTaxIdentifier(
+        BeneficialOwnerTaxIdentifier|array|null $beneficialOwnerTaxIdentifier
+    ): self {
+        $self = clone $this;
+        $self['beneficialOwnerTaxIdentifier'] = $beneficialOwnerTaxIdentifier;
 
         return $self;
     }

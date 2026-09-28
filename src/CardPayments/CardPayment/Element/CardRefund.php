@@ -7,6 +7,7 @@ namespace Increase\CardPayments\CardPayment\Element;
 use Increase\CardPayments\CardPayment\Element\CardRefund\Cashback;
 use Increase\CardPayments\CardPayment\Element\CardRefund\Currency;
 use Increase\CardPayments\CardPayment\Element\CardRefund\Interchange;
+use Increase\CardPayments\CardPayment\Element\CardRefund\Network;
 use Increase\CardPayments\CardPayment\Element\CardRefund\NetworkIdentifiers;
 use Increase\CardPayments\CardPayment\Element\CardRefund\PurchaseDetails;
 use Increase\CardPayments\CardPayment\Element\CardRefund\SchemeFee;
@@ -38,6 +39,7 @@ use Increase\Core\Contracts\BaseModel;
  *   merchantName: string,
  *   merchantPostalCode: string|null,
  *   merchantState: string|null,
+ *   network: Network|value-of<Network>,
  *   networkIdentifiers: NetworkIdentifiers|NetworkIdentifiersShape,
  *   presentmentAmount: int,
  *   presentmentCurrency: string,
@@ -133,6 +135,14 @@ final class CardRefund implements BaseModel
     public ?string $merchantState;
 
     /**
+     * The card network on which this transaction was processed.
+     *
+     * @var value-of<Network> $network
+     */
+    #[Required(enum: Network::class)]
+    public string $network;
+
+    /**
      * Network-specific identifiers for this refund.
      */
     #[Required('network_identifiers')]
@@ -197,6 +207,7 @@ final class CardRefund implements BaseModel
      *   merchantName: ...,
      *   merchantPostalCode: ...,
      *   merchantState: ...,
+     *   network: ...,
      *   networkIdentifiers: ...,
      *   presentmentAmount: ...,
      *   presentmentCurrency: ...,
@@ -224,6 +235,7 @@ final class CardRefund implements BaseModel
      *   ->withMerchantName(...)
      *   ->withMerchantPostalCode(...)
      *   ->withMerchantState(...)
+     *   ->withNetwork(...)
      *   ->withNetworkIdentifiers(...)
      *   ->withPresentmentAmount(...)
      *   ->withPresentmentCurrency(...)
@@ -246,6 +258,7 @@ final class CardRefund implements BaseModel
      * @param Cashback|CashbackShape|null $cashback
      * @param Currency|value-of<Currency> $currency
      * @param Interchange|InterchangeShape|null $interchange
+     * @param Network|value-of<Network> $network
      * @param NetworkIdentifiers|NetworkIdentifiersShape $networkIdentifiers
      * @param PurchaseDetails|PurchaseDetailsShape|null $purchaseDetails
      * @param list<SchemeFee|SchemeFeeShape> $schemeFees
@@ -265,6 +278,7 @@ final class CardRefund implements BaseModel
         string $merchantName,
         ?string $merchantPostalCode,
         ?string $merchantState,
+        Network|string $network,
         NetworkIdentifiers|array $networkIdentifiers,
         int $presentmentAmount,
         string $presentmentCurrency,
@@ -288,6 +302,7 @@ final class CardRefund implements BaseModel
         $self['merchantName'] = $merchantName;
         $self['merchantPostalCode'] = $merchantPostalCode;
         $self['merchantState'] = $merchantState;
+        $self['network'] = $network;
         $self['networkIdentifiers'] = $networkIdentifiers;
         $self['presentmentAmount'] = $presentmentAmount;
         $self['presentmentCurrency'] = $presentmentCurrency;
@@ -444,6 +459,19 @@ final class CardRefund implements BaseModel
     {
         $self = clone $this;
         $self['merchantState'] = $merchantState;
+
+        return $self;
+    }
+
+    /**
+     * The card network on which this transaction was processed.
+     *
+     * @param Network|value-of<Network> $network
+     */
+    public function withNetwork(Network|string $network): self
+    {
+        $self = clone $this;
+        $self['network'] = $network;
 
         return $self;
     }

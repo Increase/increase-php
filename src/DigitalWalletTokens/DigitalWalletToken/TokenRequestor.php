@@ -15,5 +15,7 @@ enum TokenRequestor: string
 
     case SAMSUNG_PAY = 'samsung_pay';
 
+    case GARMIN_PAY = 'garmin_pay';
+
     case UNKNOWN = 'unknown';
 }

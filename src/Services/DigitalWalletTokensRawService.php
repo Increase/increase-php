@@ -11,6 +11,8 @@ use Increase\Core\Util;
 use Increase\DigitalWalletTokens\DigitalWalletToken;
 use Increase\DigitalWalletTokens\DigitalWalletTokenListParams;
 use Increase\DigitalWalletTokens\DigitalWalletTokenListParams\CreatedAt;
+use Increase\DigitalWalletTokens\DigitalWalletTokenTransitionParams;
+use Increase\DigitalWalletTokens\DigitalWalletTokenTransitionParams\Status;
 use Increase\Page;
 use Increase\RequestOptions;
 use Increase\ServiceContracts\DigitalWalletTokensRawContract;
@@ -89,6 +91,41 @@ final class DigitalWalletTokensRawService implements DigitalWalletTokensRawContr
             options: $options,
             convert: DigitalWalletToken::class,
             page: Page::class,
+        );
+    }
+
+    /**
+     * @api
+     *
+     * Submit a Digital Wallet Token status transition to the card network. The Digital Wallet Token will move to `pending_transitioning` until the card network confirms the transition, and a `digital_wallet_token.updated` webhook will be sent once the transition has been confirmed.
+     *
+     * @param string $digitalWalletTokenID the identifier of the Digital Wallet Token
+     * @param array{
+     *   status: Status|value-of<Status>
+     * }|DigitalWalletTokenTransitionParams $params
+     * @param RequestOpts|null $requestOptions
+     *
+     * @return BaseResponse<DigitalWalletToken>
+     *
+     * @throws APIException
+     */
+    public function transition(
+        string $digitalWalletTokenID,
+        array|DigitalWalletTokenTransitionParams $params,
+        RequestOptions|array|null $requestOptions = null,
+    ): BaseResponse {
+        [$parsed, $options] = DigitalWalletTokenTransitionParams::parseRequest(
+            $params,
+            $requestOptions,
+        );
+
+        // @phpstan-ignore-next-line return.type
+        return $this->client->request(
+            method: 'post',
+            path: ['digital_wallet_tokens/%1$s/transition', $digitalWalletTokenID],
+            body: (object) $parsed,
+            options: $options,
+            convert: DigitalWalletToken::class,
         );
     }
 }

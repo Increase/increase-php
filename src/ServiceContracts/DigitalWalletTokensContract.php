@@ -7,6 +7,7 @@ namespace Increase\ServiceContracts;
 use Increase\Core\Exceptions\APIException;
 use Increase\DigitalWalletTokens\DigitalWalletToken;
 use Increase\DigitalWalletTokens\DigitalWalletTokenListParams\CreatedAt;
+use Increase\DigitalWalletTokens\DigitalWalletTokenTransitionParams\Status;
 use Increase\Page;
 use Increase\RequestOptions;
 
@@ -51,4 +52,19 @@ interface DigitalWalletTokensContract
         int $limit = 100,
         RequestOptions|array|null $requestOptions = null,
     ): Page;
+
+    /**
+     * @api
+     *
+     * @param string $digitalWalletTokenID the identifier of the Digital Wallet Token
+     * @param Status|value-of<Status> $status the status to transition the Digital Wallet Token to
+     * @param RequestOpts|null $requestOptions
+     *
+     * @throws APIException
+     */
+    public function transition(
+        string $digitalWalletTokenID,
+        Status|string $status,
+        RequestOptions|array|null $requestOptions = null,
+    ): DigitalWalletToken;
 }

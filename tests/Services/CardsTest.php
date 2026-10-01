@@ -4,6 +4,7 @@ namespace Tests\Services;
 
 use Increase\Cards\Card;
 use Increase\Cards\CardDetails;
+use Increase\Cards\CardDetailsToken;
 use Increase\Cards\CardIframeURL;
 use Increase\Client;
 use Increase\Core\Util;
@@ -135,6 +136,17 @@ final class CardsTest extends TestCase
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertInstanceOf(CardIframeURL::class, $result);
+    }
+
+    #[Test]
+    public function testCreateDetailsToken(): void
+    {
+        $result = $this->client->cards->createDetailsToken(
+            'card_oubs0hwk5rn6knuecxg2'
+        );
+
+        // @phpstan-ignore-next-line method.alreadyNarrowedType
+        $this->assertInstanceOf(CardDetailsToken::class, $result);
     }
 
     #[Test]

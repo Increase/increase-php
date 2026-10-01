@@ -9,6 +9,7 @@ use Increase\Core\Exceptions\APIException;
 use Increase\Core\Util;
 use Increase\DigitalWalletTokens\DigitalWalletToken;
 use Increase\DigitalWalletTokens\DigitalWalletTokenListParams\CreatedAt;
+use Increase\DigitalWalletTokens\DigitalWalletTokenTransitionParams\Status;
 use Increase\Page;
 use Increase\RequestOptions;
 use Increase\ServiceContracts\DigitalWalletTokensContract;
@@ -87,6 +88,30 @@ final class DigitalWalletTokensService implements DigitalWalletTokensContract
 
         // @phpstan-ignore-next-line argument.type
         $response = $this->raw->list(params: $params, requestOptions: $requestOptions);
+
+        return $response->parse();
+    }
+
+    /**
+     * @api
+     *
+     * Submit a Digital Wallet Token status transition to the card network. The Digital Wallet Token will move to `pending_transitioning` until the card network confirms the transition, and a `digital_wallet_token.updated` webhook will be sent once the transition has been confirmed.
+     *
+     * @param string $digitalWalletTokenID the identifier of the Digital Wallet Token
+     * @param Status|value-of<Status> $status the status to transition the Digital Wallet Token to
+     * @param RequestOpts|null $requestOptions
+     *
+     * @throws APIException
+     */
+    public function transition(
+        string $digitalWalletTokenID,
+        Status|string $status,
+        RequestOptions|array|null $requestOptions = null,
+    ): DigitalWalletToken {
+        $params = Util::removeNulls(['status' => $status]);
+
+        // @phpstan-ignore-next-line argument.type
+        $response = $this->raw->transition($digitalWalletTokenID, params: $params, requestOptions: $requestOptions);
 
         return $response->parse();
     }

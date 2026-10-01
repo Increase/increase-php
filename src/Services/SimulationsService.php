@@ -27,6 +27,7 @@ use Increase\Services\Simulations\DigitalWalletTokenRequestsService;
 use Increase\Services\Simulations\EntitiesService;
 use Increase\Services\Simulations\EntityOnboardingSessionsService;
 use Increase\Services\Simulations\ExportsService;
+use Increase\Services\Simulations\FednowTransfersService;
 use Increase\Services\Simulations\InboundACHTransfersService;
 use Increase\Services\Simulations\InboundCheckDepositsService;
 use Increase\Services\Simulations\InboundFednowTransfersService;
@@ -182,6 +183,11 @@ final class SimulationsService implements SimulationsContract
     /**
      * @api
      */
+    public FednowTransfersService $fednowTransfers;
+
+    /**
+     * @api
+     */
     public InboundFednowTransfersService $inboundFednowTransfers;
 
     /**
@@ -256,6 +262,7 @@ final class SimulationsService implements SimulationsContract
         $this->inboundCheckDeposits = new InboundCheckDepositsService($client);
         $this->realTimePaymentsTransfers = new RealTimePaymentsTransfersService($client);
         $this->inboundRealTimePaymentsTransfers = new InboundRealTimePaymentsTransfersService($client);
+        $this->fednowTransfers = new FednowTransfersService($client);
         $this->inboundFednowTransfers = new InboundFednowTransfersService($client);
         $this->checkDeposits = new CheckDepositsService($client);
         $this->inboundMailItems = new InboundMailItemsService($client);

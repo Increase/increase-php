@@ -8,6 +8,7 @@ use Increase\Cards\Card;
 use Increase\Cards\CardCreateDetailsIframeParams;
 use Increase\Cards\CardCreateParams;
 use Increase\Cards\CardDetails;
+use Increase\Cards\CardDetailsToken;
 use Increase\Cards\CardIframeURL;
 use Increase\Cards\CardListParams;
 use Increase\Cards\CardUpdateParams;
@@ -99,6 +100,21 @@ interface CardsRawContract
         string $cardID,
         array|CardCreateDetailsIframeParams $params,
         RequestOptions|array|null $requestOptions = null,
+    ): BaseResponse;
+
+    /**
+     * @api
+     *
+     * @param string $cardID the identifier of the Card to mint a details token for
+     * @param RequestOpts|null $requestOptions
+     *
+     * @return BaseResponse<CardDetailsToken>
+     *
+     * @throws APIException
+     */
+    public function createDetailsToken(
+        string $cardID,
+        RequestOptions|array|null $requestOptions = null
     ): BaseResponse;
 
     /**

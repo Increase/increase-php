@@ -27,6 +27,7 @@ use Increase\Services\CheckDepositsService;
 use Increase\Services\CheckTransfersService;
 use Increase\Services\DeclinedTransactionsService;
 use Increase\Services\DigitalCardProfilesService;
+use Increase\Services\DigitalWalletTokenRequestsService;
 use Increase\Services\DigitalWalletTokensService;
 use Increase\Services\EntitiesService;
 use Increase\Services\EntityOnboardingSessionsService;
@@ -42,6 +43,7 @@ use Increase\Services\InboundACHTransfersService;
 use Increase\Services\InboundCheckDepositsService;
 use Increase\Services\InboundFednowTransfersService;
 use Increase\Services\InboundMailItemsService;
+use Increase\Services\InboundRealTimePaymentsRequestsForPaymentService;
 use Increase\Services\InboundRealTimePaymentsTransfersService;
 use Increase\Services\InboundWireDrawdownRequestsService;
 use Increase\Services\InboundWireTransfersService;
@@ -56,8 +58,10 @@ use Increase\Services\OAuthTokensService;
 use Increase\Services\PendingTransactionsService;
 use Increase\Services\PhysicalCardProfilesService;
 use Increase\Services\PhysicalCardsService;
+use Increase\Services\PhysicalCheckBatchesService;
 use Increase\Services\ProgramsService;
 use Increase\Services\RealTimeDecisionsService;
+use Increase\Services\RealTimePaymentsRequestsForPaymentService;
 use Increase\Services\RealTimePaymentsTransfersService;
 use Increase\Services\RoutingNumbersService;
 use Increase\Services\SimulationsService;
@@ -135,6 +139,11 @@ class Client extends BaseClient
     /**
      * @api
      */
+    public DigitalWalletTokenRequestsService $digitalWalletTokenRequests;
+
+    /**
+     * @api
+     */
     public TransactionsService $transactions;
 
     /**
@@ -201,6 +210,16 @@ class Client extends BaseClient
      * @api
      */
     public InboundRealTimePaymentsTransfersService $inboundRealTimePaymentsTransfers;
+
+    /**
+     * @api
+     */
+    public RealTimePaymentsRequestsForPaymentService $realTimePaymentsRequestsForPayment;
+
+    /**
+     * @api
+     */
+    public InboundRealTimePaymentsRequestsForPaymentService $inboundRealTimePaymentsRequestsForPayment;
 
     /**
      * @api
@@ -360,6 +379,11 @@ class Client extends BaseClient
     /**
      * @api
      */
+    public PhysicalCheckBatchesService $physicalCheckBatches;
+
+    /**
+     * @api
+     */
     public SimulationsService $simulations;
 
     /**
@@ -430,6 +454,7 @@ class Client extends BaseClient
         $this->digitalCardProfiles = new DigitalCardProfilesService($this);
         $this->physicalCardProfiles = new PhysicalCardProfilesService($this);
         $this->digitalWalletTokens = new DigitalWalletTokensService($this);
+        $this->digitalWalletTokenRequests = new DigitalWalletTokenRequestsService($this);
         $this->transactions = new TransactionsService($this);
         $this->pendingTransactions = new PendingTransactionsService($this);
         $this->declinedTransactions = new DeclinedTransactionsService($this);
@@ -444,6 +469,8 @@ class Client extends BaseClient
         $this->inboundCheckDeposits = new InboundCheckDepositsService($this);
         $this->realTimePaymentsTransfers = new RealTimePaymentsTransfersService($this);
         $this->inboundRealTimePaymentsTransfers = new InboundRealTimePaymentsTransfersService($this);
+        $this->realTimePaymentsRequestsForPayment = new RealTimePaymentsRequestsForPaymentService($this);
+        $this->inboundRealTimePaymentsRequestsForPayment = new InboundRealTimePaymentsRequestsForPaymentService($this);
         $this->fednowTransfers = new FednowTransfersService($this);
         $this->inboundFednowTransfers = new InboundFednowTransfersService($this);
         $this->swiftTransfers = new SwiftTransfersService($this);
@@ -475,6 +502,7 @@ class Client extends BaseClient
         $this->cardTokens = new CardTokensService($this);
         $this->cardPushTransfers = new CardPushTransfersService($this);
         $this->cardValidations = new CardValidationsService($this);
+        $this->physicalCheckBatches = new PhysicalCheckBatchesService($this);
         $this->simulations = new SimulationsService($this);
     }
 

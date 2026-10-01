@@ -52,4 +52,28 @@ final class DigitalWalletTokensTest extends TestCase
             $this->assertInstanceOf(DigitalWalletToken::class, $item);
         }
     }
+
+    #[Test]
+    public function testTransition(): void
+    {
+        $result = $this->client->digitalWalletTokens->transition(
+            'digital_wallet_token_izi62go3h51p369jrie0',
+            status: 'suspended'
+        );
+
+        // @phpstan-ignore-next-line method.alreadyNarrowedType
+        $this->assertInstanceOf(DigitalWalletToken::class, $result);
+    }
+
+    #[Test]
+    public function testTransitionWithOptionalParams(): void
+    {
+        $result = $this->client->digitalWalletTokens->transition(
+            'digital_wallet_token_izi62go3h51p369jrie0',
+            status: 'suspended'
+        );
+
+        // @phpstan-ignore-next-line method.alreadyNarrowedType
+        $this->assertInstanceOf(DigitalWalletToken::class, $result);
+    }
 }

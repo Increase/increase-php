@@ -34,6 +34,21 @@ interface InboundCheckDepositsRawContract
     /**
      * @api
      *
+     * @param string $inboundCheckDepositID the identifier of the Inbound Check Deposit you wish to accept
+     * @param RequestOpts|null $requestOptions
+     *
+     * @return BaseResponse<InboundCheckDeposit>
+     *
+     * @throws APIException
+     */
+    public function accept(
+        string $inboundCheckDepositID,
+        RequestOptions|array|null $requestOptions = null,
+    ): BaseResponse;
+
+    /**
+     * @api
+     *
      * @param string $inboundCheckDepositID the identifier of the Inbound Check Deposit to adjust
      * @param array<string,mixed>|InboundCheckDepositAdjustmentParams $params
      * @param RequestOpts|null $requestOptions

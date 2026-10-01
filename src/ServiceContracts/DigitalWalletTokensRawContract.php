@@ -8,6 +8,7 @@ use Increase\Core\Contracts\BaseResponse;
 use Increase\Core\Exceptions\APIException;
 use Increase\DigitalWalletTokens\DigitalWalletToken;
 use Increase\DigitalWalletTokens\DigitalWalletTokenListParams;
+use Increase\DigitalWalletTokens\DigitalWalletTokenTransitionParams;
 use Increase\Page;
 use Increase\RequestOptions;
 
@@ -43,6 +44,23 @@ interface DigitalWalletTokensRawContract
      */
     public function list(
         array|DigitalWalletTokenListParams $params,
+        RequestOptions|array|null $requestOptions = null,
+    ): BaseResponse;
+
+    /**
+     * @api
+     *
+     * @param string $digitalWalletTokenID the identifier of the Digital Wallet Token
+     * @param array<string,mixed>|DigitalWalletTokenTransitionParams $params
+     * @param RequestOpts|null $requestOptions
+     *
+     * @return BaseResponse<DigitalWalletToken>
+     *
+     * @throws APIException
+     */
+    public function transition(
+        string $digitalWalletTokenID,
+        array|DigitalWalletTokenTransitionParams $params,
         RequestOptions|array|null $requestOptions = null,
     ): BaseResponse;
 }

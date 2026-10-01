@@ -55,6 +55,17 @@ final class InboundCheckDepositsTest extends TestCase
     }
 
     #[Test]
+    public function testAccept(): void
+    {
+        $result = $this->client->simulations->inboundCheckDeposits->accept(
+            'inbound_check_deposit_zoshvqybq0cjjm31mra'
+        );
+
+        // @phpstan-ignore-next-line method.alreadyNarrowedType
+        $this->assertInstanceOf(InboundCheckDeposit::class, $result);
+    }
+
+    #[Test]
     public function testAdjustment(): void
     {
         $result = $this->client->simulations->inboundCheckDeposits->adjustment(

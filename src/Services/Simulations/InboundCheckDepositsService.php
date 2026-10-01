@@ -69,6 +69,26 @@ final class InboundCheckDepositsService implements InboundCheckDepositsContract
     /**
      * @api
      *
+     * Simulates the acceptance of an [Inbound Check Deposit](#inbound-check-deposits), creating a Transaction as a result. The Inbound Check Deposit must first have a `status` of `pending`.
+     *
+     * @param string $inboundCheckDepositID the identifier of the Inbound Check Deposit you wish to accept
+     * @param RequestOpts|null $requestOptions
+     *
+     * @throws APIException
+     */
+    public function accept(
+        string $inboundCheckDepositID,
+        RequestOptions|array|null $requestOptions = null,
+    ): InboundCheckDeposit {
+        // @phpstan-ignore-next-line argument.type
+        $response = $this->raw->accept($inboundCheckDepositID, requestOptions: $requestOptions);
+
+        return $response->parse();
+    }
+
+    /**
+     * @api
+     *
      * Simulates an adjustment on an Inbound Check Deposit. The Inbound Check Deposit must have a `status` of `accepted`.
      *
      * @param string $inboundCheckDepositID the identifier of the Inbound Check Deposit to adjust

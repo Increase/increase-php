@@ -37,6 +37,19 @@ interface InboundCheckDepositsContract
     /**
      * @api
      *
+     * @param string $inboundCheckDepositID the identifier of the Inbound Check Deposit you wish to accept
+     * @param RequestOpts|null $requestOptions
+     *
+     * @throws APIException
+     */
+    public function accept(
+        string $inboundCheckDepositID,
+        RequestOptions|array|null $requestOptions = null,
+    ): InboundCheckDeposit;
+
+    /**
+     * @api
+     *
      * @param string $inboundCheckDepositID the identifier of the Inbound Check Deposit to adjust
      * @param int $amount The adjustment amount in cents. A positive amount means that the funds are being returned to you by the other bank and is a credit to your account, as happens for a `wrong_payee_credit`. A negative amount is a debit to your account, as happens for a `late_return`. Defaults to the amount of the Inbound Check Deposit.
      * @param Reason|value-of<Reason> $reason The reason for the adjustment. Defaults to `wrong_payee_credit`.

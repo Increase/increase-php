@@ -12,6 +12,7 @@ use Increase\Cards\CardCreateParams\BillingAddress;
 use Increase\Cards\CardCreateParams\CardholderName;
 use Increase\Cards\CardCreateParams\DigitalWallet;
 use Increase\Cards\CardDetails;
+use Increase\Cards\CardDetailsToken;
 use Increase\Cards\CardIframeURL;
 use Increase\Cards\CardListParams;
 use Increase\Cards\CardListParams\CreatedAt;
@@ -226,6 +227,31 @@ final class CardsRawService implements CardsRawContract
             body: (object) $parsed,
             options: $options,
             convert: CardIframeURL::class,
+        );
+    }
+
+    /**
+     * @api
+     *
+     * Create a short-lived token that authorizes [Card Elements](/documentation/card-elements) to render the details of a Card in your frontend. Mint the token on your server and pass it to the browser; the token is valid for one hour and is scoped to a single Card.
+     *
+     * @param string $cardID the identifier of the Card to mint a details token for
+     * @param RequestOpts|null $requestOptions
+     *
+     * @return BaseResponse<CardDetailsToken>
+     *
+     * @throws APIException
+     */
+    public function createDetailsToken(
+        string $cardID,
+        RequestOptions|array|null $requestOptions = null
+    ): BaseResponse {
+        // @phpstan-ignore-next-line return.type
+        return $this->client->request(
+            method: 'post',
+            path: ['cards/%1$s/create_details_token', $cardID],
+            options: $requestOptions,
+            convert: CardDetailsToken::class,
         );
     }
 

@@ -65,6 +65,33 @@ final class InboundCheckDepositsRawService implements InboundCheckDepositsRawCon
     /**
      * @api
      *
+     * Simulates the acceptance of an [Inbound Check Deposit](#inbound-check-deposits), creating a Transaction as a result. The Inbound Check Deposit must first have a `status` of `pending`.
+     *
+     * @param string $inboundCheckDepositID the identifier of the Inbound Check Deposit you wish to accept
+     * @param RequestOpts|null $requestOptions
+     *
+     * @return BaseResponse<InboundCheckDeposit>
+     *
+     * @throws APIException
+     */
+    public function accept(
+        string $inboundCheckDepositID,
+        RequestOptions|array|null $requestOptions = null,
+    ): BaseResponse {
+        // @phpstan-ignore-next-line return.type
+        return $this->client->request(
+            method: 'post',
+            path: [
+                'simulations/inbound_check_deposits/%1$s/accept', $inboundCheckDepositID,
+            ],
+            options: $requestOptions,
+            convert: InboundCheckDeposit::class,
+        );
+    }
+
+    /**
+     * @api
+     *
      * Simulates an adjustment on an Inbound Check Deposit. The Inbound Check Deposit must have a `status` of `accepted`.
      *
      * @param string $inboundCheckDepositID the identifier of the Inbound Check Deposit to adjust

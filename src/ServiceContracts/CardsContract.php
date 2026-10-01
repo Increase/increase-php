@@ -10,6 +10,7 @@ use Increase\Cards\CardCreateParams\BillingAddress;
 use Increase\Cards\CardCreateParams\CardholderName;
 use Increase\Cards\CardCreateParams\DigitalWallet;
 use Increase\Cards\CardDetails;
+use Increase\Cards\CardDetailsToken;
 use Increase\Cards\CardIframeURL;
 use Increase\Cards\CardListParams\CreatedAt;
 use Increase\Cards\CardUpdateParams\Status;
@@ -135,6 +136,19 @@ interface CardsContract
         ?string $physicalCardID = null,
         RequestOptions|array|null $requestOptions = null,
     ): CardIframeURL;
+
+    /**
+     * @api
+     *
+     * @param string $cardID the identifier of the Card to mint a details token for
+     * @param RequestOpts|null $requestOptions
+     *
+     * @throws APIException
+     */
+    public function createDetailsToken(
+        string $cardID,
+        RequestOptions|array|null $requestOptions = null
+    ): CardDetailsToken;
 
     /**
      * @api

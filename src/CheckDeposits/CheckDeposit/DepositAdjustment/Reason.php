@@ -9,6 +9,8 @@ namespace Increase\CheckDeposits\CheckDeposit\DepositAdjustment;
  */
 enum Reason: string
 {
+    case WRONG_PAYEE_CREDIT = 'wrong_payee_credit';
+
     case ADJUSTED_AMOUNT = 'adjusted_amount';
 
     case NON_CONFORMING_ITEM = 'non_conforming_item';

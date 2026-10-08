@@ -18,4 +18,6 @@ enum Reason: string
     case NON_CONFORMING_ITEM = 'non_conforming_item';
 
     case PAID = 'paid';
+
+    case DUPLICATE_ENTRY = 'duplicate_entry';
 }

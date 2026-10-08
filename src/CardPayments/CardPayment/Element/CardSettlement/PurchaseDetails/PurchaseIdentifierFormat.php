@@ -18,4 +18,6 @@ enum PurchaseIdentifierFormat: string
     case HOTEL_FOLIO_NUMBER = 'hotel_folio_number';
 
     case INVOICE_NUMBER = 'invoice_number';
+
+    case VISA_RECURRENT_REFERENCE_IDENTIFIER = 'visa_recurrent_reference_identifier';
 }

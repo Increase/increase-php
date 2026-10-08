@@ -84,7 +84,7 @@ final class SwiftTransfersTest extends TestCase
             instructedCurrency: 'USD',
             sourceAccountNumberID: 'account_number_v18nkfqm6afpsrvy82b2',
             unstructuredRemittanceInformation: 'New Swift transfer',
-            intermediaryBankIdentificationCode: 'SEWBFL97',
+            intermediaryBankIdentificationCode: 'SEWBFL3A',
             requireApproval: true,
             routingNumber: 'sq',
         );

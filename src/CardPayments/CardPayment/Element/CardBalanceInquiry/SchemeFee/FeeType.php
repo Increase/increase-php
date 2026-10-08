@@ -66,4 +66,6 @@ enum FeeType: string
     case VISA_PROCESSING_GUARANTEE_COMMERCIAL_CREDIT = 'visa_processing_guarantee_commercial_credit';
 
     case PULSE_SWITCH_FEE = 'pulse_switch_fee';
+
+    case PULSE_TOKENIZATION_FEE = 'pulse_tokenization_fee';
 }

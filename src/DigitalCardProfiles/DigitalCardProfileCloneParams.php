@@ -22,10 +22,10 @@ use Increase\DigitalCardProfiles\DigitalCardProfileCloneParams\TextColor;
  *   backgroundImageFileID?: string|null,
  *   cardDescription?: string|null,
  *   contactEmail?: string|null,
+ *   contactName?: string|null,
  *   contactPhone?: string|null,
  *   contactWebsite?: string|null,
  *   description?: string|null,
- *   issuerName?: string|null,
  *   textColor?: null|TextColor|TextColorShape,
  * }
  */
@@ -60,6 +60,12 @@ final class DigitalCardProfileCloneParams implements BaseModel
     public ?string $contactEmail;
 
     /**
+     * The name of your company or card program, shown to the user as who to contact for support with their card.
+     */
+    #[Optional('contact_name')]
+    public ?string $contactName;
+
+    /**
      * A phone number the user can contact to receive support for their card.
      */
     #[Optional('contact_phone')]
@@ -76,12 +82,6 @@ final class DigitalCardProfileCloneParams implements BaseModel
      */
     #[Optional]
     public ?string $description;
-
-    /**
-     * A user-facing description for whoever is issuing the card.
-     */
-    #[Optional('issuer_name')]
-    public ?string $issuerName;
 
     /**
      * The Card's text color, specified as an RGB triple. The default is white.
@@ -106,10 +106,10 @@ final class DigitalCardProfileCloneParams implements BaseModel
         ?string $backgroundImageFileID = null,
         ?string $cardDescription = null,
         ?string $contactEmail = null,
+        ?string $contactName = null,
         ?string $contactPhone = null,
         ?string $contactWebsite = null,
         ?string $description = null,
-        ?string $issuerName = null,
         TextColor|array|null $textColor = null,
     ): self {
         $self = new self;
@@ -118,10 +118,10 @@ final class DigitalCardProfileCloneParams implements BaseModel
         null !== $backgroundImageFileID && $self['backgroundImageFileID'] = $backgroundImageFileID;
         null !== $cardDescription && $self['cardDescription'] = $cardDescription;
         null !== $contactEmail && $self['contactEmail'] = $contactEmail;
+        null !== $contactName && $self['contactName'] = $contactName;
         null !== $contactPhone && $self['contactPhone'] = $contactPhone;
         null !== $contactWebsite && $self['contactWebsite'] = $contactWebsite;
         null !== $description && $self['description'] = $description;
-        null !== $issuerName && $self['issuerName'] = $issuerName;
         null !== $textColor && $self['textColor'] = $textColor;
 
         return $self;
@@ -173,6 +173,17 @@ final class DigitalCardProfileCloneParams implements BaseModel
     }
 
     /**
+     * The name of your company or card program, shown to the user as who to contact for support with their card.
+     */
+    public function withContactName(string $contactName): self
+    {
+        $self = clone $this;
+        $self['contactName'] = $contactName;
+
+        return $self;
+    }
+
+    /**
      * A phone number the user can contact to receive support for their card.
      */
     public function withContactPhone(string $contactPhone): self
@@ -201,17 +212,6 @@ final class DigitalCardProfileCloneParams implements BaseModel
     {
         $self = clone $this;
         $self['description'] = $description;
-
-        return $self;
-    }
-
-    /**
-     * A user-facing description for whoever is issuing the card.
-     */
-    public function withIssuerName(string $issuerName): self
-    {
-        $self = clone $this;
-        $self['issuerName'] = $issuerName;
 
         return $self;
     }

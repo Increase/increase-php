@@ -26,8 +26,8 @@ interface DigitalCardProfilesContract
      * @param string $backgroundImageFileID the identifier of the File containing the card's front image
      * @param string $cardDescription a user-facing description for the card itself
      * @param string $description a description you can use to identify the Card Profile
-     * @param string $issuerName a user-facing description for whoever is issuing the card
      * @param string $contactEmail an email address the user can contact to receive support for their card
+     * @param string $contactName the name of your company or card program, shown to the user as who to contact for support with their card
      * @param string $contactPhone a phone number the user can contact to receive support for their card
      * @param string $contactWebsite a website the user can visit to view and receive support for their card
      * @param TextColor|TextColorShape $textColor The Card's text color, specified as an RGB triple. The default is white.
@@ -40,8 +40,8 @@ interface DigitalCardProfilesContract
         string $backgroundImageFileID,
         string $cardDescription,
         string $description,
-        string $issuerName,
         ?string $contactEmail = null,
+        ?string $contactName = null,
         ?string $contactPhone = null,
         ?string $contactWebsite = null,
         TextColor|array|null $textColor = null,

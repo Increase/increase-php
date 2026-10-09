@@ -22,12 +22,12 @@ use Increase\DigitalCardProfiles\DigitalCardProfile\Type;
  *   backgroundImageFileID: string,
  *   cardDescription: string,
  *   contactEmail: string|null,
+ *   contactName: string,
  *   contactPhone: string|null,
  *   contactWebsite: string|null,
  *   createdAt: \DateTimeInterface,
  *   description: string,
  *   idempotencyKey: string|null,
- *   issuerName: string,
  *   status: Status|value-of<Status>,
  *   textColor: TextColor|TextColorShape,
  *   type: Type|value-of<Type>,
@@ -69,6 +69,12 @@ final class DigitalCardProfile implements BaseModel
     public ?string $contactEmail;
 
     /**
+     * The name of your company or card program, shown to the user as who to contact for support with their card.
+     */
+    #[Required('contact_name')]
+    public string $contactName;
+
+    /**
      * A phone number the user can contact to receive support for their card.
      */
     #[Required('contact_phone')]
@@ -97,12 +103,6 @@ final class DigitalCardProfile implements BaseModel
      */
     #[Required('idempotency_key')]
     public ?string $idempotencyKey;
-
-    /**
-     * A user-facing description for whoever is issuing the card.
-     */
-    #[Required('issuer_name')]
-    public string $issuerName;
 
     /**
      * The status of the Card Profile.
@@ -137,12 +137,12 @@ final class DigitalCardProfile implements BaseModel
      *   backgroundImageFileID: ...,
      *   cardDescription: ...,
      *   contactEmail: ...,
+     *   contactName: ...,
      *   contactPhone: ...,
      *   contactWebsite: ...,
      *   createdAt: ...,
      *   description: ...,
      *   idempotencyKey: ...,
-     *   issuerName: ...,
      *   status: ...,
      *   textColor: ...,
      *   type: ...,
@@ -158,12 +158,12 @@ final class DigitalCardProfile implements BaseModel
      *   ->withBackgroundImageFileID(...)
      *   ->withCardDescription(...)
      *   ->withContactEmail(...)
+     *   ->withContactName(...)
      *   ->withContactPhone(...)
      *   ->withContactWebsite(...)
      *   ->withCreatedAt(...)
      *   ->withDescription(...)
      *   ->withIdempotencyKey(...)
-     *   ->withIssuerName(...)
      *   ->withStatus(...)
      *   ->withTextColor(...)
      *   ->withType(...)
@@ -189,12 +189,12 @@ final class DigitalCardProfile implements BaseModel
         string $backgroundImageFileID,
         string $cardDescription,
         ?string $contactEmail,
+        string $contactName,
         ?string $contactPhone,
         ?string $contactWebsite,
         \DateTimeInterface $createdAt,
         string $description,
         ?string $idempotencyKey,
-        string $issuerName,
         Status|string $status,
         TextColor|array $textColor,
         Type|string $type,
@@ -206,12 +206,12 @@ final class DigitalCardProfile implements BaseModel
         $self['backgroundImageFileID'] = $backgroundImageFileID;
         $self['cardDescription'] = $cardDescription;
         $self['contactEmail'] = $contactEmail;
+        $self['contactName'] = $contactName;
         $self['contactPhone'] = $contactPhone;
         $self['contactWebsite'] = $contactWebsite;
         $self['createdAt'] = $createdAt;
         $self['description'] = $description;
         $self['idempotencyKey'] = $idempotencyKey;
-        $self['issuerName'] = $issuerName;
         $self['status'] = $status;
         $self['textColor'] = $textColor;
         $self['type'] = $type;
@@ -276,6 +276,17 @@ final class DigitalCardProfile implements BaseModel
     }
 
     /**
+     * The name of your company or card program, shown to the user as who to contact for support with their card.
+     */
+    public function withContactName(string $contactName): self
+    {
+        $self = clone $this;
+        $self['contactName'] = $contactName;
+
+        return $self;
+    }
+
+    /**
      * A phone number the user can contact to receive support for their card.
      */
     public function withContactPhone(?string $contactPhone): self
@@ -326,17 +337,6 @@ final class DigitalCardProfile implements BaseModel
     {
         $self = clone $this;
         $self['idempotencyKey'] = $idempotencyKey;
-
-        return $self;
-    }
-
-    /**
-     * A user-facing description for whoever is issuing the card.
-     */
-    public function withIssuerName(string $issuerName): self
-    {
-        $self = clone $this;
-        $self['issuerName'] = $issuerName;
 
         return $self;
     }

@@ -42,7 +42,7 @@ interface EventsContract
      * @param Category|CategoryShape $category
      * @param CreatedAt|CreatedAtShape $createdAt
      * @param string $cursor return the page of entries after this one
-     * @param int $limit Limit the size of the list that is returned. The default (and maximum) is 100 objects.
+     * @param int $limit Limit the size of the list that is returned. The default is 100 objects and the maximum is 1,000.
      *
      * Defaults to `100`.
      * @param OrderBy|OrderByShape $orderBy

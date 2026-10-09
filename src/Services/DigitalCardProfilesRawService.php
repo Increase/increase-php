@@ -42,8 +42,8 @@ final class DigitalCardProfilesRawService implements DigitalCardProfilesRawContr
      *   backgroundImageFileID: string,
      *   cardDescription: string,
      *   description: string,
-     *   issuerName: string,
      *   contactEmail?: string,
+     *   contactName?: string,
      *   contactPhone?: string,
      *   contactWebsite?: string,
      *   textColor?: TextColor|TextColorShape,
@@ -174,10 +174,10 @@ final class DigitalCardProfilesRawService implements DigitalCardProfilesRawContr
      *   backgroundImageFileID?: string,
      *   cardDescription?: string,
      *   contactEmail?: string,
+     *   contactName?: string,
      *   contactPhone?: string,
      *   contactWebsite?: string,
      *   description?: string,
-     *   issuerName?: string,
      *   textColor?: DigitalCardProfileCloneParams\TextColor|TextColorShape1,
      * }|DigitalCardProfileCloneParams $params
      * @param RequestOpts|null $requestOptions

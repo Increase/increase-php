@@ -34,9 +34,8 @@ final class DigitalCardProfilesTest extends TestCase
         $result = $this->client->digitalCardProfiles->create(
             appIconFileID: 'file_8zxqkwlh43wo144u8yec',
             backgroundImageFileID: 'file_1ai913suu1zfn1pdetru',
-            cardDescription: 'MyBank Signature Card',
+            cardDescription: 'National Phonograph Card',
             description: 'My Card Profile',
-            issuerName: 'MyBank',
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -49,10 +48,10 @@ final class DigitalCardProfilesTest extends TestCase
         $result = $this->client->digitalCardProfiles->create(
             appIconFileID: 'file_8zxqkwlh43wo144u8yec',
             backgroundImageFileID: 'file_1ai913suu1zfn1pdetru',
-            cardDescription: 'MyBank Signature Card',
+            cardDescription: 'National Phonograph Card',
             description: 'My Card Profile',
-            issuerName: 'MyBank',
             contactEmail: 'user@example.com',
+            contactName: 'National Phonograph Company',
             contactPhone: '+18885551212',
             contactWebsite: 'https://example.com',
             textColor: ['blue' => 59, 'green' => 43, 'red' => 26],

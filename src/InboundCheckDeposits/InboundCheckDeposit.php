@@ -28,7 +28,7 @@ use Increase\InboundCheckDeposits\InboundCheckDeposit\Type;
  *   adjustments: list<Adjustment|AdjustmentShape>,
  *   amount: int,
  *   automaticallyResolvesAt: \DateTimeInterface,
- *   backImageFileID: string|null,
+ *   backImageFileID: string,
  *   bankOfFirstDepositRoutingNumber: string|null,
  *   checkNumber: string|null,
  *   checkTransferID: string|null,
@@ -37,7 +37,7 @@ use Increase\InboundCheckDeposits\InboundCheckDeposit\Type;
  *   declinedAt: \DateTimeInterface|null,
  *   declinedTransactionID: string|null,
  *   depositReturn: null|DepositReturn|DepositReturnShape,
- *   frontImageFileID: string|null,
+ *   frontImageFileID: string,
  *   payeeNameAnalysis: PayeeNameAnalysis|value-of<PayeeNameAnalysis>,
  *   status: Status|value-of<Status>,
  *   transactionID: string|null,
@@ -97,7 +97,7 @@ final class InboundCheckDeposit implements BaseModel
      * The ID for the File containing the image of the back of the check.
      */
     #[Required('back_image_file_id')]
-    public ?string $backImageFileID;
+    public string $backImageFileID;
 
     /**
      * The American Bankers' Association (ABA) Routing Transit Number (RTN) for the bank depositing this check. In some rare cases, this is not transmitted via Check 21 and the value will be null.
@@ -153,7 +153,7 @@ final class InboundCheckDeposit implements BaseModel
      * The ID for the File containing the image of the front of the check.
      */
     #[Required('front_image_file_id')]
-    public ?string $frontImageFileID;
+    public string $frontImageFileID;
 
     /**
      * Whether the details on the check match the recipient name of the check transfer. This is an optional feature, contact sales to enable.
@@ -267,7 +267,7 @@ final class InboundCheckDeposit implements BaseModel
         array $adjustments,
         int $amount,
         \DateTimeInterface $automaticallyResolvesAt,
-        ?string $backImageFileID,
+        string $backImageFileID,
         ?string $bankOfFirstDepositRoutingNumber,
         ?string $checkNumber,
         ?string $checkTransferID,
@@ -276,7 +276,7 @@ final class InboundCheckDeposit implements BaseModel
         ?\DateTimeInterface $declinedAt,
         ?string $declinedTransactionID,
         DepositReturn|array|null $depositReturn,
-        ?string $frontImageFileID,
+        string $frontImageFileID,
         PayeeNameAnalysis|string $payeeNameAnalysis,
         Status|string $status,
         ?string $transactionID,
@@ -392,7 +392,7 @@ final class InboundCheckDeposit implements BaseModel
     /**
      * The ID for the File containing the image of the back of the check.
      */
-    public function withBackImageFileID(?string $backImageFileID): self
+    public function withBackImageFileID(string $backImageFileID): self
     {
         $self = clone $this;
         $self['backImageFileID'] = $backImageFileID;
@@ -498,7 +498,7 @@ final class InboundCheckDeposit implements BaseModel
     /**
      * The ID for the File containing the image of the front of the check.
      */
-    public function withFrontImageFileID(?string $frontImageFileID): self
+    public function withFrontImageFileID(string $frontImageFileID): self
     {
         $self = clone $this;
         $self['frontImageFileID'] = $frontImageFileID;

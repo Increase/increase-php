@@ -55,7 +55,7 @@ final class EventListParams implements BaseModel
     public ?string $cursor;
 
     /**
-     * Limit the size of the list that is returned. The default (and maximum) is 100 objects.
+     * Limit the size of the list that is returned. The default is 100 objects and the maximum is 1,000.
      *
      * Defaults to `100`.
      */
@@ -144,7 +144,7 @@ final class EventListParams implements BaseModel
     }
 
     /**
-     * Limit the size of the list that is returned. The default (and maximum) is 100 objects.
+     * Limit the size of the list that is returned. The default is 100 objects and the maximum is 1,000.
      *
      * Defaults to `100`.
      */

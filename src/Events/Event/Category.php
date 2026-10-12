@@ -85,6 +85,8 @@ enum Category: string
 
     case DIGITAL_WALLET_TOKEN_UPDATED = 'digital_wallet_token.updated';
 
+    case DIGITAL_WALLET_TOKEN_REQUEST_CREATED = 'digital_wallet_token_request.created';
+
     case ENTITY_CREATED = 'entity.created';
 
     case ENTITY_UPDATED = 'entity.updated';

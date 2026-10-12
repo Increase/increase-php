@@ -18,6 +18,7 @@ use Increase\Core\Contracts\BaseModel;
  *   line2: string|null,
  *   line3: string|null,
  *   name: string,
+ *   phoneNumber: string|null,
  *   postalCode: string,
  *   state: string,
  * }
@@ -64,6 +65,12 @@ final class Address implements BaseModel
     public string $name;
 
     /**
+     * The phone number of the recipient.
+     */
+    #[Required('phone_number')]
+    public ?string $phoneNumber;
+
+    /**
      * The postal code of the shipping address.
      */
     #[Required('postal_code')]
@@ -87,6 +94,7 @@ final class Address implements BaseModel
      *   line2: ...,
      *   line3: ...,
      *   name: ...,
+     *   phoneNumber: ...,
      *   postalCode: ...,
      *   state: ...,
      * )
@@ -102,6 +110,7 @@ final class Address implements BaseModel
      *   ->withLine2(...)
      *   ->withLine3(...)
      *   ->withName(...)
+     *   ->withPhoneNumber(...)
      *   ->withPostalCode(...)
      *   ->withState(...)
      * ```
@@ -123,6 +132,7 @@ final class Address implements BaseModel
         ?string $line2,
         ?string $line3,
         string $name,
+        ?string $phoneNumber,
         string $postalCode,
         string $state,
     ): self {
@@ -134,6 +144,7 @@ final class Address implements BaseModel
         $self['line2'] = $line2;
         $self['line3'] = $line3;
         $self['name'] = $name;
+        $self['phoneNumber'] = $phoneNumber;
         $self['postalCode'] = $postalCode;
         $self['state'] = $state;
 
@@ -202,6 +213,17 @@ final class Address implements BaseModel
     {
         $self = clone $this;
         $self['name'] = $name;
+
+        return $self;
+    }
+
+    /**
+     * The phone number of the recipient.
+     */
+    public function withPhoneNumber(?string $phoneNumber): self
+    {
+        $self = clone $this;
+        $self['phoneNumber'] = $phoneNumber;
 
         return $self;
     }

@@ -23,8 +23,8 @@ use Increase\DigitalCardProfiles\DigitalCardProfileCreateParams\TextColor;
  *   backgroundImageFileID: string,
  *   cardDescription: string,
  *   description: string,
- *   issuerName: string,
  *   contactEmail?: string|null,
+ *   contactName?: string|null,
  *   contactPhone?: string|null,
  *   contactWebsite?: string|null,
  *   textColor?: null|TextColor|TextColorShape,
@@ -61,16 +61,16 @@ final class DigitalCardProfileCreateParams implements BaseModel
     public string $description;
 
     /**
-     * A user-facing description for whoever is issuing the card.
-     */
-    #[Required('issuer_name')]
-    public string $issuerName;
-
-    /**
      * An email address the user can contact to receive support for their card.
      */
     #[Optional('contact_email')]
     public ?string $contactEmail;
+
+    /**
+     * The name of your company or card program, shown to the user as who to contact for support with their card.
+     */
+    #[Optional('contact_name')]
+    public ?string $contactName;
 
     /**
      * A phone number the user can contact to receive support for their card.
@@ -100,7 +100,6 @@ final class DigitalCardProfileCreateParams implements BaseModel
      *   backgroundImageFileID: ...,
      *   cardDescription: ...,
      *   description: ...,
-     *   issuerName: ...,
      * )
      * ```
      *
@@ -112,7 +111,6 @@ final class DigitalCardProfileCreateParams implements BaseModel
      *   ->withBackgroundImageFileID(...)
      *   ->withCardDescription(...)
      *   ->withDescription(...)
-     *   ->withIssuerName(...)
      * ```
      */
     public function __construct()
@@ -132,8 +130,8 @@ final class DigitalCardProfileCreateParams implements BaseModel
         string $backgroundImageFileID,
         string $cardDescription,
         string $description,
-        string $issuerName,
         ?string $contactEmail = null,
+        ?string $contactName = null,
         ?string $contactPhone = null,
         ?string $contactWebsite = null,
         TextColor|array|null $textColor = null,
@@ -144,9 +142,9 @@ final class DigitalCardProfileCreateParams implements BaseModel
         $self['backgroundImageFileID'] = $backgroundImageFileID;
         $self['cardDescription'] = $cardDescription;
         $self['description'] = $description;
-        $self['issuerName'] = $issuerName;
 
         null !== $contactEmail && $self['contactEmail'] = $contactEmail;
+        null !== $contactName && $self['contactName'] = $contactName;
         null !== $contactPhone && $self['contactPhone'] = $contactPhone;
         null !== $contactWebsite && $self['contactWebsite'] = $contactWebsite;
         null !== $textColor && $self['textColor'] = $textColor;
@@ -200,23 +198,23 @@ final class DigitalCardProfileCreateParams implements BaseModel
     }
 
     /**
-     * A user-facing description for whoever is issuing the card.
-     */
-    public function withIssuerName(string $issuerName): self
-    {
-        $self = clone $this;
-        $self['issuerName'] = $issuerName;
-
-        return $self;
-    }
-
-    /**
      * An email address the user can contact to receive support for their card.
      */
     public function withContactEmail(string $contactEmail): self
     {
         $self = clone $this;
         $self['contactEmail'] = $contactEmail;
+
+        return $self;
+    }
+
+    /**
+     * The name of your company or card program, shown to the user as who to contact for support with their card.
+     */
+    public function withContactName(string $contactName): self
+    {
+        $self = clone $this;
+        $self['contactName'] = $contactName;
 
         return $self;
     }

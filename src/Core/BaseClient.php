@@ -224,7 +224,7 @@ abstract class BaseClient
         }
 
         $code = $rsp?->getStatusCode();
-        if (408 == $code || 409 == $code || 429 == $code || $code >= 500) {
+        if (408 == $code || 429 == $code || $code >= 500) {
             return true;
         }
 

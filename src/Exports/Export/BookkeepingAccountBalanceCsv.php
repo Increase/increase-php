@@ -29,13 +29,13 @@ final class BookkeepingAccountBalanceCsv implements BaseModel
     public ?string $bookkeepingAccountID;
 
     /**
-     * Filter balances to those on or after this date.
+     * Filter balances to those on or after this UTC date.
      */
     #[Required('on_or_after_date')]
     public ?string $onOrAfterDate;
 
     /**
-     * Filter balances to those on or before this date.
+     * Filter balances to those on or before this UTC date.
      */
     #[Required('on_or_before_date')]
     public ?string $onOrBeforeDate;
@@ -96,7 +96,7 @@ final class BookkeepingAccountBalanceCsv implements BaseModel
     }
 
     /**
-     * Filter balances to those on or after this date.
+     * Filter balances to those on or after this UTC date.
      */
     public function withOnOrAfterDate(?string $onOrAfterDate): self
     {
@@ -107,7 +107,7 @@ final class BookkeepingAccountBalanceCsv implements BaseModel
     }
 
     /**
-     * Filter balances to those on or before this date.
+     * Filter balances to those on or before this UTC date.
      */
     public function withOnOrBeforeDate(?string $onOrBeforeDate): self
     {

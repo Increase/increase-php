@@ -101,7 +101,7 @@ final class DigitalCardProfilesRawService implements DigitalCardProfilesRawContr
     /**
      * @api
      *
-     * List Card Profiles
+     * List Digital Card Profiles
      *
      * @param array{
      *   cursor?: string,
@@ -166,7 +166,7 @@ final class DigitalCardProfilesRawService implements DigitalCardProfilesRawContr
     /**
      * @api
      *
-     * Clones a Digital Card Profile
+     * Clone a Digital Card Profile
      *
      * @param string $digitalCardProfileID the identifier of the Digital Card Profile to clone
      * @param array{

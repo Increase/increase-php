@@ -27,7 +27,7 @@ final class AccountStatementBai2 implements BaseModel
     public ?string $accountID;
 
     /**
-     * The date for which to retrieve the balance.
+     * The UTC date for which to retrieve the balance.
      */
     #[Required('effective_date')]
     public ?string $effectiveDate;
@@ -91,7 +91,7 @@ final class AccountStatementBai2 implements BaseModel
     }
 
     /**
-     * The date for which to retrieve the balance.
+     * The UTC date for which to retrieve the balance.
      */
     public function withEffectiveDate(?string $effectiveDate): self
     {

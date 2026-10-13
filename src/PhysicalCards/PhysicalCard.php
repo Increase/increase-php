@@ -24,6 +24,8 @@ use Increase\PhysicalCards\PhysicalCard\Type;
  *   cardID: string,
  *   cardholder: Cardholder|CardholderShape,
  *   createdAt: \DateTimeInterface,
+ *   expirationMonth: int,
+ *   expirationYear: int,
  *   idempotencyKey: string|null,
  *   physicalCardProfileID: string|null,
  *   shipment: Shipment|ShipmentShape,
@@ -65,6 +67,18 @@ final class PhysicalCard implements BaseModel
      */
     #[Required('created_at')]
     public \DateTimeInterface $createdAt;
+
+    /**
+     * The month printed on the Physical Card as its expiration, in M format (e.g., August is 8). This stays the same when the Card is renewed.
+     */
+    #[Required('expiration_month')]
+    public int $expirationMonth;
+
+    /**
+     * The year printed on the Physical Card as its expiration, in YYYY format (e.g., 2025). This stays the same when the Card is renewed.
+     */
+    #[Required('expiration_year')]
+    public int $expirationYear;
 
     /**
      * The idempotency key you chose for this object. This value is unique across Increase and is used to ensure that a request is only processed once. Learn more about [idempotency](https://increase.com/documentation/idempotency-keys).
@@ -111,6 +125,8 @@ final class PhysicalCard implements BaseModel
      *   cardID: ...,
      *   cardholder: ...,
      *   createdAt: ...,
+     *   expirationMonth: ...,
+     *   expirationYear: ...,
      *   idempotencyKey: ...,
      *   physicalCardProfileID: ...,
      *   shipment: ...,
@@ -128,6 +144,8 @@ final class PhysicalCard implements BaseModel
      *   ->withCardID(...)
      *   ->withCardholder(...)
      *   ->withCreatedAt(...)
+     *   ->withExpirationMonth(...)
+     *   ->withExpirationYear(...)
      *   ->withIdempotencyKey(...)
      *   ->withPhysicalCardProfileID(...)
      *   ->withShipment(...)
@@ -156,6 +174,8 @@ final class PhysicalCard implements BaseModel
         string $cardID,
         Cardholder|array $cardholder,
         \DateTimeInterface $createdAt,
+        int $expirationMonth,
+        int $expirationYear,
         ?string $idempotencyKey,
         ?string $physicalCardProfileID,
         Shipment|array $shipment,
@@ -169,6 +189,8 @@ final class PhysicalCard implements BaseModel
         $self['cardID'] = $cardID;
         $self['cardholder'] = $cardholder;
         $self['createdAt'] = $createdAt;
+        $self['expirationMonth'] = $expirationMonth;
+        $self['expirationYear'] = $expirationYear;
         $self['idempotencyKey'] = $idempotencyKey;
         $self['physicalCardProfileID'] = $physicalCardProfileID;
         $self['shipment'] = $shipment;
@@ -231,6 +253,28 @@ final class PhysicalCard implements BaseModel
     {
         $self = clone $this;
         $self['createdAt'] = $createdAt;
+
+        return $self;
+    }
+
+    /**
+     * The month printed on the Physical Card as its expiration, in M format (e.g., August is 8). This stays the same when the Card is renewed.
+     */
+    public function withExpirationMonth(int $expirationMonth): self
+    {
+        $self = clone $this;
+        $self['expirationMonth'] = $expirationMonth;
+
+        return $self;
+    }
+
+    /**
+     * The year printed on the Physical Card as its expiration, in YYYY format (e.g., 2025). This stays the same when the Card is renewed.
+     */
+    public function withExpirationYear(int $expirationYear): self
+    {
+        $self = clone $this;
+        $self['expirationYear'] = $expirationYear;
 
         return $self;
     }

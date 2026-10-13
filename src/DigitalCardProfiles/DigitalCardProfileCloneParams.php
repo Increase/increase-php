@@ -11,7 +11,7 @@ use Increase\Core\Contracts\BaseModel;
 use Increase\DigitalCardProfiles\DigitalCardProfileCloneParams\TextColor;
 
 /**
- * Clones a Digital Card Profile.
+ * Clone a Digital Card Profile.
  *
  * @see Increase\Services\DigitalCardProfilesService::clone()
  *

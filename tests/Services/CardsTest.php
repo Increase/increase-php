@@ -159,6 +159,15 @@ final class CardsTest extends TestCase
     }
 
     #[Test]
+    public function testRenew(): void
+    {
+        $result = $this->client->cards->renew('card_oubs0hwk5rn6knuecxg2');
+
+        // @phpstan-ignore-next-line method.alreadyNarrowedType
+        $this->assertInstanceOf(Card::class, $result);
+    }
+
+    #[Test]
     public function testUpdatePin(): void
     {
         $result = $this->client->cards->updatePin(

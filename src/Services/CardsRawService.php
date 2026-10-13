@@ -283,6 +283,31 @@ final class CardsRawService implements CardsRawContract
     /**
      * @api
      *
+     * Renew a Card in place. The Card keeps its identifier, card number, PIN, and Physical Cards, and receives a new expiration date in the current month four years from now along with a new verification code, which the Card's details will return afterwards. Physical Cards that have already shipped keep working until they are canceled.
+     *
+     * @param string $cardID the identifier of the Card to renew
+     * @param RequestOpts|null $requestOptions
+     *
+     * @return BaseResponse<Card>
+     *
+     * @throws APIException
+     */
+    public function renew(
+        string $cardID,
+        RequestOptions|array|null $requestOptions = null
+    ): BaseResponse {
+        // @phpstan-ignore-next-line return.type
+        return $this->client->request(
+            method: 'post',
+            path: ['cards/%1$s/renew', $cardID],
+            options: $requestOptions,
+            convert: Card::class,
+        );
+    }
+
+    /**
+     * @api
+     *
      * Update a Card's PIN
      *
      * @param string $cardID the identifier of the Card to update the PIN for

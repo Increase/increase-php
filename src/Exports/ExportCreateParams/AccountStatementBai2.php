@@ -27,7 +27,7 @@ final class AccountStatementBai2 implements BaseModel
     public ?string $accountID;
 
     /**
-     * The date to create a BAI2 report for. If not provided, the current date will be used. The timezone is UTC. If the current date is used, the report will include intraday balances, otherwise it will include end-of-day balances for the provided date.
+     * The UTC date to create a BAI2 report for. If not provided, the current date will be used. If the current date is used, the report will include intraday balances, otherwise it will include end-of-day balances for the provided date.
      */
     #[Optional('effective_date')]
     public ?string $effectiveDate;
@@ -74,7 +74,7 @@ final class AccountStatementBai2 implements BaseModel
     }
 
     /**
-     * The date to create a BAI2 report for. If not provided, the current date will be used. The timezone is UTC. If the current date is used, the report will include intraday balances, otherwise it will include end-of-day balances for the provided date.
+     * The UTC date to create a BAI2 report for. If not provided, the current date will be used. If the current date is used, the report will include intraday balances, otherwise it will include end-of-day balances for the provided date.
      */
     public function withEffectiveDate(string $effectiveDate): self
     {

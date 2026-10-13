@@ -8,6 +8,7 @@ use Increase\Cards\Card\AuthorizationControls;
 use Increase\Cards\Card\BillingAddress;
 use Increase\Cards\Card\CardholderName;
 use Increase\Cards\Card\DigitalWallet;
+use Increase\Cards\Card\Renewal;
 use Increase\Cards\Card\Status;
 use Increase\Cards\Card\Type;
 use Increase\Core\Attributes\Required;
@@ -21,6 +22,7 @@ use Increase\Core\Contracts\BaseModel;
  * @phpstan-import-type BillingAddressShape from \Increase\Cards\Card\BillingAddress
  * @phpstan-import-type CardholderNameShape from \Increase\Cards\Card\CardholderName
  * @phpstan-import-type DigitalWalletShape from \Increase\Cards\Card\DigitalWallet
+ * @phpstan-import-type RenewalShape from \Increase\Cards\Card\Renewal
  *
  * @phpstan-type CardShape = array{
  *   id: string,
@@ -37,6 +39,7 @@ use Increase\Core\Contracts\BaseModel;
  *   expirationYear: int,
  *   idempotencyKey: string|null,
  *   last4: string,
+ *   renewals: list<Renewal|RenewalShape>,
  *   status: Status|value-of<Status>,
  *   type: Type|value-of<Type>,
  * }
@@ -131,6 +134,14 @@ final class Card implements BaseModel
     public string $last4;
 
     /**
+     * Completed renewals of this Card, sorted by `renewed_at` in ascending order. Each renewal records the expiration date the Card had before it was renewed.
+     *
+     * @var list<Renewal> $renewals
+     */
+    #[Required(list: Renewal::class)]
+    public array $renewals;
+
+    /**
      * This indicates if payments can be made with the card.
      *
      * @var value-of<Status> $status
@@ -166,6 +177,7 @@ final class Card implements BaseModel
      *   expirationYear: ...,
      *   idempotencyKey: ...,
      *   last4: ...,
+     *   renewals: ...,
      *   status: ...,
      *   type: ...,
      * )
@@ -189,6 +201,7 @@ final class Card implements BaseModel
      *   ->withExpirationYear(...)
      *   ->withIdempotencyKey(...)
      *   ->withLast4(...)
+     *   ->withRenewals(...)
      *   ->withStatus(...)
      *   ->withType(...)
      * ```
@@ -207,6 +220,7 @@ final class Card implements BaseModel
      * @param BillingAddress|BillingAddressShape $billingAddress
      * @param CardholderName|CardholderNameShape|null $cardholderName
      * @param DigitalWallet|DigitalWalletShape|null $digitalWallet
+     * @param list<Renewal|RenewalShape> $renewals
      * @param Status|value-of<Status> $status
      * @param Type|value-of<Type> $type
      */
@@ -225,6 +239,7 @@ final class Card implements BaseModel
         int $expirationYear,
         ?string $idempotencyKey,
         string $last4,
+        array $renewals,
         Status|string $status,
         Type|string $type,
     ): self {
@@ -244,6 +259,7 @@ final class Card implements BaseModel
         $self['expirationYear'] = $expirationYear;
         $self['idempotencyKey'] = $idempotencyKey;
         $self['last4'] = $last4;
+        $self['renewals'] = $renewals;
         $self['status'] = $status;
         $self['type'] = $type;
 
@@ -412,6 +428,19 @@ final class Card implements BaseModel
     {
         $self = clone $this;
         $self['last4'] = $last4;
+
+        return $self;
+    }
+
+    /**
+     * Completed renewals of this Card, sorted by `renewed_at` in ascending order. Each renewal records the expiration date the Card had before it was renewed.
+     *
+     * @param list<Renewal|RenewalShape> $renewals
+     */
+    public function withRenewals(array $renewals): self
+    {
+        $self = clone $this;
+        $self['renewals'] = $renewals;
 
         return $self;
     }

@@ -108,7 +108,7 @@ final class DigitalCardProfilesService implements DigitalCardProfilesContract
     /**
      * @api
      *
-     * List Card Profiles
+     * List Digital Card Profiles
      *
      * @param string $cursor return the page of entries after this one
      * @param string $idempotencyKey Filter records to the one with the specified `idempotency_key` you chose for that object. This value is unique across Increase and is used to ensure that a request is only processed once. Learn more about [idempotency](https://increase.com/documentation/idempotency-keys).
@@ -167,7 +167,7 @@ final class DigitalCardProfilesService implements DigitalCardProfilesContract
     /**
      * @api
      *
-     * Clones a Digital Card Profile
+     * Clone a Digital Card Profile
      *
      * @param string $digitalCardProfileID the identifier of the Digital Card Profile to clone
      * @param string $appIconFileID the identifier of the File containing the card's icon image

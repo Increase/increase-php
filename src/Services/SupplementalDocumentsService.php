@@ -33,7 +33,7 @@ final class SupplementalDocumentsService implements SupplementalDocumentsContrac
     /**
      * @api
      *
-     * Create a supplemental document for an Entity
+     * Create a Supplemental Document
      *
      * @param string $entityID the identifier of the Entity to associate with the supplemental document
      * @param string $fileID the identifier of the File containing the document
@@ -57,7 +57,7 @@ final class SupplementalDocumentsService implements SupplementalDocumentsContrac
     /**
      * @api
      *
-     * List Entity Supplemental Document Submissions
+     * List Supplemental Documents
      *
      * @param string $entityID the identifier of the Entity to list supplemental documents for
      * @param string $cursor return the page of entries after this one

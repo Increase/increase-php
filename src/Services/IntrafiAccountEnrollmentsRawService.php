@@ -31,7 +31,7 @@ final class IntrafiAccountEnrollmentsRawService implements IntrafiAccountEnrollm
     /**
      * @api
      *
-     * Enroll an account in the IntraFi deposit sweep network
+     * Enroll an Account in the IntraFi deposit sweep network
      *
      * @param array{
      *   accountID: string, emailAddress: string
@@ -130,7 +130,7 @@ final class IntrafiAccountEnrollmentsRawService implements IntrafiAccountEnrollm
     /**
      * @api
      *
-     * Unenroll an account from IntraFi
+     * Unenroll an Account from IntraFi
      *
      * @param string $intrafiAccountEnrollmentID the Identifier of the IntraFi Account Enrollment to remove from IntraFi
      * @param RequestOpts|null $requestOptions

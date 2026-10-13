@@ -73,7 +73,7 @@ final class PhysicalCardProfilesRawService implements PhysicalCardProfilesRawCon
     /**
      * @api
      *
-     * Retrieve a Card Profile
+     * Retrieve a Physical Card Profile
      *
      * @param string $physicalCardProfileID the identifier of the Card Profile
      * @param RequestOpts|null $requestOptions

@@ -29,7 +29,7 @@ final class SupplementalDocumentsRawService implements SupplementalDocumentsRawC
     /**
      * @api
      *
-     * Create a supplemental document for an Entity
+     * Create a Supplemental Document
      *
      * @param array{
      *   entityID: string, fileID: string
@@ -62,7 +62,7 @@ final class SupplementalDocumentsRawService implements SupplementalDocumentsRawC
     /**
      * @api
      *
-     * List Entity Supplemental Document Submissions
+     * List Supplemental Documents
      *
      * @param array{
      *   entityID: string, cursor?: string, idempotencyKey?: string, limit?: int

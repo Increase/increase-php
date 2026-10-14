@@ -11,6 +11,8 @@ enum EventType: string
 {
     case CHARGEBACK_SUBMITTED = 'chargeback_submitted';
 
+    case MERCHANT_PREARBITRATION_ACCEPTED = 'merchant_prearbitration_accepted';
+
     case MERCHANT_PREARBITRATION_DECLINE_SUBMITTED = 'merchant_prearbitration_decline_submitted';
 
     case MERCHANT_PREARBITRATION_RECEIVED = 'merchant_prearbitration_received';

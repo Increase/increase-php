@@ -8,6 +8,7 @@ use Increase\Cards\CardCreateParams\AuthorizationControls;
 use Increase\Cards\CardCreateParams\BillingAddress;
 use Increase\Cards\CardCreateParams\CardholderName;
 use Increase\Cards\CardCreateParams\DigitalWallet;
+use Increase\Cards\CardCreateParams\ReplacementFor;
 use Increase\Core\Attributes\Optional;
 use Increase\Core\Attributes\Required;
 use Increase\Core\Concerns\SdkModel;
@@ -23,6 +24,7 @@ use Increase\Core\Contracts\BaseModel;
  * @phpstan-import-type BillingAddressShape from \Increase\Cards\CardCreateParams\BillingAddress
  * @phpstan-import-type CardholderNameShape from \Increase\Cards\CardCreateParams\CardholderName
  * @phpstan-import-type DigitalWalletShape from \Increase\Cards\CardCreateParams\DigitalWallet
+ * @phpstan-import-type ReplacementForShape from \Increase\Cards\CardCreateParams\ReplacementFor
  *
  * @phpstan-type CardCreateParamsShape = array{
  *   accountID: string,
@@ -32,6 +34,7 @@ use Increase\Core\Contracts\BaseModel;
  *   description?: string|null,
  *   digitalWallet?: null|DigitalWallet|DigitalWalletShape,
  *   entityID?: string|null,
+ *   replacementFor?: null|ReplacementFor|ReplacementForShape,
  * }
  */
 final class CardCreateParams implements BaseModel
@@ -83,6 +86,12 @@ final class CardCreateParams implements BaseModel
     public ?string $entityID;
 
     /**
+     * Details about the Card this Card replaces. Supply this when issuing a new Card to take over from an existing one. The replaced Card is not affected.
+     */
+    #[Optional('replacement_for')]
+    public ?ReplacementFor $replacementFor;
+
+    /**
      * `new CardCreateParams()` is missing required properties by the API.
      *
      * To enforce required parameters use
@@ -110,6 +119,7 @@ final class CardCreateParams implements BaseModel
      * @param BillingAddress|BillingAddressShape|null $billingAddress
      * @param CardholderName|CardholderNameShape|null $cardholderName
      * @param DigitalWallet|DigitalWalletShape|null $digitalWallet
+     * @param ReplacementFor|ReplacementForShape|null $replacementFor
      */
     public static function with(
         string $accountID,
@@ -119,6 +129,7 @@ final class CardCreateParams implements BaseModel
         ?string $description = null,
         DigitalWallet|array|null $digitalWallet = null,
         ?string $entityID = null,
+        ReplacementFor|array|null $replacementFor = null,
     ): self {
         $self = new self;
 
@@ -130,6 +141,7 @@ final class CardCreateParams implements BaseModel
         null !== $description && $self['description'] = $description;
         null !== $digitalWallet && $self['digitalWallet'] = $digitalWallet;
         null !== $entityID && $self['entityID'] = $entityID;
+        null !== $replacementFor && $self['replacementFor'] = $replacementFor;
 
         return $self;
     }
@@ -218,6 +230,20 @@ final class CardCreateParams implements BaseModel
     {
         $self = clone $this;
         $self['entityID'] = $entityID;
+
+        return $self;
+    }
+
+    /**
+     * Details about the Card this Card replaces. Supply this when issuing a new Card to take over from an existing one. The replaced Card is not affected.
+     *
+     * @param ReplacementFor|ReplacementForShape $replacementFor
+     */
+    public function withReplacementFor(
+        ReplacementFor|array $replacementFor
+    ): self {
+        $self = clone $this;
+        $self['replacementFor'] = $replacementFor;
 
         return $self;
     }

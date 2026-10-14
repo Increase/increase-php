@@ -89,6 +89,7 @@ final class CardsTest extends TestCase
                 'phone' => 'x',
             ],
             entityID: 'entity_id',
+            replacementFor: ['cardID' => 'card_id', 'reason' => 'expiring'],
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -156,6 +157,15 @@ final class CardsTest extends TestCase
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertInstanceOf(CardDetails::class, $result);
+    }
+
+    #[Test]
+    public function testRenew(): void
+    {
+        $result = $this->client->cards->renew('card_oubs0hwk5rn6knuecxg2');
+
+        // @phpstan-ignore-next-line method.alreadyNarrowedType
+        $this->assertInstanceOf(Card::class, $result);
     }
 
     #[Test]

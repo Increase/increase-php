@@ -10,7 +10,7 @@ use Increase\Core\Concerns\SdkParams;
 use Increase\Core\Contracts\BaseModel;
 
 /**
- * Enroll an account in the IntraFi deposit sweep network.
+ * Enroll an Account in the IntraFi deposit sweep network.
  *
  * @see Increase\Services\IntrafiAccountEnrollmentsService::create()
  *

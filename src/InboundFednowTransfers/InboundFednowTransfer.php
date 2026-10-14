@@ -33,6 +33,7 @@ use Increase\InboundFednowTransfers\InboundFednowTransfer\Type;
  *   debtorRoutingNumber: string,
  *   decline: null|Decline|DeclineShape,
  *   endToEndIdentification: string|null,
+ *   messageIdentification: string,
  *   status: Status|value-of<Status>,
  *   transactionID: string|null,
  *   transactionIdentification: string|null,
@@ -127,6 +128,12 @@ final class InboundFednowTransfer implements BaseModel
     public ?string $endToEndIdentification;
 
     /**
+     * The FedNow network identification of the transfer.
+     */
+    #[Required('message_identification')]
+    public string $messageIdentification;
+
+    /**
      * The lifecycle status of the transfer.
      *
      * @var value-of<Status> $status
@@ -141,7 +148,7 @@ final class InboundFednowTransfer implements BaseModel
     public ?string $transactionID;
 
     /**
-     * The FedNow network identification of the transfer.
+     * An optional identifier for the transfer set by the sending bank.
      */
     #[Required('transaction_identification')]
     public ?string $transactionIdentification;
@@ -185,6 +192,7 @@ final class InboundFednowTransfer implements BaseModel
      *   debtorRoutingNumber: ...,
      *   decline: ...,
      *   endToEndIdentification: ...,
+     *   messageIdentification: ...,
      *   status: ...,
      *   transactionID: ...,
      *   transactionIdentification: ...,
@@ -211,6 +219,7 @@ final class InboundFednowTransfer implements BaseModel
      *   ->withDebtorRoutingNumber(...)
      *   ->withDecline(...)
      *   ->withEndToEndIdentification(...)
+     *   ->withMessageIdentification(...)
      *   ->withStatus(...)
      *   ->withTransactionID(...)
      *   ->withTransactionIdentification(...)
@@ -249,6 +258,7 @@ final class InboundFednowTransfer implements BaseModel
         string $debtorRoutingNumber,
         Decline|array|null $decline,
         ?string $endToEndIdentification,
+        string $messageIdentification,
         Status|string $status,
         ?string $transactionID,
         ?string $transactionIdentification,
@@ -271,6 +281,7 @@ final class InboundFednowTransfer implements BaseModel
         $self['debtorRoutingNumber'] = $debtorRoutingNumber;
         $self['decline'] = $decline;
         $self['endToEndIdentification'] = $endToEndIdentification;
+        $self['messageIdentification'] = $messageIdentification;
         $self['status'] = $status;
         $self['transactionID'] = $transactionID;
         $self['transactionIdentification'] = $transactionIdentification;
@@ -433,6 +444,18 @@ final class InboundFednowTransfer implements BaseModel
     }
 
     /**
+     * The FedNow network identification of the transfer.
+     */
+    public function withMessageIdentification(
+        string $messageIdentification
+    ): self {
+        $self = clone $this;
+        $self['messageIdentification'] = $messageIdentification;
+
+        return $self;
+    }
+
+    /**
      * The lifecycle status of the transfer.
      *
      * @param Status|value-of<Status> $status
@@ -457,7 +480,7 @@ final class InboundFednowTransfer implements BaseModel
     }
 
     /**
-     * The FedNow network identification of the transfer.
+     * An optional identifier for the transfer set by the sending bank.
      */
     public function withTransactionIdentification(
         ?string $transactionIdentification

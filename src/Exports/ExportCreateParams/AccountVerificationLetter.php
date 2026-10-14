@@ -28,7 +28,7 @@ final class AccountVerificationLetter implements BaseModel
     public string $accountNumberID;
 
     /**
-     * The date of the balance to include in the letter. Defaults to the current date.
+     * The UTC date of the balance to include in the letter. Defaults to the current date.
      */
     #[Optional('balance_date')]
     public ?string $balanceDate;
@@ -82,7 +82,7 @@ final class AccountVerificationLetter implements BaseModel
     }
 
     /**
-     * The date of the balance to include in the letter. Defaults to the current date.
+     * The UTC date of the balance to include in the letter. Defaults to the current date.
      */
     public function withBalanceDate(string $balanceDate): self
     {

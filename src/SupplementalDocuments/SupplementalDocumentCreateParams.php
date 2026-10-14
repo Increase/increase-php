@@ -10,7 +10,7 @@ use Increase\Core\Concerns\SdkParams;
 use Increase\Core\Contracts\BaseModel;
 
 /**
- * Create a supplemental document for an Entity.
+ * Create a Supplemental Document.
  *
  * @see Increase\Services\SupplementalDocumentsService::create()
  *

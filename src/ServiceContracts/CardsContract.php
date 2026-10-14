@@ -166,6 +166,19 @@ interface CardsContract
     /**
      * @api
      *
+     * @param string $cardID the identifier of the Card to renew
+     * @param RequestOpts|null $requestOptions
+     *
+     * @throws APIException
+     */
+    public function renew(
+        string $cardID,
+        RequestOptions|array|null $requestOptions = null
+    ): Card;
+
+    /**
+     * @api
+     *
      * @param string $cardID the identifier of the Card to update the PIN for
      * @param string $pin the 4-digit PIN for the card, for use with ATMs
      * @param RequestOpts|null $requestOptions

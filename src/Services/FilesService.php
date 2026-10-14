@@ -68,7 +68,7 @@ final class FilesService implements FilesContract
     /**
      * @api
      *
-     * Retrieve a File
+     * Fetch metadata about a File, like its `purpose` and MIME type. To access the content, use the [Get File contents](/documentation/api/files#get-file-contents) API.
      *
      * @param string $fileID the identifier of the File
      * @param RequestOpts|null $requestOptions

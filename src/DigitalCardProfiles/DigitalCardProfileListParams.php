@@ -11,7 +11,7 @@ use Increase\Core\Contracts\BaseModel;
 use Increase\DigitalCardProfiles\DigitalCardProfileListParams\Status;
 
 /**
- * List Card Profiles.
+ * List Digital Card Profiles.
  *
  * @see Increase\Services\DigitalCardProfilesService::list()
  *

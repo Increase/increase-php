@@ -11,6 +11,7 @@ use Increase\Cards\CardCreateParams\AuthorizationControls;
 use Increase\Cards\CardCreateParams\BillingAddress;
 use Increase\Cards\CardCreateParams\CardholderName;
 use Increase\Cards\CardCreateParams\DigitalWallet;
+use Increase\Cards\CardCreateParams\ReplacementFor;
 use Increase\Cards\CardDetails;
 use Increase\Cards\CardDetailsToken;
 use Increase\Cards\CardIframeURL;
@@ -32,6 +33,7 @@ use Increase\ServiceContracts\CardsRawContract;
  * @phpstan-import-type BillingAddressShape from \Increase\Cards\CardCreateParams\BillingAddress
  * @phpstan-import-type CardholderNameShape from \Increase\Cards\CardCreateParams\CardholderName
  * @phpstan-import-type DigitalWalletShape from \Increase\Cards\CardCreateParams\DigitalWallet
+ * @phpstan-import-type ReplacementForShape from \Increase\Cards\CardCreateParams\ReplacementFor
  * @phpstan-import-type AuthorizationControlsShape from \Increase\Cards\CardUpdateParams\AuthorizationControls as AuthorizationControlsShape1
  * @phpstan-import-type BillingAddressShape from \Increase\Cards\CardUpdateParams\BillingAddress as BillingAddressShape1
  * @phpstan-import-type DigitalWalletShape from \Increase\Cards\CardUpdateParams\DigitalWallet as DigitalWalletShape1
@@ -60,6 +62,7 @@ final class CardsRawService implements CardsRawContract
      *   description?: string,
      *   digitalWallet?: DigitalWallet|DigitalWalletShape,
      *   entityID?: string,
+     *   replacementFor?: ReplacementFor|ReplacementForShape,
      * }|CardCreateParams $params
      * @param RequestOpts|null $requestOptions
      *
@@ -277,6 +280,31 @@ final class CardsRawService implements CardsRawContract
             path: ['cards/%1$s/details', $cardID],
             options: $requestOptions,
             convert: CardDetails::class,
+        );
+    }
+
+    /**
+     * @api
+     *
+     * Renew a Card in place. The Card keeps its identifier, card number, PIN, and Physical Cards, and receives a new expiration date in the current month four years from now along with a new verification code, which the Card's details will return afterwards. Physical Cards that have already shipped keep working until they are canceled.
+     *
+     * @param string $cardID the identifier of the Card to renew
+     * @param RequestOpts|null $requestOptions
+     *
+     * @return BaseResponse<Card>
+     *
+     * @throws APIException
+     */
+    public function renew(
+        string $cardID,
+        RequestOptions|array|null $requestOptions = null
+    ): BaseResponse {
+        // @phpstan-ignore-next-line return.type
+        return $this->client->request(
+            method: 'post',
+            path: ['cards/%1$s/renew', $cardID],
+            options: $requestOptions,
+            convert: Card::class,
         );
     }
 

@@ -35,7 +35,7 @@ final class IntrafiAccountEnrollmentsService implements IntrafiAccountEnrollment
     /**
      * @api
      *
-     * Enroll an account in the IntraFi deposit sweep network
+     * Enroll an Account in the IntraFi deposit sweep network
      *
      * @param string $accountID the identifier for the account to be added to IntraFi
      * @param string $emailAddress the contact email for the account owner, to be shared with IntraFi
@@ -123,7 +123,7 @@ final class IntrafiAccountEnrollmentsService implements IntrafiAccountEnrollment
     /**
      * @api
      *
-     * Unenroll an account from IntraFi
+     * Unenroll an Account from IntraFi
      *
      * @param string $intrafiAccountEnrollmentID the Identifier of the IntraFi Account Enrollment to remove from IntraFi
      * @param RequestOpts|null $requestOptions

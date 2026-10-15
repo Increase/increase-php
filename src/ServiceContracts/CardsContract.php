@@ -9,6 +9,7 @@ use Increase\Cards\CardCreateParams\AuthorizationControls;
 use Increase\Cards\CardCreateParams\BillingAddress;
 use Increase\Cards\CardCreateParams\CardholderName;
 use Increase\Cards\CardCreateParams\DigitalWallet;
+use Increase\Cards\CardCreateParams\ReplacementFor;
 use Increase\Cards\CardDetails;
 use Increase\Cards\CardDetailsToken;
 use Increase\Cards\CardIframeURL;
@@ -23,6 +24,7 @@ use Increase\RequestOptions;
  * @phpstan-import-type BillingAddressShape from \Increase\Cards\CardCreateParams\BillingAddress
  * @phpstan-import-type CardholderNameShape from \Increase\Cards\CardCreateParams\CardholderName
  * @phpstan-import-type DigitalWalletShape from \Increase\Cards\CardCreateParams\DigitalWallet
+ * @phpstan-import-type ReplacementForShape from \Increase\Cards\CardCreateParams\ReplacementFor
  * @phpstan-import-type AuthorizationControlsShape from \Increase\Cards\CardUpdateParams\AuthorizationControls as AuthorizationControlsShape1
  * @phpstan-import-type BillingAddressShape from \Increase\Cards\CardUpdateParams\BillingAddress as BillingAddressShape1
  * @phpstan-import-type DigitalWalletShape from \Increase\Cards\CardUpdateParams\DigitalWallet as DigitalWalletShape1
@@ -42,6 +44,7 @@ interface CardsContract
      * @param string $description the description you choose to give the card
      * @param DigitalWallet|DigitalWalletShape $digitalWallet The contact information used in the two-factor steps for digital wallet card creation. To add the card to a digital wallet, you may supply an email or phone number with this request. Otherwise, subscribe and then action a Real Time Decision with the category `digital_wallet_token_requested` or `digital_wallet_authentication_requested`.
      * @param string $entityID The Entity the card belongs to. You only need to supply this in rare situations when the card is not for the Account holder.
+     * @param ReplacementFor|ReplacementForShape $replacementFor Details about the Card this Card replaces. Supply this when issuing a new Card to take over from an existing one. The replaced Card is not canceled.
      * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
@@ -54,6 +57,7 @@ interface CardsContract
         ?string $description = null,
         DigitalWallet|array|null $digitalWallet = null,
         ?string $entityID = null,
+        ReplacementFor|array|null $replacementFor = null,
         RequestOptions|array|null $requestOptions = null,
     ): Card;
 
@@ -162,6 +166,19 @@ interface CardsContract
         string $cardID,
         RequestOptions|array|null $requestOptions = null
     ): CardDetails;
+
+    /**
+     * @api
+     *
+     * @param string $cardID the identifier of the Card to renew
+     * @param RequestOpts|null $requestOptions
+     *
+     * @throws APIException
+     */
+    public function renew(
+        string $cardID,
+        RequestOptions|array|null $requestOptions = null
+    ): Card;
 
     /**
      * @api

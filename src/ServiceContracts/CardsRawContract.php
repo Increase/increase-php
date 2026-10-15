@@ -135,6 +135,21 @@ interface CardsRawContract
     /**
      * @api
      *
+     * @param string $cardID the identifier of the Card to renew
+     * @param RequestOpts|null $requestOptions
+     *
+     * @return BaseResponse<Card>
+     *
+     * @throws APIException
+     */
+    public function renew(
+        string $cardID,
+        RequestOptions|array|null $requestOptions = null
+    ): BaseResponse;
+
+    /**
+     * @api
+     *
      * @param string $cardID the identifier of the Card to update the PIN for
      * @param array<string,mixed>|CardUpdatePinParams $params
      * @param RequestOpts|null $requestOptions

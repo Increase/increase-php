@@ -11,7 +11,7 @@ use Increase\Core\Concerns\SdkParams;
 use Increase\Core\Contracts\BaseModel;
 
 /**
- * List Entity Supplemental Document Submissions.
+ * List Supplemental Documents.
  *
  * @see Increase\Services\SupplementalDocumentsService::list()
  *

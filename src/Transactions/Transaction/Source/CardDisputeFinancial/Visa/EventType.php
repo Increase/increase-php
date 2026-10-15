@@ -11,11 +11,15 @@ enum EventType: string
 {
     case CHARGEBACK_SUBMITTED = 'chargeback_submitted';
 
+    case MERCHANT_PREARBITRATION_ACCEPTED = 'merchant_prearbitration_accepted';
+
     case MERCHANT_PREARBITRATION_DECLINE_SUBMITTED = 'merchant_prearbitration_decline_submitted';
 
     case MERCHANT_PREARBITRATION_RECEIVED = 'merchant_prearbitration_received';
 
     case REPRESENTED = 'represented';
+
+    case USER_PREARBITRATION_ACCEPTED = 'user_prearbitration_accepted';
 
     case USER_PREARBITRATION_DECLINE_RECEIVED = 'user_prearbitration_decline_received';
 

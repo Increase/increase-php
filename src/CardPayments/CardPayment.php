@@ -12,7 +12,7 @@ use Increase\Core\Concerns\SdkModel;
 use Increase\Core\Contracts\BaseModel;
 
 /**
- * Card Payments group together interactions related to a single card payment, such as an authorization and its corresponding settlement.
+ * Card Payments group together interactions related to a single card payment, such as an authorization and its corresponding settlement. For more information, see our guide on the [Card Payment lifecycle](https://increase.com/documentation/card-payment-lifecycle).
  *
  * @phpstan-import-type ElementShape from \Increase\CardPayments\CardPayment\Element
  * @phpstan-import-type StateShape from \Increase\CardPayments\CardPayment\State

@@ -17,7 +17,7 @@ use Increase\Core\Concerns\SdkModel;
 use Increase\Core\Contracts\BaseModel;
 
 /**
- * If unauthorized activity occurs on a card, you can create a Card Dispute and we'll work with the card networks to return the funds if appropriate.
+ * If unauthorized activity occurs on a card, you can create a Card Dispute and we'll work with the card networks to return the funds if appropriate. For more information, see our guide on [card disputes](https://increase.com/documentation/card-disputes).
  *
  * @phpstan-import-type LossShape from \Increase\CardDisputes\CardDispute\Loss
  * @phpstan-import-type RejectionShape from \Increase\CardDisputes\CardDispute\Rejection

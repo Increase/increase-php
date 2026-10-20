@@ -22,7 +22,7 @@ final class FeeCsv implements BaseModel
     use SdkModel;
 
     /**
-     * Filter fees by their created date. The time range must not include any fees that are part of an open fee statement.
+     * Filter fees by their created date. The time range must not include any fees on an open fee statement.
      */
     #[Required('created_at')]
     public ?CreatedAt $createdAt;
@@ -63,7 +63,7 @@ final class FeeCsv implements BaseModel
     }
 
     /**
-     * Filter fees by their created date. The time range must not include any fees that are part of an open fee statement.
+     * Filter fees by their created date. The time range must not include any fees on an open fee statement.
      *
      * @param CreatedAt|CreatedAtShape|null $createdAt
      */

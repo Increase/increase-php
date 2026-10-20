@@ -33,7 +33,7 @@ final class DigitalWallet implements BaseModel
     public ?string $email;
 
     /**
-     * A phone number that can be used to verify the cardholder via one-time passcode over SMS.
+     * A phone number that can be used to verify the cardholder via one-time passcode over SMS. Accepts formats like `+14155550123`, `4155550123`, `415-555-0123`, or `(415) 555-0123`.
      */
     #[Optional]
     public ?string $phone;
@@ -85,7 +85,7 @@ final class DigitalWallet implements BaseModel
     }
 
     /**
-     * A phone number that can be used to verify the cardholder via one-time passcode over SMS.
+     * A phone number that can be used to verify the cardholder via one-time passcode over SMS. Accepts formats like `+14155550123`, `4155550123`, `415-555-0123`, or `(415) 555-0123`.
      */
     public function withPhone(string $phone): self
     {

@@ -21,6 +21,8 @@ enum Currency: string
 
     case AOA = 'AOA';
 
+    case XCD = 'XCD';
+
     case ARS = 'ARS';
 
     case AMD = 'AMD';
@@ -43,6 +45,8 @@ enum Currency: string
 
     case BZD = 'BZD';
 
+    case XOF = 'XOF';
+
     case BMD = 'BMD';
 
     case INR = 'INR';
@@ -63,13 +67,13 @@ enum Currency: string
 
     case BND = 'BND';
 
-    case BGN = 'BGN';
-
     case BIF = 'BIF';
 
     case CVE = 'CVE';
 
     case KHR = 'KHR';
+
+    case XAF = 'XAF';
 
     case CAD = 'CAD';
 
@@ -95,6 +99,8 @@ enum Currency: string
 
     case CUP = 'CUP';
 
+    case XCG = 'XCG';
+
     case CZK = 'CZK';
 
     case DKK = 'DKK';
@@ -116,6 +122,8 @@ enum Currency: string
     case FKP = 'FKP';
 
     case FJD = 'FJD';
+
+    case XPF = 'XPF';
 
     case GMD = 'GMD';
 
@@ -328,4 +336,6 @@ enum Currency: string
     case ZMW = 'ZMW';
 
     case ZWG = 'ZWG';
+
+    case BGN = 'BGN';
 }

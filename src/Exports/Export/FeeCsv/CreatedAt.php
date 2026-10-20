@@ -9,7 +9,7 @@ use Increase\Core\Concerns\SdkModel;
 use Increase\Core\Contracts\BaseModel;
 
 /**
- * Filter fees by their created date. The time range must not include any fees that are part of an open fee statement.
+ * Filter fees by their created date. The time range must not include any fees on an open fee statement.
  *
  * @phpstan-type CreatedAtShape = array{
  *   after: \DateTimeInterface|null,

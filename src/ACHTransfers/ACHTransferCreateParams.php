@@ -99,7 +99,7 @@ final class ACHTransferCreateParams implements BaseModel
     public ?string $companyEntryDescription;
 
     /**
-     * The name by which the recipient knows you, sent in the company batch header. We recommend setting this on every transfer; if you do not, we fall back to the ACH company name configured on your account.
+     * The name by which the recipient knows you, sent in the company batch header. We recommend setting this on every transfer; if you do not, we fall back to the `statement_descriptor`.
      */
     #[Optional('company_name')]
     public ?string $companyName;
@@ -343,7 +343,7 @@ final class ACHTransferCreateParams implements BaseModel
     }
 
     /**
-     * The name by which the recipient knows you, sent in the company batch header. We recommend setting this on every transfer; if you do not, we fall back to the ACH company name configured on your account.
+     * The name by which the recipient knows you, sent in the company batch header. We recommend setting this on every transfer; if you do not, we fall back to the `statement_descriptor`.
      */
     public function withCompanyName(string $companyName): self
     {

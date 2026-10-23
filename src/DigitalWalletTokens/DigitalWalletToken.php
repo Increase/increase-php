@@ -8,7 +8,6 @@ use Increase\Core\Attributes\Required;
 use Increase\Core\Concerns\SdkModel;
 use Increase\Core\Contracts\BaseModel;
 use Increase\DigitalWalletTokens\DigitalWalletToken\Cardholder;
-use Increase\DigitalWalletTokens\DigitalWalletToken\Decline;
 use Increase\DigitalWalletTokens\DigitalWalletToken\Device;
 use Increase\DigitalWalletTokens\DigitalWalletToken\DynamicPrimaryAccountNumber;
 use Increase\DigitalWalletTokens\DigitalWalletToken\Status;
@@ -20,7 +19,6 @@ use Increase\DigitalWalletTokens\DigitalWalletToken\Update;
  * A Digital Wallet Token is created when a user adds a Card to their Apple Pay or Google Pay app. The Digital Wallet Token can be used for purchases just like a Card.
  *
  * @phpstan-import-type CardholderShape from \Increase\DigitalWalletTokens\DigitalWalletToken\Cardholder
- * @phpstan-import-type DeclineShape from \Increase\DigitalWalletTokens\DigitalWalletToken\Decline
  * @phpstan-import-type DeviceShape from \Increase\DigitalWalletTokens\DigitalWalletToken\Device
  * @phpstan-import-type DynamicPrimaryAccountNumberShape from \Increase\DigitalWalletTokens\DigitalWalletToken\DynamicPrimaryAccountNumber
  * @phpstan-import-type UpdateShape from \Increase\DigitalWalletTokens\DigitalWalletToken\Update
@@ -31,7 +29,6 @@ use Increase\DigitalWalletTokens\DigitalWalletToken\Update;
  *   cardID: string,
  *   cardholder: Cardholder|CardholderShape,
  *   createdAt: \DateTimeInterface,
- *   decline: null|Decline|DeclineShape,
  *   device: Device|DeviceShape,
  *   dynamicPrimaryAccountNumber: null|DynamicPrimaryAccountNumber|DynamicPrimaryAccountNumberShape,
  *   primaryAccountNumberReferenceIdentifier: string,
@@ -76,12 +73,6 @@ final class DigitalWalletToken implements BaseModel
      */
     #[Required('created_at')]
     public \DateTimeInterface $createdAt;
-
-    /**
-     * If the Digital Wallet Token was declined during provisioning, details about the decline.
-     */
-    #[Required]
-    public ?Decline $decline;
 
     /**
      * The device that was used to create the Digital Wallet Token.
@@ -150,7 +141,6 @@ final class DigitalWalletToken implements BaseModel
      *   cardID: ...,
      *   cardholder: ...,
      *   createdAt: ...,
-     *   decline: ...,
      *   device: ...,
      *   dynamicPrimaryAccountNumber: ...,
      *   primaryAccountNumberReferenceIdentifier: ...,
@@ -171,7 +161,6 @@ final class DigitalWalletToken implements BaseModel
      *   ->withCardID(...)
      *   ->withCardholder(...)
      *   ->withCreatedAt(...)
-     *   ->withDecline(...)
      *   ->withDevice(...)
      *   ->withDynamicPrimaryAccountNumber(...)
      *   ->withPrimaryAccountNumberReferenceIdentifier(...)
@@ -193,7 +182,6 @@ final class DigitalWalletToken implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param Cardholder|CardholderShape $cardholder
-     * @param Decline|DeclineShape|null $decline
      * @param Device|DeviceShape $device
      * @param DynamicPrimaryAccountNumber|DynamicPrimaryAccountNumberShape|null $dynamicPrimaryAccountNumber
      * @param Status|value-of<Status> $status
@@ -207,7 +195,6 @@ final class DigitalWalletToken implements BaseModel
         string $cardID,
         Cardholder|array $cardholder,
         \DateTimeInterface $createdAt,
-        Decline|array|null $decline,
         Device|array $device,
         DynamicPrimaryAccountNumber|array|null $dynamicPrimaryAccountNumber,
         string $primaryAccountNumberReferenceIdentifier,
@@ -224,7 +211,6 @@ final class DigitalWalletToken implements BaseModel
         $self['cardID'] = $cardID;
         $self['cardholder'] = $cardholder;
         $self['createdAt'] = $createdAt;
-        $self['decline'] = $decline;
         $self['device'] = $device;
         $self['dynamicPrimaryAccountNumber'] = $dynamicPrimaryAccountNumber;
         $self['primaryAccountNumberReferenceIdentifier'] = $primaryAccountNumberReferenceIdentifier;
@@ -290,19 +276,6 @@ final class DigitalWalletToken implements BaseModel
     {
         $self = clone $this;
         $self['createdAt'] = $createdAt;
-
-        return $self;
-    }
-
-    /**
-     * If the Digital Wallet Token was declined during provisioning, details about the decline.
-     *
-     * @param Decline|DeclineShape|null $decline
-     */
-    public function withDecline(Decline|array|null $decline): self
-    {
-        $self = clone $this;
-        $self['decline'] = $decline;
 
         return $self;
     }

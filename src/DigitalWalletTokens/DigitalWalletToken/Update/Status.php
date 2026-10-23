@@ -17,7 +17,5 @@ enum Status: string
 
     case DEACTIVATED = 'deactivated';
 
-    case DECLINED = 'declined';
-
     case PENDING_TRANSITIONING = 'pending_transitioning';
 }

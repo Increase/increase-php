@@ -40,7 +40,7 @@ final class PhysicalCardsService implements PhysicalCardsContract
     /**
      * @api
      *
-     * Create a Physical Card
+     * Physical Cards start in the status `disabled`. Activate the card once it arrives at the destination and the recipient confirms receipt.
      *
      * @param string $cardID the underlying card representing this physical card
      * @param Cardholder|CardholderShape $cardholder Details about the cardholder, as it will appear on the physical card. The combined first name and last name cannot exceed 25 characters.

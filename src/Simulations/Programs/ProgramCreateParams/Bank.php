@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Increase\Simulations\Programs\ProgramCreateParams;
 
 /**
- * The bank for the program's accounts, defaults to First Internet Bank.
+ * The bank for the program's accounts, defaults to Increase Bank.
  */
 enum Bank: string
 {

@@ -26,4 +26,6 @@ enum DeclineReason: string
     case ACCOUNT_CLOSED = 'account_closed';
 
     case ENTITY_NOT_ACTIVE = 'entity_not_active';
+
+    case CARD_EXPIRATION_MISMATCH = 'card_expiration_mismatch';
 }

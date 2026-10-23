@@ -37,7 +37,7 @@ final class PhysicalCardsRawService implements PhysicalCardsRawContract
     /**
      * @api
      *
-     * Create a Physical Card
+     * Physical Cards start in the status `disabled`. Activate the card once it arrives at the destination and the recipient confirms receipt.
      *
      * @param array{
      *   cardID: string,

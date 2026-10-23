@@ -37,7 +37,7 @@ final class ProgramCreateParams implements BaseModel
     public string $name;
 
     /**
-     * The bank for the program's accounts, defaults to First Internet Bank.
+     * The bank for the program's accounts, defaults to Increase Bank.
      *
      * @var value-of<Bank>|null $bank
      */
@@ -119,7 +119,7 @@ final class ProgramCreateParams implements BaseModel
     }
 
     /**
-     * The bank for the program's accounts, defaults to First Internet Bank.
+     * The bank for the program's accounts, defaults to Increase Bank.
      *
      * @param Bank|value-of<Bank> $bank
      */

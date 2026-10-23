@@ -99,7 +99,7 @@ final class PhysicalCard implements BaseModel
     public Shipment $shipment;
 
     /**
-     * The status of the Physical Card.
+     * The status of the Physical Card. The initial status is `disabled`.
      *
      * @var value-of<Status> $status
      */
@@ -316,7 +316,7 @@ final class PhysicalCard implements BaseModel
     }
 
     /**
-     * The status of the Physical Card.
+     * The status of the Physical Card. The initial status is `disabled`.
      *
      * @param Status|value-of<Status> $status
      */

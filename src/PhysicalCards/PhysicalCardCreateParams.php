@@ -13,7 +13,7 @@ use Increase\PhysicalCards\PhysicalCardCreateParams\Cardholder;
 use Increase\PhysicalCards\PhysicalCardCreateParams\Shipment;
 
 /**
- * Create a Physical Card.
+ * Physical Cards start in the status `disabled`. Activate the card once it arrives at the destination and the recipient confirms receipt.
  *
  * @see Increase\Services\PhysicalCardsService::create()
  *

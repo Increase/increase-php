@@ -9,6 +9,7 @@ use Increase\Core\Attributes\Required;
 use Increase\Core\Concerns\SdkModel;
 use Increase\Core\Concerns\SdkParams;
 use Increase\Core\Contracts\BaseModel;
+use Increase\DigitalCardProfiles\DigitalCardProfileCreateParams\ApplePay;
 use Increase\DigitalCardProfiles\DigitalCardProfileCreateParams\TextColor;
 
 /**
@@ -16,6 +17,7 @@ use Increase\DigitalCardProfiles\DigitalCardProfileCreateParams\TextColor;
  *
  * @see Increase\Services\DigitalCardProfilesService::create()
  *
+ * @phpstan-import-type ApplePayShape from \Increase\DigitalCardProfiles\DigitalCardProfileCreateParams\ApplePay
  * @phpstan-import-type TextColorShape from \Increase\DigitalCardProfiles\DigitalCardProfileCreateParams\TextColor
  *
  * @phpstan-type DigitalCardProfileCreateParamsShape = array{
@@ -23,6 +25,7 @@ use Increase\DigitalCardProfiles\DigitalCardProfileCreateParams\TextColor;
  *   backgroundImageFileID: string,
  *   cardDescription: string,
  *   description: string,
+ *   applePay?: null|ApplePay|ApplePayShape,
  *   contactEmail?: string|null,
  *   contactName?: string|null,
  *   contactPhone?: string|null,
@@ -59,6 +62,12 @@ final class DigitalCardProfileCreateParams implements BaseModel
      */
     #[Required]
     public string $description;
+
+    /**
+     * Apple Pay specific settings for the Card Profile.
+     */
+    #[Optional('apple_pay')]
+    public ?ApplePay $applePay;
 
     /**
      * An email address the user can contact to receive support for their card.
@@ -123,6 +132,7 @@ final class DigitalCardProfileCreateParams implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
+     * @param ApplePay|ApplePayShape|null $applePay
      * @param TextColor|TextColorShape|null $textColor
      */
     public static function with(
@@ -130,6 +140,7 @@ final class DigitalCardProfileCreateParams implements BaseModel
         string $backgroundImageFileID,
         string $cardDescription,
         string $description,
+        ApplePay|array|null $applePay = null,
         ?string $contactEmail = null,
         ?string $contactName = null,
         ?string $contactPhone = null,
@@ -143,6 +154,7 @@ final class DigitalCardProfileCreateParams implements BaseModel
         $self['cardDescription'] = $cardDescription;
         $self['description'] = $description;
 
+        null !== $applePay && $self['applePay'] = $applePay;
         null !== $contactEmail && $self['contactEmail'] = $contactEmail;
         null !== $contactName && $self['contactName'] = $contactName;
         null !== $contactPhone && $self['contactPhone'] = $contactPhone;
@@ -193,6 +205,19 @@ final class DigitalCardProfileCreateParams implements BaseModel
     {
         $self = clone $this;
         $self['description'] = $description;
+
+        return $self;
+    }
+
+    /**
+     * Apple Pay specific settings for the Card Profile.
+     *
+     * @param ApplePay|ApplePayShape $applePay
+     */
+    public function withApplePay(ApplePay|array $applePay): self
+    {
+        $self = clone $this;
+        $self['applePay'] = $applePay;
 
         return $self;
     }

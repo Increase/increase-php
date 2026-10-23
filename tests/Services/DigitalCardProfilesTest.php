@@ -50,6 +50,14 @@ final class DigitalCardProfilesTest extends TestCase
             backgroundImageFileID: 'file_1ai913suu1zfn1pdetru',
             cardDescription: 'National Phonograph Card',
             description: 'My Card Profile',
+            applePay: [
+                'associatedApplicationIdentifiers' => [
+                    [
+                        'identifier' => '210B9798AD.---aH0O-6L.8tjDQ-3.-K-h.8asJ.WN--u-kX-Q.l3VU-F.-i-5p54n-N',
+                    ],
+                ],
+                'associatedStoreIdentifiers' => [['identifier' => '26']],
+            ],
             contactEmail: 'user@example.com',
             contactName: 'National Phonograph Company',
             contactPhone: '+18885551212',

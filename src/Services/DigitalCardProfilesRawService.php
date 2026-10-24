@@ -11,6 +11,7 @@ use Increase\Core\Util;
 use Increase\DigitalCardProfiles\DigitalCardProfile;
 use Increase\DigitalCardProfiles\DigitalCardProfileCloneParams;
 use Increase\DigitalCardProfiles\DigitalCardProfileCreateParams;
+use Increase\DigitalCardProfiles\DigitalCardProfileCreateParams\ApplePay;
 use Increase\DigitalCardProfiles\DigitalCardProfileCreateParams\TextColor;
 use Increase\DigitalCardProfiles\DigitalCardProfileListParams;
 use Increase\DigitalCardProfiles\DigitalCardProfileListParams\Status;
@@ -19,8 +20,10 @@ use Increase\RequestOptions;
 use Increase\ServiceContracts\DigitalCardProfilesRawContract;
 
 /**
+ * @phpstan-import-type ApplePayShape from \Increase\DigitalCardProfiles\DigitalCardProfileCreateParams\ApplePay
  * @phpstan-import-type TextColorShape from \Increase\DigitalCardProfiles\DigitalCardProfileCreateParams\TextColor
  * @phpstan-import-type StatusShape from \Increase\DigitalCardProfiles\DigitalCardProfileListParams\Status
+ * @phpstan-import-type ApplePayShape from \Increase\DigitalCardProfiles\DigitalCardProfileCloneParams\ApplePay as ApplePayShape1
  * @phpstan-import-type TextColorShape from \Increase\DigitalCardProfiles\DigitalCardProfileCloneParams\TextColor as TextColorShape1
  * @phpstan-import-type RequestOpts from \Increase\RequestOptions
  */
@@ -42,6 +45,7 @@ final class DigitalCardProfilesRawService implements DigitalCardProfilesRawContr
      *   backgroundImageFileID: string,
      *   cardDescription: string,
      *   description: string,
+     *   applePay?: ApplePay|ApplePayShape,
      *   contactEmail?: string,
      *   contactName?: string,
      *   contactPhone?: string,
@@ -171,6 +175,7 @@ final class DigitalCardProfilesRawService implements DigitalCardProfilesRawContr
      * @param string $digitalCardProfileID the identifier of the Digital Card Profile to clone
      * @param array{
      *   appIconFileID?: string,
+     *   applePay?: DigitalCardProfileCloneParams\ApplePay|ApplePayShape1,
      *   backgroundImageFileID?: string,
      *   cardDescription?: string,
      *   contactEmail?: string,

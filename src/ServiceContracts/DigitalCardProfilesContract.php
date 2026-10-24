@@ -6,14 +6,17 @@ namespace Increase\ServiceContracts;
 
 use Increase\Core\Exceptions\APIException;
 use Increase\DigitalCardProfiles\DigitalCardProfile;
+use Increase\DigitalCardProfiles\DigitalCardProfileCreateParams\ApplePay;
 use Increase\DigitalCardProfiles\DigitalCardProfileCreateParams\TextColor;
 use Increase\DigitalCardProfiles\DigitalCardProfileListParams\Status;
 use Increase\Page;
 use Increase\RequestOptions;
 
 /**
+ * @phpstan-import-type ApplePayShape from \Increase\DigitalCardProfiles\DigitalCardProfileCreateParams\ApplePay
  * @phpstan-import-type TextColorShape from \Increase\DigitalCardProfiles\DigitalCardProfileCreateParams\TextColor
  * @phpstan-import-type StatusShape from \Increase\DigitalCardProfiles\DigitalCardProfileListParams\Status
+ * @phpstan-import-type ApplePayShape from \Increase\DigitalCardProfiles\DigitalCardProfileCloneParams\ApplePay as ApplePayShape1
  * @phpstan-import-type TextColorShape from \Increase\DigitalCardProfiles\DigitalCardProfileCloneParams\TextColor as TextColorShape1
  * @phpstan-import-type RequestOpts from \Increase\RequestOptions
  */
@@ -26,6 +29,7 @@ interface DigitalCardProfilesContract
      * @param string $backgroundImageFileID the identifier of the File containing the card's front image
      * @param string $cardDescription a user-facing description for the card itself
      * @param string $description a description you can use to identify the Card Profile
+     * @param ApplePay|ApplePayShape $applePay apple Pay specific settings for the Card Profile
      * @param string $contactEmail an email address the user can contact to receive support for their card
      * @param string $contactName the name of your company or card program, shown to the user as who to contact for support with their card
      * @param string $contactPhone a phone number the user can contact to receive support for their card
@@ -40,6 +44,7 @@ interface DigitalCardProfilesContract
         string $backgroundImageFileID,
         string $cardDescription,
         string $description,
+        ApplePay|array|null $applePay = null,
         ?string $contactEmail = null,
         ?string $contactName = null,
         ?string $contactPhone = null,
@@ -102,6 +107,7 @@ interface DigitalCardProfilesContract
      *
      * @param string $digitalCardProfileID the identifier of the Digital Card Profile to clone
      * @param string $appIconFileID the identifier of the File containing the card's icon image
+     * @param \Increase\DigitalCardProfiles\DigitalCardProfileCloneParams\ApplePay|ApplePayShape1 $applePay Apple Pay specific settings for the Card Profile. Each list you leave out is copied from the original Card Profile.
      * @param string $backgroundImageFileID the identifier of the File containing the card's front image
      * @param string $cardDescription a user-facing description for the card itself
      * @param string $contactEmail an email address the user can contact to receive support for their card
@@ -117,6 +123,7 @@ interface DigitalCardProfilesContract
     public function clone(
         string $digitalCardProfileID,
         ?string $appIconFileID = null,
+        \Increase\DigitalCardProfiles\DigitalCardProfileCloneParams\ApplePay|array|null $applePay = null,
         ?string $backgroundImageFileID = null,
         ?string $cardDescription = null,
         ?string $contactEmail = null,

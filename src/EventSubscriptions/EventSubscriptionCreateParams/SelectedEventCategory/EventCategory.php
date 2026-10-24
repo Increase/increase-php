@@ -173,6 +173,10 @@ enum EventCategory: string
 
     case LOAN_PURCHASE_CREATED = 'loan_purchase.created';
 
+    case LOAN_PURCHASE_OFFER_CREATED = 'loan_purchase_offer.created';
+
+    case LOAN_PURCHASE_OFFER_UPDATED = 'loan_purchase_offer.updated';
+
     case LOCKBOX_CREATED = 'lockbox.created';
 
     case LOCKBOX_UPDATED = 'lockbox.updated';

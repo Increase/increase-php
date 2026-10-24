@@ -7,6 +7,7 @@ namespace Increase\DigitalCardProfiles;
 use Increase\Core\Attributes\Required;
 use Increase\Core\Concerns\SdkModel;
 use Increase\Core\Contracts\BaseModel;
+use Increase\DigitalCardProfiles\DigitalCardProfile\ApplePay;
 use Increase\DigitalCardProfiles\DigitalCardProfile\Status;
 use Increase\DigitalCardProfiles\DigitalCardProfile\TextColor;
 use Increase\DigitalCardProfiles\DigitalCardProfile\Type;
@@ -14,11 +15,13 @@ use Increase\DigitalCardProfiles\DigitalCardProfile\Type;
 /**
  * This contains artwork and metadata relating to a Card's appearance in digital wallet apps like Apple Pay and Google Pay. For more information, see our guide on [digital card artwork](https://increase.com/documentation/card-art).
  *
+ * @phpstan-import-type ApplePayShape from \Increase\DigitalCardProfiles\DigitalCardProfile\ApplePay
  * @phpstan-import-type TextColorShape from \Increase\DigitalCardProfiles\DigitalCardProfile\TextColor
  *
  * @phpstan-type DigitalCardProfileShape = array{
  *   id: string,
  *   appIconFileID: string,
+ *   applePay: null|ApplePay|ApplePayShape,
  *   backgroundImageFileID: string,
  *   cardDescription: string,
  *   contactEmail: string|null,
@@ -49,6 +52,12 @@ final class DigitalCardProfile implements BaseModel
      */
     #[Required('app_icon_file_id')]
     public string $appIconFileID;
+
+    /**
+     * Apple Pay specific settings for the Card Profile.
+     */
+    #[Required('apple_pay')]
+    public ?ApplePay $applePay;
 
     /**
      * The identifier of the File containing the card's front image.
@@ -134,6 +143,7 @@ final class DigitalCardProfile implements BaseModel
      * DigitalCardProfile::with(
      *   id: ...,
      *   appIconFileID: ...,
+     *   applePay: ...,
      *   backgroundImageFileID: ...,
      *   cardDescription: ...,
      *   contactEmail: ...,
@@ -155,6 +165,7 @@ final class DigitalCardProfile implements BaseModel
      * (new DigitalCardProfile)
      *   ->withID(...)
      *   ->withAppIconFileID(...)
+     *   ->withApplePay(...)
      *   ->withBackgroundImageFileID(...)
      *   ->withCardDescription(...)
      *   ->withContactEmail(...)
@@ -179,6 +190,7 @@ final class DigitalCardProfile implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
+     * @param ApplePay|ApplePayShape|null $applePay
      * @param Status|value-of<Status> $status
      * @param TextColor|TextColorShape $textColor
      * @param Type|value-of<Type> $type
@@ -186,6 +198,7 @@ final class DigitalCardProfile implements BaseModel
     public static function with(
         string $id,
         string $appIconFileID,
+        ApplePay|array|null $applePay,
         string $backgroundImageFileID,
         string $cardDescription,
         ?string $contactEmail,
@@ -203,6 +216,7 @@ final class DigitalCardProfile implements BaseModel
 
         $self['id'] = $id;
         $self['appIconFileID'] = $appIconFileID;
+        $self['applePay'] = $applePay;
         $self['backgroundImageFileID'] = $backgroundImageFileID;
         $self['cardDescription'] = $cardDescription;
         $self['contactEmail'] = $contactEmail;
@@ -237,6 +251,19 @@ final class DigitalCardProfile implements BaseModel
     {
         $self = clone $this;
         $self['appIconFileID'] = $appIconFileID;
+
+        return $self;
+    }
+
+    /**
+     * Apple Pay specific settings for the Card Profile.
+     *
+     * @param ApplePay|ApplePayShape|null $applePay
+     */
+    public function withApplePay(ApplePay|array|null $applePay): self
+    {
+        $self = clone $this;
+        $self['applePay'] = $applePay;
 
         return $self;
     }

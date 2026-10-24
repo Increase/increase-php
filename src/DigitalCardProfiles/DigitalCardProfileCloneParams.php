@@ -8,6 +8,7 @@ use Increase\Core\Attributes\Optional;
 use Increase\Core\Concerns\SdkModel;
 use Increase\Core\Concerns\SdkParams;
 use Increase\Core\Contracts\BaseModel;
+use Increase\DigitalCardProfiles\DigitalCardProfileCloneParams\ApplePay;
 use Increase\DigitalCardProfiles\DigitalCardProfileCloneParams\TextColor;
 
 /**
@@ -15,10 +16,12 @@ use Increase\DigitalCardProfiles\DigitalCardProfileCloneParams\TextColor;
  *
  * @see Increase\Services\DigitalCardProfilesService::clone()
  *
+ * @phpstan-import-type ApplePayShape from \Increase\DigitalCardProfiles\DigitalCardProfileCloneParams\ApplePay
  * @phpstan-import-type TextColorShape from \Increase\DigitalCardProfiles\DigitalCardProfileCloneParams\TextColor
  *
  * @phpstan-type DigitalCardProfileCloneParamsShape = array{
  *   appIconFileID?: string|null,
+ *   applePay?: null|ApplePay|ApplePayShape,
  *   backgroundImageFileID?: string|null,
  *   cardDescription?: string|null,
  *   contactEmail?: string|null,
@@ -40,6 +43,12 @@ final class DigitalCardProfileCloneParams implements BaseModel
      */
     #[Optional('app_icon_file_id')]
     public ?string $appIconFileID;
+
+    /**
+     * Apple Pay specific settings for the Card Profile. Each list you leave out is copied from the original Card Profile.
+     */
+    #[Optional('apple_pay')]
+    public ?ApplePay $applePay;
 
     /**
      * The identifier of the File containing the card's front image.
@@ -99,10 +108,12 @@ final class DigitalCardProfileCloneParams implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
+     * @param ApplePay|ApplePayShape|null $applePay
      * @param TextColor|TextColorShape|null $textColor
      */
     public static function with(
         ?string $appIconFileID = null,
+        ApplePay|array|null $applePay = null,
         ?string $backgroundImageFileID = null,
         ?string $cardDescription = null,
         ?string $contactEmail = null,
@@ -115,6 +126,7 @@ final class DigitalCardProfileCloneParams implements BaseModel
         $self = new self;
 
         null !== $appIconFileID && $self['appIconFileID'] = $appIconFileID;
+        null !== $applePay && $self['applePay'] = $applePay;
         null !== $backgroundImageFileID && $self['backgroundImageFileID'] = $backgroundImageFileID;
         null !== $cardDescription && $self['cardDescription'] = $cardDescription;
         null !== $contactEmail && $self['contactEmail'] = $contactEmail;
@@ -134,6 +146,19 @@ final class DigitalCardProfileCloneParams implements BaseModel
     {
         $self = clone $this;
         $self['appIconFileID'] = $appIconFileID;
+
+        return $self;
+    }
+
+    /**
+     * Apple Pay specific settings for the Card Profile. Each list you leave out is copied from the original Card Profile.
+     *
+     * @param ApplePay|ApplePayShape $applePay
+     */
+    public function withApplePay(ApplePay|array $applePay): self
+    {
+        $self = clone $this;
+        $self['applePay'] = $applePay;
 
         return $self;
     }

@@ -48,6 +48,7 @@ final class CardDisputesTest extends TestCase
             visa: [
                 'action' => 'accept_user_submission',
                 'acceptChargeback' => [],
+                'acceptUserPrearbitration' => [],
                 'acceptUserSubmission' => [],
                 'declineUserPrearbitration' => [],
                 'receiveMerchantPrearbitration' => [],

@@ -11,6 +11,8 @@ enum Action: string
 {
     case ACCEPT_CHARGEBACK = 'accept_chargeback';
 
+    case ACCEPT_USER_PREARBITRATION = 'accept_user_prearbitration';
+
     case ACCEPT_USER_SUBMISSION = 'accept_user_submission';
 
     case DECLINE_USER_PREARBITRATION = 'decline_user_prearbitration';

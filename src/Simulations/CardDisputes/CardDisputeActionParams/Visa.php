@@ -9,6 +9,7 @@ use Increase\Core\Attributes\Required;
 use Increase\Core\Concerns\SdkModel;
 use Increase\Core\Contracts\BaseModel;
 use Increase\Simulations\CardDisputes\CardDisputeActionParams\Visa\AcceptChargeback;
+use Increase\Simulations\CardDisputes\CardDisputeActionParams\Visa\AcceptUserPrearbitration;
 use Increase\Simulations\CardDisputes\CardDisputeActionParams\Visa\AcceptUserSubmission;
 use Increase\Simulations\CardDisputes\CardDisputeActionParams\Visa\Action;
 use Increase\Simulations\CardDisputes\CardDisputeActionParams\Visa\DeclineUserPrearbitration;
@@ -25,6 +26,7 @@ use Increase\Simulations\CardDisputes\CardDisputeActionParams\Visa\TimeOutUserPr
  * The Visa-specific parameters for taking action on the dispute. Required if and only if `network` is `visa`.
  *
  * @phpstan-import-type AcceptChargebackShape from \Increase\Simulations\CardDisputes\CardDisputeActionParams\Visa\AcceptChargeback
+ * @phpstan-import-type AcceptUserPrearbitrationShape from \Increase\Simulations\CardDisputes\CardDisputeActionParams\Visa\AcceptUserPrearbitration
  * @phpstan-import-type AcceptUserSubmissionShape from \Increase\Simulations\CardDisputes\CardDisputeActionParams\Visa\AcceptUserSubmission
  * @phpstan-import-type DeclineUserPrearbitrationShape from \Increase\Simulations\CardDisputes\CardDisputeActionParams\Visa\DeclineUserPrearbitration
  * @phpstan-import-type ReceiveMerchantPrearbitrationShape from \Increase\Simulations\CardDisputes\CardDisputeActionParams\Visa\ReceiveMerchantPrearbitration
@@ -39,6 +41,7 @@ use Increase\Simulations\CardDisputes\CardDisputeActionParams\Visa\TimeOutUserPr
  * @phpstan-type VisaShape = array{
  *   action: Action|value-of<Action>,
  *   acceptChargeback?: null|AcceptChargeback|AcceptChargebackShape,
+ *   acceptUserPrearbitration?: null|AcceptUserPrearbitration|AcceptUserPrearbitrationShape,
  *   acceptUserSubmission?: null|AcceptUserSubmission|AcceptUserSubmissionShape,
  *   declineUserPrearbitration?: null|DeclineUserPrearbitration|DeclineUserPrearbitrationShape,
  *   receiveMerchantPrearbitration?: null|ReceiveMerchantPrearbitration|ReceiveMerchantPrearbitrationShape,
@@ -69,6 +72,12 @@ final class Visa implements BaseModel
      */
     #[Optional('accept_chargeback')]
     public ?AcceptChargeback $acceptChargeback;
+
+    /**
+     * The parameters for accepting the user prearbitration. Required if and only if `action` is `accept_user_prearbitration`.
+     */
+    #[Optional('accept_user_prearbitration')]
+    public ?AcceptUserPrearbitration $acceptUserPrearbitration;
 
     /**
      * The parameters for accepting the user submission. Required if and only if `action` is `accept_user_submission`.
@@ -156,6 +165,7 @@ final class Visa implements BaseModel
      *
      * @param Action|value-of<Action> $action
      * @param AcceptChargeback|AcceptChargebackShape|null $acceptChargeback
+     * @param AcceptUserPrearbitration|AcceptUserPrearbitrationShape|null $acceptUserPrearbitration
      * @param AcceptUserSubmission|AcceptUserSubmissionShape|null $acceptUserSubmission
      * @param DeclineUserPrearbitration|DeclineUserPrearbitrationShape|null $declineUserPrearbitration
      * @param ReceiveMerchantPrearbitration|ReceiveMerchantPrearbitrationShape|null $receiveMerchantPrearbitration
@@ -170,6 +180,7 @@ final class Visa implements BaseModel
     public static function with(
         Action|string $action,
         AcceptChargeback|array|null $acceptChargeback = null,
+        AcceptUserPrearbitration|array|null $acceptUserPrearbitration = null,
         AcceptUserSubmission|array|null $acceptUserSubmission = null,
         DeclineUserPrearbitration|array|null $declineUserPrearbitration = null,
         ReceiveMerchantPrearbitration|array|null $receiveMerchantPrearbitration = null,
@@ -186,6 +197,7 @@ final class Visa implements BaseModel
         $self['action'] = $action;
 
         null !== $acceptChargeback && $self['acceptChargeback'] = $acceptChargeback;
+        null !== $acceptUserPrearbitration && $self['acceptUserPrearbitration'] = $acceptUserPrearbitration;
         null !== $acceptUserSubmission && $self['acceptUserSubmission'] = $acceptUserSubmission;
         null !== $declineUserPrearbitration && $self['declineUserPrearbitration'] = $declineUserPrearbitration;
         null !== $receiveMerchantPrearbitration && $self['receiveMerchantPrearbitration'] = $receiveMerchantPrearbitration;
@@ -223,6 +235,20 @@ final class Visa implements BaseModel
     ): self {
         $self = clone $this;
         $self['acceptChargeback'] = $acceptChargeback;
+
+        return $self;
+    }
+
+    /**
+     * The parameters for accepting the user prearbitration. Required if and only if `action` is `accept_user_prearbitration`.
+     *
+     * @param AcceptUserPrearbitration|AcceptUserPrearbitrationShape $acceptUserPrearbitration
+     */
+    public function withAcceptUserPrearbitration(
+        AcceptUserPrearbitration|array $acceptUserPrearbitration
+    ): self {
+        $self = clone $this;
+        $self['acceptUserPrearbitration'] = $acceptUserPrearbitration;
 
         return $self;
     }

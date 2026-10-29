@@ -9,6 +9,8 @@ use Increase\Core\Contracts\BaseResponse;
 use Increase\Core\Exceptions\APIException;
 use Increase\RequestOptions;
 use Increase\ServiceContracts\Simulations\WireDrawdownRequestsRawContract;
+use Increase\Simulations\WireDrawdownRequests\WireDrawdownRequestRefuseParams;
+use Increase\Simulations\WireDrawdownRequests\WireDrawdownRequestRefuseParams\RefusalReasonCode;
 use Increase\WireDrawdownRequests\WireDrawdownRequest;
 
 /**
@@ -28,6 +30,10 @@ final class WireDrawdownRequestsRawService implements WireDrawdownRequestsRawCon
      * Simulates a Wire Drawdown Request being refused by the debtor.
      *
      * @param string $wireDrawdownRequestID the identifier of the Wire Drawdown Request you wish to refuse
+     * @param array{
+     *   refusalReasonAdditionalInformation?: string,
+     *   refusalReasonCode?: value-of<RefusalReasonCode>,
+     * }|WireDrawdownRequestRefuseParams $params
      * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<WireDrawdownRequest>
@@ -36,15 +42,22 @@ final class WireDrawdownRequestsRawService implements WireDrawdownRequestsRawCon
      */
     public function refuse(
         string $wireDrawdownRequestID,
+        array|WireDrawdownRequestRefuseParams $params,
         RequestOptions|array|null $requestOptions = null,
     ): BaseResponse {
+        [$parsed, $options] = WireDrawdownRequestRefuseParams::parseRequest(
+            $params,
+            $requestOptions,
+        );
+
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'post',
             path: [
                 'simulations/wire_drawdown_requests/%1$s/refuse', $wireDrawdownRequestID,
             ],
-            options: $requestOptions,
+            body: (object) $parsed,
+            options: $options,
             convert: WireDrawdownRequest::class,
         );
     }

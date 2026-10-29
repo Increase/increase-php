@@ -6,8 +6,10 @@ namespace Increase\Services\Simulations;
 
 use Increase\Client;
 use Increase\Core\Exceptions\APIException;
+use Increase\Core\Util;
 use Increase\RequestOptions;
 use Increase\ServiceContracts\Simulations\WireDrawdownRequestsContract;
+use Increase\Simulations\WireDrawdownRequests\WireDrawdownRequestRefuseParams\RefusalReasonCode;
 use Increase\WireDrawdownRequests\WireDrawdownRequest;
 
 /**
@@ -34,16 +36,29 @@ final class WireDrawdownRequestsService implements WireDrawdownRequestsContract
      * Simulates a Wire Drawdown Request being refused by the debtor.
      *
      * @param string $wireDrawdownRequestID the identifier of the Wire Drawdown Request you wish to refuse
+     * @param string $refusalReasonAdditionalInformation additional information about the refusal that the simulated refusal will have
+     * @param RefusalReasonCode|value-of<RefusalReasonCode> $refusalReasonCode The reason code that the simulated refusal will have.
+     *
+     * Defaults to `other`.
      * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
      */
     public function refuse(
         string $wireDrawdownRequestID,
+        ?string $refusalReasonAdditionalInformation = null,
+        RefusalReasonCode|string $refusalReasonCode = 'other',
         RequestOptions|array|null $requestOptions = null,
     ): WireDrawdownRequest {
+        $params = Util::removeNulls(
+            [
+                'refusalReasonAdditionalInformation' => $refusalReasonAdditionalInformation,
+                'refusalReasonCode' => $refusalReasonCode,
+            ],
+        );
+
         // @phpstan-ignore-next-line argument.type
-        $response = $this->raw->refuse($wireDrawdownRequestID, requestOptions: $requestOptions);
+        $response = $this->raw->refuse($wireDrawdownRequestID, params: $params, requestOptions: $requestOptions);
 
         return $response->parse();
     }

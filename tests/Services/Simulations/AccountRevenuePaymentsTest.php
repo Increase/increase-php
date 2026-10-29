@@ -32,7 +32,7 @@ final class AccountRevenuePaymentsTest extends TestCase
     {
         $result = $this->client->simulations->accountRevenuePayments->create(
             accountID: 'account_in71c4amph0vgo2qllky',
-            amount: 1000
+            amount: 100
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -44,7 +44,7 @@ final class AccountRevenuePaymentsTest extends TestCase
     {
         $result = $this->client->simulations->accountRevenuePayments->create(
             accountID: 'account_in71c4amph0vgo2qllky',
-            amount: 1000,
+            amount: 100,
             accruedOnAccountID: 'accrued_on_account_id',
             periodEnd: new \DateTimeImmutable('2019-12-27T18:11:19.117Z'),
             periodStart: new \DateTimeImmutable('2019-12-27T18:11:19.117Z'),

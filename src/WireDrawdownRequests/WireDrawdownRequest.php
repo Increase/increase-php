@@ -9,6 +9,7 @@ use Increase\Core\Concerns\SdkModel;
 use Increase\Core\Contracts\BaseModel;
 use Increase\WireDrawdownRequests\WireDrawdownRequest\CreditorAddress;
 use Increase\WireDrawdownRequests\WireDrawdownRequest\DebtorAddress;
+use Increase\WireDrawdownRequests\WireDrawdownRequest\Refusal;
 use Increase\WireDrawdownRequests\WireDrawdownRequest\Status;
 use Increase\WireDrawdownRequests\WireDrawdownRequest\Submission;
 use Increase\WireDrawdownRequests\WireDrawdownRequest\Type;
@@ -18,6 +19,7 @@ use Increase\WireDrawdownRequests\WireDrawdownRequest\Type;
  *
  * @phpstan-import-type CreditorAddressShape from \Increase\WireDrawdownRequests\WireDrawdownRequest\CreditorAddress
  * @phpstan-import-type DebtorAddressShape from \Increase\WireDrawdownRequests\WireDrawdownRequest\DebtorAddress
+ * @phpstan-import-type RefusalShape from \Increase\WireDrawdownRequests\WireDrawdownRequest\Refusal
  * @phpstan-import-type SubmissionShape from \Increase\WireDrawdownRequests\WireDrawdownRequest\Submission
  *
  * @phpstan-type WireDrawdownRequestShape = array{
@@ -37,6 +39,7 @@ use Increase\WireDrawdownRequests\WireDrawdownRequest\Type;
  *   endToEndIdentification: string|null,
  *   fulfillmentInboundWireTransferID: string|null,
  *   idempotencyKey: string|null,
+ *   refusal: null|Refusal|RefusalShape,
  *   status: Status|value-of<Status>,
  *   submission: null|Submission|SubmissionShape,
  *   type: Type|value-of<Type>,
@@ -146,6 +149,12 @@ final class WireDrawdownRequest implements BaseModel
     public ?string $idempotencyKey;
 
     /**
+     * If the debtor refuses the drawdown request, this will contain supplemental details.
+     */
+    #[Required]
+    public ?Refusal $refusal;
+
+    /**
      * The lifecycle status of the drawdown request.
      *
      * @var value-of<Status> $status
@@ -201,6 +210,7 @@ final class WireDrawdownRequest implements BaseModel
      *   endToEndIdentification: ...,
      *   fulfillmentInboundWireTransferID: ...,
      *   idempotencyKey: ...,
+     *   refusal: ...,
      *   status: ...,
      *   submission: ...,
      *   type: ...,
@@ -229,6 +239,7 @@ final class WireDrawdownRequest implements BaseModel
      *   ->withEndToEndIdentification(...)
      *   ->withFulfillmentInboundWireTransferID(...)
      *   ->withIdempotencyKey(...)
+     *   ->withRefusal(...)
      *   ->withStatus(...)
      *   ->withSubmission(...)
      *   ->withType(...)
@@ -248,6 +259,7 @@ final class WireDrawdownRequest implements BaseModel
      *
      * @param CreditorAddress|CreditorAddressShape $creditorAddress
      * @param DebtorAddress|DebtorAddressShape $debtorAddress
+     * @param Refusal|RefusalShape|null $refusal
      * @param Status|value-of<Status> $status
      * @param Submission|SubmissionShape|null $submission
      * @param Type|value-of<Type> $type
@@ -269,6 +281,7 @@ final class WireDrawdownRequest implements BaseModel
         ?string $endToEndIdentification,
         ?string $fulfillmentInboundWireTransferID,
         ?string $idempotencyKey,
+        Refusal|array|null $refusal,
         Status|string $status,
         Submission|array|null $submission,
         Type|string $type,
@@ -293,6 +306,7 @@ final class WireDrawdownRequest implements BaseModel
         $self['endToEndIdentification'] = $endToEndIdentification;
         $self['fulfillmentInboundWireTransferID'] = $fulfillmentInboundWireTransferID;
         $self['idempotencyKey'] = $idempotencyKey;
+        $self['refusal'] = $refusal;
         $self['status'] = $status;
         $self['submission'] = $submission;
         $self['type'] = $type;
@@ -482,6 +496,19 @@ final class WireDrawdownRequest implements BaseModel
     {
         $self = clone $this;
         $self['idempotencyKey'] = $idempotencyKey;
+
+        return $self;
+    }
+
+    /**
+     * If the debtor refuses the drawdown request, this will contain supplemental details.
+     *
+     * @param Refusal|RefusalShape|null $refusal
+     */
+    public function withRefusal(Refusal|array|null $refusal): self
+    {
+        $self = clone $this;
+        $self['refusal'] = $refusal;
 
         return $self;
     }

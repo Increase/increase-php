@@ -16,7 +16,7 @@ use Increase\Core\Concerns\SdkParams;
 use Increase\Core\Contracts\BaseModel;
 
 /**
- * Create an ACH Transfer.
+ * An ACH Transfer has two primary descriptive fields: [`company_name`](/documentation/api/ach-transfers#create-an-ach-transfer.company_name) and [`individual_name`](/documentation/api/ach-transfers#create-an-ach-transfer.individual_name). You should set both of these, in addition to the required amount and account fields.
  *
  * @see Increase\Services\ACHTransfersService::create()
  *
@@ -51,13 +51,13 @@ final class ACHTransferCreateParams implements BaseModel
     use SdkParams;
 
     /**
-     * The Increase identifier for the account that will send the transfer.
+     * The Increase identifier for the account that will originate the transfer. For credit transfers (transfers with a positive `amount`), this is the account that funds will be sent from. For debit transfers (transfers with a negative `amount`), this is the account that funds will be pulled into.
      */
     #[Required('account_id')]
     public string $accountID;
 
     /**
-     * The transfer amount in USD cents. A positive amount originates a credit transfer pushing funds to the receiving account. A negative amount originates a debit transfer pulling funds from the receiving account.
+     * The transfer amount in USD cents. A positive amount originates a credit transfer pushing funds from Increase to the account at the other bank. A negative amount originates a debit transfer pulling funds from the account at the other bank into Increase. Debit transfers [might result in a hold before funds are available](/documentation/sending-ach-debit-transfers).
      */
     #[Required]
     public int $amount;
@@ -69,7 +69,7 @@ final class ACHTransferCreateParams implements BaseModel
     public string $statementDescriptor;
 
     /**
-     * The receiver's account number. For credit transfers (positive `amount`) this is the account that funds will be sent to. For debit transfers (negative `amount`) this is the account that funds will be pulled from.
+     * The receiver's account number. For credit transfers (transfers with a positive `amount`), this is the account that funds will be sent to. For debit transfers (transfers with a negative `amount`), this is the account that funds will be pulled from.
      */
     #[Optional('account_number')]
     public ?string $accountNumber;
@@ -87,19 +87,19 @@ final class ACHTransferCreateParams implements BaseModel
     public ?string $companyDescriptiveDate;
 
     /**
-     * Custom data sent in the company batch header. This value is informational and does not affect funds movement, settlement timing, or returns. Most ACH transfers do not need this. Only set this if your recipient has asked for it.
+     * Custom data sent in the company batch header, meant as metadata for the originator. This value is informational and does not affect funds movement, settlement timing, or returns. Most ACH transfers do not need this; we recommend storing metadata in your own application instead.
      */
     #[Optional('company_discretionary_data')]
     public ?string $companyDiscretionaryData;
 
     /**
-     * A short description sent in the company batch header. Most receivers do not surface this. Only set this if your recipient has asked for a specific value or if Nacha mandates one for your Standard Entry Class (SEC) code and use case. For example, Prearranged Payment and Deposit (PPD) payroll credits must use `PAYROLL`, and reversals must use `REVERSAL`.
+     * A short description sent in the company batch header, meant to provide the receiver with a reason for the transfer. Many receivers do not surface this data on the receiver's bank statement. Only set this if your recipient has asked for a specific value or if Nacha mandates one for your Standard Entry Class (SEC) code and use case. For example, some use cases require constants like `ACCTVERIFY`, `PURCHASE`, `PAYROLL`, or `REVERSAL`.
      */
     #[Optional('company_entry_description')]
     public ?string $companyEntryDescription;
 
     /**
-     * The name by which the recipient knows you, sent in the company batch header. We recommend setting this on every transfer; if you do not, we fall back to the `statement_descriptor`.
+     * The name by which the recipient knows the counterparty of this transaction. If you're processing payments on behalf of another party, use their name, not your own, so that it's more likely the recipient understands the context of the payment. This value is usually displayed to the recipient on their bank statement. We recommend setting this on every transfer; if you do not, we fall back to the `statement_descriptor`.
      */
     #[Optional('company_name')]
     public ?string $companyName;
@@ -132,13 +132,13 @@ final class ACHTransferCreateParams implements BaseModel
     public ?string $funding;
 
     /**
-     * Your internal identifier for the transfer recipient. This value is informational and not verified by the recipient's bank. Most callers can leave this unset.
+     * Your internal identifier for the recipient. This value is informational and generally not verified by the recipient's bank. Most callers can leave this unset. For the specific case of person-to-person credits with the WEB standard entry class code, this must include the name of the payer.
      */
     #[Optional('individual_id')]
     public ?string $individualID;
 
     /**
-     * The name of the transfer recipient. This value is informational and not verified by the recipient's bank.
+     * The name of the transfer recipient. This value is informational and generally not verified by the recipient's bank. This value is usually displayed to the recipient on their bank statement. We recommend setting this on every transfer; if you do not, we fall back to the `statement_descriptor`.
      */
     #[Optional('individual_name')]
     public ?string $individualName;
@@ -250,7 +250,7 @@ final class ACHTransferCreateParams implements BaseModel
     }
 
     /**
-     * The Increase identifier for the account that will send the transfer.
+     * The Increase identifier for the account that will originate the transfer. For credit transfers (transfers with a positive `amount`), this is the account that funds will be sent from. For debit transfers (transfers with a negative `amount`), this is the account that funds will be pulled into.
      */
     public function withAccountID(string $accountID): self
     {
@@ -261,7 +261,7 @@ final class ACHTransferCreateParams implements BaseModel
     }
 
     /**
-     * The transfer amount in USD cents. A positive amount originates a credit transfer pushing funds to the receiving account. A negative amount originates a debit transfer pulling funds from the receiving account.
+     * The transfer amount in USD cents. A positive amount originates a credit transfer pushing funds from Increase to the account at the other bank. A negative amount originates a debit transfer pulling funds from the account at the other bank into Increase. Debit transfers [might result in a hold before funds are available](/documentation/sending-ach-debit-transfers).
      */
     public function withAmount(int $amount): self
     {
@@ -283,7 +283,7 @@ final class ACHTransferCreateParams implements BaseModel
     }
 
     /**
-     * The receiver's account number. For credit transfers (positive `amount`) this is the account that funds will be sent to. For debit transfers (negative `amount`) this is the account that funds will be pulled from.
+     * The receiver's account number. For credit transfers (transfers with a positive `amount`), this is the account that funds will be sent to. For debit transfers (transfers with a negative `amount`), this is the account that funds will be pulled from.
      */
     public function withAccountNumber(string $accountNumber): self
     {
@@ -319,7 +319,7 @@ final class ACHTransferCreateParams implements BaseModel
     }
 
     /**
-     * Custom data sent in the company batch header. This value is informational and does not affect funds movement, settlement timing, or returns. Most ACH transfers do not need this. Only set this if your recipient has asked for it.
+     * Custom data sent in the company batch header, meant as metadata for the originator. This value is informational and does not affect funds movement, settlement timing, or returns. Most ACH transfers do not need this; we recommend storing metadata in your own application instead.
      */
     public function withCompanyDiscretionaryData(
         string $companyDiscretionaryData
@@ -331,7 +331,7 @@ final class ACHTransferCreateParams implements BaseModel
     }
 
     /**
-     * A short description sent in the company batch header. Most receivers do not surface this. Only set this if your recipient has asked for a specific value or if Nacha mandates one for your Standard Entry Class (SEC) code and use case. For example, Prearranged Payment and Deposit (PPD) payroll credits must use `PAYROLL`, and reversals must use `REVERSAL`.
+     * A short description sent in the company batch header, meant to provide the receiver with a reason for the transfer. Many receivers do not surface this data on the receiver's bank statement. Only set this if your recipient has asked for a specific value or if Nacha mandates one for your Standard Entry Class (SEC) code and use case. For example, some use cases require constants like `ACCTVERIFY`, `PURCHASE`, `PAYROLL`, or `REVERSAL`.
      */
     public function withCompanyEntryDescription(
         string $companyEntryDescription
@@ -343,7 +343,7 @@ final class ACHTransferCreateParams implements BaseModel
     }
 
     /**
-     * The name by which the recipient knows you, sent in the company batch header. We recommend setting this on every transfer; if you do not, we fall back to the `statement_descriptor`.
+     * The name by which the recipient knows the counterparty of this transaction. If you're processing payments on behalf of another party, use their name, not your own, so that it's more likely the recipient understands the context of the payment. This value is usually displayed to the recipient on their bank statement. We recommend setting this on every transfer; if you do not, we fall back to the `statement_descriptor`.
      */
     public function withCompanyName(string $companyName): self
     {
@@ -394,7 +394,7 @@ final class ACHTransferCreateParams implements BaseModel
     }
 
     /**
-     * Your internal identifier for the transfer recipient. This value is informational and not verified by the recipient's bank. Most callers can leave this unset.
+     * Your internal identifier for the recipient. This value is informational and generally not verified by the recipient's bank. Most callers can leave this unset. For the specific case of person-to-person credits with the WEB standard entry class code, this must include the name of the payer.
      */
     public function withIndividualID(string $individualID): self
     {
@@ -405,7 +405,7 @@ final class ACHTransferCreateParams implements BaseModel
     }
 
     /**
-     * The name of the transfer recipient. This value is informational and not verified by the recipient's bank.
+     * The name of the transfer recipient. This value is informational and generally not verified by the recipient's bank. This value is usually displayed to the recipient on their bank statement. We recommend setting this on every transfer; if you do not, we fall back to the `statement_descriptor`.
      */
     public function withIndividualName(string $individualName): self
     {

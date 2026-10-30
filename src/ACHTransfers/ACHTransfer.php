@@ -73,7 +73,7 @@ use Increase\Core\Contracts\BaseModel;
  *   routingNumber: string,
  *   settlement: null|Settlement|SettlementShape,
  *   standardEntryClassCode: StandardEntryClassCode|value-of<StandardEntryClassCode>,
- *   statementDescriptor: string,
+ *   statementDescriptor: string|null,
  *   status: Status|value-of<Status>,
  *   submission: null|Submission|SubmissionShape,
  *   transactionID: string|null,
@@ -290,7 +290,7 @@ final class ACHTransfer implements BaseModel
      * The descriptor that will show on the recipient's bank statement.
      */
     #[Required('statement_descriptor')]
-    public string $statementDescriptor;
+    public ?string $statementDescriptor;
 
     /**
      * The lifecycle status of the transfer.
@@ -468,7 +468,7 @@ final class ACHTransfer implements BaseModel
         string $routingNumber,
         Settlement|array|null $settlement,
         StandardEntryClassCode|string $standardEntryClassCode,
-        string $statementDescriptor,
+        ?string $statementDescriptor,
         Status|string $status,
         Submission|array|null $submission,
         ?string $transactionID,
@@ -901,7 +901,7 @@ final class ACHTransfer implements BaseModel
     /**
      * The descriptor that will show on the recipient's bank statement.
      */
-    public function withStatementDescriptor(string $statementDescriptor): self
+    public function withStatementDescriptor(?string $statementDescriptor): self
     {
         $self = clone $this;
         $self['statementDescriptor'] = $statementDescriptor;

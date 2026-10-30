@@ -38,7 +38,6 @@ use Increase\Services\ExternalAccountsService;
 use Increase\Services\FednowTransfersService;
 use Increase\Services\FileLinksService;
 use Increase\Services\FilesService;
-use Increase\Services\GroupsService;
 use Increase\Services\InboundACHTransfersService;
 use Increase\Services\InboundCheckDepositsService;
 use Increase\Services\InboundFednowTransfersService;
@@ -52,9 +51,6 @@ use Increase\Services\IntrafiBalancesService;
 use Increase\Services\IntrafiExclusionsService;
 use Increase\Services\LockboxAddressesService;
 use Increase\Services\LockboxRecipientsService;
-use Increase\Services\OAuthApplicationsService;
-use Increase\Services\OAuthConnectionsService;
-use Increase\Services\OAuthTokensService;
 use Increase\Services\PendingTransactionsService;
 use Increase\Services\PhysicalCardProfilesService;
 use Increase\Services\PhysicalCardsService;
@@ -329,26 +325,6 @@ class Client extends BaseClient
     /**
      * @api
      */
-    public GroupsService $groups;
-
-    /**
-     * @api
-     */
-    public OAuthApplicationsService $oauthApplications;
-
-    /**
-     * @api
-     */
-    public OAuthConnectionsService $oauthConnections;
-
-    /**
-     * @api
-     */
-    public OAuthTokensService $oauthTokens;
-
-    /**
-     * @api
-     */
     public IntrafiAccountEnrollmentsService $intrafiAccountEnrollments;
 
     /**
@@ -492,10 +468,6 @@ class Client extends BaseClient
         $this->events = new EventsService($this);
         $this->eventSubscriptions = new EventSubscriptionsService($this);
         $this->realTimeDecisions = new RealTimeDecisionsService($this);
-        $this->groups = new GroupsService($this);
-        $this->oauthApplications = new OAuthApplicationsService($this);
-        $this->oauthConnections = new OAuthConnectionsService($this);
-        $this->oauthTokens = new OAuthTokensService($this);
         $this->intrafiAccountEnrollments = new IntrafiAccountEnrollmentsService($this);
         $this->intrafiBalances = new IntrafiBalancesService($this);
         $this->intrafiExclusions = new IntrafiExclusionsService($this);

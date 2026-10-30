@@ -7,6 +7,7 @@ namespace Increase\ServiceContracts;
 use Increase\Core\Exceptions\APIException;
 use Increase\InboundRealTimePaymentsTransfers\InboundRealTimePaymentsTransfer;
 use Increase\InboundRealTimePaymentsTransfers\InboundRealTimePaymentsTransferListParams\CreatedAt;
+use Increase\InboundRealTimePaymentsTransfers\RealTimePaymentsTransfer;
 use Increase\Page;
 use Increase\RequestOptions;
 
@@ -53,4 +54,19 @@ interface InboundRealTimePaymentsTransfersContract
         int $limit = 100,
         RequestOptions|array|null $requestOptions = null,
     ): Page;
+
+    /**
+     * @api
+     *
+     * @param string $inboundRealTimePaymentsTransferID the identifier of the Inbound Real-Time Payments Transfer to return to its sender
+     * @param int $amount The amount to return, in USD cents. Defaults to the full amount of the Inbound Real-Time Payments Transfer, and can't be higher than it.
+     * @param RequestOpts|null $requestOptions
+     *
+     * @throws APIException
+     */
+    public function return(
+        string $inboundRealTimePaymentsTransferID,
+        ?int $amount = null,
+        RequestOptions|array|null $requestOptions = null,
+    ): RealTimePaymentsTransfer;
 }

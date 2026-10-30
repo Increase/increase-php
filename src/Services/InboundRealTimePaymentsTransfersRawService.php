@@ -11,6 +11,8 @@ use Increase\Core\Util;
 use Increase\InboundRealTimePaymentsTransfers\InboundRealTimePaymentsTransfer;
 use Increase\InboundRealTimePaymentsTransfers\InboundRealTimePaymentsTransferListParams;
 use Increase\InboundRealTimePaymentsTransfers\InboundRealTimePaymentsTransferListParams\CreatedAt;
+use Increase\InboundRealTimePaymentsTransfers\InboundRealTimePaymentsTransferReturnParams;
+use Increase\InboundRealTimePaymentsTransfers\RealTimePaymentsTransfer;
 use Increase\Page;
 use Increase\RequestOptions;
 use Increase\ServiceContracts\InboundRealTimePaymentsTransfersRawContract;
@@ -97,6 +99,42 @@ final class InboundRealTimePaymentsTransfersRawService implements InboundRealTim
             options: $options,
             convert: InboundRealTimePaymentsTransfer::class,
             page: Page::class,
+        );
+    }
+
+    /**
+     * @api
+     *
+     * Return an Inbound Real-Time Payments Transfer
+     *
+     * @param string $inboundRealTimePaymentsTransferID the identifier of the Inbound Real-Time Payments Transfer to return to its sender
+     * @param array{amount?: int}|InboundRealTimePaymentsTransferReturnParams $params
+     * @param RequestOpts|null $requestOptions
+     *
+     * @return BaseResponse<RealTimePaymentsTransfer>
+     *
+     * @throws APIException
+     */
+    public function return(
+        string $inboundRealTimePaymentsTransferID,
+        array|InboundRealTimePaymentsTransferReturnParams $params,
+        RequestOptions|array|null $requestOptions = null,
+    ): BaseResponse {
+        [$parsed, $options] = InboundRealTimePaymentsTransferReturnParams::parseRequest(
+            $params,
+            $requestOptions,
+        );
+
+        // @phpstan-ignore-next-line return.type
+        return $this->client->request(
+            method: 'post',
+            path: [
+                'inbound_real_time_payments_transfers/%1$s/return',
+                $inboundRealTimePaymentsTransferID,
+            ],
+            body: (object) $parsed,
+            options: $options,
+            convert: RealTimePaymentsTransfer::class,
         );
     }
 }

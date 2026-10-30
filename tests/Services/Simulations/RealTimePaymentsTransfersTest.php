@@ -4,7 +4,7 @@ namespace Tests\Services\Simulations;
 
 use Increase\Client;
 use Increase\Core\Util;
-use Increase\RealTimePaymentsTransfers\RealTimePaymentsTransfer;
+use Increase\InboundRealTimePaymentsTransfers\RealTimePaymentsTransfer;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;

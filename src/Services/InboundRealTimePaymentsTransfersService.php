@@ -9,6 +9,7 @@ use Increase\Core\Exceptions\APIException;
 use Increase\Core\Util;
 use Increase\InboundRealTimePaymentsTransfers\InboundRealTimePaymentsTransfer;
 use Increase\InboundRealTimePaymentsTransfers\InboundRealTimePaymentsTransferListParams\CreatedAt;
+use Increase\InboundRealTimePaymentsTransfers\RealTimePaymentsTransfer;
 use Increase\Page;
 use Increase\RequestOptions;
 use Increase\ServiceContracts\InboundRealTimePaymentsTransfersContract;
@@ -90,6 +91,30 @@ final class InboundRealTimePaymentsTransfersService implements InboundRealTimePa
 
         // @phpstan-ignore-next-line argument.type
         $response = $this->raw->list(params: $params, requestOptions: $requestOptions);
+
+        return $response->parse();
+    }
+
+    /**
+     * @api
+     *
+     * Return an Inbound Real-Time Payments Transfer
+     *
+     * @param string $inboundRealTimePaymentsTransferID the identifier of the Inbound Real-Time Payments Transfer to return to its sender
+     * @param int $amount The amount to return, in USD cents. Defaults to the full amount of the Inbound Real-Time Payments Transfer, and can't be higher than it.
+     * @param RequestOpts|null $requestOptions
+     *
+     * @throws APIException
+     */
+    public function return(
+        string $inboundRealTimePaymentsTransferID,
+        ?int $amount = null,
+        RequestOptions|array|null $requestOptions = null,
+    ): RealTimePaymentsTransfer {
+        $params = Util::removeNulls(['amount' => $amount]);
+
+        // @phpstan-ignore-next-line argument.type
+        $response = $this->raw->return($inboundRealTimePaymentsTransferID, params: $params, requestOptions: $requestOptions);
 
         return $response->parse();
     }

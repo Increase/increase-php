@@ -10,7 +10,7 @@ use Increase\Core\Concerns\SdkModel;
 use Increase\Core\Contracts\BaseModel;
 
 /**
- * Configuration for how the effective date of the transfer will be set. This determines same-day vs future-dated settlement timing. If not set, defaults to a `settlement_schedule` of `same_day`. If set, exactly one of the child attributes must be set.
+ * Configuration for how the effective date of the transfer was set. This determines same-day vs future-dated settlement timing.
  *
  * @phpstan-type PreferredEffectiveDateShape = array{
  *   date: string|null,

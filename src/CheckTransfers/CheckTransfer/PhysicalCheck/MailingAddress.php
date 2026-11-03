@@ -12,13 +12,13 @@ use Increase\Core\Contracts\BaseModel;
  * Details for where Increase will mail the check.
  *
  * @phpstan-type MailingAddressShape = array{
- *   city: string|null,
- *   line1: string|null,
+ *   city: string,
+ *   line1: string,
  *   line2: string|null,
  *   name: string|null,
  *   phone: string|null,
- *   postalCode: string|null,
- *   state: string|null,
+ *   postalCode: string,
+ *   state: string,
  * }
  */
 final class MailingAddress implements BaseModel
@@ -30,13 +30,13 @@ final class MailingAddress implements BaseModel
      * The city of the check's destination.
      */
     #[Required]
-    public ?string $city;
+    public string $city;
 
     /**
      * The street address of the check's destination.
      */
     #[Required]
-    public ?string $line1;
+    public string $line1;
 
     /**
      * The second line of the address of the check's destination.
@@ -60,13 +60,13 @@ final class MailingAddress implements BaseModel
      * The postal code of the check's destination.
      */
     #[Required('postal_code')]
-    public ?string $postalCode;
+    public string $postalCode;
 
     /**
      * The state of the check's destination.
      */
     #[Required]
-    public ?string $state;
+    public string $state;
 
     /**
      * `new MailingAddress()` is missing required properties by the API.
@@ -108,13 +108,13 @@ final class MailingAddress implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      */
     public static function with(
-        ?string $city,
-        ?string $line1,
+        string $city,
+        string $line1,
         ?string $line2,
         ?string $name,
         ?string $phone,
-        ?string $postalCode,
-        ?string $state,
+        string $postalCode,
+        string $state,
     ): self {
         $self = new self;
 
@@ -132,7 +132,7 @@ final class MailingAddress implements BaseModel
     /**
      * The city of the check's destination.
      */
-    public function withCity(?string $city): self
+    public function withCity(string $city): self
     {
         $self = clone $this;
         $self['city'] = $city;
@@ -143,7 +143,7 @@ final class MailingAddress implements BaseModel
     /**
      * The street address of the check's destination.
      */
-    public function withLine1(?string $line1): self
+    public function withLine1(string $line1): self
     {
         $self = clone $this;
         $self['line1'] = $line1;
@@ -187,7 +187,7 @@ final class MailingAddress implements BaseModel
     /**
      * The postal code of the check's destination.
      */
-    public function withPostalCode(?string $postalCode): self
+    public function withPostalCode(string $postalCode): self
     {
         $self = clone $this;
         $self['postalCode'] = $postalCode;
@@ -198,7 +198,7 @@ final class MailingAddress implements BaseModel
     /**
      * The state of the check's destination.
      */
-    public function withState(?string $state): self
+    public function withState(string $state): self
     {
         $self = clone $this;
         $self['state'] = $state;

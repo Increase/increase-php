@@ -14,7 +14,9 @@ use Increase\Exports\Export\FeeCsv\CreatedAt;
  *
  * @phpstan-import-type CreatedAtShape from \Increase\Exports\Export\FeeCsv\CreatedAt
  *
- * @phpstan-type FeeCsvShape = array{createdAt: null|CreatedAt|CreatedAtShape}
+ * @phpstan-type FeeCsvShape = array{
+ *   createdAt: null|CreatedAt|CreatedAtShape, feeStatementPeriodStart: string|null
+ * }
  */
 final class FeeCsv implements BaseModel
 {
@@ -28,17 +30,23 @@ final class FeeCsv implements BaseModel
     public ?CreatedAt $createdAt;
 
     /**
+     * Filter fees by the UTC start date of their fee statement's period, such as `2026-08-01`.
+     */
+    #[Required('fee_statement_period_start')]
+    public ?string $feeStatementPeriodStart;
+
+    /**
      * `new FeeCsv()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
-     * FeeCsv::with(createdAt: ...)
+     * FeeCsv::with(createdAt: ..., feeStatementPeriodStart: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new FeeCsv)->withCreatedAt(...)
+     * (new FeeCsv)->withCreatedAt(...)->withFeeStatementPeriodStart(...)
      * ```
      */
     public function __construct()
@@ -53,11 +61,14 @@ final class FeeCsv implements BaseModel
      *
      * @param CreatedAt|CreatedAtShape|null $createdAt
      */
-    public static function with(CreatedAt|array|null $createdAt): self
-    {
+    public static function with(
+        CreatedAt|array|null $createdAt,
+        ?string $feeStatementPeriodStart
+    ): self {
         $self = new self;
 
         $self['createdAt'] = $createdAt;
+        $self['feeStatementPeriodStart'] = $feeStatementPeriodStart;
 
         return $self;
     }
@@ -71,6 +82,18 @@ final class FeeCsv implements BaseModel
     {
         $self = clone $this;
         $self['createdAt'] = $createdAt;
+
+        return $self;
+    }
+
+    /**
+     * Filter fees by the UTC start date of their fee statement's period, such as `2026-08-01`.
+     */
+    public function withFeeStatementPeriodStart(
+        ?string $feeStatementPeriodStart
+    ): self {
+        $self = clone $this;
+        $self['feeStatementPeriodStart'] = $feeStatementPeriodStart;
 
         return $self;
     }

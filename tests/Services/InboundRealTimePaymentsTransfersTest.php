@@ -5,6 +5,7 @@ namespace Tests\Services;
 use Increase\Client;
 use Increase\Core\Util;
 use Increase\InboundRealTimePaymentsTransfers\InboundRealTimePaymentsTransfer;
+use Increase\InboundRealTimePaymentsTransfers\RealTimePaymentsTransfer;
 use Increase\Page;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\Test;
@@ -51,5 +52,16 @@ final class InboundRealTimePaymentsTransfersTest extends TestCase
             // @phpstan-ignore-next-line method.alreadyNarrowedType
             $this->assertInstanceOf(InboundRealTimePaymentsTransfer::class, $item);
         }
+    }
+
+    #[Test]
+    public function testReturn(): void
+    {
+        $result = $this->client->inboundRealTimePaymentsTransfers->return(
+            'inbound_real_time_payments_transfer_63hlz498vcxg644hcrzr'
+        );
+
+        // @phpstan-ignore-next-line method.alreadyNarrowedType
+        $this->assertInstanceOf(RealTimePaymentsTransfer::class, $result);
     }
 }

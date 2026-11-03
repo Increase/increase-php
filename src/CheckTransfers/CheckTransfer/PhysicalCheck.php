@@ -32,7 +32,7 @@ use Increase\Core\Contracts\BaseModel;
  *   payer: list<Payer|PayerShape>,
  *   physicalCheckBatchID: string|null,
  *   recipientName: string,
- *   returnAddress: null|ReturnAddress|ReturnAddressShape,
+ *   returnAddress: ReturnAddress|ReturnAddressShape,
  *   returnAddressName: string|null,
  *   shippingMethod: ShippingMethod|value-of<ShippingMethod>,
  *   signature: Signature|SignatureShape,
@@ -75,7 +75,7 @@ final class PhysicalCheck implements BaseModel
     public ?string $note;
 
     /**
-     * The payer of the check. This will be printed on the top-left portion of the check and defaults to the return address if unspecified.
+     * The payer of the check. This will be printed on the top-left portion of the check.
      *
      * @var list<Payer> $payer
      */
@@ -98,7 +98,7 @@ final class PhysicalCheck implements BaseModel
      * The return address to be printed on the check.
      */
     #[Required('return_address')]
-    public ?ReturnAddress $returnAddress;
+    public ReturnAddress $returnAddress;
 
     /**
      * A custom name printed above the Increase-managed return address.
@@ -181,7 +181,7 @@ final class PhysicalCheck implements BaseModel
      *
      * @param MailingAddress|MailingAddressShape $mailingAddress
      * @param list<Payer|PayerShape> $payer
-     * @param ReturnAddress|ReturnAddressShape|null $returnAddress
+     * @param ReturnAddress|ReturnAddressShape $returnAddress
      * @param ShippingMethod|value-of<ShippingMethod> $shippingMethod
      * @param Signature|SignatureShape $signature
      * @param list<TrackingUpdate|TrackingUpdateShape> $trackingUpdates
@@ -195,7 +195,7 @@ final class PhysicalCheck implements BaseModel
         array $payer,
         ?string $physicalCheckBatchID,
         string $recipientName,
-        ReturnAddress|array|null $returnAddress,
+        ReturnAddress|array $returnAddress,
         ?string $returnAddressName,
         ShippingMethod|string $shippingMethod,
         Signature|array $signature,
@@ -280,7 +280,7 @@ final class PhysicalCheck implements BaseModel
     }
 
     /**
-     * The payer of the check. This will be printed on the top-left portion of the check and defaults to the return address if unspecified.
+     * The payer of the check. This will be printed on the top-left portion of the check.
      *
      * @param list<Payer|PayerShape> $payer
      */
@@ -318,11 +318,10 @@ final class PhysicalCheck implements BaseModel
     /**
      * The return address to be printed on the check.
      *
-     * @param ReturnAddress|ReturnAddressShape|null $returnAddress
+     * @param ReturnAddress|ReturnAddressShape $returnAddress
      */
-    public function withReturnAddress(
-        ReturnAddress|array|null $returnAddress
-    ): self {
+    public function withReturnAddress(ReturnAddress|array $returnAddress): self
+    {
         $self = clone $this;
         $self['returnAddress'] = $returnAddress;
 

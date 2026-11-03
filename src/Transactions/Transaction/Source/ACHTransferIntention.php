@@ -15,7 +15,7 @@ use Increase\Core\Contracts\BaseModel;
  *   accountNumber: string,
  *   amount: int,
  *   routingNumber: string,
- *   statementDescriptor: string,
+ *   statementDescriptor: string|null,
  *   transferID: string,
  * }
  */
@@ -46,7 +46,7 @@ final class ACHTransferIntention implements BaseModel
      * A description set when the ACH Transfer was created.
      */
     #[Required('statement_descriptor')]
-    public string $statementDescriptor;
+    public ?string $statementDescriptor;
 
     /**
      * The identifier of the ACH Transfer that led to this Transaction.
@@ -93,7 +93,7 @@ final class ACHTransferIntention implements BaseModel
         string $accountNumber,
         int $amount,
         string $routingNumber,
-        string $statementDescriptor,
+        ?string $statementDescriptor,
         string $transferID,
     ): self {
         $self = new self;
@@ -143,7 +143,7 @@ final class ACHTransferIntention implements BaseModel
     /**
      * A description set when the ACH Transfer was created.
      */
-    public function withStatementDescriptor(string $statementDescriptor): self
+    public function withStatementDescriptor(?string $statementDescriptor): self
     {
         $self = clone $this;
         $self['statementDescriptor'] = $statementDescriptor;

@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Increase\ServiceContracts\Simulations;
 
 use Increase\Core\Exceptions\APIException;
-use Increase\RealTimePaymentsTransfers\RealTimePaymentsTransfer;
+use Increase\InboundRealTimePaymentsTransfers\RealTimePaymentsTransfer;
 use Increase\RequestOptions;
 use Increase\Simulations\RealTimePaymentsTransfers\RealTimePaymentsTransferCompleteParams\Rejection;
 

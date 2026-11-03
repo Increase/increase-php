@@ -15,7 +15,7 @@ use Increase\Core\Contracts\BaseModel;
  *   city: string,
  *   line1: string,
  *   line2: string|null,
- *   name: string|null,
+ *   name: string,
  *   phone: string|null,
  *   postalCode: string,
  *   state: string,
@@ -48,7 +48,7 @@ final class MailingAddress implements BaseModel
      * The name component of the check's mailing address.
      */
     #[Required]
-    public ?string $name;
+    public string $name;
 
     /**
      * The phone number to be used in case of delivery issues at the check's mailing address. Only used for FedEx overnight shipping.
@@ -111,7 +111,7 @@ final class MailingAddress implements BaseModel
         string $city,
         string $line1,
         ?string $line2,
-        ?string $name,
+        string $name,
         ?string $phone,
         string $postalCode,
         string $state,
@@ -165,7 +165,7 @@ final class MailingAddress implements BaseModel
     /**
      * The name component of the check's mailing address.
      */
-    public function withName(?string $name): self
+    public function withName(string $name): self
     {
         $self = clone $this;
         $self['name'] = $name;

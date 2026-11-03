@@ -75,7 +75,7 @@ final class PhysicalCheck implements BaseModel
     public ?string $note;
 
     /**
-     * The payer of the check. This will be printed on the top-left portion of the check and defaults to the return address if unspecified.
+     * The payer of the check. This will be printed on the top-left portion of the check.
      *
      * @var list<Payer> $payer
      */
@@ -280,7 +280,7 @@ final class PhysicalCheck implements BaseModel
     }
 
     /**
-     * The payer of the check. This will be printed on the top-left portion of the check and defaults to the return address if unspecified.
+     * The payer of the check. This will be printed on the top-left portion of the check.
      *
      * @param list<Payer|PayerShape> $payer
      */

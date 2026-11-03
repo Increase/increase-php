@@ -15,7 +15,9 @@ use Increase\Exports\ExportCreateParams\FeeCsv\CreatedAt;
  * @phpstan-import-type CreatedAtShape from \Increase\Exports\ExportCreateParams\FeeCsv\CreatedAt
  *
  * @phpstan-type FeeCsvShape = array{
- *   createdAt?: null|CreatedAt|CreatedAtShape, programID?: string|null
+ *   createdAt?: null|CreatedAt|CreatedAtShape,
+ *   feeStatementPeriodStart?: string|null,
+ *   programID?: string|null,
  * }
  */
 final class FeeCsv implements BaseModel
@@ -24,10 +26,16 @@ final class FeeCsv implements BaseModel
     use SdkModel;
 
     /**
-     * Filter results by time range on the `created_at` attribute.
+     * Filter exported Fees by the time they were created. This suits historical exports across many fee statements. To get all of the Fees for a given fee statement period, we recommend using `fee_statement_period_start` instead. The time range must not include any Fees on an open fee statement.
      */
     #[Optional('created_at')]
     public ?CreatedAt $createdAt;
+
+    /**
+     * Filter exported Fees to the fee statements whose period starts on this UTC date, such as `2026-08-01`. Use this filter to export all of the Fees on a fee statement. The matching fee statements must be closed.
+     */
+    #[Optional('fee_statement_period_start')]
+    public ?string $feeStatementPeriodStart;
 
     /**
      * Filter exported Fees to the specified Program.
@@ -49,18 +57,20 @@ final class FeeCsv implements BaseModel
      */
     public static function with(
         CreatedAt|array|null $createdAt = null,
-        ?string $programID = null
+        ?string $feeStatementPeriodStart = null,
+        ?string $programID = null,
     ): self {
         $self = new self;
 
         null !== $createdAt && $self['createdAt'] = $createdAt;
+        null !== $feeStatementPeriodStart && $self['feeStatementPeriodStart'] = $feeStatementPeriodStart;
         null !== $programID && $self['programID'] = $programID;
 
         return $self;
     }
 
     /**
-     * Filter results by time range on the `created_at` attribute.
+     * Filter exported Fees by the time they were created. This suits historical exports across many fee statements. To get all of the Fees for a given fee statement period, we recommend using `fee_statement_period_start` instead. The time range must not include any Fees on an open fee statement.
      *
      * @param CreatedAt|CreatedAtShape $createdAt
      */
@@ -68,6 +78,18 @@ final class FeeCsv implements BaseModel
     {
         $self = clone $this;
         $self['createdAt'] = $createdAt;
+
+        return $self;
+    }
+
+    /**
+     * Filter exported Fees to the fee statements whose period starts on this UTC date, such as `2026-08-01`. Use this filter to export all of the Fees on a fee statement. The matching fee statements must be closed.
+     */
+    public function withFeeStatementPeriodStart(
+        string $feeStatementPeriodStart
+    ): self {
+        $self = clone $this;
+        $self['feeStatementPeriodStart'] = $feeStatementPeriodStart;
 
         return $self;
     }

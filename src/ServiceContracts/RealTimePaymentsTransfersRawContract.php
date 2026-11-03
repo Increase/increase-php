@@ -6,8 +6,8 @@ namespace Increase\ServiceContracts;
 
 use Increase\Core\Contracts\BaseResponse;
 use Increase\Core\Exceptions\APIException;
+use Increase\InboundRealTimePaymentsTransfers\RealTimePaymentsTransfer;
 use Increase\Page;
-use Increase\RealTimePaymentsTransfers\RealTimePaymentsTransfer;
 use Increase\RealTimePaymentsTransfers\RealTimePaymentsTransferCreateParams;
 use Increase\RealTimePaymentsTransfers\RealTimePaymentsTransferListParams;
 use Increase\RequestOptions;

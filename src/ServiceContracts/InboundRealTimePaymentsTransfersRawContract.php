@@ -8,6 +8,8 @@ use Increase\Core\Contracts\BaseResponse;
 use Increase\Core\Exceptions\APIException;
 use Increase\InboundRealTimePaymentsTransfers\InboundRealTimePaymentsTransfer;
 use Increase\InboundRealTimePaymentsTransfers\InboundRealTimePaymentsTransferListParams;
+use Increase\InboundRealTimePaymentsTransfers\InboundRealTimePaymentsTransferReturnParams;
+use Increase\InboundRealTimePaymentsTransfers\RealTimePaymentsTransfer;
 use Increase\Page;
 use Increase\RequestOptions;
 
@@ -43,6 +45,23 @@ interface InboundRealTimePaymentsTransfersRawContract
      */
     public function list(
         array|InboundRealTimePaymentsTransferListParams $params,
+        RequestOptions|array|null $requestOptions = null,
+    ): BaseResponse;
+
+    /**
+     * @api
+     *
+     * @param string $inboundRealTimePaymentsTransferID the identifier of the Inbound Real-Time Payments Transfer to return to its sender
+     * @param array<string,mixed>|InboundRealTimePaymentsTransferReturnParams $params
+     * @param RequestOpts|null $requestOptions
+     *
+     * @return BaseResponse<RealTimePaymentsTransfer>
+     *
+     * @throws APIException
+     */
+    public function return(
+        string $inboundRealTimePaymentsTransferID,
+        array|InboundRealTimePaymentsTransferReturnParams $params,
         RequestOptions|array|null $requestOptions = null,
     ): BaseResponse;
 }

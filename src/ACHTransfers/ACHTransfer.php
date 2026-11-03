@@ -73,7 +73,7 @@ use Increase\Core\Contracts\BaseModel;
  *   routingNumber: string,
  *   settlement: null|Settlement|SettlementShape,
  *   standardEntryClassCode: StandardEntryClassCode|value-of<StandardEntryClassCode>,
- *   statementDescriptor: string,
+ *   statementDescriptor: string|null,
  *   status: Status|value-of<Status>,
  *   submission: null|Submission|SubmissionShape,
  *   transactionID: string|null,
@@ -134,25 +134,25 @@ final class ACHTransfer implements BaseModel
     public ?Cancellation $cancellation;
 
     /**
-     * The description of the date of the transfer.
+     * A description of the transfer date (typically `YYMMDD`), sent in the company batch header. This value is informational and does not affect funds movement, settlement timing, or returns.
      */
     #[Required('company_descriptive_date')]
     public ?string $companyDescriptiveDate;
 
     /**
-     * The data you chose to associate with the transfer.
+     * Custom data sent in the company batch header, meant as metadata for the originator. This value is informational and does not affect funds movement, settlement timing, or returns.
      */
     #[Required('company_discretionary_data')]
     public ?string $companyDiscretionaryData;
 
     /**
-     * The description of the transfer you set to be shown to the recipient.
+     * A short description sent in the company batch header, meant to provide the receiver with a reason for the transfer. Many receivers do not surface this data on the receiver's bank statement.
      */
     #[Required('company_entry_description')]
     public ?string $companyEntryDescription;
 
     /**
-     * The company ID associated with the transfer.
+     * The Company ID sent in the batch header, which identifies the originator to the receiving bank. Businesses use this value to allowlist the companies permitted to debit their accounts. This value is configured by Increase and will be the same for all your transfers.
      */
     #[Required('company_id')]
     public string $companyID;
@@ -255,7 +255,7 @@ final class ACHTransfer implements BaseModel
     public ?string $pendingTransactionID;
 
     /**
-     * Configuration for how the effective date of the transfer will be set. This determines same-day vs future-dated settlement timing. If not set, defaults to a `settlement_schedule` of `same_day`. If set, exactly one of the child attributes must be set.
+     * Configuration for how the effective date of the transfer was set. This determines same-day vs future-dated settlement timing.
      */
     #[Required('preferred_effective_date')]
     public PreferredEffectiveDate $preferredEffectiveDate;
@@ -290,7 +290,7 @@ final class ACHTransfer implements BaseModel
      * The descriptor that will show on the recipient's bank statement.
      */
     #[Required('statement_descriptor')]
-    public string $statementDescriptor;
+    public ?string $statementDescriptor;
 
     /**
      * The lifecycle status of the transfer.
@@ -468,7 +468,7 @@ final class ACHTransfer implements BaseModel
         string $routingNumber,
         Settlement|array|null $settlement,
         StandardEntryClassCode|string $standardEntryClassCode,
-        string $statementDescriptor,
+        ?string $statementDescriptor,
         Status|string $status,
         Submission|array|null $submission,
         ?string $transactionID,
@@ -615,7 +615,7 @@ final class ACHTransfer implements BaseModel
     }
 
     /**
-     * The description of the date of the transfer.
+     * A description of the transfer date (typically `YYMMDD`), sent in the company batch header. This value is informational and does not affect funds movement, settlement timing, or returns.
      */
     public function withCompanyDescriptiveDate(
         ?string $companyDescriptiveDate
@@ -627,7 +627,7 @@ final class ACHTransfer implements BaseModel
     }
 
     /**
-     * The data you chose to associate with the transfer.
+     * Custom data sent in the company batch header, meant as metadata for the originator. This value is informational and does not affect funds movement, settlement timing, or returns.
      */
     public function withCompanyDiscretionaryData(
         ?string $companyDiscretionaryData
@@ -639,7 +639,7 @@ final class ACHTransfer implements BaseModel
     }
 
     /**
-     * The description of the transfer you set to be shown to the recipient.
+     * A short description sent in the company batch header, meant to provide the receiver with a reason for the transfer. Many receivers do not surface this data on the receiver's bank statement.
      */
     public function withCompanyEntryDescription(
         ?string $companyEntryDescription
@@ -651,7 +651,7 @@ final class ACHTransfer implements BaseModel
     }
 
     /**
-     * The company ID associated with the transfer.
+     * The Company ID sent in the batch header, which identifies the originator to the receiving bank. Businesses use this value to allowlist the companies permitted to debit their accounts. This value is configured by Increase and will be the same for all your transfers.
      */
     public function withCompanyID(string $companyID): self
     {
@@ -834,7 +834,7 @@ final class ACHTransfer implements BaseModel
     }
 
     /**
-     * Configuration for how the effective date of the transfer will be set. This determines same-day vs future-dated settlement timing. If not set, defaults to a `settlement_schedule` of `same_day`. If set, exactly one of the child attributes must be set.
+     * Configuration for how the effective date of the transfer was set. This determines same-day vs future-dated settlement timing.
      *
      * @param PreferredEffectiveDate|PreferredEffectiveDateShape $preferredEffectiveDate
      */
@@ -901,7 +901,7 @@ final class ACHTransfer implements BaseModel
     /**
      * The descriptor that will show on the recipient's bank statement.
      */
-    public function withStatementDescriptor(string $statementDescriptor): self
+    public function withStatementDescriptor(?string $statementDescriptor): self
     {
         $self = clone $this;
         $self['statementDescriptor'] = $statementDescriptor;

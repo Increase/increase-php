@@ -33,6 +33,7 @@ use Increase\InboundRealTimePaymentsTransfers\InboundRealTimePaymentsTransfer\Ty
  *   debtorRoutingNumber: string,
  *   decline: null|Decline|DeclineShape,
  *   endToEndIdentification: string|null,
+ *   returnOfRealTimePaymentsTransferID: string|null,
  *   status: Status|value-of<Status>,
  *   transactionIdentification: string,
  *   type: Type|value-of<Type>,
@@ -125,6 +126,12 @@ final class InboundRealTimePaymentsTransfer implements BaseModel
     public ?string $endToEndIdentification;
 
     /**
+     * The identifier of the Real-Time Payments Transfer this transfer returns, if any.
+     */
+    #[Required('return_of_real_time_payments_transfer_id')]
+    public ?string $returnOfRealTimePaymentsTransferID;
+
+    /**
      * The lifecycle status of the transfer.
      *
      * @var value-of<Status> $status
@@ -171,6 +178,7 @@ final class InboundRealTimePaymentsTransfer implements BaseModel
      *   debtorRoutingNumber: ...,
      *   decline: ...,
      *   endToEndIdentification: ...,
+     *   returnOfRealTimePaymentsTransferID: ...,
      *   status: ...,
      *   transactionIdentification: ...,
      *   type: ...,
@@ -195,6 +203,7 @@ final class InboundRealTimePaymentsTransfer implements BaseModel
      *   ->withDebtorRoutingNumber(...)
      *   ->withDecline(...)
      *   ->withEndToEndIdentification(...)
+     *   ->withReturnOfRealTimePaymentsTransferID(...)
      *   ->withStatus(...)
      *   ->withTransactionIdentification(...)
      *   ->withType(...)
@@ -231,6 +240,7 @@ final class InboundRealTimePaymentsTransfer implements BaseModel
         string $debtorRoutingNumber,
         Decline|array|null $decline,
         ?string $endToEndIdentification,
+        ?string $returnOfRealTimePaymentsTransferID,
         Status|string $status,
         string $transactionIdentification,
         Type|string $type,
@@ -251,6 +261,7 @@ final class InboundRealTimePaymentsTransfer implements BaseModel
         $self['debtorRoutingNumber'] = $debtorRoutingNumber;
         $self['decline'] = $decline;
         $self['endToEndIdentification'] = $endToEndIdentification;
+        $self['returnOfRealTimePaymentsTransferID'] = $returnOfRealTimePaymentsTransferID;
         $self['status'] = $status;
         $self['transactionIdentification'] = $transactionIdentification;
         $self['type'] = $type;
@@ -406,6 +417,18 @@ final class InboundRealTimePaymentsTransfer implements BaseModel
     ): self {
         $self = clone $this;
         $self['endToEndIdentification'] = $endToEndIdentification;
+
+        return $self;
+    }
+
+    /**
+     * The identifier of the Real-Time Payments Transfer this transfer returns, if any.
+     */
+    public function withReturnOfRealTimePaymentsTransferID(
+        ?string $returnOfRealTimePaymentsTransferID
+    ): self {
+        $self = clone $this;
+        $self['returnOfRealTimePaymentsTransferID'] = $returnOfRealTimePaymentsTransferID;
 
         return $self;
     }

@@ -9,7 +9,7 @@ use Increase\Core\Concerns\SdkModel;
 use Increase\Core\Contracts\BaseModel;
 
 /**
- * Filter results by time range on the `created_at` attribute.
+ * Filter exported Fees by the time they were created. This suits historical exports across many fee statements. To get all of the Fees for a given fee statement period, we recommend using `fee_statement_period_start` instead. The time range must not include any Fees on an open fee statement.
  *
  * @phpstan-type CreatedAtShape = array{
  *   after?: \DateTimeInterface|null,

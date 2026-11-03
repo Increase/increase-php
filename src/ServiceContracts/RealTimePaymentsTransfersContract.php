@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Increase\ServiceContracts;
 
 use Increase\Core\Exceptions\APIException;
+use Increase\InboundRealTimePaymentsTransfers\RealTimePaymentsTransfer;
 use Increase\Page;
-use Increase\RealTimePaymentsTransfers\RealTimePaymentsTransfer;
 use Increase\RealTimePaymentsTransfers\RealTimePaymentsTransferListParams\CreatedAt;
 use Increase\RealTimePaymentsTransfers\RealTimePaymentsTransferListParams\Status;
 use Increase\RequestOptions;

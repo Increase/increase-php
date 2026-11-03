@@ -45,6 +45,7 @@ use Increase\RealTimePaymentsTransfers\RealTimePaymentsTransfer\Type;
  *   inboundRealTimePaymentsRequestForPaymentID: string|null,
  *   pendingTransactionID: string|null,
  *   rejection: null|Rejection|RejectionShape,
+ *   returnOfInboundRealTimePaymentsTransferID: string|null,
  *   routingNumber: string,
  *   sourceAccountNumberID: string,
  *   status: Status|value-of<Status>,
@@ -166,6 +167,12 @@ final class RealTimePaymentsTransfer implements BaseModel
     public ?Rejection $rejection;
 
     /**
+     * The identifier of the Inbound Real-Time Payments Transfer this transfer returns, if any.
+     */
+    #[Required('return_of_inbound_real_time_payments_transfer_id')]
+    public ?string $returnOfInboundRealTimePaymentsTransferID;
+
+    /**
      * The destination American Bankers' Association (ABA) Routing Transit Number (RTN).
      */
     #[Required('routing_number')]
@@ -246,6 +253,7 @@ final class RealTimePaymentsTransfer implements BaseModel
      *   inboundRealTimePaymentsRequestForPaymentID: ...,
      *   pendingTransactionID: ...,
      *   rejection: ...,
+     *   returnOfInboundRealTimePaymentsTransferID: ...,
      *   routingNumber: ...,
      *   sourceAccountNumberID: ...,
      *   status: ...,
@@ -279,6 +287,7 @@ final class RealTimePaymentsTransfer implements BaseModel
      *   ->withInboundRealTimePaymentsRequestForPaymentID(...)
      *   ->withPendingTransactionID(...)
      *   ->withRejection(...)
+     *   ->withReturnOfInboundRealTimePaymentsTransferID(...)
      *   ->withRoutingNumber(...)
      *   ->withSourceAccountNumberID(...)
      *   ->withStatus(...)
@@ -328,6 +337,7 @@ final class RealTimePaymentsTransfer implements BaseModel
         ?string $inboundRealTimePaymentsRequestForPaymentID,
         ?string $pendingTransactionID,
         Rejection|array|null $rejection,
+        ?string $returnOfInboundRealTimePaymentsTransferID,
         string $routingNumber,
         string $sourceAccountNumberID,
         Status|string $status,
@@ -357,6 +367,7 @@ final class RealTimePaymentsTransfer implements BaseModel
         $self['inboundRealTimePaymentsRequestForPaymentID'] = $inboundRealTimePaymentsRequestForPaymentID;
         $self['pendingTransactionID'] = $pendingTransactionID;
         $self['rejection'] = $rejection;
+        $self['returnOfInboundRealTimePaymentsTransferID'] = $returnOfInboundRealTimePaymentsTransferID;
         $self['routingNumber'] = $routingNumber;
         $self['sourceAccountNumberID'] = $sourceAccountNumberID;
         $self['status'] = $status;
@@ -569,6 +580,18 @@ final class RealTimePaymentsTransfer implements BaseModel
     {
         $self = clone $this;
         $self['rejection'] = $rejection;
+
+        return $self;
+    }
+
+    /**
+     * The identifier of the Inbound Real-Time Payments Transfer this transfer returns, if any.
+     */
+    public function withReturnOfInboundRealTimePaymentsTransferID(
+        ?string $returnOfInboundRealTimePaymentsTransferID
+    ): self {
+        $self = clone $this;
+        $self['returnOfInboundRealTimePaymentsTransferID'] = $returnOfInboundRealTimePaymentsTransferID;
 
         return $self;
     }

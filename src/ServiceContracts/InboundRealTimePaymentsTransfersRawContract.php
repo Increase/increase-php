@@ -9,8 +9,8 @@ use Increase\Core\Exceptions\APIException;
 use Increase\InboundRealTimePaymentsTransfers\InboundRealTimePaymentsTransfer;
 use Increase\InboundRealTimePaymentsTransfers\InboundRealTimePaymentsTransferListParams;
 use Increase\InboundRealTimePaymentsTransfers\InboundRealTimePaymentsTransferReturnParams;
-use Increase\InboundRealTimePaymentsTransfers\RealTimePaymentsTransfer;
 use Increase\Page;
+use Increase\RealTimePaymentsTransfers\RealTimePaymentsTransfer;
 use Increase\RequestOptions;
 
 /**

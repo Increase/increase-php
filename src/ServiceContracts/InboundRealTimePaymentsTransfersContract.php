@@ -7,8 +7,8 @@ namespace Increase\ServiceContracts;
 use Increase\Core\Exceptions\APIException;
 use Increase\InboundRealTimePaymentsTransfers\InboundRealTimePaymentsTransfer;
 use Increase\InboundRealTimePaymentsTransfers\InboundRealTimePaymentsTransferListParams\CreatedAt;
-use Increase\InboundRealTimePaymentsTransfers\RealTimePaymentsTransfer;
 use Increase\Page;
+use Increase\RealTimePaymentsTransfers\RealTimePaymentsTransfer;
 use Increase\RequestOptions;
 
 /**

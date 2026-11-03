@@ -12,8 +12,8 @@ use Increase\InboundRealTimePaymentsTransfers\InboundRealTimePaymentsTransfer;
 use Increase\InboundRealTimePaymentsTransfers\InboundRealTimePaymentsTransferListParams;
 use Increase\InboundRealTimePaymentsTransfers\InboundRealTimePaymentsTransferListParams\CreatedAt;
 use Increase\InboundRealTimePaymentsTransfers\InboundRealTimePaymentsTransferReturnParams;
-use Increase\InboundRealTimePaymentsTransfers\RealTimePaymentsTransfer;
 use Increase\Page;
+use Increase\RealTimePaymentsTransfers\RealTimePaymentsTransfer;
 use Increase\RequestOptions;
 use Increase\ServiceContracts\InboundRealTimePaymentsTransfersRawContract;
 

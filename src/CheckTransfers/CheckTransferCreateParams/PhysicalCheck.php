@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Increase\CheckTransfers\CheckTransferCreateParams;
 
 use Increase\CheckTransfers\CheckTransferCreateParams\PhysicalCheck\MailingAddress;
+use Increase\CheckTransfers\CheckTransferCreateParams\PhysicalCheck\Payee;
 use Increase\CheckTransfers\CheckTransferCreateParams\PhysicalCheck\Payer;
 use Increase\CheckTransfers\CheckTransferCreateParams\PhysicalCheck\ReturnAddress;
 use Increase\CheckTransfers\CheckTransferCreateParams\PhysicalCheck\ShippingMethod;
@@ -18,6 +19,7 @@ use Increase\Core\Contracts\BaseModel;
  * Details relating to the physical check that Increase will print and mail. This is required if `fulfillment_method` is equal to `physical_check`. It must not be included if any other `fulfillment_method` is provided.
  *
  * @phpstan-import-type MailingAddressShape from \Increase\CheckTransfers\CheckTransferCreateParams\PhysicalCheck\MailingAddress
+ * @phpstan-import-type PayeeShape from \Increase\CheckTransfers\CheckTransferCreateParams\PhysicalCheck\Payee
  * @phpstan-import-type PayerShape from \Increase\CheckTransfers\CheckTransferCreateParams\PhysicalCheck\Payer
  * @phpstan-import-type ReturnAddressShape from \Increase\CheckTransfers\CheckTransferCreateParams\PhysicalCheck\ReturnAddress
  * @phpstan-import-type SignatureShape from \Increase\CheckTransfers\CheckTransferCreateParams\PhysicalCheck\Signature
@@ -25,8 +27,8 @@ use Increase\Core\Contracts\BaseModel;
  * @phpstan-type PhysicalCheckShape = array{
  *   mailingAddress: MailingAddress|MailingAddressShape,
  *   memo: string,
+ *   payee: list<Payee|PayeeShape>,
  *   payer: list<Payer|PayerShape>,
- *   recipientName: string,
  *   attachmentFileID?: string|null,
  *   checkVoucherImageFileID?: string|null,
  *   note?: string|null,
@@ -55,18 +57,20 @@ final class PhysicalCheck implements BaseModel
     public string $memo;
 
     /**
+     * The payee of the check. This will be printed in the Pay to the Order Of portion of the check. This should be an array of up to 4 elements, each of which represents a line of the payee.
+     *
+     * @var list<Payee> $payee
+     */
+    #[Required(list: Payee::class)]
+    public array $payee;
+
+    /**
      * The payer of the check. This will be printed on the top-left portion of the check. This should be an array of up to 4 elements, each of which represents a line of the payer.
      *
      * @var list<Payer> $payer
      */
     #[Required(list: Payer::class)]
     public array $payer;
-
-    /**
-     * The name that will be printed on the check in the 'To:' field.
-     */
-    #[Required('recipient_name')]
-    public string $recipientName;
 
     /**
      * The ID of a File to be attached to the check. This must have `purpose: check_attachment`. For details on pricing and restrictions, see https://increase.com/documentation/originating-checks#printing-checks .
@@ -123,9 +127,7 @@ final class PhysicalCheck implements BaseModel
      *
      * To enforce required parameters use
      * ```
-     * PhysicalCheck::with(
-     *   mailingAddress: ..., memo: ..., payer: ..., recipientName: ...
-     * )
+     * PhysicalCheck::with(mailingAddress: ..., memo: ..., payee: ..., payer: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
@@ -134,8 +136,8 @@ final class PhysicalCheck implements BaseModel
      * (new PhysicalCheck)
      *   ->withMailingAddress(...)
      *   ->withMemo(...)
+     *   ->withPayee(...)
      *   ->withPayer(...)
-     *   ->withRecipientName(...)
      * ```
      */
     public function __construct()
@@ -149,6 +151,7 @@ final class PhysicalCheck implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param MailingAddress|MailingAddressShape $mailingAddress
+     * @param list<Payee|PayeeShape> $payee
      * @param list<Payer|PayerShape> $payer
      * @param ReturnAddress|ReturnAddressShape|null $returnAddress
      * @param ShippingMethod|value-of<ShippingMethod>|null $shippingMethod
@@ -157,8 +160,8 @@ final class PhysicalCheck implements BaseModel
     public static function with(
         MailingAddress|array $mailingAddress,
         string $memo,
+        array $payee,
         array $payer,
-        string $recipientName,
         ?string $attachmentFileID = null,
         ?string $checkVoucherImageFileID = null,
         ?string $note = null,
@@ -172,8 +175,8 @@ final class PhysicalCheck implements BaseModel
 
         $self['mailingAddress'] = $mailingAddress;
         $self['memo'] = $memo;
+        $self['payee'] = $payee;
         $self['payer'] = $payer;
-        $self['recipientName'] = $recipientName;
 
         null !== $attachmentFileID && $self['attachmentFileID'] = $attachmentFileID;
         null !== $checkVoucherImageFileID && $self['checkVoucherImageFileID'] = $checkVoucherImageFileID;
@@ -213,6 +216,19 @@ final class PhysicalCheck implements BaseModel
     }
 
     /**
+     * The payee of the check. This will be printed in the Pay to the Order Of portion of the check. This should be an array of up to 4 elements, each of which represents a line of the payee.
+     *
+     * @param list<Payee|PayeeShape> $payee
+     */
+    public function withPayee(array $payee): self
+    {
+        $self = clone $this;
+        $self['payee'] = $payee;
+
+        return $self;
+    }
+
+    /**
      * The payer of the check. This will be printed on the top-left portion of the check. This should be an array of up to 4 elements, each of which represents a line of the payer.
      *
      * @param list<Payer|PayerShape> $payer
@@ -221,17 +237,6 @@ final class PhysicalCheck implements BaseModel
     {
         $self = clone $this;
         $self['payer'] = $payer;
-
-        return $self;
-    }
-
-    /**
-     * The name that will be printed on the check in the 'To:' field.
-     */
-    public function withRecipientName(string $recipientName): self
-    {
-        $self = clone $this;
-        $self['recipientName'] = $recipientName;
 
         return $self;
     }

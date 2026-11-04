@@ -15,10 +15,10 @@ use Increase\Core\Contracts\BaseModel;
  * @phpstan-type MailingAddressShape = array{
  *   city: string,
  *   line1: string,
+ *   name: string,
  *   postalCode: string,
  *   state: string,
  *   line2?: string|null,
- *   name?: string|null,
  *   phone?: string|null,
  * }
  */
@@ -40,6 +40,12 @@ final class MailingAddress implements BaseModel
     public string $line1;
 
     /**
+     * The name component of the check's destination address.
+     */
+    #[Required]
+    public string $name;
+
+    /**
      * The postal code component of the check's destination address.
      */
     #[Required('postal_code')]
@@ -58,12 +64,6 @@ final class MailingAddress implements BaseModel
     public ?string $line2;
 
     /**
-     * The name component of the check's destination address. Defaults to the provided `recipient_name` parameter if `name` is not provided.
-     */
-    #[Optional]
-    public ?string $name;
-
-    /**
      * The phone number to associate with the check's destination address. The phone number is only used when `shipping_method` is `fedex_overnight` and will be supplied to FedEx to be used in case of delivery issues.
      */
     #[Optional]
@@ -74,7 +74,9 @@ final class MailingAddress implements BaseModel
      *
      * To enforce required parameters use
      * ```
-     * MailingAddress::with(city: ..., line1: ..., postalCode: ..., state: ...)
+     * MailingAddress::with(
+     *   city: ..., line1: ..., name: ..., postalCode: ..., state: ...
+     * )
      * ```
      *
      * Otherwise ensure the following setters are called
@@ -83,6 +85,7 @@ final class MailingAddress implements BaseModel
      * (new MailingAddress)
      *   ->withCity(...)
      *   ->withLine1(...)
+     *   ->withName(...)
      *   ->withPostalCode(...)
      *   ->withState(...)
      * ```
@@ -100,21 +103,21 @@ final class MailingAddress implements BaseModel
     public static function with(
         string $city,
         string $line1,
+        string $name,
         string $postalCode,
         string $state,
         ?string $line2 = null,
-        ?string $name = null,
         ?string $phone = null,
     ): self {
         $self = new self;
 
         $self['city'] = $city;
         $self['line1'] = $line1;
+        $self['name'] = $name;
         $self['postalCode'] = $postalCode;
         $self['state'] = $state;
 
         null !== $line2 && $self['line2'] = $line2;
-        null !== $name && $self['name'] = $name;
         null !== $phone && $self['phone'] = $phone;
 
         return $self;
@@ -138,6 +141,17 @@ final class MailingAddress implements BaseModel
     {
         $self = clone $this;
         $self['line1'] = $line1;
+
+        return $self;
+    }
+
+    /**
+     * The name component of the check's destination address.
+     */
+    public function withName(string $name): self
+    {
+        $self = clone $this;
+        $self['name'] = $name;
 
         return $self;
     }
@@ -171,17 +185,6 @@ final class MailingAddress implements BaseModel
     {
         $self = clone $this;
         $self['line2'] = $line2;
-
-        return $self;
-    }
-
-    /**
-     * The name component of the check's destination address. Defaults to the provided `recipient_name` parameter if `name` is not provided.
-     */
-    public function withName(string $name): self
-    {
-        $self = clone $this;
-        $self['name'] = $name;
 
         return $self;
     }

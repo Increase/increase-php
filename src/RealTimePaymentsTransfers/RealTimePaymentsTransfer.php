@@ -40,6 +40,7 @@ use Increase\RealTimePaymentsTransfers\RealTimePaymentsTransfer\Type;
  *   creditorName: string,
  *   currency: Currency|value-of<Currency>,
  *   debtorName: string|null,
+ *   endToEndIdentification: string|null,
  *   externalAccountID: string|null,
  *   idempotencyKey: string|null,
  *   inboundRealTimePaymentsRequestForPaymentID: string|null,
@@ -135,6 +136,12 @@ final class RealTimePaymentsTransfer implements BaseModel
      */
     #[Required('debtor_name')]
     public ?string $debtorName;
+
+    /**
+     * A free-form reference string set by the sender, to help identify the transfer.
+     */
+    #[Required('end_to_end_identification')]
+    public ?string $endToEndIdentification;
 
     /**
      * The identifier of the External Account the transfer was made to, if any.
@@ -248,6 +255,7 @@ final class RealTimePaymentsTransfer implements BaseModel
      *   creditorName: ...,
      *   currency: ...,
      *   debtorName: ...,
+     *   endToEndIdentification: ...,
      *   externalAccountID: ...,
      *   idempotencyKey: ...,
      *   inboundRealTimePaymentsRequestForPaymentID: ...,
@@ -282,6 +290,7 @@ final class RealTimePaymentsTransfer implements BaseModel
      *   ->withCreditorName(...)
      *   ->withCurrency(...)
      *   ->withDebtorName(...)
+     *   ->withEndToEndIdentification(...)
      *   ->withExternalAccountID(...)
      *   ->withIdempotencyKey(...)
      *   ->withInboundRealTimePaymentsRequestForPaymentID(...)
@@ -332,6 +341,7 @@ final class RealTimePaymentsTransfer implements BaseModel
         string $creditorName,
         Currency|string $currency,
         ?string $debtorName,
+        ?string $endToEndIdentification,
         ?string $externalAccountID,
         ?string $idempotencyKey,
         ?string $inboundRealTimePaymentsRequestForPaymentID,
@@ -362,6 +372,7 @@ final class RealTimePaymentsTransfer implements BaseModel
         $self['creditorName'] = $creditorName;
         $self['currency'] = $currency;
         $self['debtorName'] = $debtorName;
+        $self['endToEndIdentification'] = $endToEndIdentification;
         $self['externalAccountID'] = $externalAccountID;
         $self['idempotencyKey'] = $idempotencyKey;
         $self['inboundRealTimePaymentsRequestForPaymentID'] = $inboundRealTimePaymentsRequestForPaymentID;
@@ -521,6 +532,18 @@ final class RealTimePaymentsTransfer implements BaseModel
     {
         $self = clone $this;
         $self['debtorName'] = $debtorName;
+
+        return $self;
+    }
+
+    /**
+     * A free-form reference string set by the sender, to help identify the transfer.
+     */
+    public function withEndToEndIdentification(
+        ?string $endToEndIdentification
+    ): self {
+        $self = clone $this;
+        $self['endToEndIdentification'] = $endToEndIdentification;
 
         return $self;
     }

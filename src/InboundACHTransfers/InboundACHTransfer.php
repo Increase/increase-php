@@ -194,7 +194,7 @@ final class InboundACHTransfer implements BaseModel
     public ?string $receiverName;
 
     /**
-     * A subhash containing information about when and how the transfer settled at the Federal Reserve.
+     * A subhash containing information about when the transfer settled (or will settle) at the Federal Reserve.
      */
     #[Required]
     public Settlement $settlement;
@@ -640,7 +640,7 @@ final class InboundACHTransfer implements BaseModel
     }
 
     /**
-     * A subhash containing information about when and how the transfer settled at the Federal Reserve.
+     * A subhash containing information about when the transfer settled (or will settle) at the Federal Reserve.
      *
      * @param Settlement|SettlementShape $settlement
      */

@@ -11,7 +11,6 @@ use Increase\Entities\Entity\Corporation;
 use Increase\Entities\Entity\GovernmentAuthority;
 use Increase\Entities\Entity\Joint;
 use Increase\Entities\Entity\NaturalPerson;
-use Increase\Entities\Entity\RiskRating;
 use Increase\Entities\Entity\SoleProprietorship;
 use Increase\Entities\Entity\Status;
 use Increase\Entities\Entity\Structure;
@@ -29,7 +28,6 @@ use Increase\SupplementalDocuments\EntitySupplementalDocument;
  * @phpstan-import-type GovernmentAuthorityShape from \Increase\Entities\Entity\GovernmentAuthority
  * @phpstan-import-type JointShape from \Increase\Entities\Entity\Joint
  * @phpstan-import-type NaturalPersonShape from \Increase\Entities\Entity\NaturalPerson
- * @phpstan-import-type RiskRatingShape from \Increase\Entities\Entity\RiskRating
  * @phpstan-import-type SoleProprietorshipShape from \Increase\Entities\Entity\SoleProprietorship
  * @phpstan-import-type EntitySupplementalDocumentShape from \Increase\SupplementalDocuments\EntitySupplementalDocument
  * @phpstan-import-type TermsAgreementShape from \Increase\Entities\Entity\TermsAgreement
@@ -48,7 +46,6 @@ use Increase\SupplementalDocuments\EntitySupplementalDocument;
  *   idempotencyKey: string|null,
  *   joint: null|Joint|JointShape,
  *   naturalPerson: null|NaturalPerson|NaturalPersonShape,
- *   riskRating: null|RiskRating|RiskRatingShape,
  *   soleProprietorship: null|SoleProprietorship|SoleProprietorshipShape,
  *   status: Status|value-of<Status>,
  *   structure: Structure|value-of<Structure>,
@@ -124,12 +121,6 @@ final class Entity implements BaseModel
      */
     #[Required('natural_person')]
     public ?NaturalPerson $naturalPerson;
-
-    /**
-     * An assessment of the entity’s potential risk of involvement in financial crimes, such as money laundering.
-     */
-    #[Required('risk_rating')]
-    public ?RiskRating $riskRating;
 
     /**
      * Details of the sole proprietorship entity. Will be present if `structure` is equal to `sole_proprietorship`.
@@ -211,7 +202,6 @@ final class Entity implements BaseModel
      *   idempotencyKey: ...,
      *   joint: ...,
      *   naturalPerson: ...,
-     *   riskRating: ...,
      *   soleProprietorship: ...,
      *   status: ...,
      *   structure: ...,
@@ -238,7 +228,6 @@ final class Entity implements BaseModel
      *   ->withIdempotencyKey(...)
      *   ->withJoint(...)
      *   ->withNaturalPerson(...)
-     *   ->withRiskRating(...)
      *   ->withSoleProprietorship(...)
      *   ->withStatus(...)
      *   ->withStructure(...)
@@ -264,7 +253,6 @@ final class Entity implements BaseModel
      * @param GovernmentAuthority|GovernmentAuthorityShape|null $governmentAuthority
      * @param Joint|JointShape|null $joint
      * @param NaturalPerson|NaturalPersonShape|null $naturalPerson
-     * @param RiskRating|RiskRatingShape|null $riskRating
      * @param SoleProprietorship|SoleProprietorshipShape|null $soleProprietorship
      * @param Status|value-of<Status> $status
      * @param Structure|value-of<Structure> $structure
@@ -286,7 +274,6 @@ final class Entity implements BaseModel
         ?string $idempotencyKey,
         Joint|array|null $joint,
         NaturalPerson|array|null $naturalPerson,
-        RiskRating|array|null $riskRating,
         SoleProprietorship|array|null $soleProprietorship,
         Status|string $status,
         Structure|string $structure,
@@ -309,7 +296,6 @@ final class Entity implements BaseModel
         $self['idempotencyKey'] = $idempotencyKey;
         $self['joint'] = $joint;
         $self['naturalPerson'] = $naturalPerson;
-        $self['riskRating'] = $riskRating;
         $self['soleProprietorship'] = $soleProprietorship;
         $self['status'] = $status;
         $self['structure'] = $structure;
@@ -441,19 +427,6 @@ final class Entity implements BaseModel
     ): self {
         $self = clone $this;
         $self['naturalPerson'] = $naturalPerson;
-
-        return $self;
-    }
-
-    /**
-     * An assessment of the entity’s potential risk of involvement in financial crimes, such as money laundering.
-     *
-     * @param RiskRating|RiskRatingShape|null $riskRating
-     */
-    public function withRiskRating(RiskRating|array|null $riskRating): self
-    {
-        $self = clone $this;
-        $self['riskRating'] = $riskRating;
 
         return $self;
     }

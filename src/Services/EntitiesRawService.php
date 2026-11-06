@@ -14,7 +14,6 @@ use Increase\Entities\EntityCreateParams\Corporation;
 use Increase\Entities\EntityCreateParams\GovernmentAuthority;
 use Increase\Entities\EntityCreateParams\Joint;
 use Increase\Entities\EntityCreateParams\NaturalPerson;
-use Increase\Entities\EntityCreateParams\RiskRating;
 use Increase\Entities\EntityCreateParams\SoleProprietorship;
 use Increase\Entities\EntityCreateParams\Structure;
 use Increase\Entities\EntityCreateParams\SupplementalDocument;
@@ -35,7 +34,6 @@ use Increase\ServiceContracts\EntitiesRawContract;
  * @phpstan-import-type GovernmentAuthorityShape from \Increase\Entities\EntityCreateParams\GovernmentAuthority
  * @phpstan-import-type JointShape from \Increase\Entities\EntityCreateParams\Joint
  * @phpstan-import-type NaturalPersonShape from \Increase\Entities\EntityCreateParams\NaturalPerson
- * @phpstan-import-type RiskRatingShape from \Increase\Entities\EntityCreateParams\RiskRating
  * @phpstan-import-type SoleProprietorshipShape from \Increase\Entities\EntityCreateParams\SoleProprietorship
  * @phpstan-import-type SupplementalDocumentShape from \Increase\Entities\EntityCreateParams\SupplementalDocument
  * @phpstan-import-type TermsAgreementShape from \Increase\Entities\EntityCreateParams\TermsAgreement
@@ -44,7 +42,6 @@ use Increase\ServiceContracts\EntitiesRawContract;
  * @phpstan-import-type CorporationShape from \Increase\Entities\EntityUpdateParams\Corporation as CorporationShape1
  * @phpstan-import-type GovernmentAuthorityShape from \Increase\Entities\EntityUpdateParams\GovernmentAuthority as GovernmentAuthorityShape1
  * @phpstan-import-type NaturalPersonShape from \Increase\Entities\EntityUpdateParams\NaturalPerson as NaturalPersonShape1
- * @phpstan-import-type RiskRatingShape from \Increase\Entities\EntityUpdateParams\RiskRating as RiskRatingShape1
  * @phpstan-import-type SoleProprietorshipShape from \Increase\Entities\EntityUpdateParams\SoleProprietorship as SoleProprietorshipShape1
  * @phpstan-import-type TermsAgreementShape from \Increase\Entities\EntityUpdateParams\TermsAgreement as TermsAgreementShape1
  * @phpstan-import-type ThirdPartyVerificationShape from \Increase\Entities\EntityUpdateParams\ThirdPartyVerification as ThirdPartyVerificationShape1
@@ -70,11 +67,9 @@ final class EntitiesRawService implements EntitiesRawContract
      * @param array{
      *   structure: value-of<Structure>,
      *   corporation?: Corporation|CorporationShape,
-     *   description?: string,
      *   governmentAuthority?: GovernmentAuthority|GovernmentAuthorityShape,
      *   joint?: Joint|JointShape,
      *   naturalPerson?: NaturalPerson|NaturalPersonShape,
-     *   riskRating?: RiskRating|RiskRatingShape,
      *   soleProprietorship?: SoleProprietorship|SoleProprietorshipShape,
      *   supplementalDocuments?: list<SupplementalDocument|SupplementalDocumentShape>,
      *   termsAgreements?: list<TermsAgreement|TermsAgreementShape>,
@@ -142,7 +137,6 @@ final class EntitiesRawService implements EntitiesRawContract
      *   detailsConfirmedAt?: \DateTimeInterface,
      *   governmentAuthority?: EntityUpdateParams\GovernmentAuthority|GovernmentAuthorityShape1,
      *   naturalPerson?: EntityUpdateParams\NaturalPerson|NaturalPersonShape1,
-     *   riskRating?: EntityUpdateParams\RiskRating|RiskRatingShape1,
      *   soleProprietorship?: EntityUpdateParams\SoleProprietorship|SoleProprietorshipShape1,
      *   termsAgreements?: list<EntityUpdateParams\TermsAgreement|TermsAgreementShape1>,
      *   thirdPartyVerification?: EntityUpdateParams\ThirdPartyVerification|ThirdPartyVerificationShape1,

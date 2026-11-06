@@ -11,7 +11,6 @@ use Increase\Core\Contracts\BaseModel;
 use Increase\Entities\EntityUpdateParams\Corporation;
 use Increase\Entities\EntityUpdateParams\GovernmentAuthority;
 use Increase\Entities\EntityUpdateParams\NaturalPerson;
-use Increase\Entities\EntityUpdateParams\RiskRating;
 use Increase\Entities\EntityUpdateParams\SoleProprietorship;
 use Increase\Entities\EntityUpdateParams\TermsAgreement;
 use Increase\Entities\EntityUpdateParams\ThirdPartyVerification;
@@ -25,7 +24,6 @@ use Increase\Entities\EntityUpdateParams\Trust;
  * @phpstan-import-type CorporationShape from \Increase\Entities\EntityUpdateParams\Corporation
  * @phpstan-import-type GovernmentAuthorityShape from \Increase\Entities\EntityUpdateParams\GovernmentAuthority
  * @phpstan-import-type NaturalPersonShape from \Increase\Entities\EntityUpdateParams\NaturalPerson
- * @phpstan-import-type RiskRatingShape from \Increase\Entities\EntityUpdateParams\RiskRating
  * @phpstan-import-type SoleProprietorshipShape from \Increase\Entities\EntityUpdateParams\SoleProprietorship
  * @phpstan-import-type TermsAgreementShape from \Increase\Entities\EntityUpdateParams\TermsAgreement
  * @phpstan-import-type ThirdPartyVerificationShape from \Increase\Entities\EntityUpdateParams\ThirdPartyVerification
@@ -36,7 +34,6 @@ use Increase\Entities\EntityUpdateParams\Trust;
  *   detailsConfirmedAt?: \DateTimeInterface|null,
  *   governmentAuthority?: null|GovernmentAuthority|GovernmentAuthorityShape,
  *   naturalPerson?: null|NaturalPerson|NaturalPersonShape,
- *   riskRating?: null|RiskRating|RiskRatingShape,
  *   soleProprietorship?: null|SoleProprietorship|SoleProprietorshipShape,
  *   termsAgreements?: list<TermsAgreement|TermsAgreementShape>|null,
  *   thirdPartyVerification?: null|ThirdPartyVerification|ThirdPartyVerificationShape,
@@ -72,12 +69,6 @@ final class EntityUpdateParams implements BaseModel
      */
     #[Optional('natural_person')]
     public ?NaturalPerson $naturalPerson;
-
-    /**
-     * An assessment of the entity’s potential risk of involvement in financial crimes, such as money laundering.
-     */
-    #[Optional('risk_rating')]
-    public ?RiskRating $riskRating;
 
     /**
      * Details of the sole proprietorship entity to update. If you specify this parameter and the entity is not a sole proprietorship, the request will fail.
@@ -118,7 +109,6 @@ final class EntityUpdateParams implements BaseModel
      * @param Corporation|CorporationShape|null $corporation
      * @param GovernmentAuthority|GovernmentAuthorityShape|null $governmentAuthority
      * @param NaturalPerson|NaturalPersonShape|null $naturalPerson
-     * @param RiskRating|RiskRatingShape|null $riskRating
      * @param SoleProprietorship|SoleProprietorshipShape|null $soleProprietorship
      * @param list<TermsAgreement|TermsAgreementShape>|null $termsAgreements
      * @param ThirdPartyVerification|ThirdPartyVerificationShape|null $thirdPartyVerification
@@ -129,7 +119,6 @@ final class EntityUpdateParams implements BaseModel
         ?\DateTimeInterface $detailsConfirmedAt = null,
         GovernmentAuthority|array|null $governmentAuthority = null,
         NaturalPerson|array|null $naturalPerson = null,
-        RiskRating|array|null $riskRating = null,
         SoleProprietorship|array|null $soleProprietorship = null,
         ?array $termsAgreements = null,
         ThirdPartyVerification|array|null $thirdPartyVerification = null,
@@ -141,7 +130,6 @@ final class EntityUpdateParams implements BaseModel
         null !== $detailsConfirmedAt && $self['detailsConfirmedAt'] = $detailsConfirmedAt;
         null !== $governmentAuthority && $self['governmentAuthority'] = $governmentAuthority;
         null !== $naturalPerson && $self['naturalPerson'] = $naturalPerson;
-        null !== $riskRating && $self['riskRating'] = $riskRating;
         null !== $soleProprietorship && $self['soleProprietorship'] = $soleProprietorship;
         null !== $termsAgreements && $self['termsAgreements'] = $termsAgreements;
         null !== $thirdPartyVerification && $self['thirdPartyVerification'] = $thirdPartyVerification;
@@ -198,19 +186,6 @@ final class EntityUpdateParams implements BaseModel
     {
         $self = clone $this;
         $self['naturalPerson'] = $naturalPerson;
-
-        return $self;
-    }
-
-    /**
-     * An assessment of the entity’s potential risk of involvement in financial crimes, such as money laundering.
-     *
-     * @param RiskRating|RiskRatingShape $riskRating
-     */
-    public function withRiskRating(RiskRating|array $riskRating): self
-    {
-        $self = clone $this;
-        $self['riskRating'] = $riskRating;
 
         return $self;
     }

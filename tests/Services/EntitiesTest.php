@@ -103,7 +103,6 @@ final class EntitiesTest extends TestCase
                 'industryCode' => 'x',
                 'website' => 'https://example.com',
             ],
-            description: 'x',
             governmentAuthority: [
                 'address' => [
                     'city' => 'x',
@@ -191,10 +190,6 @@ final class EntitiesTest extends TestCase
                 ],
                 'name' => 'x',
                 'confirmedNoUsTaxID' => true,
-            ],
-            riskRating: [
-                'ratedAt' => new \DateTimeImmutable('2019-12-27T18:11:19.117Z'),
-                'rating' => 'low',
             ],
             soleProprietorship: [
                 'address' => [

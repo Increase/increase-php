@@ -187,6 +187,8 @@ enum FuelType: string
 
     case ELECTRIC_VEHICLE_CHARGING_LEVEL_3_480_VOLT = 'electric_vehicle_charging_level_3_480_volt';
 
+    case DIESEL_1_OFF_ROAD_NON_TAXABLE = 'diesel_1_off_road_non_taxable';
+
     case RENEWABLE_DIESEL_R95_OR_GREATER_OFF_ROAD_NON_TAXABLE = 'renewable_diesel_r95_or_greater_off_road_non_taxable';
 
     case BIODIESEL_BLEND_1_OFF_ROAD_NON_TAXABLE = 'biodiesel_blend_1_off_road_non_taxable';

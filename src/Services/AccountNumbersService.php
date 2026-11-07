@@ -5,9 +5,8 @@ declare(strict_types=1);
 namespace Increase\Services;
 
 use Increase\AccountNumbers\AccountNumber;
-use Increase\AccountNumbers\AccountNumberCreateParams\InboundACH;
-use Increase\AccountNumbers\AccountNumberCreateParams\InboundChecks;
-use Increase\AccountNumbers\AccountNumberListParams\ACHDebitStatus;
+use Increase\AccountNumbers\AccountNumberCreateParams\InboundACHDebits;
+use Increase\AccountNumbers\AccountNumberCreateParams\UnregisteredInboundChecks;
 use Increase\AccountNumbers\AccountNumberListParams\CreatedAt;
 use Increase\AccountNumbers\AccountNumberUpdateParams\Status;
 use Increase\Client;
@@ -18,12 +17,8 @@ use Increase\RequestOptions;
 use Increase\ServiceContracts\AccountNumbersContract;
 
 /**
- * @phpstan-import-type InboundACHShape from \Increase\AccountNumbers\AccountNumberCreateParams\InboundACH
- * @phpstan-import-type InboundChecksShape from \Increase\AccountNumbers\AccountNumberCreateParams\InboundChecks
- * @phpstan-import-type InboundACHShape from \Increase\AccountNumbers\AccountNumberUpdateParams\InboundACH as InboundACHShape1
- * @phpstan-import-type InboundChecksShape from \Increase\AccountNumbers\AccountNumberUpdateParams\InboundChecks as InboundChecksShape1
- * @phpstan-import-type ACHDebitStatusShape from \Increase\AccountNumbers\AccountNumberListParams\ACHDebitStatus
  * @phpstan-import-type CreatedAtShape from \Increase\AccountNumbers\AccountNumberListParams\CreatedAt
+ * @phpstan-import-type InboundACHDebitsShape from \Increase\AccountNumbers\AccountNumberListParams\InboundACHDebits
  * @phpstan-import-type StatusShape from \Increase\AccountNumbers\AccountNumberListParams\Status
  * @phpstan-import-type RequestOpts from \Increase\RequestOptions
  */
@@ -49,8 +44,8 @@ final class AccountNumbersService implements AccountNumbersContract
      *
      * @param string $accountID the Account the Account Number should belong to
      * @param string $name the name you choose for the Account Number
-     * @param InboundACH|InboundACHShape $inboundACH options related to how this Account Number should handle inbound ACH transfers
-     * @param InboundChecks|InboundChecksShape $inboundChecks options related to how this Account Number should handle inbound check withdrawals
+     * @param InboundACHDebits|value-of<InboundACHDebits> $inboundACHDebits Whether inbound ACH debits are allowed against this Account Number. Note that ACH debits will be declined if this is `allowed` but the Account Number is not active. If you do not specify this field, the default is `allowed`.
+     * @param UnregisteredInboundChecks|value-of<UnregisteredInboundChecks> $unregisteredInboundChecks Whether unregistered inbound checks for this Account Number can be deposited. If you do not specify this field, the default is `blocked`.
      * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
@@ -58,16 +53,16 @@ final class AccountNumbersService implements AccountNumbersContract
     public function create(
         string $accountID,
         string $name,
-        InboundACH|array|null $inboundACH = null,
-        InboundChecks|array|null $inboundChecks = null,
+        InboundACHDebits|string|null $inboundACHDebits = null,
+        UnregisteredInboundChecks|string|null $unregisteredInboundChecks = null,
         RequestOptions|array|null $requestOptions = null,
     ): AccountNumber {
         $params = Util::removeNulls(
             [
                 'accountID' => $accountID,
                 'name' => $name,
-                'inboundACH' => $inboundACH,
-                'inboundChecks' => $inboundChecks,
+                'inboundACHDebits' => $inboundACHDebits,
+                'unregisteredInboundChecks' => $unregisteredInboundChecks,
             ],
         );
 
@@ -103,28 +98,28 @@ final class AccountNumbersService implements AccountNumbersContract
      * Update an Account Number
      *
      * @param string $accountNumberID the identifier of the Account Number
-     * @param \Increase\AccountNumbers\AccountNumberUpdateParams\InboundACH|InboundACHShape1 $inboundACH options related to how this Account Number handles inbound ACH transfers
-     * @param \Increase\AccountNumbers\AccountNumberUpdateParams\InboundChecks|InboundChecksShape1 $inboundChecks options related to how this Account Number should handle inbound check withdrawals
+     * @param \Increase\AccountNumbers\AccountNumberUpdateParams\InboundACHDebits|value-of<\Increase\AccountNumbers\AccountNumberUpdateParams\InboundACHDebits> $inboundACHDebits Whether inbound ACH debits are allowed against this Account Number. Note that ACH debits will be declined if this is `allowed` but the Account Number is not active.
      * @param string $name the name you choose for the Account Number
      * @param Status|value-of<Status> $status this indicates if transfers can be made to the Account Number
+     * @param \Increase\AccountNumbers\AccountNumberUpdateParams\UnregisteredInboundChecks|value-of<\Increase\AccountNumbers\AccountNumberUpdateParams\UnregisteredInboundChecks> $unregisteredInboundChecks whether unregistered inbound checks for this Account Number can be deposited
      * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
      */
     public function update(
         string $accountNumberID,
-        \Increase\AccountNumbers\AccountNumberUpdateParams\InboundACH|array|null $inboundACH = null,
-        \Increase\AccountNumbers\AccountNumberUpdateParams\InboundChecks|array|null $inboundChecks = null,
+        \Increase\AccountNumbers\AccountNumberUpdateParams\InboundACHDebits|string|null $inboundACHDebits = null,
         ?string $name = null,
         Status|string|null $status = null,
+        \Increase\AccountNumbers\AccountNumberUpdateParams\UnregisteredInboundChecks|string|null $unregisteredInboundChecks = null,
         RequestOptions|array|null $requestOptions = null,
     ): AccountNumber {
         $params = Util::removeNulls(
             [
-                'inboundACH' => $inboundACH,
-                'inboundChecks' => $inboundChecks,
+                'inboundACHDebits' => $inboundACHDebits,
                 'name' => $name,
                 'status' => $status,
+                'unregisteredInboundChecks' => $unregisteredInboundChecks,
             ],
         );
 
@@ -140,10 +135,10 @@ final class AccountNumbersService implements AccountNumbersContract
      * List Account Numbers
      *
      * @param string $accountID filter Account Numbers to those belonging to the specified Account
-     * @param ACHDebitStatus|ACHDebitStatusShape $achDebitStatus
      * @param CreatedAt|CreatedAtShape $createdAt
      * @param string $cursor return the page of entries after this one
      * @param string $idempotencyKey Filter records to the one with the specified `idempotency_key` you chose for that object. This value is unique across Increase and is used to ensure that a request is only processed once. Learn more about [idempotency](https://increase.com/documentation/idempotency-keys).
+     * @param \Increase\AccountNumbers\AccountNumberListParams\InboundACHDebits|InboundACHDebitsShape $inboundACHDebits
      * @param int $limit Limit the size of the list that is returned. The default (and maximum) is 100 objects.
      *
      * Defaults to `100`.
@@ -156,10 +151,10 @@ final class AccountNumbersService implements AccountNumbersContract
      */
     public function list(
         ?string $accountID = null,
-        ACHDebitStatus|array|null $achDebitStatus = null,
         CreatedAt|array|null $createdAt = null,
         ?string $cursor = null,
         ?string $idempotencyKey = null,
+        \Increase\AccountNumbers\AccountNumberListParams\InboundACHDebits|array|null $inboundACHDebits = null,
         int $limit = 100,
         \Increase\AccountNumbers\AccountNumberListParams\Status|array|null $status = null,
         RequestOptions|array|null $requestOptions = null,
@@ -167,10 +162,10 @@ final class AccountNumbersService implements AccountNumbersContract
         $params = Util::removeNulls(
             [
                 'accountID' => $accountID,
-                'achDebitStatus' => $achDebitStatus,
                 'createdAt' => $createdAt,
                 'cursor' => $cursor,
                 'idempotencyKey' => $idempotencyKey,
+                'inboundACHDebits' => $inboundACHDebits,
                 'limit' => $limit,
                 'status' => $status,
             ],

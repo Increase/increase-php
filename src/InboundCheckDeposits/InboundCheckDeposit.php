@@ -32,6 +32,7 @@ use Increase\InboundCheckDeposits\InboundCheckDeposit\Type;
  *   bankOfFirstDepositRoutingNumber: string|null,
  *   checkNumber: string|null,
  *   checkTransferID: string|null,
+ *   checkbookCheckID: string|null,
  *   createdAt: \DateTimeInterface,
  *   currency: Currency|value-of<Currency>,
  *   declinedAt: \DateTimeInterface|null,
@@ -118,6 +119,12 @@ final class InboundCheckDeposit implements BaseModel
     public ?string $checkTransferID;
 
     /**
+     * If this deposit is for an existing Checkbook Check, the identifier of that Checkbook Check.
+     */
+    #[Required('checkbook_check_id')]
+    public ?string $checkbookCheckID;
+
+    /**
      * The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which the deposit was attempted.
      */
     #[Required('created_at')]
@@ -202,6 +209,7 @@ final class InboundCheckDeposit implements BaseModel
      *   bankOfFirstDepositRoutingNumber: ...,
      *   checkNumber: ...,
      *   checkTransferID: ...,
+     *   checkbookCheckID: ...,
      *   createdAt: ...,
      *   currency: ...,
      *   declinedAt: ...,
@@ -230,6 +238,7 @@ final class InboundCheckDeposit implements BaseModel
      *   ->withBankOfFirstDepositRoutingNumber(...)
      *   ->withCheckNumber(...)
      *   ->withCheckTransferID(...)
+     *   ->withCheckbookCheckID(...)
      *   ->withCreatedAt(...)
      *   ->withCurrency(...)
      *   ->withDeclinedAt(...)
@@ -271,6 +280,7 @@ final class InboundCheckDeposit implements BaseModel
         ?string $bankOfFirstDepositRoutingNumber,
         ?string $checkNumber,
         ?string $checkTransferID,
+        ?string $checkbookCheckID,
         \DateTimeInterface $createdAt,
         Currency|string $currency,
         ?\DateTimeInterface $declinedAt,
@@ -295,6 +305,7 @@ final class InboundCheckDeposit implements BaseModel
         $self['bankOfFirstDepositRoutingNumber'] = $bankOfFirstDepositRoutingNumber;
         $self['checkNumber'] = $checkNumber;
         $self['checkTransferID'] = $checkTransferID;
+        $self['checkbookCheckID'] = $checkbookCheckID;
         $self['createdAt'] = $createdAt;
         $self['currency'] = $currency;
         $self['declinedAt'] = $declinedAt;
@@ -430,6 +441,17 @@ final class InboundCheckDeposit implements BaseModel
     {
         $self = clone $this;
         $self['checkTransferID'] = $checkTransferID;
+
+        return $self;
+    }
+
+    /**
+     * If this deposit is for an existing Checkbook Check, the identifier of that Checkbook Check.
+     */
+    public function withCheckbookCheckID(?string $checkbookCheckID): self
+    {
+        $self = clone $this;
+        $self['checkbookCheckID'] = $checkbookCheckID;
 
         return $self;
     }

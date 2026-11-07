@@ -12,13 +12,21 @@ use Increase\Core\Contracts\BaseModel;
  * An Inbound Check Deposit Return Intention object. This field will be present in the JSON response if and only if `category` is equal to `inbound_check_deposit_return_intention`. An Inbound Check Deposit Return Intention is created when Increase receives an Inbound Check and the User requests that it be returned.
  *
  * @phpstan-type InboundCheckDepositReturnIntentionShape = array{
- *   inboundCheckDepositID: string, transferID: string|null
+ *   checkbookCheckID: string|null,
+ *   inboundCheckDepositID: string,
+ *   transferID: string|null,
  * }
  */
 final class InboundCheckDepositReturnIntention implements BaseModel
 {
     /** @use SdkModel<InboundCheckDepositReturnIntentionShape> */
     use SdkModel;
+
+    /**
+     * The identifier of the Checkbook Check object that was deposited.
+     */
+    #[Required('checkbook_check_id')]
+    public ?string $checkbookCheckID;
 
     /**
      * The ID of the Inbound Check Deposit that is being returned.
@@ -38,7 +46,7 @@ final class InboundCheckDepositReturnIntention implements BaseModel
      * To enforce required parameters use
      * ```
      * InboundCheckDepositReturnIntention::with(
-     *   inboundCheckDepositID: ..., transferID: ...
+     *   checkbookCheckID: ..., inboundCheckDepositID: ..., transferID: ...
      * )
      * ```
      *
@@ -46,6 +54,7 @@ final class InboundCheckDepositReturnIntention implements BaseModel
      *
      * ```
      * (new InboundCheckDepositReturnIntention)
+     *   ->withCheckbookCheckID(...)
      *   ->withInboundCheckDepositID(...)
      *   ->withTransferID(...)
      * ```
@@ -61,13 +70,26 @@ final class InboundCheckDepositReturnIntention implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      */
     public static function with(
+        ?string $checkbookCheckID,
         string $inboundCheckDepositID,
-        ?string $transferID
+        ?string $transferID,
     ): self {
         $self = new self;
 
+        $self['checkbookCheckID'] = $checkbookCheckID;
         $self['inboundCheckDepositID'] = $inboundCheckDepositID;
         $self['transferID'] = $transferID;
+
+        return $self;
+    }
+
+    /**
+     * The identifier of the Checkbook Check object that was deposited.
+     */
+    public function withCheckbookCheckID(?string $checkbookCheckID): self
+    {
+        $self = clone $this;
+        $self['checkbookCheckID'] = $checkbookCheckID;
 
         return $self;
     }

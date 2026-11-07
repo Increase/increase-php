@@ -17,6 +17,7 @@ use Increase\DeclinedTransactions\DeclinedTransaction\Source\CheckDecline\Reason
  *   auxiliaryOnUs: string|null,
  *   backImageFileID: string|null,
  *   checkTransferID: string|null,
+ *   checkbookCheckID: string|null,
  *   frontImageFileID: string|null,
  *   inboundCheckDepositID: string|null,
  *   reason: Reason|value-of<Reason>,
@@ -52,6 +53,12 @@ final class CheckDecline implements BaseModel
     public ?string $checkTransferID;
 
     /**
+     * The identifier of the Checkbook Check object associated with this decline.
+     */
+    #[Required('checkbook_check_id')]
+    public ?string $checkbookCheckID;
+
+    /**
      * The identifier of the API File object containing an image of the front of the declined check.
      */
     #[Required('front_image_file_id')]
@@ -81,6 +88,7 @@ final class CheckDecline implements BaseModel
      *   auxiliaryOnUs: ...,
      *   backImageFileID: ...,
      *   checkTransferID: ...,
+     *   checkbookCheckID: ...,
      *   frontImageFileID: ...,
      *   inboundCheckDepositID: ...,
      *   reason: ...,
@@ -95,6 +103,7 @@ final class CheckDecline implements BaseModel
      *   ->withAuxiliaryOnUs(...)
      *   ->withBackImageFileID(...)
      *   ->withCheckTransferID(...)
+     *   ->withCheckbookCheckID(...)
      *   ->withFrontImageFileID(...)
      *   ->withInboundCheckDepositID(...)
      *   ->withReason(...)
@@ -117,6 +126,7 @@ final class CheckDecline implements BaseModel
         ?string $auxiliaryOnUs,
         ?string $backImageFileID,
         ?string $checkTransferID,
+        ?string $checkbookCheckID,
         ?string $frontImageFileID,
         ?string $inboundCheckDepositID,
         Reason|string $reason,
@@ -127,6 +137,7 @@ final class CheckDecline implements BaseModel
         $self['auxiliaryOnUs'] = $auxiliaryOnUs;
         $self['backImageFileID'] = $backImageFileID;
         $self['checkTransferID'] = $checkTransferID;
+        $self['checkbookCheckID'] = $checkbookCheckID;
         $self['frontImageFileID'] = $frontImageFileID;
         $self['inboundCheckDepositID'] = $inboundCheckDepositID;
         $self['reason'] = $reason;
@@ -174,6 +185,17 @@ final class CheckDecline implements BaseModel
     {
         $self = clone $this;
         $self['checkTransferID'] = $checkTransferID;
+
+        return $self;
+    }
+
+    /**
+     * The identifier of the Checkbook Check object associated with this decline.
+     */
+    public function withCheckbookCheckID(?string $checkbookCheckID): self
+    {
+        $self = clone $this;
+        $self['checkbookCheckID'] = $checkbookCheckID;
 
         return $self;
     }

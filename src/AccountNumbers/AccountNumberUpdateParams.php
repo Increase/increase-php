@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Increase\AccountNumbers;
 
-use Increase\AccountNumbers\AccountNumberUpdateParams\InboundACH;
-use Increase\AccountNumbers\AccountNumberUpdateParams\InboundChecks;
+use Increase\AccountNumbers\AccountNumberUpdateParams\InboundACHDebits;
 use Increase\AccountNumbers\AccountNumberUpdateParams\Status;
+use Increase\AccountNumbers\AccountNumberUpdateParams\UnregisteredInboundChecks;
 use Increase\Core\Attributes\Optional;
 use Increase\Core\Concerns\SdkModel;
 use Increase\Core\Concerns\SdkParams;
@@ -17,14 +17,11 @@ use Increase\Core\Contracts\BaseModel;
  *
  * @see Increase\Services\AccountNumbersService::update()
  *
- * @phpstan-import-type InboundACHShape from \Increase\AccountNumbers\AccountNumberUpdateParams\InboundACH
- * @phpstan-import-type InboundChecksShape from \Increase\AccountNumbers\AccountNumberUpdateParams\InboundChecks
- *
  * @phpstan-type AccountNumberUpdateParamsShape = array{
- *   inboundACH?: null|InboundACH|InboundACHShape,
- *   inboundChecks?: null|InboundChecks|InboundChecksShape,
+ *   inboundACHDebits?: null|InboundACHDebits|value-of<InboundACHDebits>,
  *   name?: string|null,
  *   status?: null|Status|value-of<Status>,
+ *   unregisteredInboundChecks?: null|UnregisteredInboundChecks|value-of<UnregisteredInboundChecks>,
  * }
  */
 final class AccountNumberUpdateParams implements BaseModel
@@ -34,16 +31,12 @@ final class AccountNumberUpdateParams implements BaseModel
     use SdkParams;
 
     /**
-     * Options related to how this Account Number handles inbound ACH transfers.
+     * Whether inbound ACH debits are allowed against this Account Number. Note that ACH debits will be declined if this is `allowed` but the Account Number is not active.
+     *
+     * @var value-of<InboundACHDebits>|null $inboundACHDebits
      */
-    #[Optional('inbound_ach')]
-    public ?InboundACH $inboundACH;
-
-    /**
-     * Options related to how this Account Number should handle inbound check withdrawals.
-     */
-    #[Optional('inbound_checks')]
-    public ?InboundChecks $inboundChecks;
+    #[Optional('inbound_ach_debits', enum: InboundACHDebits::class)]
+    public ?string $inboundACHDebits;
 
     /**
      * The name you choose for the Account Number.
@@ -59,6 +52,17 @@ final class AccountNumberUpdateParams implements BaseModel
     #[Optional(enum: Status::class)]
     public ?string $status;
 
+    /**
+     * Whether unregistered inbound checks for this Account Number can be deposited.
+     *
+     * @var value-of<UnregisteredInboundChecks>|null $unregisteredInboundChecks
+     */
+    #[Optional(
+        'unregistered_inbound_checks',
+        enum: UnregisteredInboundChecks::class
+    )]
+    public ?string $unregisteredInboundChecks;
+
     public function __construct()
     {
         $this->initialize();
@@ -69,48 +73,36 @@ final class AccountNumberUpdateParams implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param InboundACH|InboundACHShape|null $inboundACH
-     * @param InboundChecks|InboundChecksShape|null $inboundChecks
+     * @param InboundACHDebits|value-of<InboundACHDebits>|null $inboundACHDebits
      * @param Status|value-of<Status>|null $status
+     * @param UnregisteredInboundChecks|value-of<UnregisteredInboundChecks>|null $unregisteredInboundChecks
      */
     public static function with(
-        InboundACH|array|null $inboundACH = null,
-        InboundChecks|array|null $inboundChecks = null,
+        InboundACHDebits|string|null $inboundACHDebits = null,
         ?string $name = null,
         Status|string|null $status = null,
+        UnregisteredInboundChecks|string|null $unregisteredInboundChecks = null,
     ): self {
         $self = new self;
 
-        null !== $inboundACH && $self['inboundACH'] = $inboundACH;
-        null !== $inboundChecks && $self['inboundChecks'] = $inboundChecks;
+        null !== $inboundACHDebits && $self['inboundACHDebits'] = $inboundACHDebits;
         null !== $name && $self['name'] = $name;
         null !== $status && $self['status'] = $status;
+        null !== $unregisteredInboundChecks && $self['unregisteredInboundChecks'] = $unregisteredInboundChecks;
 
         return $self;
     }
 
     /**
-     * Options related to how this Account Number handles inbound ACH transfers.
+     * Whether inbound ACH debits are allowed against this Account Number. Note that ACH debits will be declined if this is `allowed` but the Account Number is not active.
      *
-     * @param InboundACH|InboundACHShape $inboundACH
+     * @param InboundACHDebits|value-of<InboundACHDebits> $inboundACHDebits
      */
-    public function withInboundACH(InboundACH|array $inboundACH): self
-    {
+    public function withInboundACHDebits(
+        InboundACHDebits|string $inboundACHDebits
+    ): self {
         $self = clone $this;
-        $self['inboundACH'] = $inboundACH;
-
-        return $self;
-    }
-
-    /**
-     * Options related to how this Account Number should handle inbound check withdrawals.
-     *
-     * @param InboundChecks|InboundChecksShape $inboundChecks
-     */
-    public function withInboundChecks(InboundChecks|array $inboundChecks): self
-    {
-        $self = clone $this;
-        $self['inboundChecks'] = $inboundChecks;
+        $self['inboundACHDebits'] = $inboundACHDebits;
 
         return $self;
     }
@@ -135,6 +127,20 @@ final class AccountNumberUpdateParams implements BaseModel
     {
         $self = clone $this;
         $self['status'] = $status;
+
+        return $self;
+    }
+
+    /**
+     * Whether unregistered inbound checks for this Account Number can be deposited.
+     *
+     * @param UnregisteredInboundChecks|value-of<UnregisteredInboundChecks> $unregisteredInboundChecks
+     */
+    public function withUnregisteredInboundChecks(
+        UnregisteredInboundChecks|string $unregisteredInboundChecks
+    ): self {
+        $self = clone $this;
+        $self['unregisteredInboundChecks'] = $unregisteredInboundChecks;
 
         return $self;
     }

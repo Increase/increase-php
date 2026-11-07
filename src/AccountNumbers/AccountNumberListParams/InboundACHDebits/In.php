@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Increase\AccountNumbers\AccountNumberListParams\ACHDebitStatus;
+namespace Increase\AccountNumbers\AccountNumberListParams\InboundACHDebits;
 
 enum In: string
 {

@@ -4,21 +4,21 @@ declare(strict_types=1);
 
 namespace Increase\AccountNumbers\AccountNumberListParams;
 
-use Increase\AccountNumbers\AccountNumberListParams\ACHDebitStatus\In;
+use Increase\AccountNumbers\AccountNumberListParams\InboundACHDebits\In;
 use Increase\Core\Attributes\Optional;
 use Increase\Core\Concerns\SdkModel;
 use Increase\Core\Contracts\BaseModel;
 
 /**
- * @phpstan-type ACHDebitStatusShape = array{in?: list<In|value-of<In>>|null}
+ * @phpstan-type InboundACHDebitsShape = array{in?: list<In|value-of<In>>|null}
  */
-final class ACHDebitStatus implements BaseModel
+final class InboundACHDebits implements BaseModel
 {
-    /** @use SdkModel<ACHDebitStatusShape> */
+    /** @use SdkModel<InboundACHDebitsShape> */
     use SdkModel;
 
     /**
-     * The ACH Debit status to retrieve Account Numbers for. For GET requests, this should be encoded as a comma-delimited string, such as `?in=one,two,three`.
+     * The inbound ACH debits status to retrieve Account Numbers for. For GET requests, this should be encoded as a comma-delimited string, such as `?in=one,two,three`.
      *
      * @var list<value-of<In>>|null $in
      */
@@ -47,7 +47,7 @@ final class ACHDebitStatus implements BaseModel
     }
 
     /**
-     * The ACH Debit status to retrieve Account Numbers for. For GET requests, this should be encoded as a comma-delimited string, such as `?in=one,two,three`.
+     * The inbound ACH debits status to retrieve Account Numbers for. For GET requests, this should be encoded as a comma-delimited string, such as `?in=one,two,three`.
      *
      * @param list<In|value-of<In>> $in
      */

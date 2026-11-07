@@ -10,7 +10,7 @@ use Increase\Core\Contracts\BaseModel;
 use Increase\InboundACHTransfers\InboundACHTransfer\Settlement\SettlementSchedule;
 
 /**
- * A subhash containing information about when and how the transfer settled at the Federal Reserve.
+ * A subhash containing information about when the transfer settled (or will settle) at the Federal Reserve.
  *
  * @phpstan-type SettlementShape = array{
  *   settledAt: \DateTimeInterface,

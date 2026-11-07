@@ -6,11 +6,10 @@ namespace Increase\Services;
 
 use Increase\AccountNumbers\AccountNumber;
 use Increase\AccountNumbers\AccountNumberCreateParams;
-use Increase\AccountNumbers\AccountNumberCreateParams\InboundACH;
-use Increase\AccountNumbers\AccountNumberCreateParams\InboundChecks;
+use Increase\AccountNumbers\AccountNumberCreateParams\UnregisteredInboundChecks;
 use Increase\AccountNumbers\AccountNumberListParams;
-use Increase\AccountNumbers\AccountNumberListParams\ACHDebitStatus;
 use Increase\AccountNumbers\AccountNumberListParams\CreatedAt;
+use Increase\AccountNumbers\AccountNumberListParams\InboundACHDebits;
 use Increase\AccountNumbers\AccountNumberListParams\Status;
 use Increase\AccountNumbers\AccountNumberUpdateParams;
 use Increase\Client;
@@ -22,12 +21,8 @@ use Increase\RequestOptions;
 use Increase\ServiceContracts\AccountNumbersRawContract;
 
 /**
- * @phpstan-import-type InboundACHShape from \Increase\AccountNumbers\AccountNumberCreateParams\InboundACH
- * @phpstan-import-type InboundChecksShape from \Increase\AccountNumbers\AccountNumberCreateParams\InboundChecks
- * @phpstan-import-type InboundACHShape from \Increase\AccountNumbers\AccountNumberUpdateParams\InboundACH as InboundACHShape1
- * @phpstan-import-type InboundChecksShape from \Increase\AccountNumbers\AccountNumberUpdateParams\InboundChecks as InboundChecksShape1
- * @phpstan-import-type ACHDebitStatusShape from \Increase\AccountNumbers\AccountNumberListParams\ACHDebitStatus
  * @phpstan-import-type CreatedAtShape from \Increase\AccountNumbers\AccountNumberListParams\CreatedAt
+ * @phpstan-import-type InboundACHDebitsShape from \Increase\AccountNumbers\AccountNumberListParams\InboundACHDebits
  * @phpstan-import-type StatusShape from \Increase\AccountNumbers\AccountNumberListParams\Status
  * @phpstan-import-type RequestOpts from \Increase\RequestOptions
  */
@@ -47,8 +42,8 @@ final class AccountNumbersRawService implements AccountNumbersRawContract
      * @param array{
      *   accountID: string,
      *   name: string,
-     *   inboundACH?: InboundACH|InboundACHShape,
-     *   inboundChecks?: InboundChecks|InboundChecksShape,
+     *   inboundACHDebits?: AccountNumberCreateParams\InboundACHDebits|value-of<AccountNumberCreateParams\InboundACHDebits>,
+     *   unregisteredInboundChecks?: UnregisteredInboundChecks|value-of<UnregisteredInboundChecks>,
      * }|AccountNumberCreateParams $params
      * @param RequestOpts|null $requestOptions
      *
@@ -107,10 +102,10 @@ final class AccountNumbersRawService implements AccountNumbersRawContract
      *
      * @param string $accountNumberID the identifier of the Account Number
      * @param array{
-     *   inboundACH?: AccountNumberUpdateParams\InboundACH|InboundACHShape1,
-     *   inboundChecks?: AccountNumberUpdateParams\InboundChecks|InboundChecksShape1,
+     *   inboundACHDebits?: AccountNumberUpdateParams\InboundACHDebits|value-of<AccountNumberUpdateParams\InboundACHDebits>,
      *   name?: string,
      *   status?: AccountNumberUpdateParams\Status|value-of<AccountNumberUpdateParams\Status>,
+     *   unregisteredInboundChecks?: AccountNumberUpdateParams\UnregisteredInboundChecks|value-of<AccountNumberUpdateParams\UnregisteredInboundChecks>,
      * }|AccountNumberUpdateParams $params
      * @param RequestOpts|null $requestOptions
      *
@@ -145,10 +140,10 @@ final class AccountNumbersRawService implements AccountNumbersRawContract
      *
      * @param array{
      *   accountID?: string,
-     *   achDebitStatus?: ACHDebitStatus|ACHDebitStatusShape,
      *   createdAt?: CreatedAt|CreatedAtShape,
      *   cursor?: string,
      *   idempotencyKey?: string,
+     *   inboundACHDebits?: InboundACHDebits|InboundACHDebitsShape,
      *   limit?: int,
      *   status?: Status|StatusShape,
      * }|AccountNumberListParams $params
@@ -175,9 +170,9 @@ final class AccountNumbersRawService implements AccountNumbersRawContract
                 $parsed,
                 [
                     'accountID' => 'account_id',
-                    'achDebitStatus' => 'ach_debit_status',
                     'createdAt' => 'created_at',
                     'idempotencyKey' => 'idempotency_key',
+                    'inboundACHDebits' => 'inbound_ach_debits',
                 ],
             ),
             options: $options,

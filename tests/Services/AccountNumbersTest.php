@@ -46,8 +46,8 @@ final class AccountNumbersTest extends TestCase
         $result = $this->client->accountNumbers->create(
             accountID: 'account_in71c4amph0vgo2qllky',
             name: 'Rent payments',
-            inboundACH: ['debitStatus' => 'allowed'],
-            inboundChecks: ['status' => 'allowed'],
+            inboundACHDebits: 'allowed',
+            unregisteredInboundChecks: 'allowed',
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType

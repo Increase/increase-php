@@ -23,6 +23,8 @@ use Increase\Services\CardPushTransfersService;
 use Increase\Services\CardsService;
 use Increase\Services\CardTokensService;
 use Increase\Services\CardValidationsService;
+use Increase\Services\CheckbookChecksService;
+use Increase\Services\CheckbooksService;
 use Increase\Services\CheckDepositsService;
 use Increase\Services\CheckTransfersService;
 use Increase\Services\DeclinedTransactionsService;
@@ -191,6 +193,16 @@ class Client extends BaseClient
      * @api
      */
     public CheckTransfersService $checkTransfers;
+
+    /**
+     * @api
+     */
+    public CheckbooksService $checkbooks;
+
+    /**
+     * @api
+     */
+    public CheckbookChecksService $checkbookChecks;
 
     /**
      * @api
@@ -442,6 +454,8 @@ class Client extends BaseClient
         $this->wireDrawdownRequests = new WireDrawdownRequestsService($this);
         $this->inboundWireDrawdownRequests = new InboundWireDrawdownRequestsService($this);
         $this->checkTransfers = new CheckTransfersService($this);
+        $this->checkbooks = new CheckbooksService($this);
+        $this->checkbookChecks = new CheckbookChecksService($this);
         $this->inboundCheckDeposits = new InboundCheckDepositsService($this);
         $this->realTimePaymentsTransfers = new RealTimePaymentsTransfersService($this);
         $this->inboundRealTimePaymentsTransfers = new InboundRealTimePaymentsTransfersService($this);

@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Increase\AccountNumbers;
 
-use Increase\AccountNumbers\AccountNumber\InboundACH;
-use Increase\AccountNumbers\AccountNumber\InboundChecks;
+use Increase\AccountNumbers\AccountNumber\InboundACHDebits;
 use Increase\AccountNumbers\AccountNumber\Status;
 use Increase\AccountNumbers\AccountNumber\Type;
+use Increase\AccountNumbers\AccountNumber\UnregisteredInboundChecks;
 use Increase\Core\Attributes\Required;
 use Increase\Core\Concerns\SdkModel;
 use Increase\Core\Contracts\BaseModel;
@@ -15,21 +15,18 @@ use Increase\Core\Contracts\BaseModel;
 /**
  * Each account can have multiple account and routing numbers. We recommend that you use a set per vendor. This is similar to how you use different passwords for different websites. Account numbers can also be used to seamlessly reconcile inbound payments. Generating a unique account number per vendor ensures you always know the originator of an incoming payment.
  *
- * @phpstan-import-type InboundACHShape from \Increase\AccountNumbers\AccountNumber\InboundACH
- * @phpstan-import-type InboundChecksShape from \Increase\AccountNumbers\AccountNumber\InboundChecks
- *
  * @phpstan-type AccountNumberShape = array{
  *   id: string,
  *   accountID: string,
  *   accountNumber: string,
  *   createdAt: \DateTimeInterface,
  *   idempotencyKey: string|null,
- *   inboundACH: InboundACH|InboundACHShape,
- *   inboundChecks: InboundChecks|InboundChecksShape,
+ *   inboundACHDebits: InboundACHDebits|value-of<InboundACHDebits>,
  *   name: string,
  *   routingNumber: string,
  *   status: Status|value-of<Status>,
  *   type: Type|value-of<Type>,
+ *   unregisteredInboundChecks: UnregisteredInboundChecks|value-of<UnregisteredInboundChecks>,
  * }
  */
 final class AccountNumber implements BaseModel
@@ -68,16 +65,12 @@ final class AccountNumber implements BaseModel
     public ?string $idempotencyKey;
 
     /**
-     * Properties related to how this Account Number handles inbound ACH transfers.
+     * Whether inbound ACH debits are allowed against this Account Number. Note that they will still be declined if this is `allowed` but the Account Number is not active.
+     *
+     * @var value-of<InboundACHDebits> $inboundACHDebits
      */
-    #[Required('inbound_ach')]
-    public InboundACH $inboundACH;
-
-    /**
-     * Properties related to how this Account Number should handle inbound check withdrawals.
-     */
-    #[Required('inbound_checks')]
-    public InboundChecks $inboundChecks;
+    #[Required('inbound_ach_debits', enum: InboundACHDebits::class)]
+    public string $inboundACHDebits;
 
     /**
      * The name you choose for the Account Number.
@@ -108,6 +101,17 @@ final class AccountNumber implements BaseModel
     public string $type;
 
     /**
+     * Whether unregistered inbound checks for this Account Number can be deposited.
+     *
+     * @var value-of<UnregisteredInboundChecks> $unregisteredInboundChecks
+     */
+    #[Required(
+        'unregistered_inbound_checks',
+        enum: UnregisteredInboundChecks::class
+    )]
+    public string $unregisteredInboundChecks;
+
+    /**
      * `new AccountNumber()` is missing required properties by the API.
      *
      * To enforce required parameters use
@@ -118,12 +122,12 @@ final class AccountNumber implements BaseModel
      *   accountNumber: ...,
      *   createdAt: ...,
      *   idempotencyKey: ...,
-     *   inboundACH: ...,
-     *   inboundChecks: ...,
+     *   inboundACHDebits: ...,
      *   name: ...,
      *   routingNumber: ...,
      *   status: ...,
      *   type: ...,
+     *   unregisteredInboundChecks: ...,
      * )
      * ```
      *
@@ -136,12 +140,12 @@ final class AccountNumber implements BaseModel
      *   ->withAccountNumber(...)
      *   ->withCreatedAt(...)
      *   ->withIdempotencyKey(...)
-     *   ->withInboundACH(...)
-     *   ->withInboundChecks(...)
+     *   ->withInboundACHDebits(...)
      *   ->withName(...)
      *   ->withRoutingNumber(...)
      *   ->withStatus(...)
      *   ->withType(...)
+     *   ->withUnregisteredInboundChecks(...)
      * ```
      */
     public function __construct()
@@ -154,10 +158,10 @@ final class AccountNumber implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param InboundACH|InboundACHShape $inboundACH
-     * @param InboundChecks|InboundChecksShape $inboundChecks
+     * @param InboundACHDebits|value-of<InboundACHDebits> $inboundACHDebits
      * @param Status|value-of<Status> $status
      * @param Type|value-of<Type> $type
+     * @param UnregisteredInboundChecks|value-of<UnregisteredInboundChecks> $unregisteredInboundChecks
      */
     public static function with(
         string $id,
@@ -165,12 +169,12 @@ final class AccountNumber implements BaseModel
         string $accountNumber,
         \DateTimeInterface $createdAt,
         ?string $idempotencyKey,
-        InboundACH|array $inboundACH,
-        InboundChecks|array $inboundChecks,
+        InboundACHDebits|string $inboundACHDebits,
         string $name,
         string $routingNumber,
         Status|string $status,
         Type|string $type,
+        UnregisteredInboundChecks|string $unregisteredInboundChecks,
     ): self {
         $self = new self;
 
@@ -179,12 +183,12 @@ final class AccountNumber implements BaseModel
         $self['accountNumber'] = $accountNumber;
         $self['createdAt'] = $createdAt;
         $self['idempotencyKey'] = $idempotencyKey;
-        $self['inboundACH'] = $inboundACH;
-        $self['inboundChecks'] = $inboundChecks;
+        $self['inboundACHDebits'] = $inboundACHDebits;
         $self['name'] = $name;
         $self['routingNumber'] = $routingNumber;
         $self['status'] = $status;
         $self['type'] = $type;
+        $self['unregisteredInboundChecks'] = $unregisteredInboundChecks;
 
         return $self;
     }
@@ -245,27 +249,15 @@ final class AccountNumber implements BaseModel
     }
 
     /**
-     * Properties related to how this Account Number handles inbound ACH transfers.
+     * Whether inbound ACH debits are allowed against this Account Number. Note that they will still be declined if this is `allowed` but the Account Number is not active.
      *
-     * @param InboundACH|InboundACHShape $inboundACH
+     * @param InboundACHDebits|value-of<InboundACHDebits> $inboundACHDebits
      */
-    public function withInboundACH(InboundACH|array $inboundACH): self
-    {
+    public function withInboundACHDebits(
+        InboundACHDebits|string $inboundACHDebits
+    ): self {
         $self = clone $this;
-        $self['inboundACH'] = $inboundACH;
-
-        return $self;
-    }
-
-    /**
-     * Properties related to how this Account Number should handle inbound check withdrawals.
-     *
-     * @param InboundChecks|InboundChecksShape $inboundChecks
-     */
-    public function withInboundChecks(InboundChecks|array $inboundChecks): self
-    {
-        $self = clone $this;
-        $self['inboundChecks'] = $inboundChecks;
+        $self['inboundACHDebits'] = $inboundACHDebits;
 
         return $self;
     }
@@ -314,6 +306,20 @@ final class AccountNumber implements BaseModel
     {
         $self = clone $this;
         $self['type'] = $type;
+
+        return $self;
+    }
+
+    /**
+     * Whether unregistered inbound checks for this Account Number can be deposited.
+     *
+     * @param UnregisteredInboundChecks|value-of<UnregisteredInboundChecks> $unregisteredInboundChecks
+     */
+    public function withUnregisteredInboundChecks(
+        UnregisteredInboundChecks|string $unregisteredInboundChecks
+    ): self {
+        $self = clone $this;
+        $self['unregisteredInboundChecks'] = $unregisteredInboundChecks;
 
         return $self;
     }

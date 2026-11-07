@@ -15,6 +15,7 @@ use Increase\Transactions\Transaction\Source\CheckTransferDeposit\Type;
  * @phpstan-type CheckTransferDepositShape = array{
  *   backImageFileID: string|null,
  *   bankOfFirstDepositRoutingNumber: string|null,
+ *   checkbookCheckID: string|null,
  *   depositedAt: \DateTimeInterface,
  *   frontImageFileID: string|null,
  *   inboundCheckDepositID: string|null,
@@ -39,6 +40,12 @@ final class CheckTransferDeposit implements BaseModel
      */
     #[Required('bank_of_first_deposit_routing_number')]
     public ?string $bankOfFirstDepositRoutingNumber;
+
+    /**
+     * The identifier of the Checkbook Check object that was deposited.
+     */
+    #[Required('checkbook_check_id')]
+    public ?string $checkbookCheckID;
 
     /**
      * When the check was deposited.
@@ -86,6 +93,7 @@ final class CheckTransferDeposit implements BaseModel
      * CheckTransferDeposit::with(
      *   backImageFileID: ...,
      *   bankOfFirstDepositRoutingNumber: ...,
+     *   checkbookCheckID: ...,
      *   depositedAt: ...,
      *   frontImageFileID: ...,
      *   inboundCheckDepositID: ...,
@@ -101,6 +109,7 @@ final class CheckTransferDeposit implements BaseModel
      * (new CheckTransferDeposit)
      *   ->withBackImageFileID(...)
      *   ->withBankOfFirstDepositRoutingNumber(...)
+     *   ->withCheckbookCheckID(...)
      *   ->withDepositedAt(...)
      *   ->withFrontImageFileID(...)
      *   ->withInboundCheckDepositID(...)
@@ -124,6 +133,7 @@ final class CheckTransferDeposit implements BaseModel
     public static function with(
         ?string $backImageFileID,
         ?string $bankOfFirstDepositRoutingNumber,
+        ?string $checkbookCheckID,
         \DateTimeInterface $depositedAt,
         ?string $frontImageFileID,
         ?string $inboundCheckDepositID,
@@ -135,6 +145,7 @@ final class CheckTransferDeposit implements BaseModel
 
         $self['backImageFileID'] = $backImageFileID;
         $self['bankOfFirstDepositRoutingNumber'] = $bankOfFirstDepositRoutingNumber;
+        $self['checkbookCheckID'] = $checkbookCheckID;
         $self['depositedAt'] = $depositedAt;
         $self['frontImageFileID'] = $frontImageFileID;
         $self['inboundCheckDepositID'] = $inboundCheckDepositID;
@@ -164,6 +175,17 @@ final class CheckTransferDeposit implements BaseModel
     ): self {
         $self = clone $this;
         $self['bankOfFirstDepositRoutingNumber'] = $bankOfFirstDepositRoutingNumber;
+
+        return $self;
+    }
+
+    /**
+     * The identifier of the Checkbook Check object that was deposited.
+     */
+    public function withCheckbookCheckID(?string $checkbookCheckID): self
+    {
+        $self = clone $this;
+        $self['checkbookCheckID'] = $checkbookCheckID;
 
         return $self;
     }

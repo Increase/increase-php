@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Increase\AccountNumbers;
 
-use Increase\AccountNumbers\AccountNumberListParams\ACHDebitStatus;
 use Increase\AccountNumbers\AccountNumberListParams\CreatedAt;
+use Increase\AccountNumbers\AccountNumberListParams\InboundACHDebits;
 use Increase\AccountNumbers\AccountNumberListParams\Status;
 use Increase\Core\Attributes\Optional;
 use Increase\Core\Concerns\SdkModel;
@@ -17,16 +17,16 @@ use Increase\Core\Contracts\BaseModel;
  *
  * @see Increase\Services\AccountNumbersService::list()
  *
- * @phpstan-import-type ACHDebitStatusShape from \Increase\AccountNumbers\AccountNumberListParams\ACHDebitStatus
  * @phpstan-import-type CreatedAtShape from \Increase\AccountNumbers\AccountNumberListParams\CreatedAt
+ * @phpstan-import-type InboundACHDebitsShape from \Increase\AccountNumbers\AccountNumberListParams\InboundACHDebits
  * @phpstan-import-type StatusShape from \Increase\AccountNumbers\AccountNumberListParams\Status
  *
  * @phpstan-type AccountNumberListParamsShape = array{
  *   accountID?: string|null,
- *   achDebitStatus?: null|ACHDebitStatus|ACHDebitStatusShape,
  *   createdAt?: null|CreatedAt|CreatedAtShape,
  *   cursor?: string|null,
  *   idempotencyKey?: string|null,
+ *   inboundACHDebits?: null|InboundACHDebits|InboundACHDebitsShape,
  *   limit?: int|null,
  *   status?: null|Status|StatusShape,
  * }
@@ -44,9 +44,6 @@ final class AccountNumberListParams implements BaseModel
     public ?string $accountID;
 
     #[Optional]
-    public ?ACHDebitStatus $achDebitStatus;
-
-    #[Optional]
     public ?CreatedAt $createdAt;
 
     /**
@@ -60,6 +57,9 @@ final class AccountNumberListParams implements BaseModel
      */
     #[Optional]
     public ?string $idempotencyKey;
+
+    #[Optional]
+    public ?InboundACHDebits $inboundACHDebits;
 
     /**
      * Limit the size of the list that is returned. The default (and maximum) is 100 objects.
@@ -82,26 +82,26 @@ final class AccountNumberListParams implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param ACHDebitStatus|ACHDebitStatusShape|null $achDebitStatus
      * @param CreatedAt|CreatedAtShape|null $createdAt
+     * @param InboundACHDebits|InboundACHDebitsShape|null $inboundACHDebits
      * @param Status|StatusShape|null $status
      */
     public static function with(
         ?string $accountID = null,
-        ACHDebitStatus|array|null $achDebitStatus = null,
         CreatedAt|array|null $createdAt = null,
         ?string $cursor = null,
         ?string $idempotencyKey = null,
+        InboundACHDebits|array|null $inboundACHDebits = null,
         ?int $limit = null,
         Status|array|null $status = null,
     ): self {
         $self = new self;
 
         null !== $accountID && $self['accountID'] = $accountID;
-        null !== $achDebitStatus && $self['achDebitStatus'] = $achDebitStatus;
         null !== $createdAt && $self['createdAt'] = $createdAt;
         null !== $cursor && $self['cursor'] = $cursor;
         null !== $idempotencyKey && $self['idempotencyKey'] = $idempotencyKey;
+        null !== $inboundACHDebits && $self['inboundACHDebits'] = $inboundACHDebits;
         null !== $limit && $self['limit'] = $limit;
         null !== $status && $self['status'] = $status;
 
@@ -115,18 +115,6 @@ final class AccountNumberListParams implements BaseModel
     {
         $self = clone $this;
         $self['accountID'] = $accountID;
-
-        return $self;
-    }
-
-    /**
-     * @param ACHDebitStatus|ACHDebitStatusShape $achDebitStatus
-     */
-    public function withACHDebitStatus(
-        ACHDebitStatus|array $achDebitStatus
-    ): self {
-        $self = clone $this;
-        $self['achDebitStatus'] = $achDebitStatus;
 
         return $self;
     }
@@ -160,6 +148,18 @@ final class AccountNumberListParams implements BaseModel
     {
         $self = clone $this;
         $self['idempotencyKey'] = $idempotencyKey;
+
+        return $self;
+    }
+
+    /**
+     * @param InboundACHDebits|InboundACHDebitsShape $inboundACHDebits
+     */
+    public function withInboundACHDebits(
+        InboundACHDebits|array $inboundACHDebits
+    ): self {
+        $self = clone $this;
+        $self['inboundACHDebits'] = $inboundACHDebits;
 
         return $self;
     }

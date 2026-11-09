@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Increase\AccountNumbers;
 
-use Increase\AccountNumbers\AccountNumberCreateParams\InboundACH;
-use Increase\AccountNumbers\AccountNumberCreateParams\InboundChecks;
+use Increase\AccountNumbers\AccountNumberCreateParams\InboundACHDebits;
+use Increase\AccountNumbers\AccountNumberCreateParams\UnregisteredInboundChecks;
 use Increase\Core\Attributes\Optional;
 use Increase\Core\Attributes\Required;
 use Increase\Core\Concerns\SdkModel;
@@ -17,14 +17,11 @@ use Increase\Core\Contracts\BaseModel;
  *
  * @see Increase\Services\AccountNumbersService::create()
  *
- * @phpstan-import-type InboundACHShape from \Increase\AccountNumbers\AccountNumberCreateParams\InboundACH
- * @phpstan-import-type InboundChecksShape from \Increase\AccountNumbers\AccountNumberCreateParams\InboundChecks
- *
  * @phpstan-type AccountNumberCreateParamsShape = array{
  *   accountID: string,
  *   name: string,
- *   inboundACH?: null|InboundACH|InboundACHShape,
- *   inboundChecks?: null|InboundChecks|InboundChecksShape,
+ *   inboundACHDebits?: null|InboundACHDebits|value-of<InboundACHDebits>,
+ *   unregisteredInboundChecks?: null|UnregisteredInboundChecks|value-of<UnregisteredInboundChecks>,
  * }
  */
 final class AccountNumberCreateParams implements BaseModel
@@ -46,16 +43,23 @@ final class AccountNumberCreateParams implements BaseModel
     public string $name;
 
     /**
-     * Options related to how this Account Number should handle inbound ACH transfers.
+     * Whether inbound ACH debits are allowed against this Account Number. Note that ACH debits will be declined if this is `allowed` but the Account Number is not active. If you do not specify this field, the default is `allowed`.
+     *
+     * @var value-of<InboundACHDebits>|null $inboundACHDebits
      */
-    #[Optional('inbound_ach')]
-    public ?InboundACH $inboundACH;
+    #[Optional('inbound_ach_debits', enum: InboundACHDebits::class)]
+    public ?string $inboundACHDebits;
 
     /**
-     * Options related to how this Account Number should handle inbound check withdrawals.
+     * Whether unregistered inbound checks for this Account Number can be deposited. If you do not specify this field, the default is `blocked`.
+     *
+     * @var value-of<UnregisteredInboundChecks>|null $unregisteredInboundChecks
      */
-    #[Optional('inbound_checks')]
-    public ?InboundChecks $inboundChecks;
+    #[Optional(
+        'unregistered_inbound_checks',
+        enum: UnregisteredInboundChecks::class
+    )]
+    public ?string $unregisteredInboundChecks;
 
     /**
      * `new AccountNumberCreateParams()` is missing required properties by the API.
@@ -81,22 +85,22 @@ final class AccountNumberCreateParams implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param InboundACH|InboundACHShape|null $inboundACH
-     * @param InboundChecks|InboundChecksShape|null $inboundChecks
+     * @param InboundACHDebits|value-of<InboundACHDebits>|null $inboundACHDebits
+     * @param UnregisteredInboundChecks|value-of<UnregisteredInboundChecks>|null $unregisteredInboundChecks
      */
     public static function with(
         string $accountID,
         string $name,
-        InboundACH|array|null $inboundACH = null,
-        InboundChecks|array|null $inboundChecks = null,
+        InboundACHDebits|string|null $inboundACHDebits = null,
+        UnregisteredInboundChecks|string|null $unregisteredInboundChecks = null,
     ): self {
         $self = new self;
 
         $self['accountID'] = $accountID;
         $self['name'] = $name;
 
-        null !== $inboundACH && $self['inboundACH'] = $inboundACH;
-        null !== $inboundChecks && $self['inboundChecks'] = $inboundChecks;
+        null !== $inboundACHDebits && $self['inboundACHDebits'] = $inboundACHDebits;
+        null !== $unregisteredInboundChecks && $self['unregisteredInboundChecks'] = $unregisteredInboundChecks;
 
         return $self;
     }
@@ -124,27 +128,29 @@ final class AccountNumberCreateParams implements BaseModel
     }
 
     /**
-     * Options related to how this Account Number should handle inbound ACH transfers.
+     * Whether inbound ACH debits are allowed against this Account Number. Note that ACH debits will be declined if this is `allowed` but the Account Number is not active. If you do not specify this field, the default is `allowed`.
      *
-     * @param InboundACH|InboundACHShape $inboundACH
+     * @param InboundACHDebits|value-of<InboundACHDebits> $inboundACHDebits
      */
-    public function withInboundACH(InboundACH|array $inboundACH): self
-    {
+    public function withInboundACHDebits(
+        InboundACHDebits|string $inboundACHDebits
+    ): self {
         $self = clone $this;
-        $self['inboundACH'] = $inboundACH;
+        $self['inboundACHDebits'] = $inboundACHDebits;
 
         return $self;
     }
 
     /**
-     * Options related to how this Account Number should handle inbound check withdrawals.
+     * Whether unregistered inbound checks for this Account Number can be deposited. If you do not specify this field, the default is `blocked`.
      *
-     * @param InboundChecks|InboundChecksShape $inboundChecks
+     * @param UnregisteredInboundChecks|value-of<UnregisteredInboundChecks> $unregisteredInboundChecks
      */
-    public function withInboundChecks(InboundChecks|array $inboundChecks): self
-    {
+    public function withUnregisteredInboundChecks(
+        UnregisteredInboundChecks|string $unregisteredInboundChecks
+    ): self {
         $self = clone $this;
-        $self['inboundChecks'] = $inboundChecks;
+        $self['unregisteredInboundChecks'] = $unregisteredInboundChecks;
 
         return $self;
     }

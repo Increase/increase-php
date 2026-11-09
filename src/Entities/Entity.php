@@ -11,7 +11,6 @@ use Increase\Entities\Entity\Corporation;
 use Increase\Entities\Entity\GovernmentAuthority;
 use Increase\Entities\Entity\Joint;
 use Increase\Entities\Entity\NaturalPerson;
-use Increase\Entities\Entity\RiskRating;
 use Increase\Entities\Entity\SoleProprietorship;
 use Increase\Entities\Entity\Status;
 use Increase\Entities\Entity\Structure;
@@ -29,7 +28,6 @@ use Increase\SupplementalDocuments\EntitySupplementalDocument;
  * @phpstan-import-type GovernmentAuthorityShape from \Increase\Entities\Entity\GovernmentAuthority
  * @phpstan-import-type JointShape from \Increase\Entities\Entity\Joint
  * @phpstan-import-type NaturalPersonShape from \Increase\Entities\Entity\NaturalPerson
- * @phpstan-import-type RiskRatingShape from \Increase\Entities\Entity\RiskRating
  * @phpstan-import-type SoleProprietorshipShape from \Increase\Entities\Entity\SoleProprietorship
  * @phpstan-import-type EntitySupplementalDocumentShape from \Increase\SupplementalDocuments\EntitySupplementalDocument
  * @phpstan-import-type TermsAgreementShape from \Increase\Entities\Entity\TermsAgreement
@@ -42,13 +40,11 @@ use Increase\SupplementalDocuments\EntitySupplementalDocument;
  *   corporation: null|Corporation|CorporationShape,
  *   createdAt: \DateTimeInterface,
  *   creatingEntityOnboardingSessionID: string|null,
- *   description: string|null,
  *   detailsConfirmedAt: \DateTimeInterface|null,
  *   governmentAuthority: null|GovernmentAuthority|GovernmentAuthorityShape,
  *   idempotencyKey: string|null,
  *   joint: null|Joint|JointShape,
  *   naturalPerson: null|NaturalPerson|NaturalPersonShape,
- *   riskRating: null|RiskRating|RiskRatingShape,
  *   soleProprietorship: null|SoleProprietorship|SoleProprietorshipShape,
  *   status: Status|value-of<Status>,
  *   structure: Structure|value-of<Structure>,
@@ -90,12 +86,6 @@ final class Entity implements BaseModel
     public ?string $creatingEntityOnboardingSessionID;
 
     /**
-     * The entity's description for display purposes.
-     */
-    #[Required]
-    public ?string $description;
-
-    /**
      * The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) time at which the Entity's details were most recently confirmed.
      */
     #[Required('details_confirmed_at')]
@@ -124,12 +114,6 @@ final class Entity implements BaseModel
      */
     #[Required('natural_person')]
     public ?NaturalPerson $naturalPerson;
-
-    /**
-     * An assessment of the entity’s potential risk of involvement in financial crimes, such as money laundering.
-     */
-    #[Required('risk_rating')]
-    public ?RiskRating $riskRating;
 
     /**
      * Details of the sole proprietorship entity. Will be present if `structure` is equal to `sole_proprietorship`.
@@ -205,13 +189,11 @@ final class Entity implements BaseModel
      *   corporation: ...,
      *   createdAt: ...,
      *   creatingEntityOnboardingSessionID: ...,
-     *   description: ...,
      *   detailsConfirmedAt: ...,
      *   governmentAuthority: ...,
      *   idempotencyKey: ...,
      *   joint: ...,
      *   naturalPerson: ...,
-     *   riskRating: ...,
      *   soleProprietorship: ...,
      *   status: ...,
      *   structure: ...,
@@ -232,13 +214,11 @@ final class Entity implements BaseModel
      *   ->withCorporation(...)
      *   ->withCreatedAt(...)
      *   ->withCreatingEntityOnboardingSessionID(...)
-     *   ->withDescription(...)
      *   ->withDetailsConfirmedAt(...)
      *   ->withGovernmentAuthority(...)
      *   ->withIdempotencyKey(...)
      *   ->withJoint(...)
      *   ->withNaturalPerson(...)
-     *   ->withRiskRating(...)
      *   ->withSoleProprietorship(...)
      *   ->withStatus(...)
      *   ->withStructure(...)
@@ -264,7 +244,6 @@ final class Entity implements BaseModel
      * @param GovernmentAuthority|GovernmentAuthorityShape|null $governmentAuthority
      * @param Joint|JointShape|null $joint
      * @param NaturalPerson|NaturalPersonShape|null $naturalPerson
-     * @param RiskRating|RiskRatingShape|null $riskRating
      * @param SoleProprietorship|SoleProprietorshipShape|null $soleProprietorship
      * @param Status|value-of<Status> $status
      * @param Structure|value-of<Structure> $structure
@@ -280,13 +259,11 @@ final class Entity implements BaseModel
         Corporation|array|null $corporation,
         \DateTimeInterface $createdAt,
         ?string $creatingEntityOnboardingSessionID,
-        ?string $description,
         ?\DateTimeInterface $detailsConfirmedAt,
         GovernmentAuthority|array|null $governmentAuthority,
         ?string $idempotencyKey,
         Joint|array|null $joint,
         NaturalPerson|array|null $naturalPerson,
-        RiskRating|array|null $riskRating,
         SoleProprietorship|array|null $soleProprietorship,
         Status|string $status,
         Structure|string $structure,
@@ -303,13 +280,11 @@ final class Entity implements BaseModel
         $self['corporation'] = $corporation;
         $self['createdAt'] = $createdAt;
         $self['creatingEntityOnboardingSessionID'] = $creatingEntityOnboardingSessionID;
-        $self['description'] = $description;
         $self['detailsConfirmedAt'] = $detailsConfirmedAt;
         $self['governmentAuthority'] = $governmentAuthority;
         $self['idempotencyKey'] = $idempotencyKey;
         $self['joint'] = $joint;
         $self['naturalPerson'] = $naturalPerson;
-        $self['riskRating'] = $riskRating;
         $self['soleProprietorship'] = $soleProprietorship;
         $self['status'] = $status;
         $self['structure'] = $structure;
@@ -366,17 +341,6 @@ final class Entity implements BaseModel
     ): self {
         $self = clone $this;
         $self['creatingEntityOnboardingSessionID'] = $creatingEntityOnboardingSessionID;
-
-        return $self;
-    }
-
-    /**
-     * The entity's description for display purposes.
-     */
-    public function withDescription(?string $description): self
-    {
-        $self = clone $this;
-        $self['description'] = $description;
 
         return $self;
     }
@@ -441,19 +405,6 @@ final class Entity implements BaseModel
     ): self {
         $self = clone $this;
         $self['naturalPerson'] = $naturalPerson;
-
-        return $self;
-    }
-
-    /**
-     * An assessment of the entity’s potential risk of involvement in financial crimes, such as money laundering.
-     *
-     * @param RiskRating|RiskRatingShape|null $riskRating
-     */
-    public function withRiskRating(RiskRating|array|null $riskRating): self
-    {
-        $self = clone $this;
-        $self['riskRating'] = $riskRating;
 
         return $self;
     }

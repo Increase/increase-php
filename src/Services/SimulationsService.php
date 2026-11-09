@@ -21,6 +21,7 @@ use Increase\Services\Simulations\CardRefundsService;
 use Increase\Services\Simulations\CardReversalsService;
 use Increase\Services\Simulations\CardSettlementsService;
 use Increase\Services\Simulations\CardTokensService;
+use Increase\Services\Simulations\CheckbooksService;
 use Increase\Services\Simulations\CheckDepositsService;
 use Increase\Services\Simulations\CheckTransfersService;
 use Increase\Services\Simulations\DigitalWalletTokenRequestsService;
@@ -168,6 +169,11 @@ final class SimulationsService implements SimulationsContract
     /**
      * @api
      */
+    public CheckbooksService $checkbooks;
+
+    /**
+     * @api
+     */
     public InboundCheckDepositsService $inboundCheckDeposits;
 
     /**
@@ -259,6 +265,7 @@ final class SimulationsService implements SimulationsContract
         $this->wireDrawdownRequests = new WireDrawdownRequestsService($client);
         $this->inboundWireDrawdownRequests = new InboundWireDrawdownRequestsService($client);
         $this->checkTransfers = new CheckTransfersService($client);
+        $this->checkbooks = new CheckbooksService($client);
         $this->inboundCheckDeposits = new InboundCheckDepositsService($client);
         $this->realTimePaymentsTransfers = new RealTimePaymentsTransfersService($client);
         $this->inboundRealTimePaymentsTransfers = new InboundRealTimePaymentsTransfersService($client);

@@ -57,7 +57,7 @@ final class CardsService implements CardsContract
      *
      * @param string $accountID the Account the card should belong to
      * @param AuthorizationControls|AuthorizationControlsShape $authorizationControls controls that restrict how this card can be used
-     * @param BillingAddress|BillingAddressShape $billingAddress the card's billing address
+     * @param BillingAddress|BillingAddressShape $billingAddress The card's billing address. This is used in card authorizations to [validate the address provided by the acquirer](/documentation/address-verification-system-codes-and-overrides). If not provided, the address associated with the account's entity will be used.
      * @param CardholderName|CardholderNameShape $cardholderName The name of the cardholder. Used to respond to Account Name Inquiry requests from acquirers in Card Validations.
      * @param string $description the description you choose to give the card
      * @param DigitalWallet|DigitalWalletShape $digitalWallet The contact information used in the two-factor steps for digital wallet card creation. To add the card to a digital wallet, you may supply an email or phone number with this request. Otherwise, subscribe and then action a Real Time Decision with the category `digital_wallet_token_requested` or `digital_wallet_authentication_requested`.
@@ -124,7 +124,7 @@ final class CardsService implements CardsContract
      *
      * @param string $cardID the card identifier
      * @param \Increase\Cards\CardUpdateParams\AuthorizationControls|AuthorizationControlsShape1 $authorizationControls controls that restrict how this card can be used
-     * @param \Increase\Cards\CardUpdateParams\BillingAddress|BillingAddressShape1 $billingAddress the card's updated billing address
+     * @param \Increase\Cards\CardUpdateParams\BillingAddress|BillingAddressShape1 $billingAddress The card's billing address. This is used in card authorizations to [validate the address provided by the acquirer](/documentation/address-verification-system-codes-and-overrides). If not provided, the address associated with the account's entity will be used.
      * @param string $description the description you choose to give the card
      * @param \Increase\Cards\CardUpdateParams\DigitalWallet|DigitalWalletShape1 $digitalWallet The contact information used in the two-factor steps for digital wallet card creation. At least one field must be present to complete the digital wallet steps.
      * @param string $entityID The Entity the card belongs to. You only need to supply this in rare situations when the card is not for the Account holder.

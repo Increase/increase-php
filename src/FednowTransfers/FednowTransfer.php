@@ -42,6 +42,7 @@ use Increase\FednowTransfers\FednowTransfer\Type;
  *   currency: Currency|value-of<Currency>,
  *   debtorAddress: null|DebtorAddress|DebtorAddressShape,
  *   debtorName: string,
+ *   endToEndIdentification: string|null,
  *   externalAccountID: string|null,
  *   idempotencyKey: string|null,
  *   pendingTransactionID: string|null,
@@ -135,6 +136,12 @@ final class FednowTransfer implements BaseModel
      */
     #[Required('debtor_name')]
     public string $debtorName;
+
+    /**
+     * A free-form reference string set by the sender, to help identify the transfer.
+     */
+    #[Required('end_to_end_identification')]
+    public ?string $endToEndIdentification;
 
     /**
      * The identifier of the External Account the transfer was made to, if any.
@@ -238,6 +245,7 @@ final class FednowTransfer implements BaseModel
      *   currency: ...,
      *   debtorAddress: ...,
      *   debtorName: ...,
+     *   endToEndIdentification: ...,
      *   externalAccountID: ...,
      *   idempotencyKey: ...,
      *   pendingTransactionID: ...,
@@ -270,6 +278,7 @@ final class FednowTransfer implements BaseModel
      *   ->withCurrency(...)
      *   ->withDebtorAddress(...)
      *   ->withDebtorName(...)
+     *   ->withEndToEndIdentification(...)
      *   ->withExternalAccountID(...)
      *   ->withIdempotencyKey(...)
      *   ->withPendingTransactionID(...)
@@ -319,6 +328,7 @@ final class FednowTransfer implements BaseModel
         Currency|string $currency,
         DebtorAddress|array|null $debtorAddress,
         string $debtorName,
+        ?string $endToEndIdentification,
         ?string $externalAccountID,
         ?string $idempotencyKey,
         ?string $pendingTransactionID,
@@ -347,6 +357,7 @@ final class FednowTransfer implements BaseModel
         $self['currency'] = $currency;
         $self['debtorAddress'] = $debtorAddress;
         $self['debtorName'] = $debtorName;
+        $self['endToEndIdentification'] = $endToEndIdentification;
         $self['externalAccountID'] = $externalAccountID;
         $self['idempotencyKey'] = $idempotencyKey;
         $self['pendingTransactionID'] = $pendingTransactionID;
@@ -505,6 +516,18 @@ final class FednowTransfer implements BaseModel
     {
         $self = clone $this;
         $self['debtorName'] = $debtorName;
+
+        return $self;
+    }
+
+    /**
+     * A free-form reference string set by the sender, to help identify the transfer.
+     */
+    public function withEndToEndIdentification(
+        ?string $endToEndIdentification
+    ): self {
+        $self = clone $this;
+        $self['endToEndIdentification'] = $endToEndIdentification;
 
         return $self;
     }

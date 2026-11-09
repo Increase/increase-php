@@ -56,7 +56,7 @@ final class CardCreateParams implements BaseModel
     public ?AuthorizationControls $authorizationControls;
 
     /**
-     * The card's billing address.
+     * The card's billing address. This is used in card authorizations to [validate the address provided by the acquirer](/documentation/address-verification-system-codes-and-overrides). If not provided, the address associated with the account's entity will be used.
      */
     #[Optional('billing_address')]
     public ?BillingAddress $billingAddress;
@@ -172,7 +172,7 @@ final class CardCreateParams implements BaseModel
     }
 
     /**
-     * The card's billing address.
+     * The card's billing address. This is used in card authorizations to [validate the address provided by the acquirer](/documentation/address-verification-system-codes-and-overrides). If not provided, the address associated with the account's entity will be used.
      *
      * @param BillingAddress|BillingAddressShape $billingAddress
      */

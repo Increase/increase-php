@@ -10,7 +10,7 @@ use Increase\Core\Concerns\SdkModel;
 use Increase\Core\Contracts\BaseModel;
 
 /**
- * The card's updated billing address.
+ * The card's billing address. This is used in card authorizations to [validate the address provided by the acquirer](/documentation/address-verification-system-codes-and-overrides). If not provided, the address associated with the account's entity will be used.
  *
  * @phpstan-type BillingAddressShape = array{
  *   city: string,

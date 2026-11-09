@@ -287,7 +287,7 @@ final class ACHTransfer implements BaseModel
     public string $standardEntryClassCode;
 
     /**
-     * The descriptor that will show on the recipient's bank statement.
+     * A description you chose to give the transfer. If `individual_name` and `company_name` were not explicitly set, the `statement_descriptor` will be sent in those fields to the receiving bank to help the customer recognize the transfer.
      */
     #[Required('statement_descriptor')]
     public ?string $statementDescriptor;
@@ -899,7 +899,7 @@ final class ACHTransfer implements BaseModel
     }
 
     /**
-     * The descriptor that will show on the recipient's bank statement.
+     * A description you chose to give the transfer. If `individual_name` and `company_name` were not explicitly set, the `statement_descriptor` will be sent in those fields to the receiving bank to help the customer recognize the transfer.
      */
     public function withStatementDescriptor(?string $statementDescriptor): self
     {

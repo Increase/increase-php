@@ -26,18 +26,17 @@ use Increase\Core\Contracts\BaseModel;
  * @phpstan-type ACHTransferCreateParamsShape = array{
  *   accountID: string,
  *   amount: int,
- *   statementDescriptor: string,
+ *   companyName: string,
+ *   individualName: string,
  *   accountNumber?: string|null,
  *   addenda?: null|Addenda|AddendaShape,
  *   companyDescriptiveDate?: string|null,
  *   companyDiscretionaryData?: string|null,
  *   companyEntryDescription?: string|null,
- *   companyName?: string|null,
  *   destinationAccountHolder?: null|DestinationAccountHolder|value-of<DestinationAccountHolder>,
  *   externalAccountID?: string|null,
  *   funding?: null|Funding|value-of<Funding>,
  *   individualID?: string|null,
- *   individualName?: string|null,
  *   preferredEffectiveDate?: null|PreferredEffectiveDate|PreferredEffectiveDateShape,
  *   requireApproval?: bool|null,
  *   routingNumber?: string|null,
@@ -63,10 +62,16 @@ final class ACHTransferCreateParams implements BaseModel
     public int $amount;
 
     /**
-     * A description you choose to give the transfer. This will be saved with the transfer details, displayed in the dashboard, and returned by the API. If `individual_name` and `company_name` are not explicitly set by this API, the `statement_descriptor` will be sent in those fields to the receiving bank to help the customer recognize the transfer. You are highly encouraged to pass `individual_name` and `company_name` instead of relying on this fallback.
+     * The name by which the recipient knows the counterparty of this transaction. If you're processing payments on behalf of another party, use their name, not your own, so that it's more likely the recipient understands the context of the payment. This value is usually displayed to the recipient on their bank statement. We recommend setting this on every transfer; if you do not, we fall back to the `statement_descriptor`.
      */
-    #[Required('statement_descriptor')]
-    public string $statementDescriptor;
+    #[Required('company_name')]
+    public string $companyName;
+
+    /**
+     * The name of the transfer recipient. This value is informational and generally not verified by the recipient's bank. This value is usually displayed to the recipient on their bank statement. We recommend setting this on every transfer; if you do not, we fall back to the `statement_descriptor`.
+     */
+    #[Required('individual_name')]
+    public string $individualName;
 
     /**
      * The receiver's account number. For credit transfers (transfers with a positive `amount`), this is the account that funds will be sent to. For debit transfers (transfers with a negative `amount`), this is the account that funds will be pulled from.
@@ -97,12 +102,6 @@ final class ACHTransferCreateParams implements BaseModel
      */
     #[Optional('company_entry_description')]
     public ?string $companyEntryDescription;
-
-    /**
-     * The name by which the recipient knows the counterparty of this transaction. If you're processing payments on behalf of another party, use their name, not your own, so that it's more likely the recipient understands the context of the payment. This value is usually displayed to the recipient on their bank statement. We recommend setting this on every transfer; if you do not, we fall back to the `statement_descriptor`.
-     */
-    #[Optional('company_name')]
-    public ?string $companyName;
 
     /**
      * The type of entity that owns the receiver's account.
@@ -138,12 +137,6 @@ final class ACHTransferCreateParams implements BaseModel
     public ?string $individualID;
 
     /**
-     * The name of the transfer recipient. This value is informational and generally not verified by the recipient's bank. This value is usually displayed to the recipient on their bank statement. We recommend setting this on every transfer; if you do not, we fall back to the `statement_descriptor`.
-     */
-    #[Optional('individual_name')]
-    public ?string $individualName;
-
-    /**
      * Configuration for how the effective date of the transfer will be set. This determines same-day vs future-dated settlement timing. If not set, defaults to a `settlement_schedule` of `same_day`. If set, exactly one of the child attributes must be set.
      */
     #[Optional('preferred_effective_date')]
@@ -175,7 +168,7 @@ final class ACHTransferCreateParams implements BaseModel
      * To enforce required parameters use
      * ```
      * ACHTransferCreateParams::with(
-     *   accountID: ..., amount: ..., statementDescriptor: ...
+     *   accountID: ..., amount: ..., companyName: ..., individualName: ...
      * )
      * ```
      *
@@ -185,7 +178,8 @@ final class ACHTransferCreateParams implements BaseModel
      * (new ACHTransferCreateParams)
      *   ->withAccountID(...)
      *   ->withAmount(...)
-     *   ->withStatementDescriptor(...)
+     *   ->withCompanyName(...)
+     *   ->withIndividualName(...)
      * ```
      */
     public function __construct()
@@ -207,18 +201,17 @@ final class ACHTransferCreateParams implements BaseModel
     public static function with(
         string $accountID,
         int $amount,
-        string $statementDescriptor,
+        string $companyName,
+        string $individualName,
         ?string $accountNumber = null,
         Addenda|array|null $addenda = null,
         ?string $companyDescriptiveDate = null,
         ?string $companyDiscretionaryData = null,
         ?string $companyEntryDescription = null,
-        ?string $companyName = null,
         DestinationAccountHolder|string|null $destinationAccountHolder = null,
         ?string $externalAccountID = null,
         Funding|string|null $funding = null,
         ?string $individualID = null,
-        ?string $individualName = null,
         PreferredEffectiveDate|array|null $preferredEffectiveDate = null,
         ?bool $requireApproval = null,
         ?string $routingNumber = null,
@@ -228,19 +221,18 @@ final class ACHTransferCreateParams implements BaseModel
 
         $self['accountID'] = $accountID;
         $self['amount'] = $amount;
-        $self['statementDescriptor'] = $statementDescriptor;
+        $self['companyName'] = $companyName;
+        $self['individualName'] = $individualName;
 
         null !== $accountNumber && $self['accountNumber'] = $accountNumber;
         null !== $addenda && $self['addenda'] = $addenda;
         null !== $companyDescriptiveDate && $self['companyDescriptiveDate'] = $companyDescriptiveDate;
         null !== $companyDiscretionaryData && $self['companyDiscretionaryData'] = $companyDiscretionaryData;
         null !== $companyEntryDescription && $self['companyEntryDescription'] = $companyEntryDescription;
-        null !== $companyName && $self['companyName'] = $companyName;
         null !== $destinationAccountHolder && $self['destinationAccountHolder'] = $destinationAccountHolder;
         null !== $externalAccountID && $self['externalAccountID'] = $externalAccountID;
         null !== $funding && $self['funding'] = $funding;
         null !== $individualID && $self['individualID'] = $individualID;
-        null !== $individualName && $self['individualName'] = $individualName;
         null !== $preferredEffectiveDate && $self['preferredEffectiveDate'] = $preferredEffectiveDate;
         null !== $requireApproval && $self['requireApproval'] = $requireApproval;
         null !== $routingNumber && $self['routingNumber'] = $routingNumber;
@@ -272,12 +264,23 @@ final class ACHTransferCreateParams implements BaseModel
     }
 
     /**
-     * A description you choose to give the transfer. This will be saved with the transfer details, displayed in the dashboard, and returned by the API. If `individual_name` and `company_name` are not explicitly set by this API, the `statement_descriptor` will be sent in those fields to the receiving bank to help the customer recognize the transfer. You are highly encouraged to pass `individual_name` and `company_name` instead of relying on this fallback.
+     * The name by which the recipient knows the counterparty of this transaction. If you're processing payments on behalf of another party, use their name, not your own, so that it's more likely the recipient understands the context of the payment. This value is usually displayed to the recipient on their bank statement. We recommend setting this on every transfer; if you do not, we fall back to the `statement_descriptor`.
      */
-    public function withStatementDescriptor(string $statementDescriptor): self
+    public function withCompanyName(string $companyName): self
     {
         $self = clone $this;
-        $self['statementDescriptor'] = $statementDescriptor;
+        $self['companyName'] = $companyName;
+
+        return $self;
+    }
+
+    /**
+     * The name of the transfer recipient. This value is informational and generally not verified by the recipient's bank. This value is usually displayed to the recipient on their bank statement. We recommend setting this on every transfer; if you do not, we fall back to the `statement_descriptor`.
+     */
+    public function withIndividualName(string $individualName): self
+    {
+        $self = clone $this;
+        $self['individualName'] = $individualName;
 
         return $self;
     }
@@ -343,17 +346,6 @@ final class ACHTransferCreateParams implements BaseModel
     }
 
     /**
-     * The name by which the recipient knows the counterparty of this transaction. If you're processing payments on behalf of another party, use their name, not your own, so that it's more likely the recipient understands the context of the payment. This value is usually displayed to the recipient on their bank statement. We recommend setting this on every transfer; if you do not, we fall back to the `statement_descriptor`.
-     */
-    public function withCompanyName(string $companyName): self
-    {
-        $self = clone $this;
-        $self['companyName'] = $companyName;
-
-        return $self;
-    }
-
-    /**
      * The type of entity that owns the receiver's account.
      *
      * @param DestinationAccountHolder|value-of<DestinationAccountHolder> $destinationAccountHolder
@@ -400,17 +392,6 @@ final class ACHTransferCreateParams implements BaseModel
     {
         $self = clone $this;
         $self['individualID'] = $individualID;
-
-        return $self;
-    }
-
-    /**
-     * The name of the transfer recipient. This value is informational and generally not verified by the recipient's bank. This value is usually displayed to the recipient on their bank statement. We recommend setting this on every transfer; if you do not, we fall back to the `statement_descriptor`.
-     */
-    public function withIndividualName(string $individualName): self
-    {
-        $self = clone $this;
-        $self['individualName'] = $individualName;
 
         return $self;
     }

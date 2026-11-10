@@ -34,7 +34,8 @@ final class ACHTransfersTest extends TestCase
         $result = $this->client->achTransfers->create(
             accountID: 'account_in71c4amph0vgo2qllky',
             amount: 100,
-            statementDescriptor: 'INVOICE 2468',
+            companyName: 'Phonographs Inc',
+            individualName: 'Ian Crease',
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -47,7 +48,8 @@ final class ACHTransfersTest extends TestCase
         $result = $this->client->achTransfers->create(
             accountID: 'account_in71c4amph0vgo2qllky',
             amount: 100,
-            statementDescriptor: 'INVOICE 2468',
+            companyName: 'Phonographs Inc',
+            individualName: 'Ian Crease',
             accountNumber: '987654321',
             addenda: [
                 'category' => 'freeform',
@@ -63,12 +65,10 @@ final class ACHTransfersTest extends TestCase
             companyDescriptiveDate: 'J!',
             companyDiscretionaryData: 'J!',
             companyEntryDescription: 'J!',
-            companyName: 'Phonographs Inc',
             destinationAccountHolder: 'business',
             externalAccountID: 'external_account_id',
             funding: 'checking',
             individualID: 'individual_id',
-            individualName: 'Ian Crease',
             preferredEffectiveDate: [
                 'date' => '2019-12-27', 'settlementSchedule' => 'same_day',
             ],

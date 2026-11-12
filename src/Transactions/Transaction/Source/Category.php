@@ -23,6 +23,8 @@ enum Category: string
 
     case CARD_DISPUTE_FINANCIAL = 'card_dispute_financial';
 
+    case CARD_DISPUTE_PROVISIONAL_CREDIT = 'card_dispute_provisional_credit';
+
     case CARD_DISPUTE_LOSS = 'card_dispute_loss';
 
     case CARD_REFUND = 'card_refund';

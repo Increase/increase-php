@@ -181,13 +181,59 @@ enum FuelType: string
 
     case KEROSENE_ULTRA_LOW_SULFUR = 'kerosene_ultra_low_sulfur';
 
+    case KEROSENE_LOW_SULFUR_NON_TAXABLE = 'kerosene_low_sulfur_non_taxable';
+
+    case KEROSENE_ULTRA_LOW_SULFUR_NON_TAXABLE = 'kerosene_ultra_low_sulfur_non_taxable';
+
     case ELECTRIC_VEHICLE_CHARGING_LEVEL_1_110_VOLT = 'electric_vehicle_charging_level_1_110_volt';
 
     case ELECTRIC_VEHICLE_CHARGING_LEVEL_2_240_VOLT = 'electric_vehicle_charging_level_2_240_volt';
 
     case ELECTRIC_VEHICLE_CHARGING_LEVEL_3_480_VOLT = 'electric_vehicle_charging_level_3_480_volt';
 
+    case BIODIESEL_BLEND_2_OFF_ROAD_NON_TAXABLE = 'biodiesel_blend_2_off_road_non_taxable';
+
+    case BIODIESEL_BLEND_5_OFF_ROAD_NON_TAXABLE = 'biodiesel_blend_5_off_road_non_taxable';
+
+    case BIODIESEL_BLEND_10_OFF_ROAD_NON_TAXABLE = 'biodiesel_blend_10_off_road_non_taxable';
+
+    case BIODIESEL_BLEND_11_OFF_ROAD_NON_TAXABLE = 'biodiesel_blend_11_off_road_non_taxable';
+
+    case BIODIESEL_BLEND_15_OFF_ROAD_NON_TAXABLE = 'biodiesel_blend_15_off_road_non_taxable';
+
+    case BIODIESEL_BLEND_20_OFF_ROAD_NON_TAXABLE = 'biodiesel_blend_20_off_road_non_taxable';
+
     case DIESEL_1_OFF_ROAD_NON_TAXABLE = 'diesel_1_off_road_non_taxable';
+
+    case DIESEL_2_OFF_ROAD_NON_TAXABLE = 'diesel_2_off_road_non_taxable';
+
+    case DIESEL_1_PREMIUM_OFF_ROAD_NON_TAXABLE = 'diesel_1_premium_off_road_non_taxable';
+
+    case DIESEL_2_PREMIUM_OFF_ROAD_NON_TAXABLE = 'diesel_2_premium_off_road_non_taxable';
+
+    case ADDITIVE_DOSAGE = 'additive_dosage';
+
+    case ETHANOL_BLENDS_E16_TO_E84 = 'ethanol_blends_e16_to_e84';
+
+    case LOW_OCTANE_UNLEADED = 'low_octane_unleaded';
+
+    case BLENDED_DIESEL_1_AND_2 = 'blended_diesel_1_and_2';
+
+    case OFF_ROAD_REGULAR_NON_TAXABLE = 'off_road_regular_non_taxable';
+
+    case OFF_ROAD_MID_OR_PLUS_NON_TAXABLE = 'off_road_mid_or_plus_non_taxable';
+
+    case OFF_ROAD_PREMIUM_OR_SUPER_NON_TAXABLE = 'off_road_premium_or_super_non_taxable';
+
+    case OFF_ROAD_MID_OR_PLUS_2_NON_TAXABLE = 'off_road_mid_or_plus_2_non_taxable';
+
+    case OFF_ROAD_PREMIUM_OR_SUPER_2_NON_TAXABLE = 'off_road_premium_or_super_2_non_taxable';
+
+    case RECREATIONAL_FUEL_90_OCTANE = 'recreational_fuel_90_octane';
+
+    case HYDROGEN_H35 = 'hydrogen_h35';
+
+    case HYDROGEN_H70 = 'hydrogen_h70';
 
     case RENEWABLE_DIESEL_R95_OR_GREATER_OFF_ROAD_NON_TAXABLE = 'renewable_diesel_r95_or_greater_off_road_non_taxable';
 
@@ -200,6 +246,8 @@ enum FuelType: string
     case BIODIESEL_BLEND_100_OFF_ROAD_NON_TAXABLE = 'biodiesel_blend_100_off_road_non_taxable';
 
     case RENEWABLE_DIESEL_BIODIESEL_6_TO_20_OFF_ROAD_NON_TAXABLE = 'renewable_diesel_biodiesel_6_to_20_off_road_non_taxable';
+
+    case RENEWABLE_DIESEL_R25_HYDROTREATED_VEGETABLE_OIL_25_BLEND = 'renewable_diesel_r25_hydrotreated_vegetable_oil_25_blend';
 
     case ELECTRIC_VEHICLE_CHARGING_LEVEL_4_800_VOLT = 'electric_vehicle_charging_level_4_800_volt';
 

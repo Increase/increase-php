@@ -65,6 +65,12 @@ enum FeeType: string
 
     case VISA_PROCESSING_GUARANTEE_COMMERCIAL_CREDIT = 'visa_processing_guarantee_commercial_credit';
 
+    case VISA_ATM_CASH_WITHDRAWAL_DOMESTIC = 'visa_atm_cash_withdrawal_domestic';
+
+    case VISA_ATM_CASH_WITHDRAWAL_INTERNATIONAL = 'visa_atm_cash_withdrawal_international';
+
+    case VISA_ATM_CASH_DEPOSIT_DOMESTIC = 'visa_atm_cash_deposit_domestic';
+
     case PULSE_SWITCH_FEE = 'pulse_switch_fee';
 
     case PULSE_TOKENIZATION_FEE = 'pulse_tokenization_fee';

@@ -18,6 +18,7 @@ use Increase\Transactions\Transaction\Source\BlockchainOnrampTransferIntention;
 use Increase\Transactions\Transaction\Source\CardDisputeAcceptance;
 use Increase\Transactions\Transaction\Source\CardDisputeFinancial;
 use Increase\Transactions\Transaction\Source\CardDisputeLoss;
+use Increase\Transactions\Transaction\Source\CardDisputeProvisionalCredit;
 use Increase\Transactions\Transaction\Source\CardFinancial;
 use Increase\Transactions\Transaction\Source\CardPushTransferAcceptance;
 use Increase\Transactions\Transaction\Source\CardRefund;
@@ -64,6 +65,7 @@ use Increase\Transactions\Transaction\Source\WireTransferIntention;
  * @phpstan-import-type CardDisputeAcceptanceShape from \Increase\Transactions\Transaction\Source\CardDisputeAcceptance
  * @phpstan-import-type CardDisputeFinancialShape from \Increase\Transactions\Transaction\Source\CardDisputeFinancial
  * @phpstan-import-type CardDisputeLossShape from \Increase\Transactions\Transaction\Source\CardDisputeLoss
+ * @phpstan-import-type CardDisputeProvisionalCreditShape from \Increase\Transactions\Transaction\Source\CardDisputeProvisionalCredit
  * @phpstan-import-type CardFinancialShape from \Increase\Transactions\Transaction\Source\CardFinancial
  * @phpstan-import-type CardPushTransferAcceptanceShape from \Increase\Transactions\Transaction\Source\CardPushTransferAcceptance
  * @phpstan-import-type CardRefundShape from \Increase\Transactions\Transaction\Source\CardRefund
@@ -108,6 +110,7 @@ use Increase\Transactions\Transaction\Source\WireTransferIntention;
  *   cardDisputeAcceptance?: null|CardDisputeAcceptance|CardDisputeAcceptanceShape,
  *   cardDisputeFinancial?: null|CardDisputeFinancial|CardDisputeFinancialShape,
  *   cardDisputeLoss?: null|CardDisputeLoss|CardDisputeLossShape,
+ *   cardDisputeProvisionalCredit?: null|CardDisputeProvisionalCredit|CardDisputeProvisionalCreditShape,
  *   cardFinancial?: null|CardFinancial|CardFinancialShape,
  *   cardPushTransferAcceptance?: null|CardPushTransferAcceptance|CardPushTransferAcceptanceShape,
  *   cardRefund?: null|CardRefund|CardRefundShape,
@@ -213,6 +216,12 @@ final class Source implements BaseModel
      */
     #[Optional('card_dispute_loss', nullable: true)]
     public ?CardDisputeLoss $cardDisputeLoss;
+
+    /**
+     * A Card Dispute Provisional Credit object. This field will be present in the JSON response if and only if `category` is equal to `card_dispute_provisional_credit`. A provisional credit given to the cardholder while a Card Dispute is investigated, or its reversal. Two Transactions are created: one on the cardholder's Account, and the other on the provisional credit funding Account.
+     */
+    #[Optional('card_dispute_provisional_credit', nullable: true)]
+    public ?CardDisputeProvisionalCredit $cardDisputeProvisionalCredit;
 
     /**
      * A Card Financial object. This field will be present in the JSON response if and only if `category` is equal to `card_financial`. Card Financials are card transactions that have cleared and settled. Unlike a Card Settlement, which clears a previous authorization, a Card Financial is authorized and cleared in a single message.
@@ -438,6 +447,7 @@ final class Source implements BaseModel
      * @param CardDisputeAcceptance|CardDisputeAcceptanceShape|null $cardDisputeAcceptance
      * @param CardDisputeFinancial|CardDisputeFinancialShape|null $cardDisputeFinancial
      * @param CardDisputeLoss|CardDisputeLossShape|null $cardDisputeLoss
+     * @param CardDisputeProvisionalCredit|CardDisputeProvisionalCreditShape|null $cardDisputeProvisionalCredit
      * @param CardFinancial|CardFinancialShape|null $cardFinancial
      * @param CardPushTransferAcceptance|CardPushTransferAcceptanceShape|null $cardPushTransferAcceptance
      * @param CardRefund|CardRefundShape|null $cardRefund
@@ -482,6 +492,7 @@ final class Source implements BaseModel
         CardDisputeAcceptance|array|null $cardDisputeAcceptance = null,
         CardDisputeFinancial|array|null $cardDisputeFinancial = null,
         CardDisputeLoss|array|null $cardDisputeLoss = null,
+        CardDisputeProvisionalCredit|array|null $cardDisputeProvisionalCredit = null,
         CardFinancial|array|null $cardFinancial = null,
         CardPushTransferAcceptance|array|null $cardPushTransferAcceptance = null,
         CardRefund|array|null $cardRefund = null,
@@ -528,6 +539,7 @@ final class Source implements BaseModel
         null !== $cardDisputeAcceptance && $self['cardDisputeAcceptance'] = $cardDisputeAcceptance;
         null !== $cardDisputeFinancial && $self['cardDisputeFinancial'] = $cardDisputeFinancial;
         null !== $cardDisputeLoss && $self['cardDisputeLoss'] = $cardDisputeLoss;
+        null !== $cardDisputeProvisionalCredit && $self['cardDisputeProvisionalCredit'] = $cardDisputeProvisionalCredit;
         null !== $cardFinancial && $self['cardFinancial'] = $cardFinancial;
         null !== $cardPushTransferAcceptance && $self['cardPushTransferAcceptance'] = $cardPushTransferAcceptance;
         null !== $cardRefund && $self['cardRefund'] = $cardRefund;
@@ -712,6 +724,20 @@ final class Source implements BaseModel
     ): self {
         $self = clone $this;
         $self['cardDisputeLoss'] = $cardDisputeLoss;
+
+        return $self;
+    }
+
+    /**
+     * A Card Dispute Provisional Credit object. This field will be present in the JSON response if and only if `category` is equal to `card_dispute_provisional_credit`. A provisional credit given to the cardholder while a Card Dispute is investigated, or its reversal. Two Transactions are created: one on the cardholder's Account, and the other on the provisional credit funding Account.
+     *
+     * @param CardDisputeProvisionalCredit|CardDisputeProvisionalCreditShape|null $cardDisputeProvisionalCredit
+     */
+    public function withCardDisputeProvisionalCredit(
+        CardDisputeProvisionalCredit|array|null $cardDisputeProvisionalCredit
+    ): self {
+        $self = clone $this;
+        $self['cardDisputeProvisionalCredit'] = $cardDisputeProvisionalCredit;
 
         return $self;
     }

@@ -34,7 +34,7 @@ final class Addenda implements BaseModel
     public string $category;
 
     /**
-     * Unstructured `payment_related_information` passed through with the transfer.
+     * Unstructured `payment_related_information` passed through with the transfer. Required if and only if `category` is `freeform`.
      */
     #[Optional]
     public ?Freeform $freeform;
@@ -93,7 +93,7 @@ final class Addenda implements BaseModel
     }
 
     /**
-     * Unstructured `payment_related_information` passed through with the transfer.
+     * Unstructured `payment_related_information` passed through with the transfer. Required if and only if `category` is `freeform`.
      *
      * @param Freeform|FreeformShape $freeform
      */

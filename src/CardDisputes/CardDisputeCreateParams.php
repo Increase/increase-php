@@ -43,7 +43,7 @@ final class CardDisputeCreateParams implements BaseModel
     public string $disputedTransactionID;
 
     /**
-     * The network of the disputed transaction. Details specific to the network are required under the sub-object with the same identifier as the network.
+     * The network of the disputed transaction. Details specific to the network can be provided under the sub-object with the same identifier as the network.
      *
      * @var value-of<Network> $network
      */
@@ -57,7 +57,7 @@ final class CardDisputeCreateParams implements BaseModel
     public ?int $amount;
 
     /**
-     * The files to be attached to the initial dispute submission.
+     * The files to be attached to the initial dispute submission. Can only be provided along with the network-specific details.
      *
      * @var list<AttachmentFile>|null $attachmentFiles
      */
@@ -65,13 +65,13 @@ final class CardDisputeCreateParams implements BaseModel
     public ?array $attachmentFiles;
 
     /**
-     * The free-form explanation provided to Increase to provide more context for the user submission. This field is not sent directly to the card networks.
+     * The free-form explanation provided to Increase to provide more context for the user submission. This field is not sent directly to the card networks. Can only be provided along with the network-specific details.
      */
     #[Optional]
     public ?string $explanation;
 
     /**
-     * The Visa-specific parameters for the dispute. Required if and only if `network` is `visa`.
+     * The Visa-specific parameters for the initial User Submission. If omitted, a later User Submission will be required.
      */
     #[Optional]
     public ?Visa $visa;
@@ -138,7 +138,7 @@ final class CardDisputeCreateParams implements BaseModel
     }
 
     /**
-     * The network of the disputed transaction. Details specific to the network are required under the sub-object with the same identifier as the network.
+     * The network of the disputed transaction. Details specific to the network can be provided under the sub-object with the same identifier as the network.
      *
      * @param Network|value-of<Network> $network
      */
@@ -162,7 +162,7 @@ final class CardDisputeCreateParams implements BaseModel
     }
 
     /**
-     * The files to be attached to the initial dispute submission.
+     * The files to be attached to the initial dispute submission. Can only be provided along with the network-specific details.
      *
      * @param list<AttachmentFile|AttachmentFileShape> $attachmentFiles
      */
@@ -175,7 +175,7 @@ final class CardDisputeCreateParams implements BaseModel
     }
 
     /**
-     * The free-form explanation provided to Increase to provide more context for the user submission. This field is not sent directly to the card networks.
+     * The free-form explanation provided to Increase to provide more context for the user submission. This field is not sent directly to the card networks. Can only be provided along with the network-specific details.
      */
     public function withExplanation(string $explanation): self
     {
@@ -186,7 +186,7 @@ final class CardDisputeCreateParams implements BaseModel
     }
 
     /**
-     * The Visa-specific parameters for the dispute. Required if and only if `network` is `visa`.
+     * The Visa-specific parameters for the initial User Submission. If omitted, a later User Submission will be required.
      *
      * @param Visa|VisaShape $visa
      */

@@ -29,11 +29,11 @@ interface CardDisputesContract
      * @api
      *
      * @param string $disputedTransactionID The Transaction you wish to dispute. This Transaction must have a `source_type` of `card_settlement`.
-     * @param Network|value-of<Network> $network The network of the disputed transaction. Details specific to the network are required under the sub-object with the same identifier as the network.
+     * @param Network|value-of<Network> $network The network of the disputed transaction. Details specific to the network can be provided under the sub-object with the same identifier as the network.
      * @param int $amount The monetary amount of the part of the transaction that is being disputed. This is optional and will default to the full amount of the transaction if not provided. If provided, the amount must be less than or equal to the amount of the transaction.
-     * @param list<AttachmentFile|AttachmentFileShape> $attachmentFiles the files to be attached to the initial dispute submission
-     * @param string $explanation The free-form explanation provided to Increase to provide more context for the user submission. This field is not sent directly to the card networks.
-     * @param Visa|VisaShape $visa The Visa-specific parameters for the dispute. Required if and only if `network` is `visa`.
+     * @param list<AttachmentFile|AttachmentFileShape> $attachmentFiles The files to be attached to the initial dispute submission. Can only be provided along with the network-specific details.
+     * @param string $explanation The free-form explanation provided to Increase to provide more context for the user submission. This field is not sent directly to the card networks. Can only be provided along with the network-specific details.
+     * @param Visa|VisaShape $visa The Visa-specific parameters for the initial User Submission. If omitted, a later User Submission will be required.
      * @param RequestOpts|null $requestOptions
      *
      * @throws APIException

@@ -30,7 +30,7 @@ use Increase\Core\Concerns\SdkModel;
 use Increase\Core\Contracts\BaseModel;
 
 /**
- * The Visa-specific parameters for the dispute. Required if and only if `network` is `visa`.
+ * The Visa-specific parameters for the initial User Submission. If omitted, a later User Submission will be required.
  *
  * @phpstan-import-type AuthorizationShape from \Increase\CardDisputes\CardDisputeCreateParams\Visa\Authorization
  * @phpstan-import-type ConsumerCanceledMerchandiseShape from \Increase\CardDisputes\CardDisputeCreateParams\Visa\ConsumerCanceledMerchandise

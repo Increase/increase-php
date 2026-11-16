@@ -35,7 +35,7 @@ final class CardRefundsService implements CardRefundsContract
      * Simulates refunding a card transaction. The full value of the original sandbox transaction is refunded.
      *
      * @param int $amount The refund amount in cents. Pulled off the `pending_transaction` or the `transaction` if not provided.
-     * @param string $pendingTransactionID The identifier of the Pending Transaction for the refund authorization. If this is provided, `transaction` must not be provided as a refund with a refund authorized can not be linked to a regular transaction.
+     * @param string $pendingTransactionID The identifier of the Pending Transaction for the refund or original credit authorization. If this is provided, `transaction` must not be provided as a refund with a refund authorized can not be linked to a regular transaction.
      * @param string $transactionID The identifier for the Transaction to refund. The Transaction's source must have a category of card_settlement.
      * @param RequestOpts|null $requestOptions
      *

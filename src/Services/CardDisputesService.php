@@ -47,11 +47,11 @@ final class CardDisputesService implements CardDisputesContract
      * Create a Card Dispute
      *
      * @param string $disputedTransactionID The Transaction you wish to dispute. This Transaction must have a `source_type` of `card_settlement`.
-     * @param Network|value-of<Network> $network The network of the disputed transaction. Details specific to the network are required under the sub-object with the same identifier as the network.
+     * @param Network|value-of<Network> $network The network of the disputed transaction. Details specific to the network can be provided under the sub-object with the same identifier as the network.
      * @param int $amount The monetary amount of the part of the transaction that is being disputed. This is optional and will default to the full amount of the transaction if not provided. If provided, the amount must be less than or equal to the amount of the transaction.
-     * @param list<AttachmentFile|AttachmentFileShape> $attachmentFiles the files to be attached to the initial dispute submission
-     * @param string $explanation The free-form explanation provided to Increase to provide more context for the user submission. This field is not sent directly to the card networks.
-     * @param Visa|VisaShape $visa The Visa-specific parameters for the dispute. Required if and only if `network` is `visa`.
+     * @param list<AttachmentFile|AttachmentFileShape> $attachmentFiles The files to be attached to the initial dispute submission. Can only be provided along with the network-specific details.
+     * @param string $explanation The free-form explanation provided to Increase to provide more context for the user submission. This field is not sent directly to the card networks. Can only be provided along with the network-specific details.
+     * @param Visa|VisaShape $visa The Visa-specific parameters for the initial User Submission. If omitted, a later User Submission will be required.
      * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
@@ -140,6 +140,46 @@ final class CardDisputesService implements CardDisputesContract
 
         // @phpstan-ignore-next-line argument.type
         $response = $this->raw->list(params: $params, requestOptions: $requestOptions);
+
+        return $response->parse();
+    }
+
+    /**
+     * @api
+     *
+     * Credits the cardholder's Account for the Card Dispute amount, funded by your program's provisional credit Account.
+     *
+     * @param string $cardDisputeID the identifier of the Card Dispute to provide a provisional credit for
+     * @param RequestOpts|null $requestOptions
+     *
+     * @throws APIException
+     */
+    public function provideProvisionalCredit(
+        string $cardDisputeID,
+        RequestOptions|array|null $requestOptions = null
+    ): CardDispute {
+        // @phpstan-ignore-next-line argument.type
+        $response = $this->raw->provideProvisionalCredit($cardDisputeID, requestOptions: $requestOptions);
+
+        return $response->parse();
+    }
+
+    /**
+     * @api
+     *
+     * Debits the cardholder's Account for the provisional credit and returns it to your program's provisional credit Account.
+     *
+     * @param string $cardDisputeID the identifier of the Card Dispute to reverse the provisional credit for
+     * @param RequestOpts|null $requestOptions
+     *
+     * @throws APIException
+     */
+    public function reverseProvisionalCredit(
+        string $cardDisputeID,
+        RequestOptions|array|null $requestOptions = null
+    ): CardDispute {
+        // @phpstan-ignore-next-line argument.type
+        $response = $this->raw->reverseProvisionalCredit($cardDisputeID, requestOptions: $requestOptions);
 
         return $response->parse();
     }

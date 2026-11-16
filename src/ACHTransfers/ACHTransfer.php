@@ -54,7 +54,7 @@ use Increase\Core\Contracts\BaseModel;
  *   companyDiscretionaryData: string|null,
  *   companyEntryDescription: string|null,
  *   companyID: string,
- *   companyName: string|null,
+ *   companyName: string,
  *   createdAt: \DateTimeInterface,
  *   createdBy: null|CreatedBy|CreatedByShape,
  *   currency: Currency|value-of<Currency>,
@@ -64,7 +64,7 @@ use Increase\Core\Contracts\BaseModel;
  *   idempotencyKey: string|null,
  *   inboundFundsHold: null|InboundFundsHold|InboundFundsHoldShape,
  *   individualID: string|null,
- *   individualName: string|null,
+ *   individualName: string,
  *   network: Network|value-of<Network>,
  *   notificationsOfChange: list<NotificationsOfChange|NotificationsOfChangeShape>,
  *   pendingTransactionID: string|null,
@@ -161,7 +161,7 @@ final class ACHTransfer implements BaseModel
      * The name by which the recipient knows you.
      */
     #[Required('company_name')]
-    public ?string $companyName;
+    public string $companyName;
 
     /**
      * The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which the transfer was created.
@@ -230,7 +230,7 @@ final class ACHTransfer implements BaseModel
      * The name of the transfer recipient. This value is informational and not verified by the recipient's bank.
      */
     #[Required('individual_name')]
-    public ?string $individualName;
+    public string $individualName;
 
     /**
      * The transfer's network.
@@ -449,7 +449,7 @@ final class ACHTransfer implements BaseModel
         ?string $companyDiscretionaryData,
         ?string $companyEntryDescription,
         string $companyID,
-        ?string $companyName,
+        string $companyName,
         \DateTimeInterface $createdAt,
         CreatedBy|array|null $createdBy,
         Currency|string $currency,
@@ -459,7 +459,7 @@ final class ACHTransfer implements BaseModel
         ?string $idempotencyKey,
         InboundFundsHold|array|null $inboundFundsHold,
         ?string $individualID,
-        ?string $individualName,
+        string $individualName,
         Network|string $network,
         array $notificationsOfChange,
         ?string $pendingTransactionID,
@@ -664,7 +664,7 @@ final class ACHTransfer implements BaseModel
     /**
      * The name by which the recipient knows you.
      */
-    public function withCompanyName(?string $companyName): self
+    public function withCompanyName(string $companyName): self
     {
         $self = clone $this;
         $self['companyName'] = $companyName;
@@ -786,7 +786,7 @@ final class ACHTransfer implements BaseModel
     /**
      * The name of the transfer recipient. This value is informational and not verified by the recipient's bank.
      */
-    public function withIndividualName(?string $individualName): self
+    public function withIndividualName(string $individualName): self
     {
         $self = clone $this;
         $self['individualName'] = $individualName;

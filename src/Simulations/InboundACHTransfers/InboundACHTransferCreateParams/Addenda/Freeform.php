@@ -10,7 +10,7 @@ use Increase\Core\Contracts\BaseModel;
 use Increase\Simulations\InboundACHTransfers\InboundACHTransferCreateParams\Addenda\Freeform\Entry;
 
 /**
- * Unstructured `payment_related_information` passed through with the transfer.
+ * Unstructured `payment_related_information` passed through with the transfer. Required if and only if `category` is `freeform`.
  *
  * @phpstan-import-type EntryShape from \Increase\Simulations\InboundACHTransfers\InboundACHTransferCreateParams\Addenda\Freeform\Entry
  *

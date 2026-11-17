@@ -95,6 +95,7 @@ final class EntitiesTest extends TestCase
                 'legalIdentifier' => [
                     'value' => '602214076',
                     'category' => 'us_employer_identification_number',
+                    'issuedOn' => '2019-12-27',
                 ],
                 'name' => 'National Phonograph Company',
                 'beneficialOwnershipExemptionReason' => 'regulated_financial_institution',

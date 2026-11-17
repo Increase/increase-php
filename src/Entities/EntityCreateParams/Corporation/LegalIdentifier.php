@@ -14,7 +14,9 @@ use Increase\Entities\EntityCreateParams\Corporation\LegalIdentifier\Category;
  * The legal identifier of the corporation. This is usually the Employer Identification Number (EIN). This replaces the deprecated `tax_identifier` field.
  *
  * @phpstan-type LegalIdentifierShape = array{
- *   value: string, category?: null|Category|value-of<Category>
+ *   value: string,
+ *   category?: null|Category|value-of<Category>,
+ *   issuedOn?: string|null,
  * }
  */
 final class LegalIdentifier implements BaseModel
@@ -37,6 +39,12 @@ final class LegalIdentifier implements BaseModel
      */
     #[Optional(enum: Category::class)]
     public ?string $category;
+
+    /**
+     * The date on which the legal identifier was issued.
+     */
+    #[Optional('issued_on')]
+    public ?string $issuedOn;
 
     /**
      * `new LegalIdentifier()` is missing required properties by the API.
@@ -66,13 +74,15 @@ final class LegalIdentifier implements BaseModel
      */
     public static function with(
         string $value,
-        Category|string|null $category = null
+        Category|string|null $category = null,
+        ?string $issuedOn = null
     ): self {
         $self = new self;
 
         $self['value'] = $value;
 
         null !== $category && $self['category'] = $category;
+        null !== $issuedOn && $self['issuedOn'] = $issuedOn;
 
         return $self;
     }
@@ -99,6 +109,17 @@ final class LegalIdentifier implements BaseModel
     {
         $self = clone $this;
         $self['category'] = $category;
+
+        return $self;
+    }
+
+    /**
+     * The date on which the legal identifier was issued.
+     */
+    public function withIssuedOn(string $issuedOn): self
+    {
+        $self = clone $this;
+        $self['issuedOn'] = $issuedOn;
 
         return $self;
     }

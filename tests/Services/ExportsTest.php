@@ -44,7 +44,8 @@ final class ExportsTest extends TestCase
             category: 'transaction_csv',
             accountStatementBai2: [
                 'accountID' => 'account_id',
-                'effectiveDate' => '2019-12-27',
+                'onOrAfterDate' => '2019-12-27',
+                'onOrBeforeDate' => '2019-12-27',
                 'programID' => 'program_id',
             ],
             accountStatementOfx: [

@@ -21,6 +21,8 @@ enum Category: string
 
     case FEDNOW_TRANSFER_INSTRUCTION = 'fednow_transfer_instruction';
 
+    case INBOUND_FEDNOW_TRANSFER_RETURN = 'inbound_fednow_transfer_return';
+
     case INBOUND_FUNDS_HOLD = 'inbound_funds_hold';
 
     case USER_INITIATED_HOLD = 'user_initiated_hold';

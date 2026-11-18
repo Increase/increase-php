@@ -18,6 +18,7 @@ use Increase\PendingTransactions\PendingTransaction\Source\Category;
 use Increase\PendingTransactions\PendingTransaction\Source\CheckDepositInstruction;
 use Increase\PendingTransactions\PendingTransaction\Source\CheckTransferInstruction;
 use Increase\PendingTransactions\PendingTransaction\Source\FednowTransferInstruction;
+use Increase\PendingTransactions\PendingTransaction\Source\InboundFednowTransferReturn;
 use Increase\PendingTransactions\PendingTransaction\Source\InboundFundsHold;
 use Increase\PendingTransactions\PendingTransaction\Source\InboundWireTransferReversal;
 use Increase\PendingTransactions\PendingTransaction\Source\Other;
@@ -39,6 +40,7 @@ use Increase\PendingTransactions\PendingTransaction\Source\WireTransferInstructi
  * @phpstan-import-type CheckDepositInstructionShape from \Increase\PendingTransactions\PendingTransaction\Source\CheckDepositInstruction
  * @phpstan-import-type CheckTransferInstructionShape from \Increase\PendingTransactions\PendingTransaction\Source\CheckTransferInstruction
  * @phpstan-import-type FednowTransferInstructionShape from \Increase\PendingTransactions\PendingTransaction\Source\FednowTransferInstruction
+ * @phpstan-import-type InboundFednowTransferReturnShape from \Increase\PendingTransactions\PendingTransaction\Source\InboundFednowTransferReturn
  * @phpstan-import-type InboundFundsHoldShape from \Increase\PendingTransactions\PendingTransaction\Source\InboundFundsHold
  * @phpstan-import-type InboundWireTransferReversalShape from \Increase\PendingTransactions\PendingTransaction\Source\InboundWireTransferReversal
  * @phpstan-import-type OtherShape from \Increase\PendingTransactions\PendingTransaction\Source\Other
@@ -59,6 +61,7 @@ use Increase\PendingTransactions\PendingTransaction\Source\WireTransferInstructi
  *   checkDepositInstruction?: null|CheckDepositInstruction|CheckDepositInstructionShape,
  *   checkTransferInstruction?: null|CheckTransferInstruction|CheckTransferInstructionShape,
  *   fednowTransferInstruction?: null|FednowTransferInstruction|FednowTransferInstructionShape,
+ *   inboundFednowTransferReturn?: null|InboundFednowTransferReturn|InboundFednowTransferReturnShape,
  *   inboundFundsHold?: null|InboundFundsHold|InboundFundsHoldShape,
  *   inboundWireTransferReversal?: null|InboundWireTransferReversal|InboundWireTransferReversalShape,
  *   other?: null|Other|OtherShape,
@@ -136,6 +139,12 @@ final class Source implements BaseModel
      */
     #[Optional('fednow_transfer_instruction', nullable: true)]
     public ?FednowTransferInstruction $fednowTransferInstruction;
+
+    /**
+     * An Inbound FedNow Transfer Return object. This field will be present in the JSON response if and only if `category` is equal to `inbound_fednow_transfer_return`. An Inbound FedNow Transfer Return is created when Increase has received a FedNow transfer and the User requests that it be returned.
+     */
+    #[Optional('inbound_fednow_transfer_return', nullable: true)]
+    public ?InboundFednowTransferReturn $inboundFednowTransferReturn;
 
     /**
      * An Inbound Funds Hold object. This field will be present in the JSON response if and only if `category` is equal to `inbound_funds_hold`. We hold funds for certain transaction types to account for return windows where funds might still be clawed back by the sending institution.
@@ -227,6 +236,7 @@ final class Source implements BaseModel
      * @param CheckDepositInstruction|CheckDepositInstructionShape|null $checkDepositInstruction
      * @param CheckTransferInstruction|CheckTransferInstructionShape|null $checkTransferInstruction
      * @param FednowTransferInstruction|FednowTransferInstructionShape|null $fednowTransferInstruction
+     * @param InboundFednowTransferReturn|InboundFednowTransferReturnShape|null $inboundFednowTransferReturn
      * @param InboundFundsHold|InboundFundsHoldShape|null $inboundFundsHold
      * @param InboundWireTransferReversal|InboundWireTransferReversalShape|null $inboundWireTransferReversal
      * @param Other|OtherShape|null $other
@@ -248,6 +258,7 @@ final class Source implements BaseModel
         CheckDepositInstruction|array|null $checkDepositInstruction = null,
         CheckTransferInstruction|array|null $checkTransferInstruction = null,
         FednowTransferInstruction|array|null $fednowTransferInstruction = null,
+        InboundFednowTransferReturn|array|null $inboundFednowTransferReturn = null,
         InboundFundsHold|array|null $inboundFundsHold = null,
         InboundWireTransferReversal|array|null $inboundWireTransferReversal = null,
         Other|array|null $other = null,
@@ -271,6 +282,7 @@ final class Source implements BaseModel
         null !== $checkDepositInstruction && $self['checkDepositInstruction'] = $checkDepositInstruction;
         null !== $checkTransferInstruction && $self['checkTransferInstruction'] = $checkTransferInstruction;
         null !== $fednowTransferInstruction && $self['fednowTransferInstruction'] = $fednowTransferInstruction;
+        null !== $inboundFednowTransferReturn && $self['inboundFednowTransferReturn'] = $inboundFednowTransferReturn;
         null !== $inboundFundsHold && $self['inboundFundsHold'] = $inboundFundsHold;
         null !== $inboundWireTransferReversal && $self['inboundWireTransferReversal'] = $inboundWireTransferReversal;
         null !== $other && $self['other'] = $other;
@@ -419,6 +431,20 @@ final class Source implements BaseModel
     ): self {
         $self = clone $this;
         $self['fednowTransferInstruction'] = $fednowTransferInstruction;
+
+        return $self;
+    }
+
+    /**
+     * An Inbound FedNow Transfer Return object. This field will be present in the JSON response if and only if `category` is equal to `inbound_fednow_transfer_return`. An Inbound FedNow Transfer Return is created when Increase has received a FedNow transfer and the User requests that it be returned.
+     *
+     * @param InboundFednowTransferReturn|InboundFednowTransferReturnShape|null $inboundFednowTransferReturn
+     */
+    public function withInboundFednowTransferReturn(
+        InboundFednowTransferReturn|array|null $inboundFednowTransferReturn
+    ): self {
+        $self = clone $this;
+        $self['inboundFednowTransferReturn'] = $inboundFednowTransferReturn;
 
         return $self;
     }

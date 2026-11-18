@@ -146,6 +146,56 @@ final class CardDisputesRawService implements CardDisputesRawContract
     /**
      * @api
      *
+     * Credits the cardholder's Account for the Card Dispute amount, funded by your program's provisional credit Account.
+     *
+     * @param string $cardDisputeID the identifier of the Card Dispute to provide a provisional credit for
+     * @param RequestOpts|null $requestOptions
+     *
+     * @return BaseResponse<CardDispute>
+     *
+     * @throws APIException
+     */
+    public function provideProvisionalCredit(
+        string $cardDisputeID,
+        RequestOptions|array|null $requestOptions = null
+    ): BaseResponse {
+        // @phpstan-ignore-next-line return.type
+        return $this->client->request(
+            method: 'post',
+            path: ['card_disputes/%1$s/provide_provisional_credit', $cardDisputeID],
+            options: $requestOptions,
+            convert: CardDispute::class,
+        );
+    }
+
+    /**
+     * @api
+     *
+     * Debits the cardholder's Account for the provisional credit and returns it to your program's provisional credit Account.
+     *
+     * @param string $cardDisputeID the identifier of the Card Dispute to reverse the provisional credit for
+     * @param RequestOpts|null $requestOptions
+     *
+     * @return BaseResponse<CardDispute>
+     *
+     * @throws APIException
+     */
+    public function reverseProvisionalCredit(
+        string $cardDisputeID,
+        RequestOptions|array|null $requestOptions = null
+    ): BaseResponse {
+        // @phpstan-ignore-next-line return.type
+        return $this->client->request(
+            method: 'post',
+            path: ['card_disputes/%1$s/reverse_provisional_credit', $cardDisputeID],
+            options: $requestOptions,
+            convert: CardDispute::class,
+        );
+    }
+
+    /**
+     * @api
+     *
      * Submit a User Submission for a Card Dispute
      *
      * @param string $cardDisputeID the identifier of the Card Dispute to submit a user submission for

@@ -323,6 +323,28 @@ final class CardDisputesTest extends TestCase
     }
 
     #[Test]
+    public function testProvideProvisionalCredit(): void
+    {
+        $result = $this->client->cardDisputes->provideProvisionalCredit(
+            'card_dispute_h9sc95nbl1cgltpp7men'
+        );
+
+        // @phpstan-ignore-next-line method.alreadyNarrowedType
+        $this->assertInstanceOf(CardDispute::class, $result);
+    }
+
+    #[Test]
+    public function testReverseProvisionalCredit(): void
+    {
+        $result = $this->client->cardDisputes->reverseProvisionalCredit(
+            'card_dispute_h9sc95nbl1cgltpp7men'
+        );
+
+        // @phpstan-ignore-next-line method.alreadyNarrowedType
+        $this->assertInstanceOf(CardDispute::class, $result);
+    }
+
+    #[Test]
     public function testSubmitUserSubmission(): void
     {
         $result = $this->client->cardDisputes->submitUserSubmission(

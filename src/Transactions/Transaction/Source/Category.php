@@ -57,6 +57,8 @@ enum Category: string
 
     case INBOUND_FEDNOW_TRANSFER_CONFIRMATION = 'inbound_fednow_transfer_confirmation';
 
+    case INBOUND_FEDNOW_TRANSFER_RETURN_ACKNOWLEDGEMENT = 'inbound_fednow_transfer_return_acknowledgement';
+
     case INBOUND_REAL_TIME_PAYMENTS_TRANSFER_CONFIRMATION = 'inbound_real_time_payments_transfer_confirmation';
 
     case INBOUND_WIRE_REVERSAL = 'inbound_wire_reversal';

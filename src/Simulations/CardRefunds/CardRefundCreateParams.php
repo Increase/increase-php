@@ -33,7 +33,7 @@ final class CardRefundCreateParams implements BaseModel
     public ?int $amount;
 
     /**
-     * The identifier of the Pending Transaction for the refund or original credit authorization. If this is provided, `transaction` must not be provided as a refund with a refund authorized can not be linked to a regular transaction.
+     * The identifier of the Pending Transaction for the refund or original credit authorization. If this is provided, `transaction` must not be provided as a refund with a refund authorization can not be linked to a regular transaction.
      */
     #[Optional('pending_transaction_id')]
     public ?string $pendingTransactionID;
@@ -80,7 +80,7 @@ final class CardRefundCreateParams implements BaseModel
     }
 
     /**
-     * The identifier of the Pending Transaction for the refund or original credit authorization. If this is provided, `transaction` must not be provided as a refund with a refund authorized can not be linked to a regular transaction.
+     * The identifier of the Pending Transaction for the refund or original credit authorization. If this is provided, `transaction` must not be provided as a refund with a refund authorization can not be linked to a regular transaction.
      */
     public function withPendingTransactionID(string $pendingTransactionID): self
     {

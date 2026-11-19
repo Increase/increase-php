@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Increase\InboundCheckDeposits\InboundCheckDeposit;
 
 /**
- * Whether the details on the check match the recipient name of the check transfer. This is an optional feature, contact sales to enable.
+ * Whether the details on the check match the recipient name of the check transfer.
  */
 enum PayeeNameAnalysis: string
 {

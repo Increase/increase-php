@@ -89,6 +89,32 @@ interface CardDisputesContract
     /**
      * @api
      *
+     * @param string $cardDisputeID the identifier of the Card Dispute to provide a provisional credit for
+     * @param RequestOpts|null $requestOptions
+     *
+     * @throws APIException
+     */
+    public function provideProvisionalCredit(
+        string $cardDisputeID,
+        RequestOptions|array|null $requestOptions = null
+    ): CardDispute;
+
+    /**
+     * @api
+     *
+     * @param string $cardDisputeID the identifier of the Card Dispute to reverse the provisional credit for
+     * @param RequestOpts|null $requestOptions
+     *
+     * @throws APIException
+     */
+    public function reverseProvisionalCredit(
+        string $cardDisputeID,
+        RequestOptions|array|null $requestOptions = null
+    ): CardDispute;
+
+    /**
+     * @api
+     *
      * @param string $cardDisputeID the identifier of the Card Dispute to submit a user submission for
      * @param \Increase\CardDisputes\CardDisputeSubmitUserSubmissionParams\Network|value-of<\Increase\CardDisputes\CardDisputeSubmitUserSubmissionParams\Network> $network The network of the Card Dispute. Details specific to the network are required under the sub-object with the same identifier as the network.
      * @param int $amount The adjusted monetary amount of the part of the transaction that is being disputed. This is optional and will default to the most recent amount provided. If provided, the amount must be less than or equal to the amount of the transaction.

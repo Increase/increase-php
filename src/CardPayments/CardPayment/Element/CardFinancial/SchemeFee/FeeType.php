@@ -73,5 +73,7 @@ enum FeeType: string
 
     case PULSE_SWITCH_FEE = 'pulse_switch_fee';
 
+    case PULSE_SWITCH_FEE_CREDIT = 'pulse_switch_fee_credit';
+
     case PULSE_TOKENIZATION_FEE = 'pulse_tokenization_fee';
 }

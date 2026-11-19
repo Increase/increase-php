@@ -44,6 +44,7 @@ use Increase\Core\Contracts\BaseModel;
  *   attachmentFiles: list<AttachmentFile|AttachmentFileShape>,
  *   category: Category|value-of<Category>,
  *   createdAt: \DateTimeInterface,
+ *   disputeFinancialAccountID: string|null,
  *   disputeFinancialTransactionID: string|null,
  *   chargebackAccepted?: null|ChargebackAccepted|ChargebackAcceptedShape,
  *   chargebackSubmitted?: null|ChargebackSubmitted|ChargebackSubmittedShape,
@@ -86,6 +87,12 @@ final class NetworkEvent implements BaseModel
      */
     #[Required('created_at')]
     public \DateTimeInterface $createdAt;
+
+    /**
+     * The account the dispute financial transaction was posted to, if any.
+     */
+    #[Required('dispute_financial_account_id')]
+    public ?string $disputeFinancialAccountID;
 
     /**
      * The dispute financial transaction that resulted from the network event, if any.
@@ -180,6 +187,7 @@ final class NetworkEvent implements BaseModel
      *   attachmentFiles: ...,
      *   category: ...,
      *   createdAt: ...,
+     *   disputeFinancialAccountID: ...,
      *   disputeFinancialTransactionID: ...,
      * )
      * ```
@@ -191,6 +199,7 @@ final class NetworkEvent implements BaseModel
      *   ->withAttachmentFiles(...)
      *   ->withCategory(...)
      *   ->withCreatedAt(...)
+     *   ->withDisputeFinancialAccountID(...)
      *   ->withDisputeFinancialTransactionID(...)
      * ```
      */
@@ -224,6 +233,7 @@ final class NetworkEvent implements BaseModel
         array $attachmentFiles,
         Category|string $category,
         \DateTimeInterface $createdAt,
+        ?string $disputeFinancialAccountID,
         ?string $disputeFinancialTransactionID,
         ChargebackAccepted|array|null $chargebackAccepted = null,
         ChargebackSubmitted|array|null $chargebackSubmitted = null,
@@ -244,6 +254,7 @@ final class NetworkEvent implements BaseModel
         $self['attachmentFiles'] = $attachmentFiles;
         $self['category'] = $category;
         $self['createdAt'] = $createdAt;
+        $self['disputeFinancialAccountID'] = $disputeFinancialAccountID;
         $self['disputeFinancialTransactionID'] = $disputeFinancialTransactionID;
 
         null !== $chargebackAccepted && $self['chargebackAccepted'] = $chargebackAccepted;
@@ -296,6 +307,18 @@ final class NetworkEvent implements BaseModel
     {
         $self = clone $this;
         $self['createdAt'] = $createdAt;
+
+        return $self;
+    }
+
+    /**
+     * The account the dispute financial transaction was posted to, if any.
+     */
+    public function withDisputeFinancialAccountID(
+        ?string $disputeFinancialAccountID
+    ): self {
+        $self = clone $this;
+        $self['disputeFinancialAccountID'] = $disputeFinancialAccountID;
 
         return $self;
     }

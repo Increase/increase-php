@@ -17,5 +17,7 @@ enum Status: string
 
     case DECLINED = 'declined';
 
+    case RETURNED = 'returned';
+
     case REQUIRES_ATTENTION = 'requires_attention';
 }

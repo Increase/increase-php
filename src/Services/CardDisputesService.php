@@ -147,6 +147,46 @@ final class CardDisputesService implements CardDisputesContract
     /**
      * @api
      *
+     * Credits the cardholder's Account for the Card Dispute amount, funded by your program's provisional credit Account.
+     *
+     * @param string $cardDisputeID the identifier of the Card Dispute to provide a provisional credit for
+     * @param RequestOpts|null $requestOptions
+     *
+     * @throws APIException
+     */
+    public function provideProvisionalCredit(
+        string $cardDisputeID,
+        RequestOptions|array|null $requestOptions = null
+    ): CardDispute {
+        // @phpstan-ignore-next-line argument.type
+        $response = $this->raw->provideProvisionalCredit($cardDisputeID, requestOptions: $requestOptions);
+
+        return $response->parse();
+    }
+
+    /**
+     * @api
+     *
+     * Debits the cardholder's Account for the provisional credit and returns it to your program's provisional credit Account.
+     *
+     * @param string $cardDisputeID the identifier of the Card Dispute to reverse the provisional credit for
+     * @param RequestOpts|null $requestOptions
+     *
+     * @throws APIException
+     */
+    public function reverseProvisionalCredit(
+        string $cardDisputeID,
+        RequestOptions|array|null $requestOptions = null
+    ): CardDispute {
+        // @phpstan-ignore-next-line argument.type
+        $response = $this->raw->reverseProvisionalCredit($cardDisputeID, requestOptions: $requestOptions);
+
+        return $response->parse();
+    }
+
+    /**
+     * @api
+     *
      * Submit a User Submission for a Card Dispute
      *
      * @param string $cardDisputeID the identifier of the Card Dispute to submit a user submission for

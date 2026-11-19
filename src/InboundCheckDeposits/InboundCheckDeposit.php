@@ -163,7 +163,7 @@ final class InboundCheckDeposit implements BaseModel
     public string $frontImageFileID;
 
     /**
-     * Whether the details on the check match the recipient name of the check transfer. This is an optional feature, contact sales to enable.
+     * Whether the details on the check match the recipient name of the check transfer.
      *
      * @var value-of<PayeeNameAnalysis> $payeeNameAnalysis
      */
@@ -529,7 +529,7 @@ final class InboundCheckDeposit implements BaseModel
     }
 
     /**
-     * Whether the details on the check match the recipient name of the check transfer. This is an optional feature, contact sales to enable.
+     * Whether the details on the check match the recipient name of the check transfer.
      *
      * @param PayeeNameAnalysis|value-of<PayeeNameAnalysis> $payeeNameAnalysis
      */

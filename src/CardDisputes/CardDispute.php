@@ -6,6 +6,7 @@ namespace Increase\CardDisputes;
 
 use Increase\CardDisputes\CardDispute\Loss;
 use Increase\CardDisputes\CardDispute\Network;
+use Increase\CardDisputes\CardDispute\ProvisionalCredit;
 use Increase\CardDisputes\CardDispute\Rejection;
 use Increase\CardDisputes\CardDispute\Status;
 use Increase\CardDisputes\CardDispute\Type;
@@ -20,6 +21,7 @@ use Increase\Core\Contracts\BaseModel;
  * If unauthorized activity occurs on a card, you can create a Card Dispute and we'll work with the card networks to return the funds if appropriate. For more information, see our guide on [card disputes](https://increase.com/documentation/card-disputes).
  *
  * @phpstan-import-type LossShape from \Increase\CardDisputes\CardDispute\Loss
+ * @phpstan-import-type ProvisionalCreditShape from \Increase\CardDisputes\CardDispute\ProvisionalCredit
  * @phpstan-import-type RejectionShape from \Increase\CardDisputes\CardDispute\Rejection
  * @phpstan-import-type VisaShape from \Increase\CardDisputes\CardDispute\Visa
  * @phpstan-import-type WinShape from \Increase\CardDisputes\CardDispute\Win
@@ -35,6 +37,7 @@ use Increase\Core\Contracts\BaseModel;
  *   idempotencyKey: string|null,
  *   loss: null|Loss|LossShape,
  *   network: Network|value-of<Network>,
+ *   provisionalCredit: null|ProvisionalCredit|ProvisionalCreditShape,
  *   rejection: null|Rejection|RejectionShape,
  *   status: Status|value-of<Status>,
  *   type: Type|value-of<Type>,
@@ -106,6 +109,12 @@ final class CardDispute implements BaseModel
     public string $network;
 
     /**
+     * If a provisional credit has been provided for the Card Dispute, this will contain details of the provisional credit.
+     */
+    #[Required('provisional_credit')]
+    public ?ProvisionalCredit $provisionalCredit;
+
+    /**
      * If the Card Dispute has been rejected, this will contain details of the rejection.
      */
     #[Required]
@@ -166,6 +175,7 @@ final class CardDispute implements BaseModel
      *   idempotencyKey: ...,
      *   loss: ...,
      *   network: ...,
+     *   provisionalCredit: ...,
      *   rejection: ...,
      *   status: ...,
      *   type: ...,
@@ -189,6 +199,7 @@ final class CardDispute implements BaseModel
      *   ->withIdempotencyKey(...)
      *   ->withLoss(...)
      *   ->withNetwork(...)
+     *   ->withProvisionalCredit(...)
      *   ->withRejection(...)
      *   ->withStatus(...)
      *   ->withType(...)
@@ -210,6 +221,7 @@ final class CardDispute implements BaseModel
      *
      * @param Loss|LossShape|null $loss
      * @param Network|value-of<Network> $network
+     * @param ProvisionalCredit|ProvisionalCreditShape|null $provisionalCredit
      * @param Rejection|RejectionShape|null $rejection
      * @param Status|value-of<Status> $status
      * @param Type|value-of<Type> $type
@@ -227,6 +239,7 @@ final class CardDispute implements BaseModel
         ?string $idempotencyKey,
         Loss|array|null $loss,
         Network|string $network,
+        ProvisionalCredit|array|null $provisionalCredit,
         Rejection|array|null $rejection,
         Status|string $status,
         Type|string $type,
@@ -246,6 +259,7 @@ final class CardDispute implements BaseModel
         $self['idempotencyKey'] = $idempotencyKey;
         $self['loss'] = $loss;
         $self['network'] = $network;
+        $self['provisionalCredit'] = $provisionalCredit;
         $self['rejection'] = $rejection;
         $self['status'] = $status;
         $self['type'] = $type;
@@ -357,6 +371,20 @@ final class CardDispute implements BaseModel
     {
         $self = clone $this;
         $self['network'] = $network;
+
+        return $self;
+    }
+
+    /**
+     * If a provisional credit has been provided for the Card Dispute, this will contain details of the provisional credit.
+     *
+     * @param ProvisionalCredit|ProvisionalCreditShape|null $provisionalCredit
+     */
+    public function withProvisionalCredit(
+        ProvisionalCredit|array|null $provisionalCredit
+    ): self {
+        $self = clone $this;
+        $self['provisionalCredit'] = $provisionalCredit;
 
         return $self;
     }

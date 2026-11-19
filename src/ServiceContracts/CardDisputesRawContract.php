@@ -67,6 +67,36 @@ interface CardDisputesRawContract
     /**
      * @api
      *
+     * @param string $cardDisputeID the identifier of the Card Dispute to provide a provisional credit for
+     * @param RequestOpts|null $requestOptions
+     *
+     * @return BaseResponse<CardDispute>
+     *
+     * @throws APIException
+     */
+    public function provideProvisionalCredit(
+        string $cardDisputeID,
+        RequestOptions|array|null $requestOptions = null
+    ): BaseResponse;
+
+    /**
+     * @api
+     *
+     * @param string $cardDisputeID the identifier of the Card Dispute to reverse the provisional credit for
+     * @param RequestOpts|null $requestOptions
+     *
+     * @return BaseResponse<CardDispute>
+     *
+     * @throws APIException
+     */
+    public function reverseProvisionalCredit(
+        string $cardDisputeID,
+        RequestOptions|array|null $requestOptions = null
+    ): BaseResponse;
+
+    /**
+     * @api
+     *
      * @param string $cardDisputeID the identifier of the Card Dispute to submit a user submission for
      * @param array<string,mixed>|CardDisputeSubmitUserSubmissionParams $params
      * @param RequestOpts|null $requestOptions

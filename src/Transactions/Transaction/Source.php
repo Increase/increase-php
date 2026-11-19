@@ -37,6 +37,7 @@ use Increase\Transactions\Transaction\Source\InboundACHTransferReturnIntention;
 use Increase\Transactions\Transaction\Source\InboundCheckAdjustment;
 use Increase\Transactions\Transaction\Source\InboundCheckDepositReturnIntention;
 use Increase\Transactions\Transaction\Source\InboundFednowTransferConfirmation;
+use Increase\Transactions\Transaction\Source\InboundFednowTransferReturnAcknowledgement;
 use Increase\Transactions\Transaction\Source\InboundRealTimePaymentsTransferConfirmation;
 use Increase\Transactions\Transaction\Source\InboundWireReversal;
 use Increase\Transactions\Transaction\Source\InboundWireTransfer;
@@ -83,6 +84,7 @@ use Increase\Transactions\Transaction\Source\WireTransferIntention;
  * @phpstan-import-type InboundCheckAdjustmentShape from \Increase\Transactions\Transaction\Source\InboundCheckAdjustment
  * @phpstan-import-type InboundCheckDepositReturnIntentionShape from \Increase\Transactions\Transaction\Source\InboundCheckDepositReturnIntention
  * @phpstan-import-type InboundFednowTransferConfirmationShape from \Increase\Transactions\Transaction\Source\InboundFednowTransferConfirmation
+ * @phpstan-import-type InboundFednowTransferReturnAcknowledgementShape from \Increase\Transactions\Transaction\Source\InboundFednowTransferReturnAcknowledgement
  * @phpstan-import-type InboundRealTimePaymentsTransferConfirmationShape from \Increase\Transactions\Transaction\Source\InboundRealTimePaymentsTransferConfirmation
  * @phpstan-import-type InboundWireReversalShape from \Increase\Transactions\Transaction\Source\InboundWireReversal
  * @phpstan-import-type InboundWireTransferShape from \Increase\Transactions\Transaction\Source\InboundWireTransfer
@@ -128,6 +130,7 @@ use Increase\Transactions\Transaction\Source\WireTransferIntention;
  *   inboundCheckAdjustment?: null|InboundCheckAdjustment|InboundCheckAdjustmentShape,
  *   inboundCheckDepositReturnIntention?: null|InboundCheckDepositReturnIntention|InboundCheckDepositReturnIntentionShape,
  *   inboundFednowTransferConfirmation?: null|InboundFednowTransferConfirmation|InboundFednowTransferConfirmationShape,
+ *   inboundFednowTransferReturnAcknowledgement?: null|InboundFednowTransferReturnAcknowledgement|InboundFednowTransferReturnAcknowledgementShape,
  *   inboundRealTimePaymentsTransferConfirmation?: null|InboundRealTimePaymentsTransferConfirmation|InboundRealTimePaymentsTransferConfirmationShape,
  *   inboundWireReversal?: null|InboundWireReversal|InboundWireReversalShape,
  *   inboundWireTransfer?: null|InboundWireTransfer|InboundWireTransferShape,
@@ -326,6 +329,12 @@ final class Source implements BaseModel
     public ?InboundFednowTransferConfirmation $inboundFednowTransferConfirmation;
 
     /**
+     * An Inbound FedNow Transfer Return Acknowledgement object. This field will be present in the JSON response if and only if `category` is equal to `inbound_fednow_transfer_return_acknowledgement`. An Inbound FedNow Transfer Return Acknowledgement is created when a return of an Inbound FedNow Transfer has been accepted and settled by the FedNow Service.
+     */
+    #[Optional('inbound_fednow_transfer_return_acknowledgement', nullable: true)]
+    public ?InboundFednowTransferReturnAcknowledgement $inboundFednowTransferReturnAcknowledgement;
+
+    /**
      * An Inbound Real-Time Payments Transfer Confirmation object. This field will be present in the JSON response if and only if `category` is equal to `inbound_real_time_payments_transfer_confirmation`. An Inbound Real-Time Payments Transfer Confirmation is created when a Real-Time Payments transfer is initiated at another bank and received by Increase.
      */
     #[Optional(
@@ -465,6 +474,7 @@ final class Source implements BaseModel
      * @param InboundCheckAdjustment|InboundCheckAdjustmentShape|null $inboundCheckAdjustment
      * @param InboundCheckDepositReturnIntention|InboundCheckDepositReturnIntentionShape|null $inboundCheckDepositReturnIntention
      * @param InboundFednowTransferConfirmation|InboundFednowTransferConfirmationShape|null $inboundFednowTransferConfirmation
+     * @param InboundFednowTransferReturnAcknowledgement|InboundFednowTransferReturnAcknowledgementShape|null $inboundFednowTransferReturnAcknowledgement
      * @param InboundRealTimePaymentsTransferConfirmation|InboundRealTimePaymentsTransferConfirmationShape|null $inboundRealTimePaymentsTransferConfirmation
      * @param InboundWireReversal|InboundWireReversalShape|null $inboundWireReversal
      * @param InboundWireTransfer|InboundWireTransferShape|null $inboundWireTransfer
@@ -510,6 +520,7 @@ final class Source implements BaseModel
         InboundCheckAdjustment|array|null $inboundCheckAdjustment = null,
         InboundCheckDepositReturnIntention|array|null $inboundCheckDepositReturnIntention = null,
         InboundFednowTransferConfirmation|array|null $inboundFednowTransferConfirmation = null,
+        InboundFednowTransferReturnAcknowledgement|array|null $inboundFednowTransferReturnAcknowledgement = null,
         InboundRealTimePaymentsTransferConfirmation|array|null $inboundRealTimePaymentsTransferConfirmation = null,
         InboundWireReversal|array|null $inboundWireReversal = null,
         InboundWireTransfer|array|null $inboundWireTransfer = null,
@@ -557,6 +568,7 @@ final class Source implements BaseModel
         null !== $inboundCheckAdjustment && $self['inboundCheckAdjustment'] = $inboundCheckAdjustment;
         null !== $inboundCheckDepositReturnIntention && $self['inboundCheckDepositReturnIntention'] = $inboundCheckDepositReturnIntention;
         null !== $inboundFednowTransferConfirmation && $self['inboundFednowTransferConfirmation'] = $inboundFednowTransferConfirmation;
+        null !== $inboundFednowTransferReturnAcknowledgement && $self['inboundFednowTransferReturnAcknowledgement'] = $inboundFednowTransferReturnAcknowledgement;
         null !== $inboundRealTimePaymentsTransferConfirmation && $self['inboundRealTimePaymentsTransferConfirmation'] = $inboundRealTimePaymentsTransferConfirmation;
         null !== $inboundWireReversal && $self['inboundWireReversal'] = $inboundWireReversal;
         null !== $inboundWireTransfer && $self['inboundWireTransfer'] = $inboundWireTransfer;
@@ -974,6 +986,20 @@ final class Source implements BaseModel
     ): self {
         $self = clone $this;
         $self['inboundFednowTransferConfirmation'] = $inboundFednowTransferConfirmation;
+
+        return $self;
+    }
+
+    /**
+     * An Inbound FedNow Transfer Return Acknowledgement object. This field will be present in the JSON response if and only if `category` is equal to `inbound_fednow_transfer_return_acknowledgement`. An Inbound FedNow Transfer Return Acknowledgement is created when a return of an Inbound FedNow Transfer has been accepted and settled by the FedNow Service.
+     *
+     * @param InboundFednowTransferReturnAcknowledgement|InboundFednowTransferReturnAcknowledgementShape|null $inboundFednowTransferReturnAcknowledgement
+     */
+    public function withInboundFednowTransferReturnAcknowledgement(
+        InboundFednowTransferReturnAcknowledgement|array|null $inboundFednowTransferReturnAcknowledgement,
+    ): self {
+        $self = clone $this;
+        $self['inboundFednowTransferReturnAcknowledgement'] = $inboundFednowTransferReturnAcknowledgement;
 
         return $self;
     }

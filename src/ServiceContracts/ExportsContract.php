@@ -49,7 +49,7 @@ interface ExportsContract
      * @api
      *
      * @param Category|value-of<Category> $category the type of Export to create
-     * @param AccountStatementBai2|AccountStatementBai2Shape $accountStatementBai2 Options for the created export. Required if `category` is equal to `account_statement_bai2`.
+     * @param AccountStatementBai2|AccountStatementBai2Shape $accountStatementBai2 Options for the created export. Required if `category` is equal to `account_statement_bai2`. Each as-of date from `on_or_after_date` through `on_or_before_date` gets its own BAI2 group (`02` record) in the file. If a group's as-of date is before the UTC date the Export was created, it has end-of-day balances. If it's the UTC date the Export was created, it has intraday balances as of the time the Export was created.
      * @param AccountStatementOfx|AccountStatementOfxShape $accountStatementOfx Options for the created export. Required if `category` is equal to `account_statement_ofx`.
      * @param AccountVerificationLetter|AccountVerificationLetterShape $accountVerificationLetter Options for the created export. Required if `category` is equal to `account_verification_letter`.
      * @param BookkeepingAccountBalanceCsv|BookkeepingAccountBalanceCsvShape $bookkeepingAccountBalanceCsv Options for the created export. Required if `category` is equal to `bookkeeping_account_balance_csv`.

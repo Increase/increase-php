@@ -69,7 +69,7 @@ final class ExportCreateParams implements BaseModel
     public string $category;
 
     /**
-     * Options for the created export. Required if `category` is equal to `account_statement_bai2`.
+     * Options for the created export. Required if `category` is equal to `account_statement_bai2`. Each as-of date from `on_or_after_date` through `on_or_before_date` gets its own BAI2 group (`02` record) in the file. If a group's as-of date is before the UTC date the Export was created, it has end-of-day balances. If it's the UTC date the Export was created, it has intraday balances as of the time the Export was created.
      */
     #[Optional('account_statement_bai2')]
     public ?AccountStatementBai2 $accountStatementBai2;
@@ -218,7 +218,7 @@ final class ExportCreateParams implements BaseModel
     }
 
     /**
-     * Options for the created export. Required if `category` is equal to `account_statement_bai2`.
+     * Options for the created export. Required if `category` is equal to `account_statement_bai2`. Each as-of date from `on_or_after_date` through `on_or_before_date` gets its own BAI2 group (`02` record) in the file. If a group's as-of date is before the UTC date the Export was created, it has end-of-day balances. If it's the UTC date the Export was created, it has intraday balances as of the time the Export was created.
      *
      * @param AccountStatementBai2|AccountStatementBai2Shape $accountStatementBai2
      */

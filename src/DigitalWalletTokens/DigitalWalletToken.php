@@ -12,8 +12,10 @@ use Increase\DigitalWalletTokens\DigitalWalletToken\Device;
 use Increase\DigitalWalletTokens\DigitalWalletToken\DynamicPrimaryAccountNumber;
 use Increase\DigitalWalletTokens\DigitalWalletToken\Status;
 use Increase\DigitalWalletTokens\DigitalWalletToken\TokenRequestor;
+use Increase\DigitalWalletTokens\DigitalWalletToken\TokenRequestorDetails;
 use Increase\DigitalWalletTokens\DigitalWalletToken\Type;
 use Increase\DigitalWalletTokens\DigitalWalletToken\Update;
+use Increase\DigitalWalletTokens\DigitalWalletToken\Wallet;
 
 /**
  * A Digital Wallet Token is created when a user adds a Card to their Apple Pay or Google Pay app. The Digital Wallet Token can be used for purchases just like a Card.
@@ -21,7 +23,9 @@ use Increase\DigitalWalletTokens\DigitalWalletToken\Update;
  * @phpstan-import-type CardholderShape from \Increase\DigitalWalletTokens\DigitalWalletToken\Cardholder
  * @phpstan-import-type DeviceShape from \Increase\DigitalWalletTokens\DigitalWalletToken\Device
  * @phpstan-import-type DynamicPrimaryAccountNumberShape from \Increase\DigitalWalletTokens\DigitalWalletToken\DynamicPrimaryAccountNumber
+ * @phpstan-import-type TokenRequestorDetailsShape from \Increase\DigitalWalletTokens\DigitalWalletToken\TokenRequestorDetails
  * @phpstan-import-type UpdateShape from \Increase\DigitalWalletTokens\DigitalWalletToken\Update
+ * @phpstan-import-type WalletShape from \Increase\DigitalWalletTokens\DigitalWalletToken\Wallet
  *
  * @phpstan-type DigitalWalletTokenShape = array{
  *   id: string,
@@ -35,8 +39,10 @@ use Increase\DigitalWalletTokens\DigitalWalletToken\Update;
  *   status: Status|value-of<Status>,
  *   tokenReferenceIdentifier: string,
  *   tokenRequestor: TokenRequestor|value-of<TokenRequestor>,
+ *   tokenRequestorDetails: TokenRequestorDetails|TokenRequestorDetailsShape,
  *   type: Type|value-of<Type>,
  *   updates: list<Update|UpdateShape>,
+ *   wallet: Wallet|WalletShape,
  * }
  */
 final class DigitalWalletToken implements BaseModel
@@ -115,6 +121,12 @@ final class DigitalWalletToken implements BaseModel
     public string $tokenRequestor;
 
     /**
+     * The digital wallet or merchant that requested the token.
+     */
+    #[Required('token_requestor_details')]
+    public TokenRequestorDetails $tokenRequestorDetails;
+
+    /**
      * A constant representing the object's type. For this resource it will always be `digital_wallet_token`.
      *
      * @var value-of<Type> $type
@@ -129,6 +141,12 @@ final class DigitalWalletToken implements BaseModel
      */
     #[Required(list: Update::class)]
     public array $updates;
+
+    /**
+     * Details about the digital wallet.
+     */
+    #[Required]
+    public Wallet $wallet;
 
     /**
      * `new DigitalWalletToken()` is missing required properties by the API.
@@ -147,8 +165,10 @@ final class DigitalWalletToken implements BaseModel
      *   status: ...,
      *   tokenReferenceIdentifier: ...,
      *   tokenRequestor: ...,
+     *   tokenRequestorDetails: ...,
      *   type: ...,
      *   updates: ...,
+     *   wallet: ...,
      * )
      * ```
      *
@@ -167,8 +187,10 @@ final class DigitalWalletToken implements BaseModel
      *   ->withStatus(...)
      *   ->withTokenReferenceIdentifier(...)
      *   ->withTokenRequestor(...)
+     *   ->withTokenRequestorDetails(...)
      *   ->withType(...)
      *   ->withUpdates(...)
+     *   ->withWallet(...)
      * ```
      */
     public function __construct()
@@ -186,8 +208,10 @@ final class DigitalWalletToken implements BaseModel
      * @param DynamicPrimaryAccountNumber|DynamicPrimaryAccountNumberShape|null $dynamicPrimaryAccountNumber
      * @param Status|value-of<Status> $status
      * @param TokenRequestor|value-of<TokenRequestor> $tokenRequestor
+     * @param TokenRequestorDetails|TokenRequestorDetailsShape $tokenRequestorDetails
      * @param Type|value-of<Type> $type
      * @param list<Update|UpdateShape> $updates
+     * @param Wallet|WalletShape $wallet
      */
     public static function with(
         string $id,
@@ -201,8 +225,10 @@ final class DigitalWalletToken implements BaseModel
         Status|string $status,
         string $tokenReferenceIdentifier,
         TokenRequestor|string $tokenRequestor,
+        TokenRequestorDetails|array $tokenRequestorDetails,
         Type|string $type,
         array $updates,
+        Wallet|array $wallet,
     ): self {
         $self = new self;
 
@@ -217,8 +243,10 @@ final class DigitalWalletToken implements BaseModel
         $self['status'] = $status;
         $self['tokenReferenceIdentifier'] = $tokenReferenceIdentifier;
         $self['tokenRequestor'] = $tokenRequestor;
+        $self['tokenRequestorDetails'] = $tokenRequestorDetails;
         $self['type'] = $type;
         $self['updates'] = $updates;
+        $self['wallet'] = $wallet;
 
         return $self;
     }
@@ -359,6 +387,20 @@ final class DigitalWalletToken implements BaseModel
     }
 
     /**
+     * The digital wallet or merchant that requested the token.
+     *
+     * @param TokenRequestorDetails|TokenRequestorDetailsShape $tokenRequestorDetails
+     */
+    public function withTokenRequestorDetails(
+        TokenRequestorDetails|array $tokenRequestorDetails
+    ): self {
+        $self = clone $this;
+        $self['tokenRequestorDetails'] = $tokenRequestorDetails;
+
+        return $self;
+    }
+
+    /**
      * A constant representing the object's type. For this resource it will always be `digital_wallet_token`.
      *
      * @param Type|value-of<Type> $type
@@ -380,6 +422,19 @@ final class DigitalWalletToken implements BaseModel
     {
         $self = clone $this;
         $self['updates'] = $updates;
+
+        return $self;
+    }
+
+    /**
+     * Details about the digital wallet.
+     *
+     * @param Wallet|WalletShape $wallet
+     */
+    public function withWallet(Wallet|array $wallet): self
+    {
+        $self = clone $this;
+        $self['wallet'] = $wallet;
 
         return $self;
     }

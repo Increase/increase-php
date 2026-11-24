@@ -11,6 +11,7 @@ use Increase\Core\Util;
 use Increase\Page;
 use Increase\RealTimePaymentsTransfers\RealTimePaymentsTransfer;
 use Increase\RealTimePaymentsTransfers\RealTimePaymentsTransferCreateParams;
+use Increase\RealTimePaymentsTransfers\RealTimePaymentsTransferCreateParams\DebtorAddress;
 use Increase\RealTimePaymentsTransfers\RealTimePaymentsTransferListParams;
 use Increase\RealTimePaymentsTransfers\RealTimePaymentsTransferListParams\CreatedAt;
 use Increase\RealTimePaymentsTransfers\RealTimePaymentsTransferListParams\Status;
@@ -18,6 +19,7 @@ use Increase\RequestOptions;
 use Increase\ServiceContracts\RealTimePaymentsTransfersRawContract;
 
 /**
+ * @phpstan-import-type DebtorAddressShape from \Increase\RealTimePaymentsTransfers\RealTimePaymentsTransferCreateParams\DebtorAddress
  * @phpstan-import-type CreatedAtShape from \Increase\RealTimePaymentsTransfers\RealTimePaymentsTransferListParams\CreatedAt
  * @phpstan-import-type StatusShape from \Increase\RealTimePaymentsTransfers\RealTimePaymentsTransferListParams\Status
  * @phpstan-import-type RequestOpts from \Increase\RequestOptions
@@ -41,6 +43,7 @@ final class RealTimePaymentsTransfersRawService implements RealTimePaymentsTrans
      *   sourceAccountNumberID: string,
      *   unstructuredRemittanceInformation: string,
      *   accountNumber?: string,
+     *   debtorAddress?: DebtorAddress|DebtorAddressShape,
      *   debtorName?: string,
      *   externalAccountID?: string,
      *   inboundRealTimePaymentsRequestForPaymentID?: string,

@@ -9,11 +9,14 @@ use Increase\Core\Attributes\Required;
 use Increase\Core\Concerns\SdkModel;
 use Increase\Core\Concerns\SdkParams;
 use Increase\Core\Contracts\BaseModel;
+use Increase\RealTimePaymentsTransfers\RealTimePaymentsTransferCreateParams\DebtorAddress;
 
 /**
  * Create a Real-Time Payments Transfer.
  *
  * @see Increase\Services\RealTimePaymentsTransfersService::create()
+ *
+ * @phpstan-import-type DebtorAddressShape from \Increase\RealTimePaymentsTransfers\RealTimePaymentsTransferCreateParams\DebtorAddress
  *
  * @phpstan-type RealTimePaymentsTransferCreateParamsShape = array{
  *   amount: int,
@@ -21,6 +24,7 @@ use Increase\Core\Contracts\BaseModel;
  *   sourceAccountNumberID: string,
  *   unstructuredRemittanceInformation: string,
  *   accountNumber?: string|null,
+ *   debtorAddress?: null|DebtorAddress|DebtorAddressShape,
  *   debtorName?: string|null,
  *   externalAccountID?: string|null,
  *   inboundRealTimePaymentsRequestForPaymentID?: string|null,
@@ -65,6 +69,12 @@ final class RealTimePaymentsTransferCreateParams implements BaseModel
      */
     #[Optional('account_number')]
     public ?string $accountNumber;
+
+    /**
+     * The address of the transfer's sender. If not provided, no debtor address is sent with the transfer.
+     */
+    #[Optional('debtor_address')]
+    public ?DebtorAddress $debtorAddress;
 
     /**
      * The name of the transfer's sender. If not provided, defaults to the name of the account's entity.
@@ -140,6 +150,8 @@ final class RealTimePaymentsTransferCreateParams implements BaseModel
      * Construct an instance from the required parameters.
      *
      * You must use named parameters to construct any parameters with a default value.
+     *
+     * @param DebtorAddress|DebtorAddressShape|null $debtorAddress
      */
     public static function with(
         int $amount,
@@ -147,6 +159,7 @@ final class RealTimePaymentsTransferCreateParams implements BaseModel
         string $sourceAccountNumberID,
         string $unstructuredRemittanceInformation,
         ?string $accountNumber = null,
+        DebtorAddress|array|null $debtorAddress = null,
         ?string $debtorName = null,
         ?string $externalAccountID = null,
         ?string $inboundRealTimePaymentsRequestForPaymentID = null,
@@ -163,6 +176,7 @@ final class RealTimePaymentsTransferCreateParams implements BaseModel
         $self['unstructuredRemittanceInformation'] = $unstructuredRemittanceInformation;
 
         null !== $accountNumber && $self['accountNumber'] = $accountNumber;
+        null !== $debtorAddress && $self['debtorAddress'] = $debtorAddress;
         null !== $debtorName && $self['debtorName'] = $debtorName;
         null !== $externalAccountID && $self['externalAccountID'] = $externalAccountID;
         null !== $inboundRealTimePaymentsRequestForPaymentID && $self['inboundRealTimePaymentsRequestForPaymentID'] = $inboundRealTimePaymentsRequestForPaymentID;
@@ -227,6 +241,19 @@ final class RealTimePaymentsTransferCreateParams implements BaseModel
     {
         $self = clone $this;
         $self['accountNumber'] = $accountNumber;
+
+        return $self;
+    }
+
+    /**
+     * The address of the transfer's sender. If not provided, no debtor address is sent with the transfer.
+     *
+     * @param DebtorAddress|DebtorAddressShape $debtorAddress
+     */
+    public function withDebtorAddress(DebtorAddress|array $debtorAddress): self
+    {
+        $self = clone $this;
+        $self['debtorAddress'] = $debtorAddress;
 
         return $self;
     }

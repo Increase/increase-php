@@ -70,7 +70,8 @@ final class InboundWireTransfersTest extends TestCase
     {
         $result = $this->client->inboundWireTransfers->reverse(
             'inbound_wire_transfer_f228m6bmhtcxjco9pwp0',
-            reason: 'creditor_request'
+            reason: 'creditor_request',
+            amount: 1,
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType

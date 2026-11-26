@@ -14,4 +14,6 @@ enum Reason: string
     case CREDITOR_REQUEST = 'creditor_request';
 
     case TRANSACTION_FORBIDDEN = 'transaction_forbidden';
+
+    case FRAUD = 'fraud';
 }

@@ -49,6 +49,7 @@ class APIStatusException extends APIException
             403 === $status && PrivateFeatureError::type === $key => PrivateFeatureError::class,
             404 === $status && APIMethodNotFoundError::type === $key => APIMethodNotFoundError::class,
             404 === $status && ObjectNotFoundError::type === $key => ObjectNotFoundError::class,
+            408 === $status && RequestTimeoutError::type === $key => RequestTimeoutError::class,
             409 === $status && IdempotencyKeyAlreadyUsedError::type === $key => IdempotencyKeyAlreadyUsedError::class,
             409 === $status && InvalidOperationError::type === $key => InvalidOperationError::class,
             429 === $status && RateLimitedError::type === $key => RateLimitedError::class,

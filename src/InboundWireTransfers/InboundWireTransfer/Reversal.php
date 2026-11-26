@@ -13,13 +13,19 @@ use Increase\InboundWireTransfers\InboundWireTransfer\Reversal\Reason;
  * If the transfer is reversed, this will contain details of the reversal.
  *
  * @phpstan-type ReversalShape = array{
- *   reason: Reason|value-of<Reason>, reversedAt: \DateTimeInterface
+ *   amount: int, reason: Reason|value-of<Reason>, reversedAt: \DateTimeInterface
  * }
  */
 final class Reversal implements BaseModel
 {
     /** @use SdkModel<ReversalShape> */
     use SdkModel;
+
+    /**
+     * The amount that was reversed in USD cents.
+     */
+    #[Required]
+    public int $amount;
 
     /**
      * The reason for the reversal.
@@ -40,13 +46,13 @@ final class Reversal implements BaseModel
      *
      * To enforce required parameters use
      * ```
-     * Reversal::with(reason: ..., reversedAt: ...)
+     * Reversal::with(amount: ..., reason: ..., reversedAt: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new Reversal)->withReason(...)->withReversedAt(...)
+     * (new Reversal)->withAmount(...)->withReason(...)->withReversedAt(...)
      * ```
      */
     public function __construct()
@@ -62,13 +68,26 @@ final class Reversal implements BaseModel
      * @param Reason|value-of<Reason> $reason
      */
     public static function with(
+        int $amount,
         Reason|string $reason,
         \DateTimeInterface $reversedAt
     ): self {
         $self = new self;
 
+        $self['amount'] = $amount;
         $self['reason'] = $reason;
         $self['reversedAt'] = $reversedAt;
+
+        return $self;
+    }
+
+    /**
+     * The amount that was reversed in USD cents.
+     */
+    public function withAmount(int $amount): self
+    {
+        $self = clone $this;
+        $self['amount'] = $amount;
 
         return $self;
     }

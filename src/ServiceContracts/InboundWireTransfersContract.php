@@ -66,6 +66,7 @@ interface InboundWireTransfersContract
      *
      * @param string $inboundWireTransferID the identifier of the Inbound Wire Transfer to reverse
      * @param Reason|value-of<Reason> $reason reason for the reversal
+     * @param int $amount The amount to return, in USD cents. Defaults to the full amount of the Inbound Wire Transfer. A transfer can only be reversed once, so any amount you don't return now stays with the recipient.
      * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
@@ -73,6 +74,7 @@ interface InboundWireTransfersContract
     public function reverse(
         string $inboundWireTransferID,
         Reason|string $reason,
+        ?int $amount = null,
         RequestOptions|array|null $requestOptions = null,
     ): InboundWireTransfer;
 }

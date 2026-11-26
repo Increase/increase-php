@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Increase\InboundWireTransfers;
 
+use Increase\Core\Attributes\Optional;
 use Increase\Core\Attributes\Required;
 use Increase\Core\Concerns\SdkModel;
 use Increase\Core\Concerns\SdkParams;
@@ -16,7 +17,7 @@ use Increase\InboundWireTransfers\InboundWireTransferReverseParams\Reason;
  * @see Increase\Services\InboundWireTransfersService::reverse()
  *
  * @phpstan-type InboundWireTransferReverseParamsShape = array{
- *   reason: Reason|value-of<Reason>
+ *   reason: Reason|value-of<Reason>, amount?: int|null
  * }
  */
 final class InboundWireTransferReverseParams implements BaseModel
@@ -32,6 +33,12 @@ final class InboundWireTransferReverseParams implements BaseModel
      */
     #[Required(enum: Reason::class)]
     public string $reason;
+
+    /**
+     * The amount to return, in USD cents. Defaults to the full amount of the Inbound Wire Transfer. A transfer can only be reversed once, so any amount you don't return now stays with the recipient.
+     */
+    #[Optional]
+    public ?int $amount;
 
     /**
      * `new InboundWireTransferReverseParams()` is missing required properties by the API.
@@ -59,11 +66,13 @@ final class InboundWireTransferReverseParams implements BaseModel
      *
      * @param Reason|value-of<Reason> $reason
      */
-    public static function with(Reason|string $reason): self
+    public static function with(Reason|string $reason, ?int $amount = null): self
     {
         $self = new self;
 
         $self['reason'] = $reason;
+
+        null !== $amount && $self['amount'] = $amount;
 
         return $self;
     }
@@ -77,6 +86,17 @@ final class InboundWireTransferReverseParams implements BaseModel
     {
         $self = clone $this;
         $self['reason'] = $reason;
+
+        return $self;
+    }
+
+    /**
+     * The amount to return, in USD cents. Defaults to the full amount of the Inbound Wire Transfer. A transfer can only be reversed once, so any amount you don't return now stays with the recipient.
+     */
+    public function withAmount(int $amount): self
+    {
+        $self = clone $this;
+        $self['amount'] = $amount;
 
         return $self;
     }

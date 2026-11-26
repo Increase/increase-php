@@ -7,11 +7,13 @@ namespace Increase\ServiceContracts;
 use Increase\Core\Exceptions\APIException;
 use Increase\Page;
 use Increase\RealTimePaymentsTransfers\RealTimePaymentsTransfer;
+use Increase\RealTimePaymentsTransfers\RealTimePaymentsTransferCreateParams\DebtorAddress;
 use Increase\RealTimePaymentsTransfers\RealTimePaymentsTransferListParams\CreatedAt;
 use Increase\RealTimePaymentsTransfers\RealTimePaymentsTransferListParams\Status;
 use Increase\RequestOptions;
 
 /**
+ * @phpstan-import-type DebtorAddressShape from \Increase\RealTimePaymentsTransfers\RealTimePaymentsTransferCreateParams\DebtorAddress
  * @phpstan-import-type CreatedAtShape from \Increase\RealTimePaymentsTransfers\RealTimePaymentsTransferListParams\CreatedAt
  * @phpstan-import-type StatusShape from \Increase\RealTimePaymentsTransfers\RealTimePaymentsTransferListParams\Status
  * @phpstan-import-type RequestOpts from \Increase\RequestOptions
@@ -26,6 +28,7 @@ interface RealTimePaymentsTransfersContract
      * @param string $sourceAccountNumberID the identifier of the Account Number from which to send the transfer
      * @param string $unstructuredRemittanceInformation unstructured information that will show on the recipient's bank statement
      * @param string $accountNumber the destination account number
+     * @param DebtorAddress|DebtorAddressShape $debtorAddress The address of the transfer's sender. If not provided, no debtor address is sent with the transfer.
      * @param string $debtorName The name of the transfer's sender. If not provided, defaults to the name of the account's entity.
      * @param string $externalAccountID The ID of an External Account to initiate a transfer to. If this parameter is provided, `account_number` and `routing_number` must be absent.
      * @param string $inboundRealTimePaymentsRequestForPaymentID the ID of an Inbound Real-Time Payments Request for Payment in response to which this transfer is being sent
@@ -43,6 +46,7 @@ interface RealTimePaymentsTransfersContract
         string $sourceAccountNumberID,
         string $unstructuredRemittanceInformation,
         ?string $accountNumber = null,
+        DebtorAddress|array|null $debtorAddress = null,
         ?string $debtorName = null,
         ?string $externalAccountID = null,
         ?string $inboundRealTimePaymentsRequestForPaymentID = null,

@@ -6,6 +6,7 @@ namespace Increase\Checkbooks;
 
 use Increase\Checkbooks\CheckbookCreateParams\MailingAddress;
 use Increase\Checkbooks\CheckbookCreateParams\Payer;
+use Increase\Checkbooks\CheckbookCreateParams\Style;
 use Increase\Core\Attributes\Required;
 use Increase\Core\Concerns\SdkModel;
 use Increase\Core\Concerns\SdkParams;
@@ -23,6 +24,7 @@ use Increase\Core\Contracts\BaseModel;
  *   accountNumberID: string,
  *   mailingAddress: MailingAddress|MailingAddressShape,
  *   payer: list<Payer|PayerShape>,
+ *   style: Style|value-of<Style>,
  * }
  */
 final class CheckbookCreateParams implements BaseModel
@@ -52,12 +54,20 @@ final class CheckbookCreateParams implements BaseModel
     public array $payer;
 
     /**
+     * The physical format of the Checkbook.
+     *
+     * @var value-of<Style> $style
+     */
+    #[Required(enum: Style::class)]
+    public string $style;
+
+    /**
      * `new CheckbookCreateParams()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
      * CheckbookCreateParams::with(
-     *   accountNumberID: ..., mailingAddress: ..., payer: ...
+     *   accountNumberID: ..., mailingAddress: ..., payer: ..., style: ...
      * )
      * ```
      *
@@ -68,6 +78,7 @@ final class CheckbookCreateParams implements BaseModel
      *   ->withAccountNumberID(...)
      *   ->withMailingAddress(...)
      *   ->withPayer(...)
+     *   ->withStyle(...)
      * ```
      */
     public function __construct()
@@ -82,17 +93,20 @@ final class CheckbookCreateParams implements BaseModel
      *
      * @param MailingAddress|MailingAddressShape $mailingAddress
      * @param list<Payer|PayerShape> $payer
+     * @param Style|value-of<Style> $style
      */
     public static function with(
         string $accountNumberID,
         MailingAddress|array $mailingAddress,
-        array $payer
+        array $payer,
+        Style|string $style,
     ): self {
         $self = new self;
 
         $self['accountNumberID'] = $accountNumberID;
         $self['mailingAddress'] = $mailingAddress;
         $self['payer'] = $payer;
+        $self['style'] = $style;
 
         return $self;
     }
@@ -131,6 +145,19 @@ final class CheckbookCreateParams implements BaseModel
     {
         $self = clone $this;
         $self['payer'] = $payer;
+
+        return $self;
+    }
+
+    /**
+     * The physical format of the Checkbook.
+     *
+     * @param Style|value-of<Style> $style
+     */
+    public function withStyle(Style|string $style): self
+    {
+        $self = clone $this;
+        $self['style'] = $style;
 
         return $self;
     }

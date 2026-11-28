@@ -111,7 +111,7 @@ final class InboundWireTransfersRawService implements InboundWireTransfersRawCon
      *
      * @param string $inboundWireTransferID the identifier of the Inbound Wire Transfer to reverse
      * @param array{
-     *   reason: Reason|value-of<Reason>
+     *   reason: Reason|value-of<Reason>, amount?: int
      * }|InboundWireTransferReverseParams $params
      * @param RequestOpts|null $requestOptions
      *

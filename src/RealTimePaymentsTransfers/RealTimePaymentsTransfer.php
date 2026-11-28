@@ -12,6 +12,7 @@ use Increase\RealTimePaymentsTransfers\RealTimePaymentsTransfer\Approval;
 use Increase\RealTimePaymentsTransfers\RealTimePaymentsTransfer\Cancellation;
 use Increase\RealTimePaymentsTransfers\RealTimePaymentsTransfer\CreatedBy;
 use Increase\RealTimePaymentsTransfers\RealTimePaymentsTransfer\Currency;
+use Increase\RealTimePaymentsTransfers\RealTimePaymentsTransfer\DebtorAddress;
 use Increase\RealTimePaymentsTransfers\RealTimePaymentsTransfer\Rejection;
 use Increase\RealTimePaymentsTransfers\RealTimePaymentsTransfer\Status;
 use Increase\RealTimePaymentsTransfers\RealTimePaymentsTransfer\Submission;
@@ -24,6 +25,7 @@ use Increase\RealTimePaymentsTransfers\RealTimePaymentsTransfer\Type;
  * @phpstan-import-type ApprovalShape from \Increase\RealTimePaymentsTransfers\RealTimePaymentsTransfer\Approval
  * @phpstan-import-type CancellationShape from \Increase\RealTimePaymentsTransfers\RealTimePaymentsTransfer\Cancellation
  * @phpstan-import-type CreatedByShape from \Increase\RealTimePaymentsTransfers\RealTimePaymentsTransfer\CreatedBy
+ * @phpstan-import-type DebtorAddressShape from \Increase\RealTimePaymentsTransfers\RealTimePaymentsTransfer\DebtorAddress
  * @phpstan-import-type RejectionShape from \Increase\RealTimePaymentsTransfers\RealTimePaymentsTransfer\Rejection
  * @phpstan-import-type SubmissionShape from \Increase\RealTimePaymentsTransfers\RealTimePaymentsTransfer\Submission
  *
@@ -39,6 +41,7 @@ use Increase\RealTimePaymentsTransfers\RealTimePaymentsTransfer\Type;
  *   createdBy: null|CreatedBy|CreatedByShape,
  *   creditorName: string,
  *   currency: Currency|value-of<Currency>,
+ *   debtorAddress: null|DebtorAddress|DebtorAddressShape,
  *   debtorName: string|null,
  *   endToEndIdentification: string|null,
  *   externalAccountID: string|null,
@@ -130,6 +133,12 @@ final class RealTimePaymentsTransfer implements BaseModel
      */
     #[Required(enum: Currency::class)]
     public string $currency;
+
+    /**
+     * The address of the transfer's sender.
+     */
+    #[Required('debtor_address')]
+    public ?DebtorAddress $debtorAddress;
 
     /**
      * The name of the transfer's sender. If not provided, defaults to the name of the account's entity.
@@ -254,6 +263,7 @@ final class RealTimePaymentsTransfer implements BaseModel
      *   createdBy: ...,
      *   creditorName: ...,
      *   currency: ...,
+     *   debtorAddress: ...,
      *   debtorName: ...,
      *   endToEndIdentification: ...,
      *   externalAccountID: ...,
@@ -289,6 +299,7 @@ final class RealTimePaymentsTransfer implements BaseModel
      *   ->withCreatedBy(...)
      *   ->withCreditorName(...)
      *   ->withCurrency(...)
+     *   ->withDebtorAddress(...)
      *   ->withDebtorName(...)
      *   ->withEndToEndIdentification(...)
      *   ->withExternalAccountID(...)
@@ -323,6 +334,7 @@ final class RealTimePaymentsTransfer implements BaseModel
      * @param Cancellation|CancellationShape|null $cancellation
      * @param CreatedBy|CreatedByShape|null $createdBy
      * @param Currency|value-of<Currency> $currency
+     * @param DebtorAddress|DebtorAddressShape|null $debtorAddress
      * @param Rejection|RejectionShape|null $rejection
      * @param Status|value-of<Status> $status
      * @param Submission|SubmissionShape|null $submission
@@ -340,6 +352,7 @@ final class RealTimePaymentsTransfer implements BaseModel
         CreatedBy|array|null $createdBy,
         string $creditorName,
         Currency|string $currency,
+        DebtorAddress|array|null $debtorAddress,
         ?string $debtorName,
         ?string $endToEndIdentification,
         ?string $externalAccountID,
@@ -371,6 +384,7 @@ final class RealTimePaymentsTransfer implements BaseModel
         $self['createdBy'] = $createdBy;
         $self['creditorName'] = $creditorName;
         $self['currency'] = $currency;
+        $self['debtorAddress'] = $debtorAddress;
         $self['debtorName'] = $debtorName;
         $self['endToEndIdentification'] = $endToEndIdentification;
         $self['externalAccountID'] = $externalAccountID;
@@ -521,6 +535,20 @@ final class RealTimePaymentsTransfer implements BaseModel
     {
         $self = clone $this;
         $self['currency'] = $currency;
+
+        return $self;
+    }
+
+    /**
+     * The address of the transfer's sender.
+     *
+     * @param DebtorAddress|DebtorAddressShape|null $debtorAddress
+     */
+    public function withDebtorAddress(
+        DebtorAddress|array|null $debtorAddress
+    ): self {
+        $self = clone $this;
+        $self['debtorAddress'] = $debtorAddress;
 
         return $self;
     }

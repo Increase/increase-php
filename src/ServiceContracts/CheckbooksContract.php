@@ -7,6 +7,7 @@ namespace Increase\ServiceContracts;
 use Increase\Checkbooks\Checkbook;
 use Increase\Checkbooks\CheckbookCreateParams\MailingAddress;
 use Increase\Checkbooks\CheckbookCreateParams\Payer;
+use Increase\Checkbooks\CheckbookCreateParams\Style;
 use Increase\Checkbooks\CheckbookListParams\Status;
 use Increase\Core\Exceptions\APIException;
 use Increase\Page;
@@ -26,6 +27,7 @@ interface CheckbooksContract
      * @param string $accountNumberID The identifier of the Account Number that the checks will draw from. The Account Number must be active.
      * @param MailingAddress|MailingAddressShape $mailingAddress the destination address that the Checkbook will be mailed to
      * @param list<Payer|PayerShape> $payer The payer of the checks. This will be printed on the top-left corner of each check. This should be an array of up to 4 elements, each of which represents a line of the payer.
+     * @param Style|value-of<Style> $style the physical format of the Checkbook
      * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
@@ -34,6 +36,7 @@ interface CheckbooksContract
         string $accountNumberID,
         MailingAddress|array $mailingAddress,
         array $payer,
+        Style|string $style,
         RequestOptions|array|null $requestOptions = null,
     ): Checkbook;
 

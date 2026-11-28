@@ -45,6 +45,7 @@ final class CheckbooksTest extends TestCase
                 ['contents' => '33 Liberty Street'],
                 ['contents' => 'New York, NY 10045'],
             ],
+            style: 'three_ring_binder',
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -69,6 +70,7 @@ final class CheckbooksTest extends TestCase
                 ['contents' => '33 Liberty Street'],
                 ['contents' => 'New York, NY 10045'],
             ],
+            style: 'three_ring_binder',
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType

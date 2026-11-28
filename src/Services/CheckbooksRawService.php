@@ -8,6 +8,7 @@ use Increase\Checkbooks\Checkbook;
 use Increase\Checkbooks\CheckbookCreateParams;
 use Increase\Checkbooks\CheckbookCreateParams\MailingAddress;
 use Increase\Checkbooks\CheckbookCreateParams\Payer;
+use Increase\Checkbooks\CheckbookCreateParams\Style;
 use Increase\Checkbooks\CheckbookListParams;
 use Increase\Checkbooks\CheckbookListParams\Status;
 use Increase\Client;
@@ -41,6 +42,7 @@ final class CheckbooksRawService implements CheckbooksRawContract
      *   accountNumberID: string,
      *   mailingAddress: MailingAddress|MailingAddressShape,
      *   payer: list<Payer|PayerShape>,
+     *   style: Style|value-of<Style>,
      * }|CheckbookCreateParams $params
      * @param RequestOpts|null $requestOptions
      *
